@@ -1,6 +1,5 @@
 ﻿namespace Hexalith.Documents.Shared.Documents.Services;
 
-using Hexalith.Document.Domain.ValueObjects;
 using Hexalith.Documents.Shared.Documents.ViewModels;
 
 /// <summary>
@@ -16,13 +15,8 @@ public static class DemoDocumentData
     /// </value>
     internal static DocumentDetails PJ => new(
         "PJ",
-        "Piquot Jérôme",
-        "AI Technical architect",
-        new Person(),
-        [
-            new("Mobile", DocumentPointType.Mobile, "+33651818181"),
-            new("Office phone", DocumentPointType.Phone, "+33145453333"),
-            new("Email", DocumentPointType.Email, "jpiquot@hexalith.com")],
+        "Photo Paris",
+        "Une photo de Paris",
         false);
 
     /// <summary>
@@ -33,13 +27,8 @@ public static class DemoDocumentData
     /// </value>
     internal static DocumentDetails JB => new(
         "JB",
-        "Jean Bernard",
-        "Pediatric Doctor",
-        new Person(),
-        [
-            new("Mobile", DocumentPointType.Mobile, "+33651717171"),
-            new("Office phone", DocumentPointType.Phone, "+33145456666"),
-            new("Email", DocumentPointType.Email, "jbernard@hexalith.com")],
+        "Un livre de SF",
+        "Un roman de science fiction",
         false);
 
     /// <summary>

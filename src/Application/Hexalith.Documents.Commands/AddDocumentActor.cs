@@ -4,7 +4,7 @@ using Hexalith.Document.Domain.ValueObjects;
 using Hexalith.PolymorphicSerialization;
 
 [PolymorphicSerialization]
-public partial record AddDocumentPoint(string Id, DocumentPoint DocumentPoint)
+public partial record AddDocumentActor(string Id, DocumentActor Actor)
     : DocumentCommand(Id)
 {
 }

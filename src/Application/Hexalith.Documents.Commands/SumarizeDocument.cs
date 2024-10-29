@@ -3,9 +3,9 @@
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
-/// Represents a document disabled event.
+/// Represents a document enabled event.
 /// </summary>
 [PolymorphicSerialization]
-public partial record DisableDocument(string Id) : DocumentCommand(Id)
+public partial record SumarizeDocument(string Id, string Summary) : DocumentCommand(Id)
 {
 }

@@ -12,7 +12,7 @@ public abstract partial record DocumentCommand(string Id)
     /// <summary>
     /// Gets the aggregate ID of the document command.
     /// </summary>
-    public string AggregateId => AggregateName + "-" + Id;
+    public string AggregateId => Id;
 
     /// <summary>
     /// Gets the aggregate name of the document command.

@@ -1,7 +1,4 @@
 ﻿namespace Hexalith.Documents.Shared.Documents.ViewModels;
-
-using Hexalith.Document.Domain.ValueObjects;
-
 /// <summary>
 /// Represents the details of a document in the system.
 /// </summary>
@@ -15,7 +12,4 @@ public record DocumentDetails(
     string Id,
     string Name,
     string Description,
-    Person Person,
-    IEnumerable<DocumentPoint> DocumentPoints,
     bool Disabled);
-

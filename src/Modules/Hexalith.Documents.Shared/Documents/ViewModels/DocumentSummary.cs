@@ -1,7 +1,4 @@
 ﻿namespace Hexalith.Documents.Shared.Documents.ViewModels;
-
-using Hexalith.Document.Domain.Helpers;
-
 /// <summary>
 /// Represents a summary of document information.
 /// </summary>
@@ -14,9 +11,6 @@ using Hexalith.Document.Domain.Helpers;
 public record DocumentSummary(
     string Id,
     string Name,
-    string? Phone,
-    string? Mobile,
-    string? Email,
     bool Disabled)
 {
     /// <summary>
@@ -28,9 +22,6 @@ public record DocumentSummary(
         : this(
               (details ?? throw new ArgumentNullException(nameof(details))).Id,
               details.Name,
-              details.DocumentPoints.GetPhone(),
-              details.DocumentPoints.GetMobile(),
-              details.DocumentPoints.GetEmail(),
               details.Disabled)
     {
     }

@@ -19,7 +19,7 @@ public class AddDocumentTest
         // Arrange
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
         JsonSerializerOptions jsonOptions = PolymorphicHelper.DefaultJsonSerializerOptions;
-        AddDocument message = new("1", "Test AddDocumentBaseType", "This is a test AddDocumentBaseType", new Document.Domain.ValueObjects.Person());
+        CreateDocument message = new("1", "Test AddDocumentBaseType", "This is a test AddDocumentBaseType", new Uri("file://test.pdf"), "user1", DateTimeOffset.Now, null);
         Metadata metadata = Metadata.CreateNew(message, "test", "part1", DateTime.UtcNow);
         ActorMessageEnvelope envelope = ActorMessageEnvelope.Create(message, metadata);
 

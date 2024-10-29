@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-
 using Hexalith.Application.Aggregates;
 using Hexalith.Application.Commands;
 using Hexalith.Application.Modules.Modules;
@@ -63,7 +62,7 @@ public class DocumentSharedModule : ISharedApplicationModule
         services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>();
 
         // Add command handlers
-        services.TryAddSingleton<IDomainCommandHandler<AddDocument>, AddDocumentHandler>();
+        services.TryAddSingleton<IDomainCommandHandler<CreateDocument>, CreateDocumentHandler>();
 
         _ = services
             .AddSingleton<IDocumentQueryService, DemoDocumentQueryService>()
