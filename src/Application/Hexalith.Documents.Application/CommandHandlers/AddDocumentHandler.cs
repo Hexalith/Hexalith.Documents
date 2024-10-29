@@ -16,7 +16,7 @@ public class AddDocumentHandler : DomainCommandHandler<AddDocument>
     public override Task<ExecuteCommandResult> DoAsync(AddDocument command, Metadata metadata, IDomainAggregate? aggregate, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(command);
-        DocumentAdded ev = new(command.Id, command.Name, command.Comments, command.Person);
+        DocumentCreated ev = new(command.Id, command.Name, command.Comments, command.Person);
         if (aggregate is null)
         {
             return Task.FromResult(new ExecuteCommandResult(new Document(ev), [ev], [ev]));

@@ -2,7 +2,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
-using System.Text.Json;
 
 using Hexalith.Document.Domain;
 using Hexalith.Document.Domain.ValueObjects;
@@ -15,32 +14,105 @@ using Hexalith.Domain.Events;
 /// </summary>
 [DataContract]
 public record Document(
+    /// <summary>
+    /// Gets the unique identifier of the document.
+    /// </summary>
+    /// <value>The document's unique identifier string.</value>
     [property: DataMember(Order = 1)] string Id,
+
+    /// <summary>
+    /// Gets the name of the document.
+    /// </summary>
+    /// <value>The document's display name.</value>
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] string? Comments,
-    [property: DataMember(Order = 4)] Person Person,
-    [property: DataMember(Order = 5)] IEnumerable<DocumentPoint> DocumentPoints,
+
+    /// <summary>
+    /// Gets the detailed description of the document.
+    /// </summary>
+    /// <value>The document's description text.</value>
+    [property: DataMember(Order = 3)] string Description,
+
+    /// <summary>
+    /// Gets the URL where the document can be accessed.
+    /// </summary>
+    /// <value>The document's location URL.</value>
+    [property: DataMember(Order = 4)] Uri LocationUrl,
+    /// <summary>
+    /// Gets the type identifier of the document.
+    /// </summary>
+    /// <value>The document's type identifier string.</value>
+    [property: DataMember(Order = 5)] string? DocumentTypeId,
+    [property: DataMember(Order = 6)] string? Summary,
+
+    [property: DataMember(Order = 7)] DocumentStatus Status,
+
+    [property: DataMember(Order = 8)] IEnumerable<DocumentActor> Actors,
+
+    [property: DataMember(Order = 9)] IEnumerable<string> Tags,
+
+    [property: DataMember(Order = 10)] DateTimeOffset CreatedOn,
+    [property: DataMember(Order = 11)] string CreatedBy,
+    [property: DataMember(Order = 12)] DateTimeOffset? ModifiedOn,
+    [property: DataMember(Order = 13)] string? ModifiedBy,
+    [property: DataMember(Order = 14)] DateTimeOffset? ValidatedOn,
+    [property: DataMember(Order = 15)] string? ValidatedBy,
+    [property: DataMember(Order = 16)] DateTimeOffset? PublishedOn,
+    [property: DataMember(Order = 17)] string? PublishedBy,
+
+    /// <summary>
+    /// Gets a value indicating whether the document is disabled.
+    /// </summary>
     [property: DataMember(Order = 6)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Document"/> class.
     /// </summary>
     public Document()
-        : this(string.Empty, string.Empty, null, new Person(), [], false)
+        : this(
+              string.Empty,
+              string.Empty,
+              string.Empty,
+              new Uri("empty.undefined.error"),
+              null,
+              null,
+              DocumentStatus.Draft,
+              [],
+              [],
+              DateTimeOffset.MinValue,
+              string.Empty,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              false)
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Document"/> class based on the <see cref="DocumentAdded"/> event.
+    /// Initializes a new instance of the <see cref="Document"/> class based on the <see cref="DocumentCreated"/> event.
     /// </summary>
-    /// <param name="added">The <see cref="DocumentAdded"/> event.</param>
-    public Document(DocumentAdded added)
+    /// <param name="added">The <see cref="DocumentCreated"/> event.</param>
+    public Document(DocumentCreated added)
         : this(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               added.Name,
               added.Description,
-              added.Person,
+              added.LocationUrl,
+              added.DocumentTypeId,
+              null,
+              DocumentStatus.Draft,
+              [new DocumentActor(added.OwnerId, DocumentActorRole.Owner)],
               [],
+              added.CreatedOn,
+              string.Empty,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
               false)
     {
     }
@@ -55,51 +127,33 @@ public record Document(
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (domainEvent is DocumentAdded added)
-        {
-            if (!IsInitialized())
-            {
-                return ApplyEvent(added);
-            }
-
-            return new ApplyResult(
-                this,
-                [new DocumentEventCancelled(added, $"Aggregate {Id}/{Name} already initialized")],
-                true);
-        }
-
-        if (domainEvent is DocumentEvent documentEvent)
-        {
-            if (documentEvent.AggregateId != AggregateId)
-            {
-                return new ApplyResult(this, [new DocumentEventCancelled(documentEvent, $"Invalid aggregate identifier for {Id}/{Name} : {documentEvent.AggregateId}")], true);
-            }
-        }
-        else
+        if (domainEvent is DocumentEvent ev && domainEvent is not DocumentEnabled && Disabled)
         {
             return new ApplyResult(
                 this,
-                [new InvalidEventApplied(
-                    AggregateName,
-                    AggregateId,
-                    domainEvent.GetType().FullName ?? "Unknown",
-                    JsonSerializer.Serialize(domainEvent),
-                    $"Unexpected event applied.")],
+                [new DocumentEventCancelled(ev, "Document is disabled.")],
                 true);
         }
 
-        return documentEvent switch
+        return domainEvent switch
         {
-            DocumentPersonChanged e => ApplyEvent(e),
+            DocumentActorAdded e => ApplyEvent(e),
+            DocumentActorRemoved e => ApplyEvent(e),
+            DocumentCreated e => ApplyEvent(e),
             DocumentDescriptionChanged e => ApplyEvent(e),
             DocumentDisabled e => ApplyEvent(e),
             DocumentEnabled e => ApplyEvent(e),
-            DocumentPointAdded e => ApplyEvent(e),
-            DocumentPointChanged e => ApplyEvent(e),
-            DocumentPointRemoved e => ApplyEvent(e),
+            DocumentSummarized e => ApplyEvent(e),
+            DocumentEvent e => new ApplyResult(
+                this,
+                [new DocumentEventCancelled(e, "Event not implemented")],
+                true),
             _ => new ApplyResult(
                 this,
-                [new DocumentEventCancelled(documentEvent, "Event not implemented")],
+                [InvalidEventApplied.CreateNotSupportedAppliedEvent(
+                    AggregateName,
+                    AggregateId,
+                    domainEvent)],
                 true),
         };
     }
@@ -107,120 +161,42 @@ public record Document(
     /// <inheritdoc/>
     public bool IsInitialized() => !string.IsNullOrWhiteSpace(Id);
 
-    /// <summary>
-    /// Applies the DocumentAdded event.
-    /// </summary>
-    /// <param name="e">The DocumentAdded event.</param>
-    /// <returns>ApplyResult.</returns>
-    private static ApplyResult ApplyEvent(DocumentAdded e) => new(
-        new Document(e),
-        [e],
-        false);
-
-    /// <summary>
-    /// Applies the DocumentPointAdded event.
-    /// </summary>
-    /// <param name="e">The DocumentPointAdded event.</param>
-    /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(DocumentPointAdded e)
-    {
-        if (DocumentPoints.Any(p => p.Name == e.DocumentPoint.Name))
-        {
-            return new ApplyResult(this, [new DocumentEventCancelled(e, $"Document point {e.DocumentPoint.Name} already exists for {Id}/{Name}")], true);
-        }
-
-        return new ApplyResult(
-            this with { DocumentPoints = DocumentPoints.Union([e.DocumentPoint]).OrderBy(p => p.Name).ToList() },
+    private ApplyResult ApplyEvent(DocumentCreated e) => !IsInitialized()
+        ? new ApplyResult(
+            new Document(e),
             [e],
-            false);
-    }
+            false)
+        : new ApplyResult(this, [new DocumentEventCancelled(e, "The document already exists.")], true);
 
-    /// <summary>
-    /// Applies the DocumentPointChanged event.
-    /// </summary>
-    /// <param name="e">The DocumentPointChanged event.</param>
-    /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(DocumentPointChanged e)
-    {
-        List<DocumentPoint> points = DocumentPoints.ToList();
-        DocumentPoint? oldValue = points.FirstOrDefault(p => p.Name == e.DocumentPoint.Name);
-        if (oldValue == null)
-        {
-            return new ApplyResult(this, [new DocumentEventCancelled(e, $"Document point {e.DocumentPoint.Name} does not exist for {Id}/{Name}")], true);
-        }
-
-        if (oldValue != e.DocumentPoint)
-        {
-            return new ApplyResult(
-                this with { DocumentPoints = points.Where(p => p.Name != e.DocumentPoint.Name).Union([e.DocumentPoint]).OrderBy(p => p.Name).ToList() },
-                [e],
-                false);
-        }
-
-        return new ApplyResult(this, [], false);
-    }
-
-    /// <summary>
-    /// Applies the DocumentPointRemoved event.
-    /// </summary>
-    /// <param name="e">The DocumentPointRemoved event.</param>
-    /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(DocumentPointRemoved e)
-    {
-        if (DocumentPoints.Any(p => p.Name == e.Name) == false)
-        {
-            return new ApplyResult(this, [new DocumentEventCancelled(e, $"Document point {e.Name} does not exist for {Id}/{Name}")], true);
-        }
-
-        return new ApplyResult(
-            this with { DocumentPoints = DocumentPoints.Where(p => p.Name != e.Name).ToList() },
-            [e],
-            false);
-    }
-
-    /// <summary>
-    /// Applies the DocumentDescriptionChanged event.
-    /// </summary>
-    /// <param name="e">The DocumentDescriptionChanged event.</param>
-    /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(DocumentDescriptionChanged e) => Comments == e.Comments && Name == e.Name
-            ? new ApplyResult(this, [], true)
-            : new ApplyResult(
-            this with { Comments = e.Comments, Name = e.Name },
-            [e],
-            false);
-
-    /// <summary>
-    /// Applies the DocumentDisabled event.
-    /// </summary>
-    /// <param name="e">The DocumentDisabled event.</param>
-    /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(DocumentDisabled e) => Disabled
-            ? new ApplyResult(this, [], true)
-            : new ApplyResult(
-            this with { Disabled = true },
-            [e],
-            false);
-
-    /// <summary>
-    /// Applies the DocumentPersonChanged event.
-    /// </summary>
-    /// <param name="e">The DocumentPersonChanged event.</param>
-    /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(DocumentPersonChanged e) => new(
-            this with { Person = e.Person },
-            [e],
-            false);
-
-    /// <summary>
-    /// Applies the DocumentEnabled event.
-    /// </summary>
-    /// <param name="e">The DocumentEnabled event.</param>
-    /// <returns>ApplyResult.</returns>
     private ApplyResult ApplyEvent(DocumentEnabled e) => Disabled
             ? new ApplyResult(
             this with { Disabled = false },
             [e],
             false)
-            : new ApplyResult(this, [], true);
+            : new ApplyResult(this, [new DocumentEventCancelled(e, "The document is already enabled.")], true);
+
+    private ApplyResult ApplyEvent(DocumentActorAdded e) => new DocumentActors(Actors).ApplyEvent(this, e);
+
+    private ApplyResult ApplyEvent(DocumentActorRemoved e) => new DocumentActors(Actors).ApplyEvent(this, e);
+
+    private ApplyResult ApplyEvent(DocumentDisabled e) => !Disabled
+            ? new ApplyResult(
+            this with { Disabled = true },
+            [e],
+            false)
+            : new ApplyResult(this, [new DocumentEventCancelled(e, "The document is already disabled.")], true);
+
+    private ApplyResult ApplyEvent(DocumentSummarized e) => (e.Summary != Summary)
+        ? new ApplyResult(
+            this with { Summary = e.Summary },
+            [e],
+            false)
+        : new ApplyResult(this, [], false);
+
+    private ApplyResult ApplyEvent(DocumentDescriptionChanged e) => (e.Name != Name || e.Description != Description)
+        ? new ApplyResult(
+            this with { Name = e.Name, Description = e.Description },
+            [e],
+            false)
+        : new ApplyResult(this, [], false);
 }

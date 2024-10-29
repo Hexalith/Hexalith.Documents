@@ -1,10 +1,9 @@
 ﻿namespace Hexalith.Documents.Events;
 
-using Hexalith.Document.Domain.ValueObjects;
 using Hexalith.PolymorphicSerialization;
 
 [PolymorphicSerialization]
-public partial record DocumentPointChanged(string Id, DocumentPoint DocumentPoint)
+public partial record DocumentActorRemoved(string Id, string ContactId)
     : DocumentEvent(Id)
 {
 }
