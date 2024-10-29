@@ -3,7 +3,7 @@
 using Hexalith.UI.Components;
 using Hexalith.UI.Components.Icons;
 
-using Labels = Resources.Modules.DocumentMenu;
+using Labels = Hexalith.Documents.Shared.Resources.Modules.DocumentMenu;
 
 /// <summary>
 /// Represents the Document menu.
@@ -18,23 +18,16 @@ public static class DocumentMenu
     public static MenuItemInformation Menu => new(
                     Labels.DocumentMenuItem,
                     string.Empty,
-                    new IconInformation("BookDocuments", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
+                    new IconInformation("DocumentDatabase", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
                     true,
                     10,
                     [
                         new MenuItemInformation(
                             Labels.DocumentMenuItem,
                             "Document/Document",
-                            new IconInformation("DocumentCard", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
+                            new IconInformation("DocumentBulletListMultiple", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
                             false,
                             10,
-                            []),
-                        new MenuItemInformation(
-                            "test",
-                            "/Document/AuthorizeTest",
-                            new IconInformation("DocumentKey", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
-                            false,
-                            30,
                             []),
                     ]);
 }

@@ -61,7 +61,7 @@ public class DocumentActors(IEnumerable<DocumentActor> actors)
     /// <remarks>
     /// The event will be cancelled if:
     /// - The actor does not exist in the document
-    /// - The actor is the last owner of the document
+    /// - The actor is the last owner of the document.
     /// </remarks>
     internal ApplyResult ApplyEvent(Document document, DocumentActorRemoved e)
     {
