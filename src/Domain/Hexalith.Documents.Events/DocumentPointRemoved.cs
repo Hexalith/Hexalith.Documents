@@ -1,9 +1,9 @@
-﻿namespace Hexalith.Contacts.Events;
+﻿namespace Hexalith.Documents.Events;
 
 using Hexalith.PolymorphicSerialization;
 
 [PolymorphicSerialization]
-public partial record ContactPointRemoved(string Id, string Name)
-    : ContactEvent(Id)
+public partial record DocumentPointRemoved(string Id, string Name)
+    : DocumentEvent(Id)
 {
 }

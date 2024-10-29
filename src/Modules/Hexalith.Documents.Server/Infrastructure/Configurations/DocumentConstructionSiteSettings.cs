@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : Hexalith.Infrastructure.DaprRuntime.Contact
+// Assembly         : Hexalith.Infrastructure.DaprRuntime.Document
 // Author           : Jérôme Piquot
 // Created          : 02-01-2023
 //
@@ -14,10 +14,10 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace Hexalith.Contacts.Server.Infrastructure.Configurations;
+namespace Hexalith.Documents.Server.Infrastructure.Configurations;
 
 using Hexalith.Application.Configurations;
-using Hexalith.Contact.Domain;
+using Hexalith.Document.Domain;
 using Hexalith.Extensions.Configuration;
 
 /// <summary>
@@ -25,7 +25,7 @@ using Hexalith.Extensions.Configuration;
 /// Implements the <see cref="ISettings" />.
 /// </summary>
 /// <seealso cref="ISettings" />
-public class ContactSettings : ISettings
+public class DocumentSettings : ISettings
 {
     /// <summary>
     /// Gets or sets the command processor.
@@ -37,5 +37,5 @@ public class ContactSettings : ISettings
     /// The configuration section name of the settings.
     /// </summary>
     /// <returns>The name.</returns>
-    public static string ConfigurationName() => ContactDomainHelper.ContactAggregateName;
+    public static string ConfigurationName() => DocumentDomainHelper.DocumentAggregateName;
 }

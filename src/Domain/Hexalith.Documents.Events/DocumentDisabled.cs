@@ -1,11 +1,11 @@
-﻿namespace Hexalith.Contacts.Events;
+﻿namespace Hexalith.Documents.Events;
 
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
-/// Represents a contact disabled event.
+/// Represents a document disabled event.
 /// </summary>
 [PolymorphicSerialization]
-public partial record ContactDisabled(string Id) : ContactEvent(Id)
+public partial record DocumentDisabled(string Id) : DocumentEvent(Id)
 {
 }

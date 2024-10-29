@@ -1,12 +1,12 @@
-﻿namespace Hexalith.Contacts.Events;
+﻿namespace Hexalith.Documents.Events;
 
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
-/// Represents a cancelled contact event.
+/// Represents a cancelled document event.
 /// </summary>
-/// <param name="Event">The original contact event that was cancelled.</param>
+/// <param name="Event">The original document event that was cancelled.</param>
 /// <param name="Reason">The reason for cancelling the event.</param>
 [PolymorphicSerialization]
-public partial record ContactEventCancelled(ContactEvent Event, string Reason)
-    : ContactEvent(Event.Id);
+public partial record DocumentEventCancelled(DocumentEvent Event, string Reason)
+    : DocumentEvent(Event.Id);

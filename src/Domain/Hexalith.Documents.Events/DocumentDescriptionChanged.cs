@@ -1,14 +1,14 @@
-﻿namespace Hexalith.Contacts.Events;
+﻿namespace Hexalith.Documents.Events;
 
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
-/// Represents a change of the name of a contact.
+/// Represents a change of the name of a document.
 /// </summary>
-/// <param name="Id">The contact identifier.</param>
-/// <param name="Name">The contact name.</param>
-/// <param name="Description">The contact description.</param>
+/// <param name="Id">The document identifier.</param>
+/// <param name="Name">The document name.</param>
+/// <param name="Description">The document description.</param>
 [PolymorphicSerialization]
-public partial record ContactDescriptionChanged(string Id, string Name, string Comments) : ContactEvent(Id)
+public partial record DocumentDescriptionChanged(string Id, string Name, string Comments) : DocumentEvent(Id)
 {
 }

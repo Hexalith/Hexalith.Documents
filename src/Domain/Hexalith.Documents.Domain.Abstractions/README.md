@@ -1,3 +1,3 @@
-# Contact Business Domain
-This project contains the business domain logic abstractions for the Contact application.
+# Document Business Domain
+This project contains the business domain logic abstractions for the Document application.
 

@@ -1,37 +1,37 @@
-﻿namespace Hexalith.Contacts.Shared.Modules;
+﻿namespace Hexalith.Documents.Shared.Modules;
 
 using Hexalith.UI.Components;
 using Hexalith.UI.Components.Icons;
 
-using Labels = Resources.Modules.ContactMenu;
+using Labels = Resources.Modules.DocumentMenu;
 
 /// <summary>
-/// Represents the Contact menu.
+/// Represents the Document menu.
 /// </summary>
-public static class ContactMenu
+public static class DocumentMenu
 {
-    private const string _iconLibraryName = $"{nameof(Contact)}.{nameof(Shared)}";
+    private const string _iconLibraryName = $"{nameof(Document)}.{nameof(Shared)}";
 
     /// <summary>
     /// Gets the menu information.
     /// </summary>
     public static MenuItemInformation Menu => new(
-                    Labels.ContactMenuItem,
+                    Labels.DocumentMenuItem,
                     string.Empty,
-                    new IconInformation("BookContacts", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
+                    new IconInformation("BookDocuments", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
                     true,
                     10,
                     [
                         new MenuItemInformation(
-                            Labels.ContactMenuItem,
-                            "Contact/Contact",
-                            new IconInformation("ContactCard", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
+                            Labels.DocumentMenuItem,
+                            "Document/Document",
+                            new IconInformation("DocumentCard", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
                             false,
                             10,
                             []),
                         new MenuItemInformation(
                             "test",
-                            "/Contact/AuthorizeTest",
+                            "/Document/AuthorizeTest",
                             new IconInformation("DocumentKey", 20, IconStyle.Regular, IconSource.Fluent, _iconLibraryName),
                             false,
                             30,

@@ -1,10 +1,10 @@
-﻿// <copyright file="ContactClientModule.cs" company="Hexalith SAS Paris France">
+﻿// <copyright file="DocumentClientModule.cs" company="Hexalith SAS Paris France">
 //     Copyright (c) Hexalith SAS Paris France. All rights reserved.
 //     Licensed under the MIT license.
 //     See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Hexalith.Contacts.Client.Modules;
+namespace Hexalith.Documents.Client.Modules;
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -16,27 +16,27 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// The contact construction site client module.
+/// The document construction site client module.
 /// </summary>
-public class ContactClientModule : IClientApplicationModule
+public class DocumentClientModule : IClientApplicationModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
 
     /// <inheritdoc/>
-    public string Description => "Contact client module";
+    public string Description => "Document client module";
 
     /// <inheritdoc/>
-    public string Id => "Hexalith.Contact.Client";
+    public string Id => "Hexalith.Document.Client";
 
     /// <inheritdoc/>
-    public string Name => "Contact client";
+    public string Name => "Document client";
 
     /// <inheritdoc/>
     public int OrderWeight => 0;
 
     /// <inheritdoc/>
-    public string Path => "Contact";
+    public string Path => "Document";
 
     /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [GetType().Assembly];

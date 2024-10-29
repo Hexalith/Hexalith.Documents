@@ -1,3 +1,3 @@
-# Contact Commands
-This project contains the application commands for the Contact application.
+# Document Commands
+This project contains the application commands for the Document application.
 

@@ -1,17 +1,17 @@
-﻿namespace Hexalith.Contacts.Shared.Contacts.ViewModels;
+﻿namespace Hexalith.Documents.Shared.Documents.ViewModels;
 
-using Hexalith.Contact.Domain.Helpers;
+using Hexalith.Document.Domain.Helpers;
 
 /// <summary>
-/// Represents a summary of contact information.
+/// Represents a summary of document information.
 /// </summary>
-/// <param name="Id">The unique identifier of the contact.</param>
-/// <param name="Name">The name of the contact.</param>
-/// <param name="Phone">The phone number of the contact.</param>
-/// <param name="Mobile">The mobile number of the contact.</param>
-/// <param name="Email">The email address of the contact.</param>
-/// <param name="Disabled">A flag indicating whether the contact is disabled.</param>
-public record ContactSummary(
+/// <param name="Id">The unique identifier of the document.</param>
+/// <param name="Name">The name of the document.</param>
+/// <param name="Phone">The phone number of the document.</param>
+/// <param name="Mobile">The mobile number of the document.</param>
+/// <param name="Email">The email address of the document.</param>
+/// <param name="Disabled">A flag indicating whether the document is disabled.</param>
+public record DocumentSummary(
     string Id,
     string Name,
     string? Phone,
@@ -20,17 +20,17 @@ public record ContactSummary(
     bool Disabled)
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ContactSummary"/> class from ContactDetails.
+    /// Initializes a new instance of the <see cref="DocumentSummary"/> class from DocumentDetails.
     /// </summary>
-    /// <param name="details">The ContactDetails object to create the summary from.</param>
+    /// <param name="details">The DocumentDetails object to create the summary from.</param>
     /// <exception cref="ArgumentNullException">Thrown when details is null.</exception>
-    public ContactSummary(ContactDetails details)
+    public DocumentSummary(DocumentDetails details)
         : this(
               (details ?? throw new ArgumentNullException(nameof(details))).Id,
               details.Name,
-              details.ContactPoints.GetPhone(),
-              details.ContactPoints.GetMobile(),
-              details.ContactPoints.GetEmail(),
+              details.DocumentPoints.GetPhone(),
+              details.DocumentPoints.GetMobile(),
+              details.DocumentPoints.GetEmail(),
               details.Disabled)
     {
     }

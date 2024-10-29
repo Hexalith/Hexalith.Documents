@@ -1,9 +1,9 @@
-namespace Hexalith.Contact.Domain.ValueObjects;
+namespace Hexalith.Document.Domain.ValueObjects;
 
 using System.Text.Json.Serialization;
 
 /// <summary>
-/// Represents the gender of a person in the contact management system.
+/// Represents the gender of a person in the document management system.
 /// </summary>
 /// <remarks>
 /// This enum is used to categorize individuals by gender, providing options for standard gender identities

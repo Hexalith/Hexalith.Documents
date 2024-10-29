@@ -1,21 +1,21 @@
-﻿namespace Hexalith.Contacts.Commands;
+﻿namespace Hexalith.Documents.Commands;
 
-using Hexalith.Contact.Domain;
+using Hexalith.Document.Domain;
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
-/// Represents a base class for contact commands.
+/// Represents a base class for document commands.
 /// </summary>
 [PolymorphicSerialization]
-public abstract partial record ContactCommand(string Id)
+public abstract partial record DocumentCommand(string Id)
 {
     /// <summary>
-    /// Gets the aggregate ID of the contact command.
+    /// Gets the aggregate ID of the document command.
     /// </summary>
     public string AggregateId => AggregateName + "-" + Id;
 
     /// <summary>
-    /// Gets the aggregate name of the contact command.
+    /// Gets the aggregate name of the document command.
     /// </summary>
-    public static string AggregateName => ContactDomainHelper.ContactAggregateName;
+    public static string AggregateName => DocumentDomainHelper.DocumentAggregateName;
 }

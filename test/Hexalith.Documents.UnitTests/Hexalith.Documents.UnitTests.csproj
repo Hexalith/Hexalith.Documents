@@ -6,7 +6,7 @@
 		<None Include="..\..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Modules\Hexalith.Contacts.Server\Hexalith.Contacts.Server.csproj" />
+	  <ProjectReference Include="..\..\src\Modules\Hexalith.Documents.Server\Hexalith.Documents.Server.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="appsettings.json">

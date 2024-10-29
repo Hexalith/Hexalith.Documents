@@ -1,9 +1,9 @@
-﻿namespace Hexalith.Contact.Domain.ValueObjects;
+﻿namespace Hexalith.Document.Domain.ValueObjects;
 
 using System.Runtime.Serialization;
 
 /// <summary>
-/// Represents a person in the contact management system.
+/// Represents a person in the document management system.
 /// </summary>
 [DataContract]
 public record Person(

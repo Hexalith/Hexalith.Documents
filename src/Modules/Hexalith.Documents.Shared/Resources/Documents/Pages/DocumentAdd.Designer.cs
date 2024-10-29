@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hexalith.Contacts.Shared.Resources.Contacts.Pages {
+namespace Hexalith.Documents.Shared.Resources.Documents.Pages {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Hexalith.Contacts.Shared.Resources.Contacts.Pages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ContactAdd {
+    internal class DocumentAdd {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ContactAdd() {
+        internal DocumentAdd() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Hexalith.Contacts.Shared.Resources.Contacts.Pages {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Contacts.Shared.Resources.Contacts.Pages.ContactAdd", typeof(ContactAdd).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.Shared.Resources.Documents.Pages.DocumentAdd", typeof(DocumentAdd).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

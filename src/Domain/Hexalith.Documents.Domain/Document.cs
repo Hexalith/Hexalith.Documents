@@ -1,40 +1,40 @@
-﻿namespace Hexalith.Contacts.Domain;
+﻿namespace Hexalith.Documents.Domain;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Text.Json;
 
-using Hexalith.Contact.Domain;
-using Hexalith.Contact.Domain.ValueObjects;
-using Hexalith.Contacts.Events;
+using Hexalith.Document.Domain;
+using Hexalith.Document.Domain.ValueObjects;
+using Hexalith.Documents.Events;
 using Hexalith.Domain.Aggregates;
 using Hexalith.Domain.Events;
 
 /// <summary>
-/// Represents a contact in the domain.
+/// Represents a document in the domain.
 /// </summary>
 [DataContract]
-public record Contact(
+public record Document(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] string? Comments,
     [property: DataMember(Order = 4)] Person Person,
-    [property: DataMember(Order = 5)] IEnumerable<ContactPoint> ContactPoints,
+    [property: DataMember(Order = 5)] IEnumerable<DocumentPoint> DocumentPoints,
     [property: DataMember(Order = 6)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="Contact"/> class.
+    /// Initializes a new instance of the <see cref="Document"/> class.
     /// </summary>
-    public Contact()
+    public Document()
         : this(string.Empty, string.Empty, null, new Person(), [], false)
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Contact"/> class based on the <see cref="ContactAdded"/> event.
+    /// Initializes a new instance of the <see cref="Document"/> class based on the <see cref="DocumentAdded"/> event.
     /// </summary>
-    /// <param name="added">The <see cref="ContactAdded"/> event.</param>
-    public Contact(ContactAdded added)
+    /// <param name="added">The <see cref="DocumentAdded"/> event.</param>
+    public Document(DocumentAdded added)
         : this(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               added.Name,
@@ -49,13 +49,13 @@ public record Contact(
     public string AggregateId => Id;
 
     /// <inheritdoc/>
-    public string AggregateName => ContactDomainHelper.ContactAggregateName;
+    public string AggregateName => DocumentDomainHelper.DocumentAggregateName;
 
     /// <inheritdoc/>
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (domainEvent is ContactAdded added)
+        if (domainEvent is DocumentAdded added)
         {
             if (!IsInitialized())
             {
@@ -64,15 +64,15 @@ public record Contact(
 
             return new ApplyResult(
                 this,
-                [new ContactEventCancelled(added, $"Aggregate {Id}/{Name} already initialized")],
+                [new DocumentEventCancelled(added, $"Aggregate {Id}/{Name} already initialized")],
                 true);
         }
 
-        if (domainEvent is ContactEvent contactEvent)
+        if (domainEvent is DocumentEvent documentEvent)
         {
-            if (contactEvent.AggregateId != AggregateId)
+            if (documentEvent.AggregateId != AggregateId)
             {
-                return new ApplyResult(this, [new ContactEventCancelled(contactEvent, $"Invalid aggregate identifier for {Id}/{Name} : {contactEvent.AggregateId}")], true);
+                return new ApplyResult(this, [new DocumentEventCancelled(documentEvent, $"Invalid aggregate identifier for {Id}/{Name} : {documentEvent.AggregateId}")], true);
             }
         }
         else
@@ -88,18 +88,18 @@ public record Contact(
                 true);
         }
 
-        return contactEvent switch
+        return documentEvent switch
         {
-            ContactPersonChanged e => ApplyEvent(e),
-            ContactDescriptionChanged e => ApplyEvent(e),
-            ContactDisabled e => ApplyEvent(e),
-            ContactEnabled e => ApplyEvent(e),
-            ContactPointAdded e => ApplyEvent(e),
-            ContactPointChanged e => ApplyEvent(e),
-            ContactPointRemoved e => ApplyEvent(e),
+            DocumentPersonChanged e => ApplyEvent(e),
+            DocumentDescriptionChanged e => ApplyEvent(e),
+            DocumentDisabled e => ApplyEvent(e),
+            DocumentEnabled e => ApplyEvent(e),
+            DocumentPointAdded e => ApplyEvent(e),
+            DocumentPointChanged e => ApplyEvent(e),
+            DocumentPointRemoved e => ApplyEvent(e),
             _ => new ApplyResult(
                 this,
-                [new ContactEventCancelled(contactEvent, "Event not implemented")],
+                [new DocumentEventCancelled(documentEvent, "Event not implemented")],
                 true),
         };
     }
@@ -108,51 +108,51 @@ public record Contact(
     public bool IsInitialized() => !string.IsNullOrWhiteSpace(Id);
 
     /// <summary>
-    /// Applies the ContactAdded event.
+    /// Applies the DocumentAdded event.
     /// </summary>
-    /// <param name="e">The ContactAdded event.</param>
+    /// <param name="e">The DocumentAdded event.</param>
     /// <returns>ApplyResult.</returns>
-    private static ApplyResult ApplyEvent(ContactAdded e) => new(
-        new Contact(e),
+    private static ApplyResult ApplyEvent(DocumentAdded e) => new(
+        new Document(e),
         [e],
         false);
 
     /// <summary>
-    /// Applies the ContactPointAdded event.
+    /// Applies the DocumentPointAdded event.
     /// </summary>
-    /// <param name="e">The ContactPointAdded event.</param>
+    /// <param name="e">The DocumentPointAdded event.</param>
     /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(ContactPointAdded e)
+    private ApplyResult ApplyEvent(DocumentPointAdded e)
     {
-        if (ContactPoints.Any(p => p.Name == e.ContactPoint.Name))
+        if (DocumentPoints.Any(p => p.Name == e.DocumentPoint.Name))
         {
-            return new ApplyResult(this, [new ContactEventCancelled(e, $"Contact point {e.ContactPoint.Name} already exists for {Id}/{Name}")], true);
+            return new ApplyResult(this, [new DocumentEventCancelled(e, $"Document point {e.DocumentPoint.Name} already exists for {Id}/{Name}")], true);
         }
 
         return new ApplyResult(
-            this with { ContactPoints = ContactPoints.Union([e.ContactPoint]).OrderBy(p => p.Name).ToList() },
+            this with { DocumentPoints = DocumentPoints.Union([e.DocumentPoint]).OrderBy(p => p.Name).ToList() },
             [e],
             false);
     }
 
     /// <summary>
-    /// Applies the ContactPointChanged event.
+    /// Applies the DocumentPointChanged event.
     /// </summary>
-    /// <param name="e">The ContactPointChanged event.</param>
+    /// <param name="e">The DocumentPointChanged event.</param>
     /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(ContactPointChanged e)
+    private ApplyResult ApplyEvent(DocumentPointChanged e)
     {
-        List<ContactPoint> points = ContactPoints.ToList();
-        ContactPoint? oldValue = points.FirstOrDefault(p => p.Name == e.ContactPoint.Name);
+        List<DocumentPoint> points = DocumentPoints.ToList();
+        DocumentPoint? oldValue = points.FirstOrDefault(p => p.Name == e.DocumentPoint.Name);
         if (oldValue == null)
         {
-            return new ApplyResult(this, [new ContactEventCancelled(e, $"Contact point {e.ContactPoint.Name} does not exist for {Id}/{Name}")], true);
+            return new ApplyResult(this, [new DocumentEventCancelled(e, $"Document point {e.DocumentPoint.Name} does not exist for {Id}/{Name}")], true);
         }
 
-        if (oldValue != e.ContactPoint)
+        if (oldValue != e.DocumentPoint)
         {
             return new ApplyResult(
-                this with { ContactPoints = points.Where(p => p.Name != e.ContactPoint.Name).Union([e.ContactPoint]).OrderBy(p => p.Name).ToList() },
+                this with { DocumentPoints = points.Where(p => p.Name != e.DocumentPoint.Name).Union([e.DocumentPoint]).OrderBy(p => p.Name).ToList() },
                 [e],
                 false);
         }
@@ -161,29 +161,29 @@ public record Contact(
     }
 
     /// <summary>
-    /// Applies the ContactPointRemoved event.
+    /// Applies the DocumentPointRemoved event.
     /// </summary>
-    /// <param name="e">The ContactPointRemoved event.</param>
+    /// <param name="e">The DocumentPointRemoved event.</param>
     /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(ContactPointRemoved e)
+    private ApplyResult ApplyEvent(DocumentPointRemoved e)
     {
-        if (ContactPoints.Any(p => p.Name == e.Name) == false)
+        if (DocumentPoints.Any(p => p.Name == e.Name) == false)
         {
-            return new ApplyResult(this, [new ContactEventCancelled(e, $"Contact point {e.Name} does not exist for {Id}/{Name}")], true);
+            return new ApplyResult(this, [new DocumentEventCancelled(e, $"Document point {e.Name} does not exist for {Id}/{Name}")], true);
         }
 
         return new ApplyResult(
-            this with { ContactPoints = ContactPoints.Where(p => p.Name != e.Name).ToList() },
+            this with { DocumentPoints = DocumentPoints.Where(p => p.Name != e.Name).ToList() },
             [e],
             false);
     }
 
     /// <summary>
-    /// Applies the ContactDescriptionChanged event.
+    /// Applies the DocumentDescriptionChanged event.
     /// </summary>
-    /// <param name="e">The ContactDescriptionChanged event.</param>
+    /// <param name="e">The DocumentDescriptionChanged event.</param>
     /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(ContactDescriptionChanged e) => Comments == e.Comments && Name == e.Name
+    private ApplyResult ApplyEvent(DocumentDescriptionChanged e) => Comments == e.Comments && Name == e.Name
             ? new ApplyResult(this, [], true)
             : new ApplyResult(
             this with { Comments = e.Comments, Name = e.Name },
@@ -191,11 +191,11 @@ public record Contact(
             false);
 
     /// <summary>
-    /// Applies the ContactDisabled event.
+    /// Applies the DocumentDisabled event.
     /// </summary>
-    /// <param name="e">The ContactDisabled event.</param>
+    /// <param name="e">The DocumentDisabled event.</param>
     /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(ContactDisabled e) => Disabled
+    private ApplyResult ApplyEvent(DocumentDisabled e) => Disabled
             ? new ApplyResult(this, [], true)
             : new ApplyResult(
             this with { Disabled = true },
@@ -203,21 +203,21 @@ public record Contact(
             false);
 
     /// <summary>
-    /// Applies the ContactPersonChanged event.
+    /// Applies the DocumentPersonChanged event.
     /// </summary>
-    /// <param name="e">The ContactPersonChanged event.</param>
+    /// <param name="e">The DocumentPersonChanged event.</param>
     /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(ContactPersonChanged e) => new(
+    private ApplyResult ApplyEvent(DocumentPersonChanged e) => new(
             this with { Person = e.Person },
             [e],
             false);
 
     /// <summary>
-    /// Applies the ContactEnabled event.
+    /// Applies the DocumentEnabled event.
     /// </summary>
-    /// <param name="e">The ContactEnabled event.</param>
+    /// <param name="e">The DocumentEnabled event.</param>
     /// <returns>ApplyResult.</returns>
-    private ApplyResult ApplyEvent(ContactEnabled e) => Disabled
+    private ApplyResult ApplyEvent(DocumentEnabled e) => Disabled
             ? new ApplyResult(
             this with { Disabled = false },
             [e],

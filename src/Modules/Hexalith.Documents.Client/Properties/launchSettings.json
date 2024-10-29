@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Contact.Client": {
+    "Document.Client": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

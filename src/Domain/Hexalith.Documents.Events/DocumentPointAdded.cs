@@ -1,10 +1,10 @@
-﻿namespace Hexalith.Contacts.Events;
+﻿namespace Hexalith.Documents.Events;
 
-using Hexalith.Contact.Domain.ValueObjects;
+using Hexalith.Document.Domain.ValueObjects;
 using Hexalith.PolymorphicSerialization;
 
 [PolymorphicSerialization]
-public partial record ContactPointAdded(string Id, ContactPoint ContactPoint)
-    : ContactEvent(Id)
+public partial record DocumentPointAdded(string Id, DocumentPoint DocumentPoint)
+    : DocumentEvent(Id)
 {
 }

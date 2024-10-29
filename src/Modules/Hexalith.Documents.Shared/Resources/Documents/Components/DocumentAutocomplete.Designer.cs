@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hexalith.Contacts.Shared.Resources.Contacts.Components {
+namespace Hexalith.Documents.Shared.Resources.Documents.Components {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Hexalith.Contacts.Shared.Resources.Contacts.Components {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ContactAutocomplete {
+    internal class DocumentAutocomplete {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ContactAutocomplete() {
+        internal DocumentAutocomplete() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Hexalith.Contacts.Shared.Resources.Contacts.Components {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Contacts.Shared.Resources.Contacts.Components.ContactAutocomplete", typeof(ContactAutocomplete).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.Shared.Resources.Documents.Components.DocumentAutocomplete", typeof(DocumentAutocomplete).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Hexalith.Contacts.Shared.Resources.Contacts.Components {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contact.
+        ///   Looks up a localized string similar to Document.
         /// </summary>
         internal static string Label {
             get {

@@ -28,8 +28,8 @@
 	<PropertyGroup>
 		<Authors>Jérôme Piquot</Authors>
 		<Company>ITANEO</Company>
-		<Product>Hexalith contacts module</Product>
-		<RepositoryUrl>https://github.com/Hexalith/Hexalith.Contacts.git</RepositoryUrl>
+		<Product>Hexalith documents module</Product>
+		<RepositoryUrl>https://github.com/Hexalith/Hexalith.Documents.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 	<PropertyGroup>

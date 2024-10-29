@@ -1,14 +1,14 @@
-﻿namespace Hexalith.Contacts.Shared.Contacts.ViewModels;
+﻿namespace Hexalith.Documents.Shared.Documents.ViewModels;
 /// <summary>
 /// Represents the details of a factory.
 /// </summary>
-public class ContactEdit
+public class DocumentEdit
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ContactEdit"/> class.
+    /// Initializes a new instance of the <see cref="DocumentEdit"/> class.
     /// </summary>
     /// <param name="factoryDetails">The details object.</param>
-    public ContactEdit(ContactDetails factoryDetails)
+    public DocumentEdit(DocumentDetails factoryDetails)
     {
         ArgumentNullException.ThrowIfNull(factoryDetails);
         Original = factoryDetails;
@@ -45,6 +45,6 @@ public class ContactEdit
     /// <summary>
     /// Gets the original factory details.
     /// </summary>
-    public ContactDetails Original { get; }
+    public DocumentDetails Original { get; }
 
 }

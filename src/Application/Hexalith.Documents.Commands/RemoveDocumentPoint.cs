@@ -1,9 +1,9 @@
-﻿namespace Hexalith.Contacts.Commands;
+﻿namespace Hexalith.Documents.Commands;
 
 using Hexalith.PolymorphicSerialization;
 
 [PolymorphicSerialization]
-public partial record RemoveContactPoint(string Id, string Name)
-    : ContactCommand(Id)
+public partial record RemoveDocumentPoint(string Id, string Name)
+    : DocumentCommand(Id)
 {
 }

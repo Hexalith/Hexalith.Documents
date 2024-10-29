@@ -1,8 +1,8 @@
-﻿namespace Hexalith.Contacts.Commands;
+﻿namespace Hexalith.Documents.Commands;
 
 /// <summary>
-/// Represents a contact enabled event.
+/// Represents a document enabled event.
 /// </summary>
-public partial record EnableContact(string Id) : ContactCommand(Id)
+public partial record EnableDocument(string Id) : DocumentCommand(Id)
 {
 }

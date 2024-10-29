@@ -1,13 +1,13 @@
-﻿namespace Hexalith.Contacts.Shared.Contacts.Services;
+﻿namespace Hexalith.Documents.Shared.Documents.Services;
 
 /// <summary>
-/// Represents a demo implementation of the contact query service that uses pre-defined data.
+/// Represents a demo implementation of the document query service that uses pre-defined data.
 /// </summary>
 /// <remarks>
-/// This class extends the MemoryContactQueryService and initializes it with demo data,
+/// This class extends the MemoryDocumentQueryService and initializes it with demo data,
 /// making it useful for testing, demonstrations, or development scenarios where a
 /// fully functional backend is not required.
 /// </remarks>
-public class DemoContactQueryService() : MemoryContactQueryService(DemoContactData.Data)
+public class DemoDocumentQueryService() : MemoryDocumentQueryService(DemoDocumentData.Data)
 {
 }

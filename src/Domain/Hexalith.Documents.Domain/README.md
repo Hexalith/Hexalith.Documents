@@ -1,2 +1,2 @@
-# Contact Business Domain
-This project contains the business domain logic for the Contact application.
+# Document Business Domain
+This project contains the business domain logic for the Document application.

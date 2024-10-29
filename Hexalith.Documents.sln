@@ -95,7 +95,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{3A505F
 		.gitignore = .gitignore
 		.stylecop.json = .stylecop.json
 		.stylecop.ruleset = .stylecop.ruleset
-		.github\workflows\Contact_build.yaml = .github\workflows\Contact_build.yaml
+		.github\workflows\Document_build.yaml = .github\workflows\Document_build.yaml
 		Directory.Build.props = Directory.Build.props
 		Hexalith.Modules.Client.props = Hexalith.Modules.Client.props
 		Hexalith.Modules.Server.props = Hexalith.Modules.Server.props
@@ -121,7 +121,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34E4AB9D-C6DD-4FB7-A205-4544129F7AE0}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		.github\workflows\Contact_build.yaml = .github\workflows\Contact_build.yaml
+		.github\workflows\Document_build.yaml = .github\workflows\Document_build.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_global", "_global", "{1E9B2907-372E-4D83-96E0-F09636AF1E6A}"
@@ -167,25 +167,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{9368C4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{D81ADEE4-9D3D-46A8-B034-2F0500F3FC2E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexalithContactInfrastructure", "ContactInfrastructure\HexalithContactInfrastructure.csproj", "{0E9E77F7-FBDB-48CC-AA72-1681A55392B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexalithDocumentInfrastructure", "DocumentInfrastructure\HexalithDocumentInfrastructure.csproj", "{0E9E77F7-FBDB-48CC-AA72-1681A55392B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.Commands", "src\Application\Hexalith.Contacts.Commands\Hexalith.Contacts.Commands.csproj", "{208EFAF5-C124-4C6D-9565-864C28D71300}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Commands", "src\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj", "{208EFAF5-C124-4C6D-9565-864C28D71300}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.Domain.Abstractions", "src\Domain\Hexalith.Contacts.Domain.Abstractions\Hexalith.Contacts.Domain.Abstractions.csproj", "{8977EF22-4C0E-4E5D-8E14-69AA8C275E72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Domain.Abstractions", "src\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj", "{8977EF22-4C0E-4E5D-8E14-69AA8C275E72}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.Domain", "src\Domain\Hexalith.Contacts.Domain\Hexalith.Contacts.Domain.csproj", "{C0DDC1F8-0CCE-45DC-AA0B-B7B632A7551B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Domain", "src\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj", "{C0DDC1F8-0CCE-45DC-AA0B-B7B632A7551B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.Events", "src\Domain\Hexalith.Contacts.Events\Hexalith.Contacts.Events.csproj", "{8106EBC2-A669-4837-9340-71FB725030E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Events", "src\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj", "{8106EBC2-A669-4837-9340-71FB725030E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.Client", "src\Modules\Hexalith.Contacts.Client\Hexalith.Contacts.Client.csproj", "{C8A709D5-652D-4FB0-9D0B-3AFAA5FD2666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Client", "src\Modules\Hexalith.Documents.Client\Hexalith.Documents.Client.csproj", "{C8A709D5-652D-4FB0-9D0B-3AFAA5FD2666}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.Shared", "src\Modules\Hexalith.Contacts.Shared\Hexalith.Contacts.Shared.csproj", "{7EB0FD62-0A71-47C3-B0BD-6983556D9FF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Shared", "src\Modules\Hexalith.Documents.Shared\Hexalith.Documents.Shared.csproj", "{7EB0FD62-0A71-47C3-B0BD-6983556D9FF4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.Server", "src\Modules\Hexalith.Contacts.Server\Hexalith.Contacts.Server.csproj", "{67B0BEA2-E1D6-493F-8B1E-0DF1BC6F3AC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Server", "src\Modules\Hexalith.Documents.Server\Hexalith.Documents.Server.csproj", "{67B0BEA2-E1D6-493F-8B1E-0DF1BC6F3AC0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.IntegrationTests", "test\Hexalith.Contacts.IntegrationTests\Hexalith.Contacts.IntegrationTests.csproj", "{F4D7FFBD-BD03-42CC-8D62-66D6EE0EC3B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.IntegrationTests", "test\Hexalith.Documents.IntegrationTests\Hexalith.Documents.IntegrationTests.csproj", "{F4D7FFBD-BD03-42CC-8D62-66D6EE0EC3B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.UnitTests", "test\Hexalith.Contacts.UnitTests\Hexalith.Contacts.UnitTests.csproj", "{ED6C0A6A-ABC1-45C2-A23C-D33287B59C1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.UnitTests", "test\Hexalith.Documents.UnitTests\Hexalith.Documents.UnitTests.csproj", "{ED6C0A6A-ABC1-45C2-A23C-D33287B59C1D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hexalith.EasyAuthentication", "Hexalith.EasyAuthentication", "{637A01D4-E549-45E3-8A8D-31D86D884CC8}"
 EndProject
@@ -208,7 +208,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_global", "_global", "{C3E5
 		Hexalith\flush_redis.bat = Hexalith\flush_redis.bat
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Contacts.Application", "src\Application\Hexalith.Contacts.Application\Hexalith.Contacts.Application.csproj", "{B2DD4127-C1A7-453A-A517-95D77FAD6863}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Application", "src\Application\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj", "{B2DD4127-C1A7-453A-A517-95D77FAD6863}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{0BFC2A7A-EE19-4929-9EA5-630463698E67}"
 	ProjectSection(SolutionItems) = preProject

@@ -1,5 +1,5 @@
 ﻿@inject IServiceProvider ServiceProvider
-@using Labels = Hexalith.Contacts.Shared.Resources.Contacts.Components.ContactAutocomplete
+@using Labels = Hexalith.Documents.Shared.Resources.Documents.Components.DocumentAutocomplete
 @using Microsoft.Extensions.DependencyInjection
 
 <HexAutocomplete Width="100%"
@@ -16,7 +16,7 @@
 
     public IIdDescriptionService? _autocompleteService;
     public IIdDescriptionService AutocompleteService 
-        => Service ?? (_autocompleteService ??= ServiceProvider.GetRequiredService<Services.IContactQueryService>());
+        => Service ?? (_autocompleteService ??= ServiceProvider.GetRequiredService<Services.IDocumentQueryService>());
 
     [Parameter]
     public string? Id { get; set; }
