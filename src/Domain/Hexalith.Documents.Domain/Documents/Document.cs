@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 
 using Hexalith.Document.Domain;
 using Hexalith.Document.Domain.ValueObjects;
-using Hexalith.Documents.Domain;
 using Hexalith.Documents.Events;
 using Hexalith.Domain.Aggregates;
 using Hexalith.Domain.Events;
@@ -22,48 +21,52 @@ public record Document(
     [property: DataMember(Order = 1)] string Id,
 
     /// <summary>
-    /// Gets the name of the document.
+    /// Gets the descriptive information of the document.
     /// </summary>
-    /// <value>The document's display name.</value>
-    [property: DataMember(Order = 2)] string Name,
+    /// <value>The document's descriptive information.</value>
+    [property: DataMember(Order = 2)] DocumentDescription Description,
 
     /// <summary>
-    /// Gets the detailed description of the document.
+    /// Gets the routing information for the document.
     /// </summary>
-    /// <value>The document's description text.</value>
-    [property: DataMember(Order = 3)] string Description,
+    /// <value>The document's routing configuration.</value>
+    [property: DataMember(Order = 3)] DocumentRouting? Routing,
 
     /// <summary>
-    /// Gets the URL where the document can be accessed.
+    /// Gets the identifier of the parent document.
     /// </summary>
-    /// <value>The document's location URL.</value>
-    [property: DataMember(Order = 4)] Uri LocationUrl,
+    /// <value>The parent document's identifier string.</value>
+    [property: DataMember(Order = 4)] string? ParentDocumentId,
+
     /// <summary>
-    /// Gets the type identifier of the document.
+    /// Gets the current state of the document.
     /// </summary>
-    /// <value>The document's type identifier string.</value>
-    [property: DataMember(Order = 5)] string? DocumentTypeId,
-    [property: DataMember(Order = 6)] string? Summary,
+    /// <value>The document's current state information.</value>
+    [property: DataMember(Order = 5)] DocumentState State,
 
-    [property: DataMember(Order = 7)] DocumentStatus Status,
+    /// <summary>
+    /// Gets the collection of actors associated with the document.
+    /// </summary>
+    /// <value>The enumerable collection of document actors.</value>
+    [property: DataMember(Order = 6)] IEnumerable<DocumentActor> Actors,
 
-    [property: DataMember(Order = 8)] IEnumerable<DocumentActor> Actors,
+    /// <summary>
+    /// Gets the file description associated with the document.
+    /// </summary>
+    /// <value>The document's file description.</value>
+    [property: DataMember(Order = 7)] FileDescription File,
 
-    [property: DataMember(Order = 9)] IEnumerable<string> Tags,
-
-    [property: DataMember(Order = 10)] DateTimeOffset CreatedOn,
-    [property: DataMember(Order = 11)] string CreatedBy,
-    [property: DataMember(Order = 12)] DateTimeOffset? ModifiedOn,
-    [property: DataMember(Order = 13)] string? ModifiedBy,
-    [property: DataMember(Order = 14)] DateTimeOffset? ValidatedOn,
-    [property: DataMember(Order = 15)] string? ValidatedBy,
-    [property: DataMember(Order = 16)] DateTimeOffset? PublishedOn,
-    [property: DataMember(Order = 17)] string? PublishedBy,
+    /// <summary>
+    /// Gets the collection of tags associated with the document.
+    /// </summary>
+    /// <value>The enumerable collection of tag strings.</value>
+    [property: DataMember(Order = 8)] IEnumerable<string> Tags,
 
     /// <summary>
     /// Gets a value indicating whether the document is disabled.
     /// </summary>
-    [property: DataMember(Order = 6)] bool Disabled) : IDomainAggregate
+    /// <value>True if the document is disabled; otherwise, false.</value>
+    [property: DataMember(Order = 9)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Document"/> class.
@@ -71,22 +74,18 @@ public record Document(
     public Document()
         : this(
               string.Empty,
-              string.Empty,
-              string.Empty,
-              new Uri("empty.undefined.error"),
+              new DocumentDescription(
+                  string.Empty,
+                  string.Empty,
+                  null,
+                  null,
+                  null),
               null,
               null,
-              DocumentStatus.Draft,
+              new DocumentState(DateTimeOffset.MinValue, string.Empty),
               [],
+              new FileDescription(string.Empty, string.Empty, string.Empty, string.Empty),
               [],
-              DateTimeOffset.MinValue,
-              string.Empty,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
               false)
     {
     }
@@ -95,25 +94,22 @@ public record Document(
     /// Initializes a new instance of the <see cref="Document"/> class based on the <see cref="DocumentCreated"/> event.
     /// </summary>
     /// <param name="added">The <see cref="DocumentCreated"/> event.</param>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="added"/> is null.</exception>
     public Document(DocumentCreated added)
         : this(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
-              added.Name,
-              added.Description,
-              added.LocationUrl,
-              added.DocumentTypeId,
+              new DocumentDescription(
+                  added.Name,
+                  added.Description,
+                  null,
+                  added.DocumentTypeId,
+                  null),
               null,
-              DocumentStatus.Draft,
+              null,
+              new DocumentState(DateTimeOffset.MinValue, string.Empty),
               [new DocumentActor(added.OwnerId, DocumentActorRole.Owner)],
+              added.File,
               [],
-              added.CreatedOn,
-              string.Empty,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
               false)
     {
     }
@@ -141,10 +137,10 @@ public record Document(
             DocumentActorAdded e => ApplyEvent(e),
             DocumentActorRemoved e => ApplyEvent(e),
             DocumentCreated e => ApplyEvent(e),
-            DocumentDescriptionChanged e => ApplyEvent(e),
+            DocumentDescriptionChanged e => DocumentDescription.ApplyEvent(this, e),
             DocumentDisabled e => ApplyEvent(e),
             DocumentEnabled e => ApplyEvent(e),
-            DocumentSummarized e => ApplyEvent(e),
+            DocumentSummarized e => DocumentDescription.ApplyEvent(this, e),
             DocumentEvent e => new ApplyResult(
                 this,
                 [new DocumentEventCancelled(e, "Event not implemented")],
@@ -162,6 +158,11 @@ public record Document(
     /// <inheritdoc/>
     public bool IsInitialized() => !string.IsNullOrWhiteSpace(Id);
 
+    /// <summary>
+    /// Applies a DocumentCreated event to the document.
+    /// </summary>
+    /// <param name="e">The DocumentCreated event to apply.</param>
+    /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(DocumentCreated e) => !IsInitialized()
         ? new ApplyResult(
             new Document(e),
@@ -169,6 +170,11 @@ public record Document(
             false)
         : new ApplyResult(this, [new DocumentEventCancelled(e, "The document already exists.")], true);
 
+    /// <summary>
+    /// Applies a DocumentEnabled event to the document.
+    /// </summary>
+    /// <param name="e">The DocumentEnabled event to apply.</param>
+    /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(DocumentEnabled e) => Disabled
             ? new ApplyResult(
             this with { Disabled = false },
@@ -176,28 +182,29 @@ public record Document(
             false)
             : new ApplyResult(this, [new DocumentEventCancelled(e, "The document is already enabled.")], true);
 
+    /// <summary>
+    /// Applies a DocumentActorAdded event to the document.
+    /// </summary>
+    /// <param name="e">The DocumentActorAdded event to apply.</param>
+    /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(DocumentActorAdded e) => new DocumentActors(Actors).ApplyEvent(this, e);
 
+    /// <summary>
+    /// Applies a DocumentActorRemoved event to the document.
+    /// </summary>
+    /// <param name="e">The DocumentActorRemoved event to apply.</param>
+    /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(DocumentActorRemoved e) => new DocumentActors(Actors).ApplyEvent(this, e);
 
+    /// <summary>
+    /// Applies a DocumentDisabled event to the document.
+    /// </summary>
+    /// <param name="e">The DocumentDisabled event to apply.</param>
+    /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(DocumentDisabled e) => !Disabled
             ? new ApplyResult(
             this with { Disabled = true },
             [e],
             false)
             : new ApplyResult(this, [new DocumentEventCancelled(e, "The document is already disabled.")], true);
-
-    private ApplyResult ApplyEvent(DocumentSummarized e) => e.Summary != Summary
-        ? new ApplyResult(
-            this with { Summary = e.Summary },
-            [e],
-            false)
-        : new ApplyResult(this, [], false);
-
-    private ApplyResult ApplyEvent(DocumentDescriptionChanged e) => e.Name != Name || e.Description != Description
-        ? new ApplyResult(
-            this with { Name = e.Name, Description = e.Description },
-            [e],
-            false)
-        : new ApplyResult(this, [], false);
 }

@@ -1,5 +1,6 @@
 ﻿namespace Hexalith.Documents.Commands;
 
+using System.Runtime.Serialization;
 using Hexalith.Document.Domain;
 using Hexalith.PolymorphicSerialization;
 
@@ -7,7 +8,7 @@ using Hexalith.PolymorphicSerialization;
 /// Represents a base class for document commands.
 /// </summary>
 [PolymorphicSerialization]
-public abstract partial record DocumentCommand(string Id)
+public abstract partial record DocumentCommand([property: DataMember(Order = 1)] string Id)
 {
     /// <summary>
     /// Gets the aggregate ID of the document command.
