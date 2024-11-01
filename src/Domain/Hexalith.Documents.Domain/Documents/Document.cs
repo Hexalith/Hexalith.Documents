@@ -1,10 +1,11 @@
-﻿namespace Hexalith.Documents.Domain;
+﻿namespace Hexalith.Documents.Domain.Documents;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 using Hexalith.Document.Domain;
 using Hexalith.Document.Domain.ValueObjects;
+using Hexalith.Documents.Domain;
 using Hexalith.Documents.Events;
 using Hexalith.Domain.Aggregates;
 using Hexalith.Domain.Events;
@@ -186,14 +187,14 @@ public record Document(
             false)
             : new ApplyResult(this, [new DocumentEventCancelled(e, "The document is already disabled.")], true);
 
-    private ApplyResult ApplyEvent(DocumentSummarized e) => (e.Summary != Summary)
+    private ApplyResult ApplyEvent(DocumentSummarized e) => e.Summary != Summary
         ? new ApplyResult(
             this with { Summary = e.Summary },
             [e],
             false)
         : new ApplyResult(this, [], false);
 
-    private ApplyResult ApplyEvent(DocumentDescriptionChanged e) => (e.Name != Name || e.Description != Description)
+    private ApplyResult ApplyEvent(DocumentDescriptionChanged e) => e.Name != Name || e.Description != Description
         ? new ApplyResult(
             this with { Name = e.Name, Description = e.Description },
             [e],

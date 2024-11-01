@@ -9,7 +9,7 @@ using Hexalith.Application.Modules.Modules;
 using Hexalith.Documents.Application.CommandHandlers;
 using Hexalith.Documents.Commands;
 using Hexalith.Documents.Commands.Extensions;
-using Hexalith.Documents.Domain;
+using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.Shared.Documents.Services;
 using Hexalith.UI.Components;

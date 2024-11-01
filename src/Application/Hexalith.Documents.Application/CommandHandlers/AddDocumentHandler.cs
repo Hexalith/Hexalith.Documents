@@ -3,7 +3,7 @@
 using Hexalith.Application.Commands;
 using Hexalith.Application.Metadatas;
 using Hexalith.Documents.Commands;
-using Hexalith.Documents.Domain;
+using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Events;
 using Hexalith.Domain.Aggregates;
 

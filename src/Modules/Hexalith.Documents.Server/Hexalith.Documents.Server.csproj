@@ -7,12 +7,14 @@
 		<ProjectReference Include="$(HexalithPath)\src\Core\Application\Hexalith.Application.Organizations\Hexalith.Application.Organizations.csproj" />
 		<ProjectReference Include="$(HexalithPath)\src\Core\Infrastructure\Hexalith.Infrastructure.DaprRuntime.CosmosDatabases\Hexalith.Infrastructure.DaprRuntime.CosmosDatabases.csproj" />
 		<ProjectReference Include="$(HexalithPath)\src\Core\Infrastructure\Hexalith.Infrastructure.DaprRuntime\Hexalith.Infrastructure.DaprRuntime.csproj" />
+		<ProjectReference Include="$(HexalithPath)\src\Core\Infrastructure\Hexalith.Infrastructure.AzureBlobStorage\Hexalith.Infrastructure.AzureBlobStorage.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(UseProjectReference)' != 'true'">
 		<PackageReference Include="Hexalith.Application.Organizations" Version="$(HexalithVersion)" />
 		<PackageReference Include="Hexalith.Infrastructure.ClientAppOnServer" Version="$(HexalithVersion)" />
 		<PackageReference Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases" Version="$(HexalithVersion)" />
 		<PackageReference Include="Hexalith.Infrastructure.DaprRuntime" Version="$(HexalithVersion)" />
+		<PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage" Version="$(HexalithVersion)" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
@@ -20,6 +22,16 @@
 	  <ProjectReference Include="..\Hexalith.Documents.Shared\Hexalith.Documents.Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Infrastructure\Services\" />
+	  <Compile Update="Resources\Documents\Pages\DocumentAdd.Designer.cs">
+	    <DependentUpon>DocumentAdd.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Documents\Pages\DocumentAdd.resx">
+	    <LastGenOutput>DocumentAdd.Designer.cs</LastGenOutput>
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
 	</ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Domain;
+﻿namespace Hexalith.Documents.Domain.Documents;
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -11,7 +11,7 @@ using Hexalith.Domain.Aggregates;
 /// <summary>
 /// Represents a collection of document actors and provides methods to manage them.
 /// </summary>
-/// <param name="actors">The collection of document actors.</param>
+/// <param name="actors">The immutable collection of document actors that defines the roles and permissions for each actor in the document.</param>
 public class DocumentActors(IEnumerable<DocumentActor> actors)
 {
     /// <summary>

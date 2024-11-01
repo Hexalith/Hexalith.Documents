@@ -6,10 +6,14 @@ using System.Reflection;
 using Dapr.Actors.Runtime;
 
 using Hexalith.Application.Modules.Modules;
+using Hexalith.Application.Services;
 using Hexalith.Document.Domain;
-using Hexalith.Documents.Domain;
+using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Server.Application.Helpers;
 using Hexalith.Extensions.Configuration;
+using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
+using Hexalith.Infrastructure.AzureBlobStorage.Services;
+using Hexalith.Infrastructure.CosmosDb.Configurations;
 using Hexalith.Infrastructure.DaprRuntime.Actors;
 using Hexalith.Infrastructure.DaprRuntime.Helpers;
 
@@ -56,10 +60,13 @@ public sealed class DocumentServerModule : IServerApplicationModule
     {
         ArgumentNullException.ThrowIfNull(services);
         _ = services
-            .ConfigureSettings<Hexalith.Infrastructure.CosmosDb.Configurations.CosmosDbSettings>(configuration);
+            .ConfigureSettings<CosmosDbSettings>(configuration)
+            .ConfigureSettings<AzureBlobFileServiceSettings>(configuration);
 
         _ = services.AddDocumentCommandHandlers();
         _ = services.AddDocumentEventValidators();
+
+        _ = services.AddScoped<IFileService, AzureBlobStorageFileService>();
     }
 
     /// <summary>

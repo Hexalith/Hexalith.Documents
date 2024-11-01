@@ -1,10 +1,11 @@
 ﻿@page "/Document/Document/Add"
-@inject Services.IDocumentQueryService DocumentQueryService
+@inject IFileService FileService
 @inject NavigationManager NavigationManager
-@inject IStringLocalizer<DocumentDetails> L
+@inject IStringLocalizer<DocumentAdd> L
 @inject IClientCommandService CommandService
+@using Hexalith.Application.Services
 @using Hexalith.Infrastructure.ClientApp.Services
-@using Labels = Hexalith.Documents.Shared.Resources.Documents.Pages.DocumentAdd
+@using Labels = Hexalith.Documents.Server.Resources.Documents.Pages.DocumentAdd
 @using Hexalith.Documents.Commands
 
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">

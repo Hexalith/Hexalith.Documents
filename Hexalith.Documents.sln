@@ -95,8 +95,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{3A505F
 		.gitignore = .gitignore
 		.stylecop.json = .stylecop.json
 		.stylecop.ruleset = .stylecop.ruleset
-		.github\workflows\Document_build.yaml = .github\workflows\Document_build.yaml
 		Directory.Build.props = Directory.Build.props
+		.github\workflows\Document_build.yaml = .github\workflows\Document_build.yaml
 		Hexalith.Modules.Client.props = Hexalith.Modules.Client.props
 		Hexalith.Modules.Server.props = Hexalith.Modules.Server.props
 		Hexalith.Modules.Shared.props = Hexalith.Modules.Shared.props
@@ -226,6 +226,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{0BFC2A
 		Hexalith.EasyAuthentication\src\BuildFiles\Project.Common.props = Hexalith.EasyAuthentication\src\BuildFiles\Project.Common.props
 		Hexalith.EasyAuthentication\README.md = Hexalith.EasyAuthentication\README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Infrastructure.AzureBlobStorage", "Hexalith\src\Core\Infrastructure\Hexalith.Infrastructure.AzureBlobStorage\Hexalith.Infrastructure.AzureBlobStorage.csproj", "{BE6DDC34-EE1B-4D93-82F0-84F5EFDA38D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -457,6 +459,10 @@ Global
 		{B2DD4127-C1A7-453A-A517-95D77FAD6863}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2DD4127-C1A7-453A-A517-95D77FAD6863}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2DD4127-C1A7-453A-A517-95D77FAD6863}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE6DDC34-EE1B-4D93-82F0-84F5EFDA38D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE6DDC34-EE1B-4D93-82F0-84F5EFDA38D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE6DDC34-EE1B-4D93-82F0-84F5EFDA38D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE6DDC34-EE1B-4D93-82F0-84F5EFDA38D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -533,6 +539,7 @@ Global
 		{C3E549CD-FE45-4747-B2F1-AC89F309B1C1} = {D2DA3040-462E-4E0E-9CFE-3EA95FA3D014}
 		{B2DD4127-C1A7-453A-A517-95D77FAD6863} = {2A01A18A-F858-44A1-9AD0-8F7C4FA112B5}
 		{0BFC2A7A-EE19-4929-9EA5-630463698E67} = {637A01D4-E549-45E3-8A8D-31D86D884CC8}
+		{BE6DDC34-EE1B-4D93-82F0-84F5EFDA38D9} = {FA933B2A-DC9F-44A0-94C7-C5D2D49C550B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09CBB595-8996-4C7F-9C48-4C58AD9293AC}

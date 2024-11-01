@@ -43,11 +43,6 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
-	  <Compile Update="Resources\Documents\Pages\DocumentAdd.Designer.cs">
-	    <DependentUpon>DocumentAdd.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
 	  <Compile Update="Resources\Documents\Pages\DocumentDetails.Designer.cs">
 	    <DependentUpon>DocumentDetails.resx</DependentUpon>
 	    <DesignTime>True</DesignTime>
@@ -70,10 +65,6 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Documents\Components\DocumentSummaryGrid.resx">
 	    <LastGenOutput>DocumentSummaryGrid.Designer.cs</LastGenOutput>
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Documents\Pages\DocumentAdd.resx">
-	    <LastGenOutput>DocumentAdd.Designer.cs</LastGenOutput>
 	    <Generator>ResXFileCodeGenerator</Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Documents\Pages\DocumentDetails.resx">

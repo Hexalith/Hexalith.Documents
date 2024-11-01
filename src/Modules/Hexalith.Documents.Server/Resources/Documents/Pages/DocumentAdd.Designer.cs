@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hexalith.Documents.Shared.Resources.Documents.Pages {
+namespace Hexalith.Documents.Server.Resources.Documents.Pages {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Hexalith.Documents.Shared.Resources.Documents.Pages {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.Shared.Resources.Documents.Pages.DocumentAdd", typeof(DocumentAdd).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.Server.Resources.Documents.Pages.DocumentAdd", typeof(DocumentAdd).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -142,7 +142,7 @@ namespace Hexalith.Documents.Shared.Resources.Documents.Pages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a contact.
+        ///   Looks up a localized string similar to Add a document.
         /// </summary>
         internal static string Title {
             get {

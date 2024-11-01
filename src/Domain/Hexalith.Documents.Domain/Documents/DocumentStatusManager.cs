@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Domain;
+﻿namespace Hexalith.Documents.Domain.Documents;
 
 using System.Collections.Generic;
 
