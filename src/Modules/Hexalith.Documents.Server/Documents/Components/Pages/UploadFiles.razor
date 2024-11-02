@@ -1,10 +1,11 @@
 ﻿@page "/Document/UploadFiles"
 @inject IFileService FileService
-@inject IUserSessionService SessionService
-@inject ICommandBus CommandBus
+@inject ISessionService SessionService
+@inject ICommandService CommandService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<UploadFiles> L
 @using Hexalith.Application.Metadatas
+@using Hexalith.Application.Sessions.Services
 @using Hexalith.Documents.Commands
 @using Document.Domain.ValueObjects
 @using Hexalith.Infrastructure.ClientApp.Services
@@ -44,10 +45,9 @@
         {
             var fileDescription = new FileDescription(file.Id, file.Name, file.OriginalName, file.ContentType);
             var command = CreateCommand(fileDescription);
-            tasks.Add(
+            tasks.Add(CommandService.SubmitCommandAsync(
                 command, 
-                Metadata.CreateNew(command, userId, partitionId, DateTimeOffset.Now),
-                CancellationToken.None);
+                CancellationToken.None));
         }
         await Task.WhenAll(tasks);
     }

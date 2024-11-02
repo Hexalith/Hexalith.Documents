@@ -6,6 +6,7 @@ using System.Text.Json;
 using FluentAssertions;
 
 using Hexalith.Application.Metadatas;
+using Hexalith.Document.Domain.ValueObjects;
 using Hexalith.Documents.Commands;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Infrastructure.DaprRuntime.Actors;
@@ -19,7 +20,14 @@ public class AddDocumentTest
         // Arrange
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
         JsonSerializerOptions jsonOptions = PolymorphicHelper.DefaultJsonSerializerOptions;
-        CreateDocument message = new("1", "Test AddDocumentBaseType", "This is a test AddDocumentBaseType", new Uri("file://test.pdf"), "user1", DateTimeOffset.Now, null);
+        CreateDocument message = new(
+            "1",
+            "Test AddDocumentBaseType",
+            "This is a test AddDocumentBaseType",
+            new FileDescription("F1", "12354_File 1.pdf", "File 1.pdf", "application/pdf"),
+            "user1",
+            DateTimeOffset.Now,
+            null);
         Metadata metadata = Metadata.CreateNew(message, "test", "part1", DateTime.UtcNow);
         ActorMessageEnvelope envelope = ActorMessageEnvelope.Create(message, metadata);
 
