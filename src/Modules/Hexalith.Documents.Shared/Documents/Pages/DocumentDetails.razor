@@ -2,7 +2,8 @@
 @inject Services.IDocumentQueryService DocumentQueryService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<DocumentDetails> L
-@inject IClientCommandService CommandService
+@inject ICommandService CommandService
+@using Hexalith.Application.Commands
 @using Hexalith.Infrastructure.ClientApp.Services
 @using Labels = Hexalith.Documents.Shared.Resources.Documents.Pages.DocumentDetails;
 @using Hexalith.Documents.Commands
@@ -48,11 +49,11 @@
 		}
 		if (data.Name == data.Original.Name || data.Description != data.Original.Description)
 		{
-			await CommandService.SendCommandAsync(new ChangeDocumentDescription(data.Id, data.Name, data.Description), CancellationToken.None);
+			await CommandService.SubmitCommandAsync(new ChangeDocumentDescription(data.Id, data.Name, data.Description), CancellationToken.None);
 		}
 		if (data.Disabled == data.Original?.Disabled)
 		{
-			await CommandService.SendCommandAsync(new DisableDocument(data.Id), CancellationToken.None);
+			await CommandService.SubmitCommandAsync(new DisableDocument(data.Id), CancellationToken.None);
 		}
 		NavigationManager.NavigateTo("/Document/Document");
 	}
