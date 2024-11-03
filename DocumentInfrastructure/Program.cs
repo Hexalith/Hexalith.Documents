@@ -27,8 +27,12 @@ if (app.IsProjectEnabled<Projects.HexalithApp_Server>())
 {
     _ = app
         .AddProject<Projects.HexalithApp_Server>("document")
-        .WithEnvironment("Hexalith__EasyAuthentication__Enabled", "true")
-        .WithOrganization("STRADAL", "FR", "DocumentApp");
+        .WithEnvironmentFromConfiguration("Hexalith__EasyAuthentication__UseMsal")
+        .WithEnvironmentFromConfiguration("Hexalith__EasyAuthentication__Enabled")
+        .WithEnvironmentFromConfiguration("AzureAd__Instance")
+        .WithEnvironmentFromConfiguration("AzureAd__Domain")
+        .WithEnvironmentFromConfiguration("AzureAd__TenantId")
+        .WithEnvironmentFromConfiguration("AzureAd__ClientId");
 }
 
 await app

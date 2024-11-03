@@ -1,4 +1,4 @@
-name: Stradal Document Build
+name: Hexalith Document Build
 on:
   push:
     paths-ignore:
