@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Application.CommandHandlers;
+﻿﻿namespace Hexalith.Documents.Application.CommandHandlers;
 
 using Hexalith.Application.Commands;
 using Hexalith.Application.Metadatas;
@@ -18,6 +18,11 @@ using Hexalith.Domain.Aggregates;
 public class CreateDocumentHandler : DomainCommandHandler<CreateDocument>
 {
     /// <inheritdoc/>
+    /// <remarks>
+    /// Creates a new document or applies changes to an existing one by generating and applying
+    /// a DocumentCreated event. If the aggregate is null, a new Document is created. If the
+    /// aggregate exists, the event is applied to it.
+    /// </remarks>
     public override Task<ExecuteCommandResult> DoAsync(CreateDocument command, Metadata metadata, IDomainAggregate? aggregate, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(command);
@@ -45,6 +50,10 @@ public class CreateDocumentHandler : DomainCommandHandler<CreateDocument>
     }
 
     /// <inheritdoc/>
+    /// <remarks>
+    /// Rolls back a document creation by disabling the document through a DocumentDisabled event.
+    /// This operation can only be performed on an existing document aggregate.
+    /// </remarks>
     public override Task<ExecuteCommandResult> UndoAsync(CreateDocument command, Metadata metadata, IDomainAggregate? aggregate, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(command);
