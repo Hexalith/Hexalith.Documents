@@ -70,7 +70,7 @@ namespace Hexalith.Documents.Shared.Resources.Documents.Components {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a contact.
+        ///   Looks up a localized string similar to Select a document.
         /// </summary>
         internal static string Placeholder {
             get {
