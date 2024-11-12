@@ -17,9 +17,9 @@
 		<PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage" Version="$(HexalithVersion)" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
-	  <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
-	  <ProjectReference Include="..\Hexalith.Documents.Shared\Hexalith.Documents.Shared.csproj" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Modules\Hexalith.Documents.Shared\Hexalith.Documents.Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Update="Resources\Documents\Pages\UploadFiles.Designer.cs">

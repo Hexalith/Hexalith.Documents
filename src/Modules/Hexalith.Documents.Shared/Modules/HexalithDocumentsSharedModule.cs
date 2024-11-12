@@ -12,8 +12,6 @@ using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.Shared.Documents.Services;
-using Hexalith.UI.Components;
-using Hexalith.UI.Components.Icons;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,10 +20,10 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 /// <summary>
 /// The document construction site shared module.
 /// </summary>
-public class DocumentSharedModule : ISharedApplicationModule
+public class HexalithDocumentsSharedModule : ISharedApplicationModule
 {
     /// <inheritdoc/>
-    public IEnumerable<string> Dependencies => ["Hexalith.Oidc"];
+    public IEnumerable<string> Dependencies => ["Hexalith.Documents"];
 
     /// <inheritdoc/>
     public string Description => "Document shared module";
@@ -67,13 +65,6 @@ public class DocumentSharedModule : ISharedApplicationModule
         _ = services
             .AddSingleton<IDocumentQueryService, DemoDocumentQueryService>()
             .AddSingleton<IDocumentQueryService, DemoDocumentQueryService>()
-            .AddSingleton(new MenuItemInformation(
-                "Home",
-                "/",
-                new IconInformation("Home", 20, IconStyle.Regular, IconSource.Fluent, $"{nameof(Hexalith.Document)}.{nameof(Shared)}"),
-                true,
-                0,
-                []))
             .AddTransient(p => DocumentMenu.Menu);
     }
 

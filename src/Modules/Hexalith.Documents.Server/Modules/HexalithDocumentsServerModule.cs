@@ -23,7 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// The document construction site client module.
 /// </summary>
-public sealed class DocumentServerModule : IServerApplicationModule
+public sealed class HexalithDocumentsServerModule : IServerApplicationModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
@@ -41,13 +41,13 @@ public sealed class DocumentServerModule : IServerApplicationModule
     public int OrderWeight => 0;
 
     /// <inheritdoc/>
+    string IApplicationModule.Path => Path;
+
+    /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [GetType().Assembly];
 
     /// <inheritdoc/>
     public string Version => "1.0";
-
-    /// <inheritdoc/>
-    string IApplicationModule.Path => Path;
 
     private static string Path => "Document";
 

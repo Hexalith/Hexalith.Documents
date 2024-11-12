@@ -12,71 +12,9 @@
 		<PackageReference Include="Hexalith.UI.Components" Version="$(HexalithVersion)" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Application\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
-	  <ProjectReference Include="..\..\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
-	  <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
-	  <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Update="Localization\DocumentResource.fr-FR.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DocumentResource.fr-FR.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Localization\DocumentElementResource.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DocumentElementResource.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Modules\DocumentMenu.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DocumentMenu.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Documents\Components\DocumentAutocomplete.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DocumentAutocomplete.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Documents\Components\DocumentSummaryGrid.Designer.cs">
-	    <DependentUpon>DocumentSummaryGrid.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
-	  <Compile Update="Resources\Documents\Pages\DocumentDetails.Designer.cs">
-	    <DependentUpon>DocumentDetails.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
-	  <Compile Update="Resources\Documents\Pages\DocumentIndex.Designer.cs">
-	    <DependentUpon>DocumentIndex.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
-	</ItemGroup>
-	<ItemGroup>
-	  <EmbeddedResource Update="Resources\Modules\DocumentMenu.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>DocumentMenu.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Documents\Components\DocumentAutocomplete.resx">
-	    <LastGenOutput>DocumentAutocomplete.Designer.cs</LastGenOutput>
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Documents\Components\DocumentSummaryGrid.resx">
-	    <LastGenOutput>DocumentSummaryGrid.Designer.cs</LastGenOutput>
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Documents\Pages\DocumentDetails.resx">
-	    <LastGenOutput>DocumentDetails.Designer.cs</LastGenOutput>
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Documents\Pages\DocumentIndex.resx">
-	    <LastGenOutput>DocumentIndex.Designer.cs</LastGenOutput>
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="wwwroot\fontawesome\" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Application\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
 	</ItemGroup>
 </Project>

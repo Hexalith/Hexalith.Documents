@@ -18,7 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// The document construction site client module.
 /// </summary>
-public class DocumentClientModule : IClientApplicationModule
+public class HexalithDocumentsClientModule : IClientApplicationModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
