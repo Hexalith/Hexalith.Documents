@@ -33,10 +33,10 @@ jobs:
       run: |
           git submodule init HexalithApp
           git submodule update HexalithApp
-    - name: Setup .NET 8.0
+    - name: Setup .NET 9.0
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
     - name: Add Aspire Workloads
       run: |
         dotnet workload install aspire
