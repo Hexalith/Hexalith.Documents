@@ -1,0 +1,19 @@
+﻿@page "/Document/Document"
+@inject NavigationManager NavigationManager;
+@using Labels = Hexalith.Documents.UI.Pages.Resources.Documents.Pages.DocumentIndex;
+<FluentToolbar Style="width:100%;">
+    <FluentButton IconStart="@(new Icons.Filled.Size16.Add())" OnClick="AddAsync">@Labels.Add</FluentButton>
+</FluentToolbar>
+
+<FluentStack Orientation="Orientation.Vertical">
+    <h3>@Labels.Title</h3>
+    <DocumentSummaryGrid/>
+</FluentStack>
+
+@code {
+
+    private void AddAsync()
+    {
+        NavigationManager.NavigateTo("/Document/Document/Add");
+    }
+}

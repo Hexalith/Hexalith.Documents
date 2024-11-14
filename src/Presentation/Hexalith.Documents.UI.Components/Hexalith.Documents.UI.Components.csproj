@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsPackagesVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="$(AspNetCorePackagesVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="$(AspNetCorePackagesVersion)" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsPackagesVersion)" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
+    <ProjectReference Include="$(HexalithPath)\src\Core\Application\Hexalith.Application.Modules.Abstractions\Hexalith.Application.Modules.Abstractions.csproj" />
+    <ProjectReference Include="$(HexalithPath)\src\Core\Application\Hexalith.Application.Sessions.Abstractions\Hexalith.Application.Sessions.Abstractions.csproj" />
+    <ProjectReference Include="$(HexalithPath)\src\Core\Application\Hexalith.Application.Partitions.Abstractions\Hexalith.Application.Partitions.Abstractions.csproj" />
+    <ProjectReference Include="$(HexalithPath)\src\Core\UI\Hexalith.UI.Components\Hexalith.UI.Components.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
+    <PackageReference Include="Hexalith.Application.Modules.Abstractions" Version="$(HexalithVersion)" />
+    <PackageReference Include="Hexalith.Application.Sessions.Abstractions" Version="$(HexalithVersion)" />
+    <PackageReference Include="Hexalith.Application.Partitions.Abstractions" Version="$(HexalithVersion)" />
+    <PackageReference Include="Hexalith.UI.Components" Version="$(HexalithVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\Documents\DocumentAutocomplete.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentAutocomplete.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Documents\DocumentSummaryGrid.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentSummaryGrid.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Documents\DocumentAutocomplete.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DocumentAutocomplete.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Documents\DocumentSummaryGrid.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DocumentSummaryGrid.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

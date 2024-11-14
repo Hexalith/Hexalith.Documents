@@ -11,7 +11,7 @@
     <HexalithAppVersion Condition="'$(HexalithAppVersion)' == ''">*</HexalithAppVersion>
     <HexalithEasyAuthenticationPath Condition="'$(HexalithEasyAuthenticationPath)' == ''">$(HexalithPath)..\Hexalith.EasyAuthentication\</HexalithEasyAuthenticationPath>
     <HexalithEasyAuthenticationVersion Condition="'$(HexalithEasyAuthenticationVersion)' == ''">*</HexalithEasyAuthenticationVersion>
-    <HexalithDocumentPath Condition="'$(HexalithDocumentPath)' == ''">$(MSBuildThisFileDirectory)</HexalithDocumentPath>
-    <HexalithDocumentVersion Condition="'$(HexalithDocumentVersion)' == ''">*</HexalithDocumentVersion>
+    <HexalithDocumentsPath Condition="'$(HexalithDocumentsPath)' == ''">$(MSBuildThisFileDirectory)</HexalithDocumentsPath>
+    <HexalithDocumentsVersion Condition="'$(HexalithDocumentsVersion)' == ''">*</HexalithDocumentsVersion>
   </PropertyGroup>
 </Project>

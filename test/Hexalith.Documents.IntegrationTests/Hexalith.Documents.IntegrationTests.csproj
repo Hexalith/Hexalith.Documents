@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -31,11 +31,6 @@
 
   <ItemGroup>
     <PackageReference Include="Reqnroll.xUnit" Version="2.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Modules\Hexalith.Documents.Server\Hexalith.Documents.Server.csproj" />
-    <ProjectReference Include="..\..\src\Modules\Hexalith.Documents.Shared\Hexalith.Documents.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

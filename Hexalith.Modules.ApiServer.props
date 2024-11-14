@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <HexalithModulesApiServerProps>$([MSBuild]::GetPathOfFileAbove('Hexalith.Modules.ApiServer.props', '$(MSBuildThisFileDirectory)..'))</HexalithModulesApiServerProps>
+  </PropertyGroup>
+  <Import Project="$(HexalithModulesApiServerProps)" Condition=" '$(HexalithModulesApiServerProps)' != '' " />
+  <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
+    <ProjectReference Include="$(HexalithEasyAuthenticationPath)\src\Modules\Hexalith.EasyAuthentication.ApiServer\Hexalith.EasyAuthentication.ApiServer.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
+    <PackageReference Include="Hexalith.EasyAuthentication.ApiServer" Version="$(HexalithEasyAuthenticationVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsApiServerApplication.cs" />
+    <ProjectReference Include="$(HexalithDocumentsPath)\src\Modules\Hexalith.Documents.ApiServer\Hexalith.Documents.ApiServer.csproj" />
+  </ItemGroup>
+</Project>

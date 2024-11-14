@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+	<PropertyGroup>
+		<TargetFramework>$(CommonTargetFrameworks)</TargetFramework>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(UseProjectReference)' == 'true'">
+		<ProjectReference Include="$(HexalithPath)src\Core\Infrastructure\Hexalith.Infrastructure.ClientAppOnServer\Hexalith.Infrastructure.ClientAppOnServer.csproj" />
+		<ProjectReference Include="$(HexalithPath)\src\Core\Application\Hexalith.Application.Organizations\Hexalith.Application.Organizations.csproj" />
+		<ProjectReference Include="$(HexalithPath)\src\Core\Infrastructure\Hexalith.Infrastructure.DaprRuntime.CosmosDatabases\Hexalith.Infrastructure.DaprRuntime.CosmosDatabases.csproj" />
+		<ProjectReference Include="$(HexalithPath)\src\Core\Infrastructure\Hexalith.Infrastructure.DaprRuntime\Hexalith.Infrastructure.DaprRuntime.csproj" />
+		<ProjectReference Include="$(HexalithPath)\src\Core\Infrastructure\Hexalith.Infrastructure.AzureBlobStorage\Hexalith.Infrastructure.AzureBlobStorage.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(UseProjectReference)' != 'true'">
+		<PackageReference Include="Hexalith.Application.Organizations" Version="$(HexalithVersion)" />
+		<PackageReference Include="Hexalith.Infrastructure.ClientAppOnServer" Version="$(HexalithVersion)" />
+		<PackageReference Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases" Version="$(HexalithVersion)" />
+		<PackageReference Include="Hexalith.Infrastructure.DaprRuntime" Version="$(HexalithVersion)" />
+		<PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage" Version="$(HexalithVersion)" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Modules\Hexalith.Documents.SharedAssets\Hexalith.Documents.SharedAssets.csproj" />
+	  <ProjectReference Include="..\..\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
+	  <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
+	</ItemGroup>
+</Project>

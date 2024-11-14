@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+	<PropertyGroup>
+		<TargetFramework>$(CommonTargetFrameworks)</TargetFramework>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(UseProjectReference)' == 'true'">
+		<ProjectReference Include="$(HexalithPath)src\Core\Infrastructure\Hexalith.Infrastructure.ClientAppOnWasm\Hexalith.Infrastructure.ClientAppOnWasm.csproj" />
+		<ProjectReference Include="$(HexalithPath)\src\Core\Application\Hexalith.Application\Hexalith.Application.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(UseProjectReference)' != 'true'">
+		<PackageReference Include="Hexalith.Application" Version="$(HexalithVersion)" />
+		<PackageReference Include="Hexalith.Infrastructure.ClientAppOnWasm" Version="$(HexalithVersion)" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Remove="Modules\Home.razor" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="Modules\Home.razor" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="$(HexalithDocumentsPath)src\Modules\Hexalith.Documents.SharedAssets\Hexalith.Documents.SharedAssets.csproj" />
+		<ProjectReference Include="..\..\Presentation\Hexalith.Documents.UI.Pages\Hexalith.Documents.UI.Pages.csproj" />
+	</ItemGroup>
+</Project>

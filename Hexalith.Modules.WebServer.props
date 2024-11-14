@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <HexalithModulesWebServerProps>$([MSBuild]::GetPathOfFileAbove('Hexalith.Modules.WebServer.props', '$(MSBuildThisFileDirectory)..'))</HexalithModulesWebServerProps>
+  </PropertyGroup>
+  <Import Project="$(HexalithModulesWebServerProps)" Condition=" '$(HexalithModulesWebServerProps)' != '' " />
+  <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
+    <ProjectReference Include="$(HexalithEasyAuthenticationPath)\src\Modules\Hexalith.EasyAuthentication.WebServer\Hexalith.EasyAuthentication.WebServer.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
+    <PackageReference Include="Hexalith.EasyAuthentication.WebServer" Version="$(HexalithEasyAuthenticationVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsWebServerApplication.cs" />
+    <ProjectReference Include="$(HexalithDocumentsPath)\src\Modules\Hexalith.Documents.WebServer\Hexalith.Documents.WebServer.csproj" />
+  </ItemGroup>
+</Project>

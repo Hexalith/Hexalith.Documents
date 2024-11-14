@@ -6,9 +6,6 @@
 		<None Include="..\..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Modules\Hexalith.Documents.Server\Hexalith.Documents.Server.csproj" />
-	</ItemGroup>
-	<ItemGroup>
 		<None Update="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
@@ -21,5 +18,8 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Domain\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\HexalithApp\src\HexalithApp.WebServer\HexalithApp.WebServer.csproj" />
 	</ItemGroup>
 </Project>
