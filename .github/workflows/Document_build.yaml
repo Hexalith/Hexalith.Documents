@@ -63,7 +63,8 @@ jobs:
         password: ${{ secrets.AZURE_APPLICATIONSECRET }}
     - name: Publish and push the Document Web server container images to the container registry
       run: |
-          dotnet publish './HexalithApp/src/HexalithApp.Server/HexalithApp.Server.csproj' /t:PublishContainer --configuration Release --os linux --arch x64 -p:ContainerImageTags='"${{ env.VERSION }};latest"' -p:ContainerRegistry=${{ vars.AZURE_REGISTRY }} -p:ContainerRepository='document'
+          dotnet publish './HexalithApp/src/HexalithApp.WebServer/HexalithApp.WebServer.csproj' /t:PublishContainer --configuration Release --os linux --arch x64 -p:ContainerImageTags='"${{ env.VERSION }};latest"' -p:ContainerRegistry=${{ vars.AZURE_REGISTRY }} -p:ContainerRepository='document-web'
+          dotnet publish './HexalithApp/src/HexalithApp.ApiServer/HexalithApp.ApiServer.csproj' /t:PublishContainer --configuration Release --os linux --arch x64 -p:ContainerImageTags='"${{ env.VERSION }};latest"' -p:ContainerRegistry=${{ vars.AZURE_REGISTRY }} -p:ContainerRepository='document-api'
     - name: Log in to Azure
       uses: azure/login@v2
       with:

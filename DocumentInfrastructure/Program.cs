@@ -26,7 +26,7 @@ app.Builder.Configuration.AddUserSecrets<Program>();
 if (app.IsProjectEnabled<Projects.HexalithApp_WebServer>())
 {
     _ = app
-        .AddProject<Projects.HexalithApp_WebServer>("documents-web")
+        .AddProject<Projects.HexalithApp_WebServer>("document-web")
         .WithEnvironmentFromConfiguration("Hexalith__EasyAuthentication__UseMsal")
         .WithEnvironmentFromConfiguration("Hexalith__EasyAuthentication__Enabled")
         .WithEnvironmentFromConfiguration("AzureAd__Instance")
@@ -38,7 +38,7 @@ if (app.IsProjectEnabled<Projects.HexalithApp_WebServer>())
 if (app.IsProjectEnabled<Projects.HexalithApp_WebServer>())
 {
     _ = app
-        .AddProject<Projects.HexalithApp_ApiServer>("documents-api");
+        .AddProject<Projects.HexalithApp_ApiServer>("document-api");
 }
 
 await app
