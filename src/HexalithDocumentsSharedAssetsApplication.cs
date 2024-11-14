@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace HexalithApp.Shared;
+namespace HexalithApp.SharedAssets;
 
 using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.SharedAssets.Modules;
@@ -32,7 +32,7 @@ public class HexalithDocumentsSharedAssetsApplication : HexalithSharedAssetsAppl
     public override string Name => "Documents";
 
     /// <inheritdoc/>
-    public override IEnumerable<Type> SharedModules =>
+    public override IEnumerable<Type> SharedAssetsModules =>
     [
         typeof(HexalithDocumentsSharedAssetsModule),
         typeof(HexalithUIComponentsSharedModule),

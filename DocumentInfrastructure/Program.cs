@@ -12,7 +12,7 @@ HexalithDistributedApplication app = new(args);
 
 app.Builder.AddForwardedHeaders();
 
-if (!app.Builder.ExecutionContext.IsRunMode)
+if (app.Builder.ExecutionContext.IsRunMode)
 {
     Console.WriteLine($"Starting environment {app.Builder.Environment.EnvironmentName}");
     _ = app
@@ -23,16 +23,22 @@ if (!app.Builder.ExecutionContext.IsRunMode)
 
 app.Builder.Configuration.AddUserSecrets<Program>();
 
-if (app.IsProjectEnabled<Projects.HexalithApp_Server>())
+if (app.IsProjectEnabled<Projects.HexalithApp_WebServer>())
 {
     _ = app
-        .AddProject<Projects.HexalithApp_Server>("document")
+        .AddProject<Projects.HexalithApp_WebServer>("documents-web")
         .WithEnvironmentFromConfiguration("Hexalith__EasyAuthentication__UseMsal")
         .WithEnvironmentFromConfiguration("Hexalith__EasyAuthentication__Enabled")
         .WithEnvironmentFromConfiguration("AzureAd__Instance")
         .WithEnvironmentFromConfiguration("AzureAd__Domain")
         .WithEnvironmentFromConfiguration("AzureAd__TenantId")
         .WithEnvironmentFromConfiguration("AzureAd__ClientId");
+}
+
+if (app.IsProjectEnabled<Projects.HexalithApp_WebServer>())
+{
+    _ = app
+        .AddProject<Projects.HexalithApp_ApiServer>("documents-api");
 }
 
 await app

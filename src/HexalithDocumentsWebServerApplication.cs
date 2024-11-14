@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace HexalithApp.Server;
+namespace HexalithApp.WebServer;
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,8 @@ using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.WebServer.Modules;
 using Hexalith.EasyAuthentication.WebServer;
 
-using HexalithApp.Shared;
+using HexalithApp.SharedAssets;
+using HexalithApp.WebApp;
 
 /// <summary>
 /// Represents a server application.
@@ -23,7 +24,7 @@ public class HexalithDocumentsWebServerApplication : HexalithWebServerApplicatio
     public override Type SharedAssetsApplicationType => typeof(HexalithDocumentsSharedAssetsApplication);
 
     /// <inheritdoc/>
-    public override Type WebAppApplicationType => typeof(HexalithWebAppApplication);
+    public override Type WebAppApplicationType => typeof(HexalithDocumentsWebAppApplication);
 
     /// <inheritdoc/>
     public override IEnumerable<Type> WebServerModules => [

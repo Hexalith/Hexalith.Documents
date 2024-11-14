@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace HexalithApp.Server;
+namespace HexalithApp.ApiServer;
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.ApiServer.Modules;
 using Hexalith.EasyAuthentication.ApiServer;
 
-using HexalithApp.Shared;
+using HexalithApp.SharedAssets;
 
 /// <summary>
 /// Represents a server application.
