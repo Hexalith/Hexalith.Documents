@@ -98,11 +98,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{3A505F
 		Directory.Build.props = Directory.Build.props
 		.github\workflows\Document_build.yaml = .github\workflows\Document_build.yaml
 		Hexalith.Modules.ApiServer.props = Hexalith.Modules.ApiServer.props
-		Hexalith.Modules.StoreApp.props = Hexalith.Modules.StoreApp.props
 		Hexalith.Modules.SharedAssets.props = Hexalith.Modules.SharedAssets.props
-		Hexalith.props = Hexalith.props
-		Hexalith.Modules.WebServer.props = Hexalith.Modules.WebServer.props
+		Hexalith.Modules.StoreApp.props = Hexalith.Modules.StoreApp.props
 		Hexalith.Modules.WebApp.props = Hexalith.Modules.WebApp.props
+		Hexalith.Modules.WebServer.props = Hexalith.Modules.WebServer.props
+		Hexalith.props = Hexalith.props
 		src\BuildFiles\Project.Common.props = src\BuildFiles\Project.Common.props
 	EndProjectSection
 EndProject
@@ -206,6 +206,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{0BFC2A
 		Hexalith.EasyAuthentication\Hexalith.Modules.Shared.props = Hexalith.EasyAuthentication\Hexalith.Modules.Shared.props
 		Hexalith.EasyAuthentication\Hexalith.Modules.StoreApp.props = Hexalith.EasyAuthentication\Hexalith.Modules.StoreApp.props
 		Hexalith.EasyAuthentication\Hexalith.props = Hexalith.EasyAuthentication\Hexalith.props
+		Hexalith.EasyAuthentication\.github\workflows\hexalith_build.yml = Hexalith.EasyAuthentication\.github\workflows\hexalith_build.yml
 		Hexalith.EasyAuthentication\LICENSE = Hexalith.EasyAuthentication\LICENSE
 		Hexalith.EasyAuthentication\src\BuildFiles\Project.Common.props = Hexalith.EasyAuthentication\src\BuildFiles\Project.Common.props
 		Hexalith.EasyAuthentication\README.md = Hexalith.EasyAuthentication\README.md
