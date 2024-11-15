@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.WebServer.Modules;
-using Hexalith.EasyAuthentication.WebServer;
+using Hexalith.Security.WebServer;
 
 using HexalithApp.SharedUIElements;
 using HexalithApp.WebApp;
@@ -29,5 +29,5 @@ public class HexalithDocumentsWebServerApplication : HexalithWebServerApplicatio
     /// <inheritdoc/>
     public override IEnumerable<Type> WebServerModules => [
         typeof(HexalithDocumentsWebServerModule),
-        typeof(HexalithEasyAuthenticationServerModule)];
+        typeof(HexalithSecurityServerModule)];
 }

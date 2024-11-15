@@ -4,10 +4,10 @@
   </PropertyGroup>
   <Import Project="$(HexalithModulesSharedUIElementsProps)" Condition=" '$(HexalithModulesSharedUIElementsProps)' != '' " />
   <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
-    <ProjectReference Include="$(HexalithEasyAuthenticationPath)\src\Modules\Hexalith.EasyAuthentication.SharedUIElements\Hexalith.EasyAuthentication.SharedUIElements.csproj" />
+    <ProjectReference Include="$(HexalithSecurityPath)\src\Modules\Hexalith.Security.SharedUIElements\Hexalith.Security.SharedUIElements.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
-    <PackageReference Include="Hexalith.EasyAuthentication.SharedUIElements" Version="$(HexalithEasyAuthenticationVersion)" />
+    <PackageReference Include="Hexalith.Security.SharedUIElements" Version="$(HexalithSecurityVersion)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsSharedUIElementsApplication.cs" />

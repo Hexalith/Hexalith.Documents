@@ -4,10 +4,10 @@
   </PropertyGroup>
   <Import Project="$(HexalithModulesWebAppProps)" Condition=" '$(HexalithModulesWebAppProps)' != '' " />
   <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
-    <ProjectReference Include="$(HexalithEasyAuthenticationPath)\src\Modules\Hexalith.EasyAuthentication.WebApp\Hexalith.EasyAuthentication.WebApp.csproj" />
+    <ProjectReference Include="$(HexalithSecurityPath)\src\Modules\Hexalith.Security.WebApp\Hexalith.Security.WebApp.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
-    <PackageReference Include="Hexalith.EasyAuthentication.WebApp" Version="$(HexalithEasyAuthenticationVersion)" />
+    <PackageReference Include="Hexalith.Security.WebApp" Version="$(HexalithSecurityVersion)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsWebAppApplication.cs" />

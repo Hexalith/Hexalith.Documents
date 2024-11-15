@@ -27,8 +27,8 @@ if (app.IsProjectEnabled<Projects.HexalithApp_WebServer>())
 {
     _ = app
         .AddProject<Projects.HexalithApp_WebServer>("document-web")
-        .WithEnvironmentFromConfiguration("Hexalith__EasyAuthentication__UseMsal")
-        .WithEnvironmentFromConfiguration("Hexalith__EasyAuthentication__Enabled")
+        .WithEnvironmentFromConfiguration("Hexalith__Security__UseMsal")
+        .WithEnvironmentFromConfiguration("Hexalith__Security__Enabled")
         .WithEnvironmentFromConfiguration("AzureAd__Instance")
         .WithEnvironmentFromConfiguration("AzureAd__Domain")
         .WithEnvironmentFromConfiguration("AzureAd__TenantId")

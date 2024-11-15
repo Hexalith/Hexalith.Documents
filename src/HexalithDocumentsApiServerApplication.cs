@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.ApiServer.Modules;
-using Hexalith.EasyAuthentication.ApiServer;
+using Hexalith.Security.ApiServer;
 
 using HexalithApp.SharedUIElements;
 
@@ -22,7 +22,7 @@ public class HexalithDocumentsApiServerApplication : HexalithApiServerApplicatio
     /// <inheritdoc/>
     public override IEnumerable<Type> ApiServerModules => [
         typeof(HexalithDocumentsApiServerModule),
-        typeof(HexalithEasyAuthenticationApiServerModule)];
+        typeof(HexalithSecurityApiServerModule)];
 
     /// <inheritdoc/>
     public override Type SharedUIElementsApplicationType => typeof(HexalithDocumentsSharedUIElementsApplication);

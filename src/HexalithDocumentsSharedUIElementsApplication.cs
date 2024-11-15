@@ -5,8 +5,10 @@
 
 namespace HexalithApp.SharedUIElements;
 
+using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.SharedUIElements.Modules;
 using Hexalith.Extensions.Helpers;
+using Hexalith.Security.SharedUIElements.Modules;
 using Hexalith.UI.Components.Modules;
 
 /// <summary>
@@ -34,7 +36,7 @@ public class HexalithDocumentsSharedUIElementsApplication : HexalithSharedUIElem
     [
         typeof(HexalithDocumentsSharedUIElementsModule),
         typeof(HexalithUIComponentsSharedModule),
-        typeof(HexalithEasyAuthenticationSharedModule),
+        typeof(HexalithSecuritySharedModule),
     ];
 
     /// <inheritdoc/>

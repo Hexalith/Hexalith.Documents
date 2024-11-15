@@ -4,10 +4,10 @@
   </PropertyGroup>
   <Import Project="$(HexalithModulesApiServerProps)" Condition=" '$(HexalithModulesApiServerProps)' != '' " />
   <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
-    <ProjectReference Include="$(HexalithEasyAuthenticationPath)\src\Modules\Hexalith.EasyAuthentication.ApiServer\Hexalith.EasyAuthentication.ApiServer.csproj" />
+    <ProjectReference Include="$(HexalithSecurityPath)\src\Modules\Hexalith.Security.ApiServer\Hexalith.Security.ApiServer.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
-    <PackageReference Include="Hexalith.EasyAuthentication.ApiServer" Version="$(HexalithEasyAuthenticationVersion)" />
+    <PackageReference Include="Hexalith.Security.ApiServer" Version="$(HexalithSecurityVersion)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsApiServerApplication.cs" />
