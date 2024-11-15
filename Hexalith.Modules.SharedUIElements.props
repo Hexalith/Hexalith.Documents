@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <HexalithModulesSharedUIElementsProps>$([MSBuild]::GetPathOfFileAbove('Hexalith.Modules.SharedUIElements.props', '$(MSBuildThisFileDirectory)..'))</HexalithModulesSharedUIElementsProps>
+  </PropertyGroup>
+  <Import Project="$(HexalithModulesSharedUIElementsProps)" Condition=" '$(HexalithModulesSharedUIElementsProps)' != '' " />
+  <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
+    <ProjectReference Include="$(HexalithEasyAuthenticationPath)\src\Modules\Hexalith.EasyAuthentication.SharedUIElements\Hexalith.EasyAuthentication.SharedUIElements.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
+    <PackageReference Include="Hexalith.EasyAuthentication.SharedUIElements" Version="$(HexalithEasyAuthenticationVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsSharedUIElementsApplication.cs" />
+    <ProjectReference Include="$(HexalithDocumentsPath)\src\Modules\Hexalith.Documents.SharedUIElements\Hexalith.Documents.SharedUIElements.csproj" />
+  </ItemGroup>
+</Project>

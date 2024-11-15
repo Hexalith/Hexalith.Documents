@@ -19,7 +19,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="$(HexalithDocumentsPath)src\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
 	  <ProjectReference Include="$(HexalithDocumentsPath)src\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
-	  <ProjectReference Include="$(HexalithDocumentsPath)src\Modules\Hexalith.Documents.SharedAssets\Hexalith.Documents.SharedAssets.csproj" />
+	  <ProjectReference Include="$(HexalithDocumentsPath)src\Modules\Hexalith.Documents.SharedUIElements\Hexalith.Documents.SharedUIElements.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Update="Resources\Documents\Pages\UploadFiles.Designer.cs">

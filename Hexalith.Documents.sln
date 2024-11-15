@@ -98,7 +98,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{3A505F
 		Directory.Build.props = Directory.Build.props
 		.github\workflows\Document_build.yaml = .github\workflows\Document_build.yaml
 		Hexalith.Modules.ApiServer.props = Hexalith.Modules.ApiServer.props
-		Hexalith.Modules.SharedAssets.props = Hexalith.Modules.SharedAssets.props
+		Hexalith.Modules.SharedUIElements.props = Hexalith.Modules.SharedUIElements.props
 		Hexalith.Modules.StoreApp.props = Hexalith.Modules.StoreApp.props
 		Hexalith.Modules.WebApp.props = Hexalith.Modules.WebApp.props
 		Hexalith.Modules.WebServer.props = Hexalith.Modules.WebServer.props
@@ -144,7 +144,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{6C4BEC
 		HexalithApp\src\HexalithApp.Build\Dependencies.props = HexalithApp\src\HexalithApp.Build\Dependencies.props
 		HexalithApp\Directory.Build.props = HexalithApp\Directory.Build.props
 		HexalithApp\Hexalith.Modules.ApiServer.props = HexalithApp\Hexalith.Modules.ApiServer.props
-		HexalithApp\Hexalith.Modules.SharedAssets.props = HexalithApp\Hexalith.Modules.SharedAssets.props
+		HexalithApp\Hexalith.Modules.SharedUIElements.props = HexalithApp\Hexalith.Modules.SharedUIElements.props
 		HexalithApp\Hexalith.Modules.StoreApp.props = HexalithApp\Hexalith.Modules.StoreApp.props
 		HexalithApp\Hexalith.Modules.WebApp.props = HexalithApp\Hexalith.Modules.WebApp.props
 		HexalithApp\Hexalith.Modules.WebServer.props = HexalithApp\Hexalith.Modules.WebServer.props
@@ -177,7 +177,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Integrat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.UnitTests", "test\Hexalith.Documents.UnitTests\Hexalith.Documents.UnitTests.csproj", "{ED6C0A6A-ABC1-45C2-A23C-D33287B59C1D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hexalith.EasyAuthentication", "Hexalith.EasyAuthentication", "{637A01D4-E549-45E3-8A8D-31D86D884CC8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hexalith.Security", "Hexalith.Security", "{637A01D4-E549-45E3-8A8D-31D86D884CC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeGenerations", "CodeGenerations", "{78B9DBC0-0806-41D3-ADC7-A2DB03D9292C}"
 EndProject
@@ -196,21 +196,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Applicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{0BFC2A7A-EE19-4929-9EA5-630463698E67}"
 	ProjectSection(SolutionItems) = preProject
-		Hexalith.EasyAuthentication\.editorconfig = Hexalith.EasyAuthentication\.editorconfig
-		Hexalith.EasyAuthentication\.gitignore = Hexalith.EasyAuthentication\.gitignore
-		Hexalith.EasyAuthentication\.stylecop.json = Hexalith.EasyAuthentication\.stylecop.json
-		Hexalith.EasyAuthentication\.stylecop.ruleset = Hexalith.EasyAuthentication\.stylecop.ruleset
-		Hexalith.EasyAuthentication\Directory.Build.props = Hexalith.EasyAuthentication\Directory.Build.props
-		Hexalith.EasyAuthentication\Hexalith.Modules.ApiServer.props = Hexalith.EasyAuthentication\Hexalith.Modules.ApiServer.props
-		Hexalith.EasyAuthentication\Hexalith.Modules.SharedAssets.props = Hexalith.EasyAuthentication\Hexalith.Modules.SharedAssets.props
-		Hexalith.EasyAuthentication\Hexalith.Modules.StoreApp.props = Hexalith.EasyAuthentication\Hexalith.Modules.StoreApp.props
-		Hexalith.EasyAuthentication\Hexalith.Modules.WebApp.props = Hexalith.EasyAuthentication\Hexalith.Modules.WebApp.props
-		Hexalith.EasyAuthentication\Hexalith.Modules.WebServer.props = Hexalith.EasyAuthentication\Hexalith.Modules.WebServer.props
-		Hexalith.EasyAuthentication\Hexalith.props = Hexalith.EasyAuthentication\Hexalith.props
-		Hexalith.EasyAuthentication\.github\workflows\hexalith_build.yml = Hexalith.EasyAuthentication\.github\workflows\hexalith_build.yml
-		Hexalith.EasyAuthentication\LICENSE = Hexalith.EasyAuthentication\LICENSE
-		Hexalith.EasyAuthentication\src\BuildFiles\Project.Common.props = Hexalith.EasyAuthentication\src\BuildFiles\Project.Common.props
-		Hexalith.EasyAuthentication\README.md = Hexalith.EasyAuthentication\README.md
+		Hexalith.Security\.editorconfig = Hexalith.Security\.editorconfig
+		Hexalith.Security\.gitignore = Hexalith.Security\.gitignore
+		Hexalith.Security\.stylecop.json = Hexalith.Security\.stylecop.json
+		Hexalith.Security\.stylecop.ruleset = Hexalith.Security\.stylecop.ruleset
+		Hexalith.Security\Directory.Build.props = Hexalith.Security\Directory.Build.props
+		Hexalith.Security\Hexalith.Modules.ApiServer.props = Hexalith.Security\Hexalith.Modules.ApiServer.props
+		Hexalith.Security\Hexalith.Modules.SharedUIElements.props = Hexalith.Security\Hexalith.Modules.SharedUIElements.props
+		Hexalith.Security\Hexalith.Modules.StoreApp.props = Hexalith.Security\Hexalith.Modules.StoreApp.props
+		Hexalith.Security\Hexalith.Modules.WebApp.props = Hexalith.Security\Hexalith.Modules.WebApp.props
+		Hexalith.Security\Hexalith.Modules.WebServer.props = Hexalith.Security\Hexalith.Modules.WebServer.props
+		Hexalith.Security\Hexalith.props = Hexalith.Security\Hexalith.props
+		Hexalith.Security\.github\workflows\hexalith_build.yml = Hexalith.Security\.github\workflows\hexalith_build.yml
+		Hexalith.Security\LICENSE = Hexalith.Security\LICENSE
+		Hexalith.Security\src\BuildFiles\Project.Common.props = Hexalith.Security\src\BuildFiles\Project.Common.props
+		Hexalith.Security\README.md = Hexalith.Security\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Infrastructure.AzureBlobStorage", "Hexalith\src\Core\Infrastructure\Hexalith.Infrastructure.AzureBlobStorage\Hexalith.Infrastructure.AzureBlobStorage.csproj", "{BE6DDC34-EE1B-4D93-82F0-84F5EFDA38D9}"
@@ -225,7 +225,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Infrastructure.Dap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexalithApp.ApiServer", "HexalithApp\src\HexalithApp.ApiServer\HexalithApp.ApiServer.csproj", "{B8799753-28A1-45EE-852C-1B3EA7AB23B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexalithApp.SharedAssets", "HexalithApp\src\HexalithApp.SharedAssets\HexalithApp.SharedAssets.csproj", "{605E50ED-DAA9-4393-ACAF-28D900DC309C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexalithApp.SharedUIElements", "HexalithApp\src\HexalithApp.SharedUIElements\HexalithApp.SharedUIElements.csproj", "{605E50ED-DAA9-4393-ACAF-28D900DC309C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexalithApp.StoreApp", "HexalithApp\src\HexalithApp.StoreApp\HexalithApp.StoreApp.csproj", "{7C7667DE-5A74-4613-9ECB-C176B77FBFA9}"
 EndProject
@@ -233,17 +233,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexalithApp.WebApp", "Hexal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexalithApp.WebServer", "HexalithApp\src\HexalithApp.WebServer\HexalithApp.WebServer.csproj", "{37546872-C877-4557-8AAE-9F3F69C6608B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.EasyAuthentication.ApiServer", "Hexalith.EasyAuthentication\src\Modules\Hexalith.EasyAuthentication.ApiServer\Hexalith.EasyAuthentication.ApiServer.csproj", "{8348A57A-0070-4DB9-B40A-386C8CDAB695}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Security.ApiServer", "Hexalith.Security\src\Modules\Hexalith.Security.ApiServer\Hexalith.Security.ApiServer.csproj", "{8348A57A-0070-4DB9-B40A-386C8CDAB695}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.EasyAuthentication.SharedAssets", "Hexalith.EasyAuthentication\src\Modules\Hexalith.EasyAuthentication.SharedAssets\Hexalith.EasyAuthentication.SharedAssets.csproj", "{FF766D6F-B972-493C-8CB5-2B523AECAF32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Security.SharedUIElements", "Hexalith.Security\src\Modules\Hexalith.Security.SharedUIElements\Hexalith.Security.SharedUIElements.csproj", "{FF766D6F-B972-493C-8CB5-2B523AECAF32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.EasyAuthentication.WebApp", "Hexalith.EasyAuthentication\src\Modules\Hexalith.EasyAuthentication.WebApp\Hexalith.EasyAuthentication.WebApp.csproj", "{A71FB02C-8BAC-4C53-AB46-8E4B7064229C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Security.WebApp", "Hexalith.Security\src\Modules\Hexalith.Security.WebApp\Hexalith.Security.WebApp.csproj", "{A71FB02C-8BAC-4C53-AB46-8E4B7064229C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.EasyAuthentication.WebServer", "Hexalith.EasyAuthentication\src\Modules\Hexalith.EasyAuthentication.WebServer\Hexalith.EasyAuthentication.WebServer.csproj", "{ED3E2EA9-F086-473D-9757-A72DEEFCF8B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Security.WebServer", "Hexalith.Security\src\Modules\Hexalith.Security.WebServer\Hexalith.Security.WebServer.csproj", "{ED3E2EA9-F086-473D-9757-A72DEEFCF8B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.ApiServer", "src\Modules\Hexalith.Documents.ApiServer\Hexalith.Documents.ApiServer.csproj", "{8B1B6F9B-E679-4AFB-B475-53C42F3822FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.SharedAssets", "src\Modules\Hexalith.Documents.SharedAssets\Hexalith.Documents.SharedAssets.csproj", "{6ADB3FFA-49FB-4A3B-BB01-310DA3194555}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.SharedUIElements", "src\Modules\Hexalith.Documents.SharedUIElements\Hexalith.Documents.SharedUIElements.csproj", "{6ADB3FFA-49FB-4A3B-BB01-310DA3194555}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.WebApp", "src\Modules\Hexalith.Documents.WebApp\Hexalith.Documents.WebApp.csproj", "{E8393723-C4C0-49B2-BC8E-BF096FE491CA}"
 EndProject
@@ -259,9 +259,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{3B91C39F-813F-47C0-B06C-9C699386EBFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.EasyAuthentication.UI.Components", "Hexalith.EasyAuthentication\src\Presentation\Hexalith.EasyAuthentication.UI.Components\Hexalith.EasyAuthentication.UI.Components.csproj", "{D30075F4-7F9C-4FC2-B3D1-8F2B8D1E91A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Security.UI.Components", "Hexalith.Security\src\Presentation\Hexalith.Security.UI.Components\Hexalith.Security.UI.Components.csproj", "{D30075F4-7F9C-4FC2-B3D1-8F2B8D1E91A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.EasyAuthentication.UI.Pages", "Hexalith.EasyAuthentication\src\Presentation\Hexalith.EasyAuthentication.UI.Pages\Hexalith.EasyAuthentication.UI.Pages.csproj", "{58DD0D75-4767-45C6-8647-34CFD3A65707}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Security.UI.Pages", "Hexalith.Security\src\Presentation\Hexalith.Security.UI.Pages\Hexalith.Security.UI.Pages.csproj", "{58DD0D75-4767-45C6-8647-34CFD3A65707}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

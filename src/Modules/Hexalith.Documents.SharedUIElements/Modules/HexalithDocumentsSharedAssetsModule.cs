@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.SharedAssets.Modules;
+﻿namespace Hexalith.Documents.SharedUIElements.Modules;
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -19,7 +19,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 /// <summary>
 /// The document construction site shared module.
 /// </summary>
-public class HexalithDocumentsSharedAssetsModule : ISharedAssetsApplicationModule
+public class HexalithDocumentsSharedUIElementsModule : ISharedUIElementsApplicationModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => ["Hexalith.Documents"];

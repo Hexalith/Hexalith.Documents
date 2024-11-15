@@ -12,7 +12,7 @@ using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.WebServer.Modules;
 using Hexalith.EasyAuthentication.WebServer;
 
-using HexalithApp.SharedAssets;
+using HexalithApp.SharedUIElements;
 using HexalithApp.WebApp;
 
 /// <summary>
@@ -21,7 +21,7 @@ using HexalithApp.WebApp;
 public class HexalithDocumentsWebServerApplication : HexalithWebServerApplication
 {
     /// <inheritdoc/>
-    public override Type SharedAssetsApplicationType => typeof(HexalithDocumentsSharedAssetsApplication);
+    public override Type SharedUIElementsApplicationType => typeof(HexalithDocumentsSharedUIElementsApplication);
 
     /// <inheritdoc/>
     public override Type WebAppApplicationType => typeof(HexalithDocumentsWebAppApplication);

@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.SharedAssets.Modules;
+﻿namespace Hexalith.Documents.SharedUIElements.Modules;
 
 using Hexalith.UI.Components;
 using Hexalith.UI.Components.Icons;

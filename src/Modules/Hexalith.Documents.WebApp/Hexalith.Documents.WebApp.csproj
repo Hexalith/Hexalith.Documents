@@ -17,7 +17,7 @@
 	  <None Include="Modules\Home.razor" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="$(HexalithDocumentsPath)src\Modules\Hexalith.Documents.SharedAssets\Hexalith.Documents.SharedAssets.csproj" />
+		<ProjectReference Include="$(HexalithDocumentsPath)src\Modules\Hexalith.Documents.SharedUIElements\Hexalith.Documents.SharedUIElements.csproj" />
 		<ProjectReference Include="..\..\Presentation\Hexalith.Documents.UI.Pages\Hexalith.Documents.UI.Pages.csproj" />
 	</ItemGroup>
 </Project>

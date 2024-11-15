@@ -12,7 +12,7 @@ using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.ApiServer.Modules;
 using Hexalith.EasyAuthentication.ApiServer;
 
-using HexalithApp.SharedAssets;
+using HexalithApp.SharedUIElements;
 
 /// <summary>
 /// Represents a server application.
@@ -25,5 +25,5 @@ public class HexalithDocumentsApiServerApplication : HexalithApiServerApplicatio
         typeof(HexalithEasyAuthenticationApiServerModule)];
 
     /// <inheritdoc/>
-    public override Type SharedAssetsApplicationType => typeof(HexalithDocumentsSharedAssetsApplication);
+    public override Type SharedUIElementsApplicationType => typeof(HexalithDocumentsSharedUIElementsApplication);
 }

@@ -3,18 +3,16 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace HexalithApp.SharedAssets;
+namespace HexalithApp.SharedUIElements;
 
-using Hexalith.Application.Modules.Applications;
-using Hexalith.Documents.SharedAssets.Modules;
-using Hexalith.EasyAuthentication.SharedAssets.Modules;
+using Hexalith.Documents.SharedUIElements.Modules;
 using Hexalith.Extensions.Helpers;
 using Hexalith.UI.Components.Modules;
 
 /// <summary>
 /// Represents a shared application.
 /// </summary>
-public class HexalithDocumentsSharedAssetsApplication : HexalithSharedAssetsApplication
+public class HexalithDocumentsSharedUIElementsApplication : HexalithSharedUIElementsApplication
 {
     /// <inheritdoc/>
     public override string HomePath => "Document";
@@ -32,9 +30,9 @@ public class HexalithDocumentsSharedAssetsApplication : HexalithSharedAssetsAppl
     public override string Name => "Documents";
 
     /// <inheritdoc/>
-    public override IEnumerable<Type> SharedAssetsModules =>
+    public override IEnumerable<Type> SharedUIElementsModules =>
     [
-        typeof(HexalithDocumentsSharedAssetsModule),
+        typeof(HexalithDocumentsSharedUIElementsModule),
         typeof(HexalithUIComponentsSharedModule),
         typeof(HexalithEasyAuthenticationSharedModule),
     ];
