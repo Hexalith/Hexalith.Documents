@@ -4,6 +4,6 @@
 [submodule "HexalithApp"]
 	path = HexalithApp
 	url = https://github.com/Hexalith/HexalithApp.git
-[submodule "Hexalith.EasyAuthentication"]
-	path = Hexalith.EasyAuthentication
-	url = https://github.com/Hexalith/Hexalith.EasyAuthentication.git
+[submodule "Hexalith.Security"]
+	path = Hexalith.Security
+	url = https://github.com/Hexalith/Hexalith.Security.git
