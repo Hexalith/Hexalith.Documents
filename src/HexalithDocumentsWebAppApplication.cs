@@ -12,15 +12,19 @@ using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.WebApp.Modules;
 using Hexalith.Security.WebApp;
 
-using HexalithApp.SharedUIElements;
-
 /// <summary>
 /// Represents a client application.
 /// </summary>
 public class HexalithDocumentsWebAppApplication : HexalithWebAppApplication
 {
     /// <inheritdoc/>
-    public override Type SharedUIElementsApplicationType => typeof(HexalithDocumentsSharedUIElementsApplication);
+    public override string? Id { get; }
+
+    /// <inheritdoc/>
+    public override string? Name { get; }
+
+    /// <inheritdoc/>
+    public override string? ShortName { get; }
 
     /// <inheritdoc/>
     public override IEnumerable<Type> WebAppModules
