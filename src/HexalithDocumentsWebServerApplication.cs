@@ -9,10 +9,10 @@ using System;
 using System.Collections.Generic;
 
 using Hexalith.Application.Modules.Applications;
+using Hexalith.Documents.Application;
 using Hexalith.Documents.WebServer.Modules;
 using Hexalith.Security.WebServer;
 
-using HexalithApp.SharedUIElements;
 using HexalithApp.WebApp;
 
 /// <summary>
@@ -21,7 +21,13 @@ using HexalithApp.WebApp;
 public class HexalithDocumentsWebServerApplication : HexalithWebServerApplication
 {
     /// <inheritdoc/>
-    public override Type SharedUIElementsApplicationType => typeof(HexalithDocumentsSharedUIElementsApplication);
+    public override string Id => $"{HexalithDocumentsApplicationInformation.Id}.{ApplicationType}";
+
+    /// <inheritdoc/>
+    public override string Name => $"{HexalithDocumentsApplicationInformation.Name} {ApplicationType}";
+
+    /// <inheritdoc/>
+    public override string ShortName => HexalithDocumentsApplicationInformation.ShortName;
 
     /// <inheritdoc/>
     public override Type WebAppApplicationType => typeof(HexalithDocumentsWebAppApplication);
