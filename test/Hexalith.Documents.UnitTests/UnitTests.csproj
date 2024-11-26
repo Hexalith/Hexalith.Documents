@@ -20,6 +20,8 @@
 	  <Folder Include="Domain\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\HexalithApp\src\HexalithApp.WebServer\HexalithApp.WebServer.csproj" />
+	  <ProjectReference Include="..\..\src\Modules\Hexalith.Documents.ApiServer\Hexalith.Documents.ApiServer.csproj" />
+	  <ProjectReference Include="..\..\src\Modules\Hexalith.Documents.WebApp\Hexalith.Documents.WebApp.csproj" />
+	  <ProjectReference Include="..\..\src\Modules\Hexalith.Documents.WebServer\Hexalith.Documents.WebServer.csproj" />
 	</ItemGroup>
 </Project>

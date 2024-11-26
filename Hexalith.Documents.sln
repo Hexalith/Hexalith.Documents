@@ -165,9 +165,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Domain",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Events", "src\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj", "{8106EBC2-A669-4837-9340-71FB725030E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.IntegrationTests", "test\Hexalith.Documents.IntegrationTests\Hexalith.Documents.IntegrationTests.csproj", "{F4D7FFBD-BD03-42CC-8D62-66D6EE0EC3B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "test\Hexalith.Documents.IntegrationTests\IntegrationTests.csproj", "{F4D7FFBD-BD03-42CC-8D62-66D6EE0EC3B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.UnitTests", "test\Hexalith.Documents.UnitTests\Hexalith.Documents.UnitTests.csproj", "{ED6C0A6A-ABC1-45C2-A23C-D33287B59C1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "test\Hexalith.Documents.UnitTests\UnitTests.csproj", "{ED6C0A6A-ABC1-45C2-A23C-D33287B59C1D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hexalith.Security", "Hexalith.Security", "{637A01D4-E549-45E3-8A8D-31D86D884CC8}"
 EndProject
