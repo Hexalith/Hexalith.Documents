@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hexalith.Documents.Shared.Resources.Modules {
+namespace Hexalith.Documents.UI.Components.Resources.Modules {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Hexalith.Documents.Shared.Resources.Modules {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.Shared.Resources.Modules.DocumentMenu", typeof(DocumentMenu).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Components.Resources.Modules.DocumentMenu", typeof(DocumentMenu).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

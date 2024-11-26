@@ -31,6 +31,11 @@
     <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Resources\Modules\DocumentMenu.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentMenu.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Documents\DocumentAutocomplete.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -43,6 +48,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Modules\DocumentMenu.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DocumentMenu.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Documents\DocumentAutocomplete.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DocumentAutocomplete.Designer.cs</LastGenOutput>

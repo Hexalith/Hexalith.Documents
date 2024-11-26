@@ -110,5 +110,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     }
 
     /// <inheritdoc/>
-    public void UseSecurity(object application) => throw new NotImplementedException();
+    public void UseSecurity(object application)
+    {
+    }
 }
