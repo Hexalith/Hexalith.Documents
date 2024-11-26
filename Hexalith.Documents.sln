@@ -147,8 +147,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{6C4BEC
 		HexalithApp\src\HexalithApp.Build\Project.Common.props = HexalithApp\src\HexalithApp.Build\Project.Common.props
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure", "Azure", "{7FD8C982-3FC4-4DBD-89EF-3EC5AACF723C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{9368C4ED-9BE9-48B5-8EC6-861CEA560C5D}"
 	ProjectSection(SolutionItems) = preProject
 		Hexalith\src\Hexalith.Build\Dependencies.props = Hexalith\src\Hexalith.Build\Dependencies.props
@@ -158,8 +156,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{9368C4
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{D81ADEE4-9D3D-46A8-B034-2F0500F3FC2E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexalithDocumentInfrastructure", "DocumentInfrastructure\HexalithDocumentInfrastructure.csproj", "{0E9E77F7-FBDB-48CC-AA72-1681A55392B0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Documents.Commands", "src\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj", "{208EFAF5-C124-4C6D-9565-864C28D71300}"
 EndProject
@@ -265,6 +261,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.DaprIdentityStore.UI", "Hexalith.DaprIdentityStore\src\Hexalith.DaprIdentityStore.UI\Hexalith.DaprIdentityStore.UI.csproj", "{EA2C90C4-83FD-4537-8B25-2174257C1646}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.Application.Abstractions", "src\Application\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj", "{A08D5780-90F6-42BA-97CF-74504A095FDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireHost", "Aspire\AspireHost.csproj", "{F4FC4DD5-7318-CD49-8525-500CC4C7EEE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -416,10 +414,6 @@ Global
 		{8F25EBB4-BF9E-40C2-9B16-7D2E875AFFBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F25EBB4-BF9E-40C2-9B16-7D2E875AFFBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F25EBB4-BF9E-40C2-9B16-7D2E875AFFBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E9E77F7-FBDB-48CC-AA72-1681A55392B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E9E77F7-FBDB-48CC-AA72-1681A55392B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E9E77F7-FBDB-48CC-AA72-1681A55392B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E9E77F7-FBDB-48CC-AA72-1681A55392B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{208EFAF5-C124-4C6D-9565-864C28D71300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{208EFAF5-C124-4C6D-9565-864C28D71300}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{208EFAF5-C124-4C6D-9565-864C28D71300}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -548,6 +542,10 @@ Global
 		{A08D5780-90F6-42BA-97CF-74504A095FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A08D5780-90F6-42BA-97CF-74504A095FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A08D5780-90F6-42BA-97CF-74504A095FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4FC4DD5-7318-CD49-8525-500CC4C7EEE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4FC4DD5-7318-CD49-8525-500CC4C7EEE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4FC4DD5-7318-CD49-8525-500CC4C7EEE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4FC4DD5-7318-CD49-8525-500CC4C7EEE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -601,7 +599,6 @@ Global
 		{6C4BEC38-313B-4E69-A837-0A23AD8BCF26} = {01ECF18B-80EF-4B78-875B-AC460AC0D5CC}
 		{9368C4ED-9BE9-48B5-8EC6-861CEA560C5D} = {D2DA3040-462E-4E0E-9CFE-3EA95FA3D014}
 		{D81ADEE4-9D3D-46A8-B034-2F0500F3FC2E} = {6DCC825D-02D0-4F25-9A3D-A530736AB837}
-		{0E9E77F7-FBDB-48CC-AA72-1681A55392B0} = {7FD8C982-3FC4-4DBD-89EF-3EC5AACF723C}
 		{208EFAF5-C124-4C6D-9565-864C28D71300} = {2A01A18A-F858-44A1-9AD0-8F7C4FA112B5}
 		{8977EF22-4C0E-4E5D-8E14-69AA8C275E72} = {5B4A4C55-DC36-4DC1-B773-2E6E95C75F28}
 		{C0DDC1F8-0CCE-45DC-AA0B-B7B632A7551B} = {5B4A4C55-DC36-4DC1-B773-2E6E95C75F28}
