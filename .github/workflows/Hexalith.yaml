@@ -1,0 +1,137 @@
+name: Hexalith Build
+on:
+  push:
+    paths-ignore:
+      - '**/*.md'
+      - 'mkdocs.yml'
+      - 'docs/**/*'
+    branches: 
+      - main
+      - release-*
+    tags:
+      - 'v*'
+  pull_request:
+    branches: 
+      - main
+      - release-*
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+  security-events: write
+env:
+  DOTNET_MULTILEVEL_LOOKUP: 0 
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_NOLOGO: true  # To reduce noise
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages  # Cache NuGet packages
+jobs:
+  build-test-publish:
+    runs-on: ubuntu-latest
+    name: Build, Test, Publish
+    timeout-minutes: 30  # Added timeout for safety
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Initialize HexalithApp submodule
+      run: |
+          git submodule init HexalithApp
+          git submodule update HexalithApp
+          cd HexalithApp
+          git checkout main
+    - name: Setup .NET 9.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+        cache: false  
+    - name: Add Aspire Workloads
+      run: |
+        dotnet workload install aspire
+    - name: Build Version
+      run: |
+        dotnet tool install --global minver-cli --version 5.0.0
+        version=$(minver -t v -v e -d preview)
+        echo "MINVERVERSIONOVERRIDE=$version" >> $GITHUB_ENV
+        echo "VERSION=$version" >> $GITHUB_ENV
+        echo "VERSION=$version"
+    - name: Build all projects
+      shell: pwsh
+      run: |
+        Get-ChildItem -Path src -Filter *.csproj -Recurse | ForEach-Object {
+          Write-Host "Building $($_.FullName)"
+          dotnet build $_.FullName --configuration Release -p:Version=${{ env.VERSION }}
+        }
+    - name: Unit Tests
+      run: |
+        dotnet test --configuration Release -p:Version=${{ env.VERSION }} ./test/${{ vars.HEXALITH_MODULE_NAME }}.UnitTests/${{ vars.HEXALITH_MODULE_NAME }}.UnitTests.csproj
+    - name: Check the container registry parameters
+      run: |
+        echo "Registry: ${{ vars.AZURE_REGISTRY }}"
+        echo "User Name: ${{ secrets.AZURE_APPLICATIONID }}"
+        echo "Password: ${{ secrets.AZURE_APPLICATIONSECRET }}"
+    - name: Login to the container registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ vars.AZURE_REGISTRY }}
+        username: ${{ secrets.AZURE_APPLICATIONID }}
+        password: ${{ secrets.AZURE_APPLICATIONSECRET }}
+    - name: Publish and push the server images to the container registry
+      run: |
+        publish_container() {
+          local app_type=$1
+          local project_name="HexalithApp.${app_type}Server"
+          local project_path="./HexalithApp/src/${project_name}/${project_name}.csproj"
+          local app_type_lower=$(echo "$app_type" | tr '[:upper:]' '[:lower:]')
+          local repo="${{ vars.HEXALITH_MODULE_SHORT_NAME }}${app_type_lower}"
+
+          echo "Publishing project ${project_name} to ${repo}"
+          if [ ! -f "$project_path" ]; then
+            echo "Error: Project file not found at $project_path"
+            return 1
+          fi
+          
+          echo "Publishing container for ${project_path}..."
+          dotnet publish "$project_path" \
+            /t:PublishContainer \
+            --configuration Release \
+            --os linux \
+            --arch x64 \
+            -p:ContainerImageTags='"${{ env.VERSION }};latest"' \
+            -p:ContainerRegistry=${{ vars.AZURE_REGISTRY }} \
+            -p:ContainerRepository=$repo
+        }
+
+        publish_container "Web"
+        publish_container "Api"
+    - name: Publish final release packages to Nuget
+      if: startswith(github.ref, 'refs/tags/v') 
+      run: |
+        dotnet nuget push './src/**/*.nupkg' --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate    
+    - name: Publish preview packages to GitHub
+      if: ${{ !startswith(github.ref, 'refs/tags/') }}
+      run: |
+        dotnet nuget push './src/**/*.nupkg' --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+    - name: Log in to Azure
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_APPLICATIONID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID  }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        enable-AzPSSession: true
+        allow-no-subscriptions: true
+    - name: Deploy to Azure Container Apps
+      run: |
+        # Function to update container app
+        update_container_app() {
+          local app_type=$1
+          
+          az containerapp update \
+            --name ${{ vars.HEXALITH_MODULE_SHORT_NAME }}$app_type \
+            --resource-group ${{ vars.HEXALITH_RESOURCE_GROUP }} \
+            --image ${{ vars.AZURE_REGISTRY }}/${{ vars.HEXALITH_MODULE_SHORT_NAME }}$app_type:${{ env.VERSION }}
+        }
+
+        update_container_app "web"
+        update_container_app "api" 

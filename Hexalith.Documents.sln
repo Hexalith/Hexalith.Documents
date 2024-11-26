@@ -94,11 +94,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{3A505F
 		.stylecop.json = .stylecop.json
 		.stylecop.ruleset = .stylecop.ruleset
 		Directory.Build.props = Directory.Build.props
-		.github\workflows\Document_build.yaml = .github\workflows\Document_build.yaml
 		Hexalith.Modules.ApiServer.props = Hexalith.Modules.ApiServer.props
 		Hexalith.Modules.WebApp.props = Hexalith.Modules.WebApp.props
 		Hexalith.Modules.WebServer.props = Hexalith.Modules.WebServer.props
 		Hexalith.props = Hexalith.props
+		.github\workflows\Hexalith.yaml = .github\workflows\Hexalith.yaml
 		src\BuildFiles\Project.Common.props = src\BuildFiles\Project.Common.props
 	EndProjectSection
 EndProject
