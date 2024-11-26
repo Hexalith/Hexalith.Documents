@@ -7,3 +7,6 @@
 [submodule "Hexalith.Security"]
 	path = Hexalith.Security
 	url = https://github.com/Hexalith/Hexalith.Security.git
+[submodule "Hexalith.DaprIdentityStore"]
+	path = Hexalith.DaprIdentityStore
+	url = https://github.com/Hexalith/Hexalith.DaprIdentityStore.git
