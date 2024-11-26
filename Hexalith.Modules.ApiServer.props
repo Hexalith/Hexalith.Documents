@@ -5,13 +5,12 @@
   <Import Project="$(HexalithModulesApiServerProps)" Condition=" '$(HexalithModulesApiServerProps)' != '' " />
   <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
     <ProjectReference Include="$(HexalithSecurityPath)\src\Modules\Hexalith.Security.ApiServer\Hexalith.Security.ApiServer.csproj" />
-    <ProjectReference Include="$(HexalithDocumentsPath)\src\Modules\Hexalith.Documents.ApiServer\Hexalith.Documents.ApiServer.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
     <PackageReference Include="Hexalith.Security.ApiServer" Version="$(HexalithSecurityVersion)" />
-    <PackageReference Include="Hexalith.Documents.ApiServer" Version="$(HexalithDocumentsVersion)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsApiServerApplication.cs" />
+    <ProjectReference Include="$(HexalithDocumentsPath)\src\Modules\Hexalith.Documents.ApiServer\Hexalith.Documents.ApiServer.csproj" />
   </ItemGroup>
 </Project>
