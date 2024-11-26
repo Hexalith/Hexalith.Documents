@@ -26,19 +26,31 @@ app.Builder.Configuration.AddUserSecrets<Program>();
 if (app.IsProjectEnabled<Projects.HexalithApp_WebServer>())
 {
     _ = app
-        .AddProject<Projects.HexalithApp_WebServer>("document-web")
-        .WithEnvironmentFromConfiguration("Hexalith__Security__UseMsal")
+        .AddProject<Projects.HexalithApp_WebServer>("documentweb")
         .WithEnvironmentFromConfiguration("Hexalith__Security__Enabled")
+        .WithEnvironmentFromConfiguration("Hexalith__Document__Enabled")
+        .WithEnvironmentFromConfiguration("EmailServer__ApplicationSecret")
+        .WithEnvironmentFromConfiguration("EmailServer__FromEmail")
+        .WithEnvironmentFromConfiguration("EmailServer__FromName")
         .WithEnvironmentFromConfiguration("AzureAd__Instance")
         .WithEnvironmentFromConfiguration("AzureAd__Domain")
         .WithEnvironmentFromConfiguration("AzureAd__TenantId")
         .WithEnvironmentFromConfiguration("AzureAd__ClientId");
 }
 
-if (app.IsProjectEnabled<Projects.HexalithApp_WebServer>())
+if (app.IsProjectEnabled<Projects.HexalithApp_ApiServer>())
 {
     _ = app
-        .AddProject<Projects.HexalithApp_ApiServer>("document-api");
+        .AddProject<Projects.HexalithApp_ApiServer>("documentapi")
+        .WithEnvironmentFromConfiguration("Hexalith__Security__Enabled")
+        .WithEnvironmentFromConfiguration("Hexalith__Document__Enabled")
+        .WithEnvironmentFromConfiguration("EmailServer__ApplicationSecret")
+        .WithEnvironmentFromConfiguration("EmailServer__FromEmail")
+        .WithEnvironmentFromConfiguration("EmailServer__FromName")
+        .WithEnvironmentFromConfiguration("AzureAd__Instance")
+        .WithEnvironmentFromConfiguration("AzureAd__Domain")
+        .WithEnvironmentFromConfiguration("AzureAd__TenantId")
+        .WithEnvironmentFromConfiguration("AzureAd__ClientId");
 }
 
 await app
