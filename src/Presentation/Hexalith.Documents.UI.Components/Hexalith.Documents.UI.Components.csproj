@@ -27,6 +27,10 @@
     <PackageReference Include="Hexalith.UI.Components" Version="$(HexalithVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
+    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Resources\Documents\DocumentAutocomplete.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

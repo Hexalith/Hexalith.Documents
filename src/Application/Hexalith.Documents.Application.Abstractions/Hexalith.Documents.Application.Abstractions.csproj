@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>$(CommonTargetFrameworks)</TargetFramework>
+		<RootNamespace>Hexalith.Document.Application</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(UseProjectReference)' == 'true'">
 		<ProjectReference Include="$(HexalithPath)\src\Core\Application\Hexalith.Application\Hexalith.Application.csproj" />
@@ -10,7 +11,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
-		<ProjectReference Include="..\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
 		<ProjectReference Include="..\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
 	</ItemGroup>
 </Project>

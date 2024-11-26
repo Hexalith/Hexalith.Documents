@@ -5,12 +5,13 @@
   <Import Project="$(HexalithModulesWebAppProps)" Condition=" '$(HexalithModulesWebAppProps)' != '' " />
   <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
     <ProjectReference Include="$(HexalithSecurityPath)\src\Modules\Hexalith.Security.WebApp\Hexalith.Security.WebApp.csproj" />
+    <ProjectReference Include="$(HexalithDocumentsPath)\src\Modules\Hexalith.Documents.WebApp\Hexalith.Documents.WebApp.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
     <PackageReference Include="Hexalith.Security.WebApp" Version="$(HexalithSecurityVersion)" />
+    <PackageReference Include="Hexalith.Documents.WebApp" Version="$(HexalithDocumentsVersion)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsWebAppApplication.cs" />
-    <ProjectReference Include="$(HexalithDocumentsPath)\src\Modules\Hexalith.Documents.WebApp\Hexalith.Documents.WebApp.csproj" />
   </ItemGroup>
 </Project>

@@ -5,22 +5,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="Layout\DocumentLayout.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Layout\DocumentLayout.razor" />
-  </ItemGroup>
-
-
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
     <ProjectReference Include="..\Hexalith.Documents.UI.Components\Hexalith.Documents.UI.Components.csproj" />
   </ItemGroup>
 

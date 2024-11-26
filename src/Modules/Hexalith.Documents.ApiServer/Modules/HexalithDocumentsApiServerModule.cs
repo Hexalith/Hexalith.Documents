@@ -5,10 +5,16 @@ using System.Reflection;
 
 using Dapr.Actors.Runtime;
 
+using Hexalith.Application.Aggregates;
+using Hexalith.Application.Commands;
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
 using Hexalith.Document.Domain;
+using Hexalith.Documents.Application.CommandHandlers;
+using Hexalith.Documents.Commands;
+using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain.Documents;
+using Hexalith.Documents.Events.Extensions;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
 using Hexalith.Infrastructure.AzureBlobStorage.Services;
@@ -18,6 +24,7 @@ using Hexalith.Infrastructure.DaprRuntime.Helpers;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 /// <summary>
 /// The document construction site client module.
@@ -63,6 +70,14 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
             .ConfigureSettings<AzureBlobFileServiceSettings>(configuration);
 
         _ = services.AddScoped<IFileService, AzureBlobStorageFileService>();
+        HexalithDocumentsEvents.RegisterPolymorphicMappers();
+        HexalithDocumentsCommands.RegisterPolymorphicMappers();
+
+        // Add domain aggregate providers
+        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>();
+
+        // Add command handlers
+        services.TryAddSingleton<IDomainCommandHandler<CreateDocument>, CreateDocumentHandler>();
     }
 
     /// <summary>
@@ -82,7 +97,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
     }
 
     /// <inheritdoc/>
-    public void UseModule(object builder)
+    public void UseModule(object application)
     {
     }
 }

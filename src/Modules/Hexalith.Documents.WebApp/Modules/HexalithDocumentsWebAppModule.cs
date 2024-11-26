@@ -10,11 +10,13 @@ using System.Collections.Generic;
 using System.Reflection;
 
 using Hexalith.Application.Modules.Modules;
+using Hexalith.Documents.Commands.Extensions;
+using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.Shared.Documents.Services;
+using Hexalith.Documents.UI.Components.Documents;
 using Hexalith.Documents.UI.Components.Documents.Services;
 
 using Microsoft.Extensions.Configuration;
-
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -52,11 +54,18 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule
     /// <param name="services">The service collection.</param>
     /// <param name="configuration">The configuration.</param>
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
-        => services
+    {
+        _ = services
             .AddSingleton<IDocumentQueryService, DemoDocumentQueryService>();
+        HexalithDocumentsEvents.RegisterPolymorphicMappers();
+        HexalithDocumentsCommands.RegisterPolymorphicMappers();
+
+        _ = services
+            .AddTransient(p => DocumentMenu.Menu);
+    }
 
     /// <inheritdoc/>
-    public void UseModule(object builder)
+    public void UseModule(object application)
     {
     }
 }

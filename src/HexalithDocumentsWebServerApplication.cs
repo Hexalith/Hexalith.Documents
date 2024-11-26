@@ -35,5 +35,5 @@ public class HexalithDocumentsWebServerApplication : HexalithWebServerApplicatio
     /// <inheritdoc/>
     public override IEnumerable<Type> WebServerModules => [
         typeof(HexalithDocumentsWebServerModule),
-        typeof(HexalithSecurityServerModule)];
+        typeof(HexalithSecurityWebServerModule)];
 }
