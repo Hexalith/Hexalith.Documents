@@ -1,4 +1,5 @@
 ﻿@page "/Documents/DocumentType/{DocumentId}"
+@attribute [Authorize(Roles = DocumentRoles.Contributor)]
 @inject IDocumentTypeQueryService DocumentQueryService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<DocumentTypeDetails> L
@@ -17,20 +18,7 @@
                 <FluentCheckbox @bind-Value="@data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
             </FluentStack>
             <FluentSpacer />
-            <AuthorizeView Roles="@DocumentRoles.Contributor">
-                <Authorized>
-                    @if (string.IsNullOrWhiteSpace(DocumentId))
-                    {
-                        <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.Add())" OnClick="OnAdd">@Labels.Add</FluentButton>
-                    }
-                    else
-                    {
-                        <FluentButton Appearance="Appearance.Accent" Disabled="@(!data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
-                    }
-                </Authorized>
-                <NotAuthorized>
-                </NotAuthorized>
-            </AuthorizeView>
+            <FluentButton Appearance="Appearance.Accent" Disabled="@(!data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
         </FluentStack>
     }
 </FluentStack>
@@ -80,34 +68,14 @@
         {
             return;
         }
-        if (data.Name == data.Original.Name || data.Description != data.Original.Description)
-        {
-            await CommandService.SubmitCommandAsync(new ChangeDocumentDescription(data.Id, data.Name, data.Description), CancellationToken.None);
-        }
-        if (data.Disabled == data.Original?.Disabled)
-        {
-            await CommandService.SubmitCommandAsync(new DisableDocument(data.Id), CancellationToken.None);
-        }
-        NavigationManager.NavigateTo("/Documents");
-    }
-    public async Task OnAdd()
-    {
-        if (data is null)
-        {
-            return;
-        }
         if (string.IsNullOrWhiteSpace(_user?.Identity?.Name))
         {
             throw new InvalidOperationException("User not authenticated");
         }
-        await CommandService.SubmitCommandAsync(new AddDocument(
-                data.Id, 
-                data.Name, 
-                data.Description, 
-                file, 
-                _user.Identity.Name,
-                TimeProvider.System.GetLocalNow(),
-                DocumentTypeId)
+        await CommandService.SubmitCommandAsync(new ChangeDocumentTypeDescription(
+                data.Id,
+                data.Name,
+                data.Description)
             , CancellationToken.None);
         NavigationManager.NavigateTo("/Documents");
     }

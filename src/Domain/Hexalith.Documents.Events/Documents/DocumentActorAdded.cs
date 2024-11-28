@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.Events;
 
-using Hexalith.Document.Domain.ValueObjects;
+using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.PolymorphicSerialization;
 
 [PolymorphicSerialization]

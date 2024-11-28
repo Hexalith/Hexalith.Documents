@@ -37,14 +37,35 @@ public static class DocumentMenu
                         new MenuItemInformation(
                             Labels.SetupMenuItem,
                             null,
-                            new IconInformation("AppSettings", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
+                            new IconInformation("AppsSettings", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                             false,
                             10,
                             [
                                 new MenuItemInformation(
                                     Labels.DocumentTypeMenuItem,
                                     "Documents/DocumentType",
-                                    new IconInformation("DocumentSettings", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
+                                    new IconInformation("BookQuestionMarkRtl", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
+                                    false,
+                                    10,
+                                    []),
+                                new MenuItemInformation(
+                                    Labels.FileTypeMenuItem,
+                                    "Documents/FileType",
+                                    new IconInformation("DocumentData", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
+                                    false,
+                                    10,
+                                    []),
+                                new MenuItemInformation(
+                                    Labels.FileTextExtractionTypeMenuItem,
+                                    "Documents/FileTextExtractionType",
+                                    new IconInformation("ScanType", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
+                                    false,
+                                    10,
+                                    []),
+                                new MenuItemInformation(
+                                    Labels.DocumentContainerTypeMenuItem,
+                                    "Documents/DocumentContainer",
+                                    new IconInformation("DocumentFolder", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     10,
                                     []),

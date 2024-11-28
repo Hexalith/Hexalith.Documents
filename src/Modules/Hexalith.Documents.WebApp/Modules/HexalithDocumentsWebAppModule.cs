@@ -45,7 +45,12 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
     public string Path => "Document";
 
     /// <inheritdoc/>
-    public IEnumerable<Assembly> PresentationAssemblies => [GetType().Assembly];
+    public IEnumerable<Assembly> PresentationAssemblies => [
+        GetType().Assembly,
+        typeof(Hexalith.UI.Components._Imports).Assembly,
+        typeof(Hexalith.Documents.UI.Components._Imports).Assembly,
+        typeof(Hexalith.Documents.UI.Pages._Imports).Assembly,
+    ];
 
     /// <inheritdoc/>
     public string Version => "1.0";

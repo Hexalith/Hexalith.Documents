@@ -3,7 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-using Hexalith.Document.Domain;
+using Hexalith.Documents.Domain;
 using Hexalith.Documents.Events.DocumentTypes;
 using Hexalith.Documents.Events.FileTypes;
 using Hexalith.Domain.Aggregates;

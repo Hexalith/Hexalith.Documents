@@ -7,7 +7,7 @@ using Dapr.Actors.Runtime;
 
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
-using Hexalith.Document.Domain;
+using Hexalith.Documents.Domain;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
@@ -49,7 +49,12 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     string IApplicationModule.Path => Path;
 
     /// <inheritdoc/>
-    public IEnumerable<Assembly> PresentationAssemblies => [GetType().Assembly];
+    public IEnumerable<Assembly> PresentationAssemblies => [
+        GetType().Assembly,
+        typeof(Hexalith.UI.Components._Imports).Assembly,
+        typeof(Hexalith.Documents.UI.Components._Imports).Assembly,
+        typeof(Hexalith.Documents.UI.Pages._Imports).Assembly,
+    ];
 
     /// <inheritdoc/>
     public string Version => "1.0";

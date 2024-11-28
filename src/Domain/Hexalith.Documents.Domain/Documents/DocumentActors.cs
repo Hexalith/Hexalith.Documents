@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-using Hexalith.Document.Domain.ValueObjects;
+using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Events;
 using Hexalith.Domain.Aggregates;
 

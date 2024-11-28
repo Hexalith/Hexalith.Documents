@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Document.Domain.ValueObjects;
+﻿namespace Hexalith.Documents.Domain.ValueObjects;
 
 using System.Runtime.Serialization;
 

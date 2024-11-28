@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Document.Domain;
+﻿namespace Hexalith.Documents.Domain;
 
 /// <summary>
 /// Helper class for the Document domain.

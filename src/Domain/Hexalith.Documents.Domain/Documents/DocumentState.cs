@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.Serialization;
 
-using Hexalith.Document.Domain.ValueObjects;
+using Hexalith.Documents.Domain.ValueObjects;
 
 /// <summary>
 /// Represents the immutable state of a document in the system, tracking its lifecycle from creation through publication.

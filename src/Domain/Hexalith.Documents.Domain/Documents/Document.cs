@@ -3,8 +3,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-using Hexalith.Document.Domain;
-using Hexalith.Document.Domain.ValueObjects;
+using Hexalith.Documents.Domain;
+using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Events;
 using Hexalith.Documents.Events.Documents;
 using Hexalith.Domain.Aggregates;

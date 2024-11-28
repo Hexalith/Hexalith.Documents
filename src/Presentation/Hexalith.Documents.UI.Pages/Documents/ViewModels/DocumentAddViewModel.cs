@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.UI.Pages.Documents.ViewModels;
 
-using Hexalith.Document.Domain.ValueObjects;
+using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Extensions.Helpers;
 
 /// <summary>

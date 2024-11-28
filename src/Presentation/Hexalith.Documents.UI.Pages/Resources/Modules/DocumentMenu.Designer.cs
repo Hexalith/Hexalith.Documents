@@ -61,6 +61,15 @@ namespace Hexalith.Documents.UI.Pages.Resources.Modules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Containers.
+        /// </summary>
+        internal static string DocumentContainerTypeMenuItem {
+            get {
+                return ResourceManager.GetString("DocumentContainerTypeMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Document.
         /// </summary>
         internal static string DocumentMenuItem {
@@ -75,6 +84,24 @@ namespace Hexalith.Documents.UI.Pages.Resources.Modules {
         internal static string DocumentTypeMenuItem {
             get {
                 return ResourceManager.GetString("DocumentTypeMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text extraction.
+        /// </summary>
+        internal static string FileTextExtractionTypeMenuItem {
+            get {
+                return ResourceManager.GetString("FileTextExtractionTypeMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File types.
+        /// </summary>
+        internal static string FileTypeMenuItem {
+            get {
+                return ResourceManager.GetString("FileTypeMenuItem", resourceCulture);
             }
         }
         

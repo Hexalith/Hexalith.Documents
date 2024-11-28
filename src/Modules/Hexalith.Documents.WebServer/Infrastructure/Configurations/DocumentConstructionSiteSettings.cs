@@ -1,7 +1,7 @@
 ﻿namespace Hexalith.Documents.WebServer.Infrastructure.Configurations;
 
 using Hexalith.Application.Configurations;
-using Hexalith.Document.Domain;
+using Hexalith.Documents.Domain;
 using Hexalith.Extensions.Configuration;
 
 /// <summary>

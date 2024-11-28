@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DocumentContainerTypeMenuItem" xml:space="preserve">
+    <value>Containers</value>
+  </data>
   <data name="DocumentMenuItem" xml:space="preserve">
     <value>Document</value>
   </data>
   <data name="DocumentTypeMenuItem" xml:space="preserve">
     <value>Document types</value>
+  </data>
+  <data name="FileTextExtractionTypeMenuItem" xml:space="preserve">
+    <value>Text extraction</value>
+  </data>
+  <data name="FileTypeMenuItem" xml:space="preserve">
+    <value>File types</value>
   </data>
   <data name="SetupMenuItem" xml:space="preserve">
     <value>Setup</value>

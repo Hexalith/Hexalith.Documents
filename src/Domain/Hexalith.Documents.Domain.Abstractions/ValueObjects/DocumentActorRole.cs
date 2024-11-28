@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Document.Domain.ValueObjects;
+﻿namespace Hexalith.Documents.Domain.ValueObjects;
 
 /// <summary>
 /// Represents the role or permission level that an actor (user or system) has in relation to a document.

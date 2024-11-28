@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-using Hexalith.Document.Domain.ValueObjects;
+using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Domain;
 
 /// <summary>

@@ -6,7 +6,7 @@ using Dapr.Actors.Runtime;
 
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
-using Hexalith.Document.Domain;
+using Hexalith.Documents.Domain;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;

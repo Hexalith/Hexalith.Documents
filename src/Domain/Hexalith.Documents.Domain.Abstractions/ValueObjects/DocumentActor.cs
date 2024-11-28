@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Document.Domain.ValueObjects;
+﻿namespace Hexalith.Documents.Domain.ValueObjects;
 
 using System.Runtime.Serialization;
 
@@ -11,7 +11,7 @@ public record DocumentActor(
     /// Gets the unique identifier of the contact associated with this document actor.
     /// </summary>
     [property: DataMember(Order = 1)] string ContactId,
-    
+
     /// <summary>
     /// Gets the role or permission level of this actor in relation to the document.
     /// </summary>
