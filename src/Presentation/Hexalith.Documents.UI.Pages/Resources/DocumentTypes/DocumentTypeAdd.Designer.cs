@@ -79,6 +79,15 @@ namespace Hexalith.Documents.UI.Pages.Resources.DocumentTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Identier.
+        /// </summary>
+        internal static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string Name {

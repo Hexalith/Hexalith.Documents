@@ -32,6 +32,16 @@
     <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Resources\FileTypes\FileTypeAutocomplete.Designer.cs">
+      <DependentUpon>FileTypeAutocomplete.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\FileTypes\FileTypeSummaryGrid.Designer.cs">
+      <DependentUpon>FileTypeSummaryGrid.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\DocumentTypes\DocumentTypeAutocomplete.Designer.cs">
       <DependentUpon>DocumentTypeAutocomplete.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -54,6 +64,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Resources\FileTypes\FileTypeAutocomplete.resx">
+      <LastGenOutput>FileTypeAutocomplete.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FileTypes\FileTypeSummaryGrid.resx">
+      <LastGenOutput>FileTypeSummaryGrid.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeAutocomplete.resx">
       <LastGenOutput>DocumentTypeAutocomplete.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>

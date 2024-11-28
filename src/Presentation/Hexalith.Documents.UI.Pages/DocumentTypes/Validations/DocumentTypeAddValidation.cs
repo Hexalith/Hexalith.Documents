@@ -6,7 +6,7 @@ using Hexalith.Documents.UI.Pages.DocumentTypes.ViewModels;
 
 using Microsoft.Extensions.Localization;
 
-using Labels = Hexalith.Documents.UI.Pages.Resources.DocumentTypes.Pages.DocumentTypeAddValidation;
+using Labels = Hexalith.Documents.UI.Pages.Resources.DocumentTypes.DocumentTypeAddValidation;
 
 /// <summary>
 /// Validator for adding a new document type.

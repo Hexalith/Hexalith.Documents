@@ -1,6 +1,6 @@
 ﻿@page "/Documents/DocumentType"
 @inject NavigationManager NavigationManager;
-@using Labels = Hexalith.Documents.UI.Pages.Resources.Documents.Pages.DocumentIndex;
+@using Labels = Hexalith.Documents.UI.Pages.Resources.Documents.DocumentIndex;
 <FluentToolbar Style="width:100%;">
     <AuthorizeView Roles="@DocumentRoles.Contributors" Context="contribute">
         <Authorized Context="contribute">
@@ -12,7 +12,7 @@
     <h3>@Labels.Title</h3>
     <AuthorizeView Roles="@DocumentRoles.Readers" Context="read">
         <Authorized Context="read">
-            <DocumentSummaryGrid />
+            <DocumentTypeSummaryGrid />
         </Authorized>
         <NotAuthorized>
             <FluentLabel Color="@Color.Error" Typo="Typography.H4">@Labels.ReadNotAuthorized</FluentLabel>

@@ -1,5 +1,6 @@
 ﻿@page "/Documents/Add"
 @page "/Documents/Document/Add"
+@attribute [Authorize(Roles = DocumentRoles.Contributor)]
 @inject IDocumentQueryService DocumentQueryService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<DocumentAdd> L
@@ -15,23 +16,9 @@
                 <FluentTextField @bind-Value="data.DocumentTypeId" Label="@Labels.DocumentTypeId"></FluentTextField>
                 <FluentTextField @bind-Value="data.Name" Label="@Labels.Name"></FluentTextField>
                 <FluentTextField @bind-Value="@data.Description" Label="@Labels.Description"></FluentTextField>
-                <FluentCheckbox @bind-Value="@data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
             </FluentStack>
             <FluentSpacer />
-            <AuthorizeView Roles="@DocumentRoles.Contributor">
-                <Authorized>
-                    @if (string.IsNullOrWhiteSpace(DocumentId))
-                    {
-                        <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.Add())" OnClick="OnAdd">@Labels.Add</FluentButton>
-                    }
-                    else
-                    {
-                        <FluentButton Appearance="Appearance.Accent" Disabled="@(!data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
-                    }
-                </Authorized>
-                <NotAuthorized>
-                </NotAuthorized>
-            </AuthorizeView>
+            <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.Add())" OnClick="OnAdd">@Labels.Add</FluentButton>
         </FluentStack>
     }
 </FluentStack>
@@ -49,7 +36,7 @@
 
     ClaimsPrincipal? _user;
 
-    DocumentAdd? _data = new DocumentAdd();
+    DocumentAddViewModel? data = new DocumentAddViewModel();
 
     protected override async Task OnInitializedAsync()
     {
@@ -64,24 +51,6 @@
         }
     }
 
-    DocumentTypeEditViewModel? data = null;
-
-    public async Task OnSave()
-    {
-        if (data is null)
-        {
-            return;
-        }
-        if (data.Name == data.Original.Name || data.Description != data.Original.Description)
-        {
-            await CommandService.SubmitCommandAsync(new ChangeDocumentDescription(data.Id, data.Name, data.Description), CancellationToken.None);
-        }
-        if (data.Disabled == data.Original?.Disabled)
-        {
-            await CommandService.SubmitCommandAsync(new DisableDocument(data.Id), CancellationToken.None);
-        }
-        NavigationManager.NavigateTo("/Documents");
-    }
     public async Task OnAdd()
     {
         if (data is null)
@@ -93,15 +62,15 @@
             throw new InvalidOperationException("User not authenticated");
         }
         await CommandService.SubmitCommandAsync(new AddDocument(
-                data.Id, 
-                data.Name, 
-                data.Description, 
-                file, 
+                data.Id,
+                data.Name!,
+                data.Description!,
+                file!,
                 _user.Identity.Name,
                 TimeProvider.System.GetLocalNow(),
-                DocumentTypeId)
+                data.DocumentTypeId!)
             , CancellationToken.None);
-        NavigationManager.NavigateTo("/Documents");
+        NavigationManager.NavigateTo(Module.Path);
     }
 
 }

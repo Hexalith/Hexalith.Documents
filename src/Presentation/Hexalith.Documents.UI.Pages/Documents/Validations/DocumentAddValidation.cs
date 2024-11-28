@@ -4,7 +4,7 @@ using FluentValidation;
 
 using Microsoft.Extensions.Localization;
 
-using Labels = Hexalith.Documents.UI.Pages.Resources.Documents.Pages.DocumentAdd;
+using Labels = Hexalith.Documents.UI.Pages.Resources.Documents.DocumentAddValidation;
 
 /// <summary>
 /// Validator for the DocumentAdd view model.

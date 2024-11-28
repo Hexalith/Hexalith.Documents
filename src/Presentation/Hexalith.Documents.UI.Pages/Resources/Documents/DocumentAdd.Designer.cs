@@ -61,6 +61,24 @@ namespace Hexalith.Documents.UI.Pages.Resources.Documents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Document type.
         /// </summary>
         internal static string DocumentTypeId {
@@ -70,29 +88,20 @@ namespace Hexalith.Documents.UI.Pages.Resources.Documents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description must not exceed {0} characters.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        internal static string MaxDescriptionLengthExceeded {
+        internal static string Name {
             get {
-                return ResourceManager.GetString("MaxDescriptionLengthExceeded", resourceCulture);
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name must not exceed {0} characters.
+        ///   Looks up a localized string similar to Add a document.
         /// </summary>
-        internal static string MaxNameLengthExceeded {
+        internal static string Title {
             get {
-                return ResourceManager.GetString("MaxNameLengthExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name is required.
-        /// </summary>
-        internal static string NameRequired {
-            get {
-                return ResourceManager.GetString("NameRequired", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

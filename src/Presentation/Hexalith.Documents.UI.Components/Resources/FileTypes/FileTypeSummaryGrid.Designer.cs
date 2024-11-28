@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hexalith.Documents.UI.Pages.Resources.Documents {
+namespace Hexalith.Documents.UI.Components.Resources.FileTypes {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Hexalith.Documents.UI.Pages.Resources.Documents {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DocumentAddValidation {
+    internal class FileTypeSummaryGrid {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DocumentAddValidation() {
+        internal FileTypeSummaryGrid() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.Documents {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.Documents.DocumentAddValidation", typeof(DocumentAddValidation).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Components.Resources.FileTypes.FileTypeSummaryGrid", typeof(FileTypeSummaryGrid).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,56 @@ namespace Hexalith.Documents.UI.Pages.Resources.Documents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description must not exceed {0} characters.
+        ///   Looks up a localized string similar to Disabled.
         /// </summary>
-        internal static string MaxDescriptionLengthExceeded {
+        internal static string Disabled {
             get {
-                return ResourceManager.GetString("MaxDescriptionLengthExceeded", resourceCulture);
+                return ResourceManager.GetString("Disabled", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name must not exceed {0} characters.
+        ///   Looks up a localized string similar to Email.
         /// </summary>
-        internal static string MaxNameLengthExceeded {
+        internal static string Email {
             get {
-                return ResourceManager.GetString("MaxNameLengthExceeded", resourceCulture);
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name is required.
+        ///   Looks up a localized string similar to Identifier.
         /// </summary>
-        internal static string NameRequired {
+        internal static string Id {
             get {
-                return ResourceManager.GetString("NameRequired", resourceCulture);
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile.
+        /// </summary>
+        internal static string Mobile {
+            get {
+                return ResourceManager.GetString("Mobile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        internal static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
             }
         }
     }

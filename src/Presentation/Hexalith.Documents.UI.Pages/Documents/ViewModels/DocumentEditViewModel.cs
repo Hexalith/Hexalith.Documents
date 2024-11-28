@@ -4,14 +4,14 @@ using Hexalith.Documents.UI.Components.Documents.ViewModels;
 using Hexalith.Extensions.Helpers;
 
 /// <summary>
-/// Represents the details of a factory.
+/// ViewModel for editing a document.
 /// </summary>
 public class DocumentEditViewModel
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentEditViewModel"/> class.
     /// </summary>
-    /// <param name="factoryDetails">The details object.</param>
+    /// <param name="factoryDetails">The details of the document to be edited.</param>
     public DocumentEditViewModel(DocumentDetails factoryDetails)
     {
         ArgumentNullException.ThrowIfNull(factoryDetails);
@@ -34,32 +34,37 @@ public class DocumentEditViewModel
     }
 
     /// <summary>
-    /// Gets or sets the description of the factory.
+    /// Gets or sets the description of the document.
     /// </summary>
     public string Description { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the factory is disabled.
+    /// Gets or sets a value indicating whether the document is disabled.
     /// </summary>
     public bool Disabled { get; set; }
 
     /// <summary>
-    /// Gets a value indicating whether the factory has changes.
+    /// Gets or sets the document type identifier.
+    /// </summary>
+    public string DocumentTypeId { get; set; }
+
+    /// <summary>
+    /// Gets a value indicating whether the document has changes.
     /// </summary>
     public bool HasChanges => Name != Original.Name || Description != Original.Description || Disabled != Original.Disabled;
 
     /// <summary>
-    /// Gets the ID of the factory.
+    /// Gets the identifier of the document.
     /// </summary>
     public string Id => Original.Id;
 
     /// <summary>
-    /// Gets or sets the name of the factory.
+    /// Gets or sets the name of the document.
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets the original factory details.
+    /// Gets the original details of the document.
     /// </summary>
     public DocumentDetails Original { get; }
 }

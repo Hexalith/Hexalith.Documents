@@ -126,7 +126,4 @@
   <data name="NameRequired" xml:space="preserve">
     <value>Le nom est obligatoire</value>
   </data>
-  <data name="DocumentTypeId" xml:space="preserve">
-    <value>Type de document</value>
-  </data>
 </root>

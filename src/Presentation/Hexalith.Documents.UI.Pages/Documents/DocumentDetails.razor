@@ -72,7 +72,7 @@
         await base.OnInitializedAsync();
     }
 
-        DocumentEditViewModel? data = null;
+    DocumentEditViewModel? data = null;
 
     public async Task OnSave()
     {
@@ -101,13 +101,13 @@
             throw new InvalidOperationException("User not authenticated");
         }
         await CommandService.SubmitCommandAsync(new AddDocument(
-                data.Id, 
-                data.Name, 
-                data.Description, 
-                file, 
+                data.Id,
+                data.Name,
+                data.Description,
+                file,
                 _user.Identity.Name,
                 TimeProvider.System.GetLocalNow(),
-                DocumentTypeId)
+                data.DocumentTypeId)
             , CancellationToken.None);
         NavigationManager.NavigateTo("/Documents");
     }
