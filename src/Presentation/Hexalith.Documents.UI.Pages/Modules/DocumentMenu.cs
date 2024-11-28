@@ -29,7 +29,7 @@ public static class DocumentMenu
                             []),
                         new MenuItemInformation(
                             Labels.UploadMenuItem,
-                            "Documents/Upload",
+                            "Documents/Add",
                             new IconInformation("ArrowUpload", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                             false,
                             20,
