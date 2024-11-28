@@ -1,5 +1,8 @@
-﻿@using System.Net.Http
+﻿@inject IApplication Application
+@inject IDocumentModule Module
+@using System.Net.Http
 @using System.Net.Http.Json
+@using Hexalith.Documents.Application.Modules
 @using Microsoft.Extensions.Localization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -11,4 +14,11 @@
 @using Microsoft.FluentUI.AspNetCore.Components
 @using Microsoft.JSInterop
 @using Hexalith.Documents.UI.Components
+@using Hexalith.Application
+@using Hexalith.Application.Modules.Applications
+@using Hexalith.UI.Components
+@using Hexalith.UI.Components.FluentUITheme
+@using Hexalith.UI.Components.Services
+@using Hexalith.UI.Components.FluentUITheme.Layouts
+
 

@@ -1,0 +1,33 @@
+﻿@inject Services.IDocumentTypeQueryService DocumentQueryService;
+@inject IStringLocalizer<DocumentTypeSummaryGrid> L;
+@inject NavigationManager NavigationManager;
+@using Labels = Resources.DocumentTypes.DocumentTypeSummaryGrid
+
+@if (elements is not null)
+{
+	<FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
+					Items="@elements"
+					ResizableColumns="true"
+					ShowHover="true"
+					OnRowDoubleClick="@((FluentDataGridRow<ViewModels.DocumentTypeSummary> row) => HandleRowDoubleClick(row))">
+		<PropertyColumn Title="@Labels.Id" Property="@(p => p.Id)" Sortable="true" />
+		<PropertyColumn Title="@Labels.Name" Property="@(p => p.Name)" Sortable="true" />
+		<TemplateColumn Title="@Labels.Disabled">
+			<FluentCheckbox Value="@(context.Disabled)"/>
+		</TemplateColumn>
+	</FluentDataGrid>
+}
+
+@code {
+	protected override async Task OnInitializedAsync()
+	{
+		elements = (await DocumentQueryService.GetSummariesAsync()).AsQueryable();
+	}
+	IQueryable<ViewModels.DocumentTypeSummary>? elements = null;
+	private Task HandleRowDoubleClick(FluentDataGridRow<ViewModels.DocumentTypeSummary> row)
+	{
+		if (row.Item is not null && !string.IsNullOrEmpty(row.Item.Id))
+			NavigationManager.NavigateTo($"/Documents/{row.Item.Id}");
+		return Task.CompletedTask;
+	}
+}

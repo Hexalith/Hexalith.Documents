@@ -50,7 +50,7 @@ public record DocumentType(
     /// </summary>
     /// <param name="added">The event containing the initial document type data.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="added"/> is null.</exception>
-    public DocumentType(DocumentTypeCreated added)
+    public DocumentType(DocumentTypeAdded added)
         : this(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               added.Name,
@@ -91,7 +91,7 @@ public record DocumentType(
 
         return domainEvent switch
         {
-            DocumentTypeCreated e => ApplyEvent(e),
+            DocumentTypeAdded e => ApplyEvent(e),
             DocumentTypeDataExtractionAdded e => ApplyEvent(e),
             DocumentTypeDataExtractionRemoved e => ApplyEvent(e),
             DocumentTypeDescriptionChanged e => ApplyEvent(e),
@@ -126,7 +126,7 @@ public record DocumentType(
     /// </summary>
     /// <param name="e">The creation event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
-    private ApplyResult ApplyEvent(DocumentTypeCreated e) => !IsInitialized()
+    private ApplyResult ApplyEvent(DocumentTypeAdded e) => !IsInitialized()
         ? new ApplyResult(
             new DocumentType(e),
             [e],

@@ -10,19 +10,21 @@ using System.Collections.Generic;
 using System.Reflection;
 
 using Hexalith.Application.Modules.Modules;
+using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Events.Extensions;
-using Hexalith.Documents.Shared.Documents.Services;
-using Hexalith.Documents.UI.Components.Documents;
 using Hexalith.Documents.UI.Components.Documents.Services;
+using Hexalith.Documents.UI.Pages.Documents.Services;
+using Hexalith.Documents.UI.Pages.Modules;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 /// <summary>
 /// The document construction site client module.
 /// </summary>
-public class HexalithDocumentsWebAppModule : IWebAppApplicationModule
+public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocumentModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
@@ -59,6 +61,9 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule
             .AddSingleton<IDocumentQueryService, DemoDocumentQueryService>();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
+
+        // Add application module
+        services.TryAddSingleton<IDocumentModule, HexalithDocumentsWebAppModule>();
 
         _ = services
             .AddTransient(p => DocumentMenu.Menu);

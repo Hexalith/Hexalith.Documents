@@ -13,4 +13,7 @@
 		<ProjectReference Include="..\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
 		<ProjectReference Include="..\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="CommandHandlers\" />
+	</ItemGroup>
 </Project>

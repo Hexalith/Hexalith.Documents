@@ -1,7 +1,4 @@
-﻿namespace Hexalith.Documents.Shared.Documents.Services;
-
-using Hexalith.Documents.UI.Pages.Documents.Services;
-
+﻿namespace Hexalith.Documents.UI.Pages.Documents.Services;
 /// <summary>
 /// Represents a demo implementation of the document query service that uses pre-defined data.
 /// </summary>

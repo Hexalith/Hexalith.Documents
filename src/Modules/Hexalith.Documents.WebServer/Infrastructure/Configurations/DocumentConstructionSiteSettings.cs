@@ -1,20 +1,4 @@
-﻿// ***********************************************************************
-// Assembly         : Hexalith.Infrastructure.DaprRuntime.Document
-// Author           : Jérôme Piquot
-// Created          : 02-01-2023
-//
-// Last Modified By : Jérôme Piquot
-// Last Modified On : 09-02-2023
-// ***********************************************************************
-// <copyright file="EnvironmentDatabaseSettings.cs" company="Hexalith SAS Paris France">
-//     Copyright (c) Hexalith SAS Paris France. All rights reserved.
-//     Licensed under the MIT license.
-//     See LICENSE file in the project root for full license information.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-namespace Hexalith.Documents.WebServer.Infrastructure.Configurations;
+﻿namespace Hexalith.Documents.WebServer.Infrastructure.Configurations;
 
 using Hexalith.Application.Configurations;
 using Hexalith.Document.Domain;

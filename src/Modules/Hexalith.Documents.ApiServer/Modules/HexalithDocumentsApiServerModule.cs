@@ -1,17 +1,14 @@
 ﻿namespace Hexalith.Documents.ApiServer.Modules;
 
 using System.Collections.Generic;
-using System.Reflection;
 
 using Dapr.Actors.Runtime;
 
-using Hexalith.Application.Aggregates;
-using Hexalith.Application.Commands;
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
 using Hexalith.Document.Domain;
-using Hexalith.Documents.Application.CommandHandlers;
-using Hexalith.Documents.Commands;
+using Hexalith.Documents.Application.Helpers;
+using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Events.Extensions;
@@ -29,7 +26,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 /// <summary>
 /// The document construction site client module.
 /// </summary>
-public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModule
+public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModule, IDocumentModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
@@ -48,9 +45,6 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
 
     /// <inheritdoc/>
     string IApplicationModule.Path => Path;
-
-    /// <inheritdoc/>
-    public IEnumerable<Assembly> PresentationAssemblies => [GetType().Assembly];
 
     /// <inheritdoc/>
     public string Version => "1.0";
@@ -73,11 +67,11 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
 
-        // Add domain aggregate providers
-        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>();
+        // Add application module
+        services.TryAddSingleton<IDocumentModule, HexalithDocumentsApiServerModule>();
 
         // Add command handlers
-        services.TryAddSingleton<IDomainCommandHandler<CreateDocument>, CreateDocumentHandler>();
+        _ = services.AddDocumentManagement();
     }
 
     /// <summary>

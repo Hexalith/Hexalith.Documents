@@ -1,0 +1,30 @@
+﻿@page "/Documents/DocumentType"
+@inject NavigationManager NavigationManager;
+@using Labels = Hexalith.Documents.UI.Pages.Resources.Documents.Pages.DocumentIndex;
+<FluentToolbar Style="width:100%;">
+    <AuthorizeView Roles="@DocumentRoles.Contributors" Context="contribute">
+        <Authorized Context="contribute">
+            <FluentButton IconStart="@(new Icons.Filled.Size16.Add())" OnClick="AddAsync">@Labels.Add</FluentButton>
+        </Authorized>
+    </AuthorizeView>
+</FluentToolbar>
+<FluentStack Orientation="Orientation.Vertical">
+    <h3>@Labels.Title</h3>
+    <AuthorizeView Roles="@DocumentRoles.Readers" Context="read">
+        <Authorized Context="read">
+            <DocumentSummaryGrid />
+        </Authorized>
+        <NotAuthorized>
+            <FluentLabel Color="@Color.Error" Typo="Typography.H4">@Labels.ReadNotAuthorized</FluentLabel>
+        </NotAuthorized>
+    </AuthorizeView>
+</FluentStack>
+
+
+@code {
+
+    private void AddAsync()
+    {
+        NavigationManager.NavigateTo("/Documents/Add");
+    }
+}

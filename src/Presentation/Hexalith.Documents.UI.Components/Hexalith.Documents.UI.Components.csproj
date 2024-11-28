@@ -27,14 +27,20 @@
     <PackageReference Include="Hexalith.UI.Components" Version="$(HexalithVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
     <ProjectReference Include="..\..\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
     <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Resources\Modules\DocumentMenu.Designer.cs">
+    <Compile Update="Resources\DocumentTypes\DocumentTypeAutocomplete.Designer.cs">
+      <DependentUpon>DocumentTypeAutocomplete.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>DocumentMenu.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\DocumentTypes\DocumentTypeSummaryGrid.Designer.cs">
+      <DependentUpon>DocumentTypeSummaryGrid.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Resources\Documents\DocumentAutocomplete.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -48,9 +54,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Modules\DocumentMenu.resx">
+    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeAutocomplete.resx">
+      <LastGenOutput>DocumentTypeAutocomplete.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DocumentMenu.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeSummaryGrid.resx">
+      <LastGenOutput>DocumentTypeSummaryGrid.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Documents\DocumentAutocomplete.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -51,9 +51,9 @@
         }
         await Task.WhenAll(tasks);
     }
-    private CreateDocument CreateCommand(FileDescription file)
+    private AddDocument CreateCommand(FileDescription file)
     {
-        return new CreateDocument(
+        return new AddDocument(
             data.Id,
             data.Name,
             data.Description,

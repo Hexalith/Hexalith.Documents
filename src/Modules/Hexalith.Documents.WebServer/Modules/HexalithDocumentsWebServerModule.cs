@@ -5,18 +5,15 @@ using System.Reflection;
 
 using Dapr.Actors.Runtime;
 
-using Hexalith.Application.Aggregates;
-using Hexalith.Application.Commands;
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
 using Hexalith.Document.Domain;
-using Hexalith.Documents.Application.CommandHandlers;
-using Hexalith.Documents.Commands;
+using Hexalith.Documents.Application.Helpers;
+using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Events.Extensions;
-using Hexalith.Documents.UI.Components.Documents;
-using Hexalith.Documents.WebServer.Application.Helpers;
+using Hexalith.Documents.UI.Pages.Modules;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
 using Hexalith.Infrastructure.AzureBlobStorage.Services;
@@ -31,7 +28,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 /// <summary>
 /// The document construction site client module.
 /// </summary>
-public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModule
+public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModule, IDocumentModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
@@ -78,11 +75,8 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
 
-        // Add domain aggregate providers
-        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>();
-
-        // Add command handlers
-        services.TryAddSingleton<IDomainCommandHandler<CreateDocument>, CreateDocumentHandler>();
+        // Add application module
+        services.TryAddSingleton<IDocumentModule, HexalithDocumentsWebServerModule>();
 
         _ = services
             .AddTransient(p => DocumentMenu.Menu);

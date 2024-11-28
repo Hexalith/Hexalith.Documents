@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UnitTests.Application;
+﻿namespace UnitTests.Application;
 
 using System;
 using System.Text.Json;
@@ -7,7 +7,7 @@ using FluentAssertions;
 
 using Hexalith.Application.Metadatas;
 using Hexalith.Document.Domain.ValueObjects;
-using Hexalith.Documents.Commands;
+using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Infrastructure.DaprRuntime.Actors;
 using Hexalith.PolymorphicSerialization;
@@ -20,7 +20,7 @@ public class AddDocumentTest
         // Arrange
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
         JsonSerializerOptions jsonOptions = PolymorphicHelper.DefaultJsonSerializerOptions;
-        CreateDocument message = new(
+        AddDocument message = new(
             "1",
             "Test AddDocumentBaseType",
             "This is a test AddDocumentBaseType",

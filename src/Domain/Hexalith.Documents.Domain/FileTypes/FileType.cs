@@ -48,11 +48,11 @@ public record FileType(
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FileType"/> class based on the <see cref="FileTypeCreated"/> event.
+    /// Initializes a new instance of the <see cref="FileType"/> class based on the <see cref="FileTypeAdded"/> event.
     /// </summary>
-    /// <param name="added">The <see cref="FileTypeCreated"/> event containing the initialization data.</param>
+    /// <param name="added">The <see cref="FileTypeAdded"/> event containing the initialization data.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="added"/> is null.</exception>
-    public FileType(FileTypeCreated added)
+    public FileType(FileTypeAdded added)
         : this(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               added.Name,
@@ -88,7 +88,7 @@ public record FileType(
         {
             FileTypeTargetAdded e => ApplyEvent(e),
             FileTypeTargetRemoved e => ApplyEvent(e),
-            FileTypeCreated e => ApplyEvent(e),
+            FileTypeAdded e => ApplyEvent(e),
             FileTypeDescriptionChanged e => ApplyEvent(e),
             FileTypeDisabled e => ApplyEvent(e),
             FileTypeEnabled e => ApplyEvent(e),
@@ -117,7 +117,7 @@ public record FileType(
     /// </summary>
     /// <param name="e">The FileTypeCreated event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeCreated e) => !IsInitialized()
+    private ApplyResult ApplyEvent(FileTypeAdded e) => !IsInitialized()
         ? new ApplyResult(
             new FileType(e),
             [e],

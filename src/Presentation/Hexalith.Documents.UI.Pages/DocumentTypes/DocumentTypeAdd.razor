@@ -1,0 +1,96 @@
+﻿@page "/Documents/DocumentType/Add"
+@inject IDocumentTypeQueryService DocumentQueryService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<DocumentTypeAdd> L
+@inject IStringLocalizer<DocumentTypeAddValidation> ValidationLabels
+@inject ICommandService CommandService
+@using FluentValidation.Results
+@using Hexalith.Documents.UI.Pages.DocumentTypes.Validations
+@using Labels = Hexalith.Documents.UI.Pages.Resources.DocumentTypes.Pages.DocumentTypeAdd;
+@using System.Security.Claims
+<FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
+    <h3>@L[Labels.Title, _documentId]</h3>
+    @if (data is not null)
+    {
+        <FluentStack Orientation="Orientation.Vertical">
+            <FluentValidationMessage TValue="ValidationResult"></FluentValidationMessage>
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentTextField @bind-Value="data.Name" Label="@Labels.Name"></FluentTextField>
+                <FluentTextField @bind-Value="@data.Description" Label="@Labels.Description"></FluentTextField>
+            </FluentStack>
+            <FluentSpacer />
+            <AuthorizeView Roles="@DocumentRoles.Contributor">
+                <Authorized>
+                    <FluentButton Disabled="@(ValidationResult is not null && !ValidationResult.IsValid)"
+                    Appearance="Appearance.Accent"
+                    IconStart="@(new Icons.Regular.Size24.Add())"
+                    OnClick="OnAdd">@Labels.Add</FluentButton>
+                </Authorized>
+                <NotAuthorized>
+                </NotAuthorized>
+            </AuthorizeView>
+        </FluentStack>
+    }
+</FluentStack>
+
+@code {
+    [Parameter]
+    public string? DocumentId { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+    private string _documentId => DocumentId ?? Hexalith.Extensions.Helpers.UniqueIdHelper.GenerateUniqueStringId();
+
+    private FileDescription? file;
+
+    ClaimsPrincipal? _user;
+
+    ViewModels.DocumentTypeAddViewModel _data = new();
+
+    ValidationResult ValidationResult => new DocumentTypeAddValidation(ValidationLabels).Validate(_data);
+
+    bool _addClicked;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            if (!authState.User.Identity?.IsAuthenticated == false)
+            {
+                NavigationManager.NavigateTo(Application.LoginPath);
+            }
+            _user = authState.User;
+        }
+    }
+
+    ViewModels.DocumentTypeAddViewModel? data = null;
+
+    public async Task OnSave()
+    {
+        _addClicked = true;
+        if (!ValidationResult.IsValid)
+            return;
+            await CommandService.SubmitCommandAsync(new ChangeDocumentTypeDescription(data.Id, data.Name, data.Description), CancellationToken.None);
+        NavigationManager.NavigateTo(Module.Path);
+    }
+    public async Task OnAdd()
+    {
+        if (data is null)
+        {
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(_user?.Identity?.Name))
+        {
+            throw new InvalidOperationException("User not authenticated");
+        }
+        await CommandService.SubmitCommandAsync(new AddDocumentType(
+                data.Id,
+                data.Name,
+                data.Description),
+            , CancellationToken.None);
+        NavigationManager.NavigateTo("/Documents");
+    }
+
+}

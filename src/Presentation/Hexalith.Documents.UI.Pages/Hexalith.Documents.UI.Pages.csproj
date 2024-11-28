@@ -14,26 +14,89 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\Documents\Pages\DocumentDetails.Designer.cs">
+    <Compile Update="Resources\Documents\DocumentAddValidation.Designer.cs">
+      <DependentUpon>DocumentAddValidation.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\DocumentTypes\DocumentTypeAddValidation.Designer.cs">
+      <DependentUpon>DocumentTypeAddValidation.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\DocumentTypes\DocumentTypeAdd.Designer.cs">
+      <DependentUpon>DocumentTypeAdd.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\DocumentTypes\DocumentTypeDetails.Designer.cs">
+      <DependentUpon>DocumentTypeDetails.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\DocumentTypes\DocumentTypeIndex.Designer.cs">
+      <DependentUpon>DocumentTypeIndex.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Documents\DocumentAdd.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentAdd.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Documents\DocumentDetails.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DocumentDetails.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\Documents\Pages\DocumentIndex.Designer.cs">
+    <Compile Update="Resources\Documents\DocumentIndex.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DocumentIndex.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Modules\DocumentMenu.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentMenu.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Documents\Pages\DocumentDetails.resx">
+    <EmbeddedResource Update="Resources\Documents\DocumentAddValidation.resx">
+      <LastGenOutput>DocumentAddValidation.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeAddValidation.resx">
+      <LastGenOutput>DocumentTypeAddValidation.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeAdd.resx">
+      <LastGenOutput>DocumentTypeAdd.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeDetails.resx">
+      <LastGenOutput>DocumentTypeDetails.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeIndex.resx">
+      <LastGenOutput>DocumentTypeIndex.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Documents\DocumentAdd.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DocumentAdd.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Documents\DocumentDetails.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DocumentDetails.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Documents\Pages\DocumentIndex.resx">
+    <EmbeddedResource Update="Resources\Documents\DocumentIndex.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DocumentIndex.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Modules\DocumentMenu.resx">
+      <LastGenOutput>DocumentMenu.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

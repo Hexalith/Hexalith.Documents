@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using Hexalith.Document.Domain;
 using Hexalith.Document.Domain.ValueObjects;
 using Hexalith.Documents.Events;
+using Hexalith.Documents.Events.Documents;
 using Hexalith.Domain.Aggregates;
 using Hexalith.Domain.Events;
 
@@ -60,7 +61,7 @@ public record Document(
     /// Gets the collection of tags associated with the document.
     /// </summary>
     /// <value>The enumerable collection of tag strings.</value>
-    [property: DataMember(Order = 8)] IEnumerable<string> Tags,
+    [property: DataMember(Order = 8)] IEnumerable<DocumentTag> Tags,
 
     /// <summary>
     /// Gets a value indicating whether the document is disabled.
@@ -91,11 +92,11 @@ public record Document(
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Document"/> class based on the <see cref="DocumentCreated"/> event.
+    /// Initializes a new instance of the <see cref="Document"/> class based on the <see cref="DocumentAdded"/> event.
     /// </summary>
-    /// <param name="added">The <see cref="DocumentCreated"/> event.</param>
+    /// <param name="added">The <see cref="DocumentAdded"/> event.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="added"/> is null.</exception>
-    public Document(DocumentCreated added)
+    public Document(DocumentAdded added)
         : this(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               new DocumentDescription(
@@ -136,7 +137,7 @@ public record Document(
         {
             DocumentActorAdded e => ApplyEvent(e),
             DocumentActorRemoved e => ApplyEvent(e),
-            DocumentCreated e => ApplyEvent(e),
+            DocumentAdded e => ApplyEvent(e),
             DocumentDescriptionChanged e => DocumentDescription.ApplyEvent(this, e),
             DocumentDisabled e => ApplyEvent(e),
             DocumentEnabled e => ApplyEvent(e),
@@ -163,7 +164,7 @@ public record Document(
     /// </summary>
     /// <param name="e">The DocumentCreated event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(DocumentCreated e) => !IsInitialized()
+    private ApplyResult ApplyEvent(DocumentAdded e) => !IsInitialized()
         ? new ApplyResult(
             new Document(e),
             [e],
