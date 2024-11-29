@@ -7,10 +7,10 @@ using Dapr.Actors.Runtime;
 
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
-using Hexalith.Documents.Domain;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
+using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.UI.Pages.Modules;
@@ -21,6 +21,7 @@ using Hexalith.Infrastructure.CosmosDb.Configurations;
 using Hexalith.Infrastructure.DaprRuntime.Actors;
 using Hexalith.Infrastructure.DaprRuntime.Helpers;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -30,6 +31,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 /// </summary>
 public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModule, IDocumentModule
 {
+    /// <inheritdoc/>
+    public IDictionary<string, AuthorizationPolicy> AuthorizationPolicies => DocumentModulePolicies.AuthorizationPolicies;
+
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
 

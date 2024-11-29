@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Reflection;
 
 using Hexalith.Application.Modules.Modules;
+using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Events.Extensions;
@@ -17,6 +18,7 @@ using Hexalith.Documents.UI.Components.Documents.Services;
 using Hexalith.Documents.UI.Pages.Documents.Services;
 using Hexalith.Documents.UI.Pages.Modules;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -26,6 +28,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 /// </summary>
 public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocumentModule
 {
+    /// <inheritdoc/>
+    public IDictionary<string, AuthorizationPolicy> AuthorizationPolicies => DocumentModulePolicies.AuthorizationPolicies;
+
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
 

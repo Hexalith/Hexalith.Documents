@@ -2,7 +2,7 @@
 @inject NavigationManager NavigationManager;
 @using Labels = Hexalith.Documents.UI.Pages.Resources.Documents.DocumentIndex;
 <FluentToolbar Style="width:100%;">
-    <AuthorizeView Roles="@DocumentRoles.Contributors" Context="contribute">
+    <AuthorizeView Policy="@DocumentPolicies.Contributors" Context="contribute">
         <Authorized Context="contribute">
             <FluentButton IconStart="@(new Icons.Filled.Size16.Add())" OnClick="AddAsync">@Labels.Add</FluentButton>
         </Authorized>
@@ -10,7 +10,7 @@
 </FluentToolbar>
 <FluentStack Orientation="Orientation.Vertical">
     <h3>@Labels.Title</h3>
-    <AuthorizeView Roles="@DocumentRoles.Readers" Context="read">
+    <AuthorizeView Policy="@DocumentPolicies.Readers" Context="read">
         <Authorized Context="read">
             <DocumentTypeSummaryGrid />
         </Authorized>
