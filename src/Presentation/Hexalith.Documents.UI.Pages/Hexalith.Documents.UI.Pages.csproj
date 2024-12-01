@@ -19,6 +19,26 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\FileTypes\FileTypeAdd.Designer.cs">
+      <DependentUpon>FileTypeAdd.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\FileTypes\FileTypeAddValidation.Designer.cs">
+      <DependentUpon>FileTypeAddValidation.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\FileTypes\FileTypeDetails.Designer.cs">
+      <DependentUpon>FileTypeDetails.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\FileTypes\FileTypeIndex.Designer.cs">
+      <DependentUpon>FileTypeIndex.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\DocumentTypes\DocumentTypeAddValidation.Designer.cs">
       <DependentUpon>DocumentTypeAddValidation.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -64,6 +84,22 @@
   <ItemGroup>
     <EmbeddedResource Update="Resources\Documents\DocumentAddValidation.resx">
       <LastGenOutput>DocumentAddValidation.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FileTypes\FileTypeAdd.resx">
+      <LastGenOutput>FileTypeAdd.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FileTypes\FileTypeAddValidation.resx">
+      <LastGenOutput>FileTypeAddValidation.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FileTypes\FileTypeDetails.resx">
+      <LastGenOutput>FileTypeDetails.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FileTypes\FileTypeIndex.resx">
+      <LastGenOutput>FileTypeIndex.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeAddValidation.resx">

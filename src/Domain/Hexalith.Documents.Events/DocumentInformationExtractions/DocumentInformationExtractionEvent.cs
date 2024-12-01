@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Events.FileTextExtractionModes;
+﻿namespace Hexalith.Documents.Events.DocumentInformationExtractions;
 
 using System.Runtime.Serialization;
 
@@ -9,7 +9,7 @@ using Hexalith.PolymorphicSerialization;
 /// Represents a base class for document commands.
 /// </summary>
 [PolymorphicSerialization]
-public abstract partial record FileTextExtractionModeEvent([property: DataMember(Order = 1)] string Id)
+public abstract partial record DocumentInformationExtractionEvent([property: DataMember(Order = 1)] string Id)
 {
     /// <summary>
     /// Gets the aggregate ID of the document command.
@@ -19,5 +19,5 @@ public abstract partial record FileTextExtractionModeEvent([property: DataMember
     /// <summary>
     /// Gets the aggregate name of the document command.
     /// </summary>
-    public static string AggregateName => DocumentDomainHelper.FileTextExtractionModeAggregateName;
+    public static string AggregateName => DocumentDomainHelper.DocumentInformationExtractionAggregateName;
 }

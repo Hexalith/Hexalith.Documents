@@ -1,0 +1,83 @@
+﻿@page "/Documents/FileType/{DocumentId}"
+@attribute [Authorize(Roles = DocumentRoles.Contributor)]
+@inject IFileTypeQueryService DocumentQueryService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<FileTypeDetails> L
+@inject ICommandService CommandService
+@using Hexalith.Documents.UI.Components.FileTypes.Services
+@using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeDetails;
+@using System.Security.Claims
+<FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
+    <h3>@L[Labels.Title, _documentId]</h3>
+    @if (data is not null)
+    {
+        <FluentStack Orientation="Orientation.Vertical">
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentTextField @bind-Value="data.Name" Label="@Labels.Name"></FluentTextField>
+                <FluentTextField @bind-Value="@data.Description" Label="@Labels.Description"></FluentTextField>
+                <FluentCheckbox @bind-Value="@data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
+            </FluentStack>
+            <FluentSpacer />
+            <FluentButton Appearance="Appearance.Accent" Disabled="@(!data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
+        </FluentStack>
+    }
+</FluentStack>
+
+@code {
+    [Parameter]
+    public string? DocumentId { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+    private string _documentId => DocumentId ?? Hexalith.Extensions.Helpers.UniqueIdHelper.GenerateUniqueStringId();
+
+    private FileDescription? file;
+
+    ClaimsPrincipal? _user;
+
+    FileTypeEditViewModel? data = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            if (!authState.User.Identity?.IsAuthenticated == false)
+            {
+                NavigationManager.NavigateTo(Application.LoginPath);
+            }
+            _user = authState.User;
+        }
+        if (string.IsNullOrWhiteSpace(DocumentId))
+        {
+            data = new FileTypeEditViewModel();
+            return;
+        }
+        else
+        {
+            data = new(await DocumentQueryService.GetDetailsAsync(DocumentId));
+        }
+
+        await base.OnInitializedAsync();
+    }
+
+    public async Task OnSave()
+    {
+        if (data is null)
+        {
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(_user?.Identity?.Name))
+        {
+            throw new InvalidOperationException("User not authenticated");
+        }
+        await CommandService.SubmitCommandAsync(new ChangeFileTypeDescription(
+                data.Id,
+                data.Name,
+                data.Description)
+            , CancellationToken.None);
+        NavigationManager.NavigateTo("/Documents");
+    }
+
+}

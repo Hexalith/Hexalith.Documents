@@ -1,6 +1,7 @@
-﻿namespace Hexalith.Documents.Events.FileTextExtractionModes;
+﻿namespace Hexalith.Documents.Events.DocumentInformationExtractions;
 
 using System.Runtime.Serialization;
+
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
@@ -9,9 +10,9 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="Event">The original document event that was cancelled.</param>
 /// <param name="Reason">The reason for cancelling the event.</param>
 [PolymorphicSerialization]
-public partial record FileTextExtractionModeEventCancelled(
+public partial record DocumentInformationExtractionEventCancelled(
     [property: DataMember(Order = 2)]
-    FileTextExtractionModeEvent Event,
+    DocumentInformationExtractionEvent Event,
     [property: DataMember(Order = 3)]
     string Reason)
-    : FileTextExtractionModeEvent(Event.Id);
+    : DocumentInformationExtractionEvent(Event.Id);

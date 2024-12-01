@@ -11,11 +11,11 @@ using Hexalith.Documents.Commands.FileTypes;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.DocumentTypes;
-using Hexalith.Documents.Domain.FileTextExtractionModes;
 using Hexalith.Documents.Domain.FileTypes;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Hexalith.Documents.Domain.FileTextExtractionModes;
 
 /// <summary>
 /// Class DocumentHelper.
@@ -32,7 +32,7 @@ public static class DocumentHelper
         services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>();
         services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentType>>();
         services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentContainer>>();
-        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<FileTextExtractionMode>>();
+        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentInformationExtraction>>();
         services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<FileType>>();
         return services;
     }

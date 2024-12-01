@@ -12,5 +12,5 @@ public static class DocumentDomainHelper
     public const string DocumentContainerAggregateName = "DocumentContainer";
     public const string DocumentTypeAggregateName = "DocumentType";
     public const string FileTypeAggregateName = "FileType";
-    public const string FileTextExtractionModeAggregateName = "FileTextExtractionMode";
+    public const string DocumentInformationExtractionAggregateName = "DocumentInformationExtraction";
 }

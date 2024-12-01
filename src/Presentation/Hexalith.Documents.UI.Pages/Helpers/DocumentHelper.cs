@@ -1,7 +1,9 @@
 ﻿namespace Hexalith.Documents.UI.Pages.Helpers;
 
 using Hexalith.Documents.UI.Components.Documents.Services;
+using Hexalith.Documents.UI.Components.DocumentTypes.Services;
 using Hexalith.Documents.UI.Pages.Documents.Services;
+using Hexalith.Documents.UI.Pages.DocumentTypes.Services;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +20,7 @@ public static class DocumentHelper
     public static IServiceCollection AddDocumentUI(this IServiceCollection services)
     {
         _ = services.AddScoped<IDocumentQueryService, DemoDocumentQueryService>();
+        _ = services.AddScoped<IDocumentTypeQueryService, DemoDocumentTypeQueryService>();
         return services;
     }
 }

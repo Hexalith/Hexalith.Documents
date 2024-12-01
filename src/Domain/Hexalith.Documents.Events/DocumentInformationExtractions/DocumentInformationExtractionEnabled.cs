@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Events.FileTextExtractionModes;
+﻿namespace Hexalith.Documents.Events.DocumentInformationExtractions;
 
 using Hexalith.PolymorphicSerialization;
 
@@ -7,6 +7,6 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Id">The unique identifier of the extraction mode that was enabled.</param>
 [PolymorphicSerialization]
-public partial record FileTextExtractionModeEnabled(string Id) : FileTextExtractionModeEvent(Id)
+public partial record DocumentInformationExtractionEnabled(string Id) : DocumentInformationExtractionEvent(Id)
 {
 }

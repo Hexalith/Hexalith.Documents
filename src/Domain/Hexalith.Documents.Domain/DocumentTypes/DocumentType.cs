@@ -15,7 +15,7 @@ using Hexalith.Domain.Events;
 /// <param name="Id">The unique identifier of the document type.</param>
 /// <param name="Name">The name of the document type.</param>
 /// <param name="Description">A detailed description of the document type.</param>
-/// <param name="DataExtractionInstructions">A collection of instructions for extracting data from documents of this type.</param>
+/// <param name="DataInstructions">A collection of instructions for extracting data from documents of this type.</param>
 /// <param name="FileTypeIds">A collection of supported file type identifiers.</param>
 /// <param name="Tags">A collection of tags associated with this document type.</param>
 /// <param name="Disabled">A value indicating whether this document type is disabled.</param>
@@ -24,7 +24,7 @@ public record DocumentType(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] string Description,
-    [property: DataMember(Order = 4)] IImmutableDictionary<string, string> DataExtractionInstructions,
+    [property: DataMember(Order = 4)] IImmutableDictionary<string, string> DataInstructions,
     [property: DataMember(Order = 5)] IEnumerable<string> FileTypeIds,
     [property: DataMember(Order = 6)] IImmutableDictionary<string, string> Tags,
     [property: DataMember(Order = 7)] bool Disabled) : IDomainAggregate
@@ -215,16 +215,16 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeDataExtractionAdded e)
     {
-        if (DataExtractionInstructions.ContainsKey(e.ExtractionId))
+        if (DataInstructions.ContainsKey(e.ExtractionId))
         {
             return new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The data extraction instruction already exists.")], true);
         }
 
-        Dictionary<string, string> instructions = DataExtractionInstructions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        instructions[e.ExtractionId] = e.DataExtractionInstructions ?? string.Empty;
+        Dictionary<string, string> instructions = DataInstructions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        instructions[e.ExtractionId] = e.DataInstructions ?? string.Empty;
 
         return new ApplyResult(
-            this with { DataExtractionInstructions = instructions.ToImmutableDictionary() },
+            this with { DataInstructions = instructions.ToImmutableDictionary() },
             [e],
             false);
     }
@@ -236,14 +236,14 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeDataExtractionRemoved e)
     {
-        Dictionary<string, string> instructions = DataExtractionInstructions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        Dictionary<string, string> instructions = DataInstructions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         if (!instructions.Remove(e.ExtractionId))
         {
             return new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The data extraction instruction does not exist.")], true);
         }
 
         return new ApplyResult(
-            this with { DataExtractionInstructions = instructions.ToImmutableDictionary() },
+            this with { DataInstructions = instructions.ToImmutableDictionary() },
             [e],
             false);
     }

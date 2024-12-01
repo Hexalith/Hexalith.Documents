@@ -1,0 +1,78 @@
+﻿@page "/Documents/FileType/Add"
+@attribute [Authorize(Roles = DocumentRoles.Contributor)]
+@inject IFileTypeQueryService DocumentQueryService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<FileTypeAdd> L
+@inject IStringLocalizer<FileTypeAddValidation> ValidationLabels
+@inject ICommandService CommandService
+@using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeAdd;
+<FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
+    <h3>@L[Labels.Title, _documentId]</h3>
+    @if (_data is not null)
+    {
+        <FluentStack Orientation="Orientation.Vertical">
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentTextField @bind-Value="_data.Id" Label="@Labels.Id"></FluentTextField>
+                <FluentTextField @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
+                <FluentTextField @bind-Value="@_data.Description" Label="@Labels.Description"></FluentTextField>
+            </FluentStack>
+            <FluentSpacer />
+            <FluentButton Disabled="@(_addClicked && !ValidationResult.IsValid)"
+                          Appearance="Appearance.Accent"
+                          IconStart="@(new Icons.Regular.Size24.Add())"
+                          OnClick="OnAdd">@Labels.Add</FluentButton>
+            <FluentSpacer />
+            <HexValidationSummary ValidationSummary="ValidationResult" />
+        </FluentStack>
+    }
+</FluentStack>
+
+@code {
+    [Parameter]
+    public string? DocumentId { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+    private string _documentId => DocumentId ?? Hexalith.Extensions.Helpers.UniqueIdHelper.GenerateUniqueStringId();
+
+    private FileDescription? file;
+
+    ClaimsPrincipal? _user;
+
+    FileTypeAddViewModel _data = new();
+
+    ValidationResult ValidationResult => new FileTypeAddValidation(ValidationLabels).Validate(_data);
+
+    bool _addClicked;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            if (!authState.User.Identity?.IsAuthenticated == false)
+            {
+                NavigationManager.NavigateTo(Application.LoginPath);
+            }
+            _user = authState.User;
+        }
+    }
+
+    public async Task OnAdd()
+    {
+        _addClicked = true;
+        if (!ValidationResult.IsValid)
+            return;
+        await CommandService.SubmitCommandAsync(new AddFileType(
+            _data.Id!, 
+            _data.Name!, 
+            _data.Description,
+            _data.TextExtractionModelId,
+            _data.SummarizationEnabled,
+            _data.SummarizationInstractions,
+            _data.Targets,
+            _data.FileTypeIds), CancellationToken.None);
+        NavigationManager.NavigateTo(Module.Path);
+    }
+}

@@ -8,13 +8,13 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Id">The unique identifier of the document type.</param>
 /// <param name="ExtractionId">The identifier of the data extraction configuration.</param>
-/// <param name="DataExtractionInstructions">Optional instructions for the data extraction process. Can be null if no specific instructions are needed.</param>
+/// <param name="DataInstructions">Optional instructions for the data extraction process. Can be null if no specific instructions are needed.</param>
 [PolymorphicSerialization]
 public partial record DocumentTypeDataExtractionAdded(
     string Id,
     [property: DataMember(Order = 2)]
     string ExtractionId,
     [property: DataMember(Order = 3)]
-    string? DataExtractionInstructions) : DocumentTypeEvent(Id)
+    string? DataInstructions) : DocumentTypeEvent(Id)
 {
 }
