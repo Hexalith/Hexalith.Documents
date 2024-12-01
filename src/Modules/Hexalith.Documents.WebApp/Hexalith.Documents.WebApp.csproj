@@ -17,6 +17,9 @@
 	  <None Include="Modules\Home.razor" />
 	</ItemGroup>
 	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="$(AspNetCorePackagesVersion)" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\..\Application\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
 		<ProjectReference Include="..\..\Presentation\Hexalith.Documents.UI.Pages\Hexalith.Documents.UI.Pages.csproj" />
 	</ItemGroup>
