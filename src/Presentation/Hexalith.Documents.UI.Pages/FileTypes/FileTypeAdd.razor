@@ -1,11 +1,13 @@
 ﻿@page "/Documents/FileType/Add"
-@attribute [Authorize(Roles = DocumentRoles.Contributor)]
 @inject IFileTypeQueryService DocumentQueryService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<FileTypeAdd> L
 @inject IStringLocalizer<FileTypeAddValidation> ValidationLabels
 @inject ICommandService CommandService
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeAdd;
+<FluentToolbar>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size16.Add())">@Labels.Add</FluentButton>
+</FluentToolbar>
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
     <h3>@L[Labels.Title, _documentId]</h3>
     @if (_data is not null)

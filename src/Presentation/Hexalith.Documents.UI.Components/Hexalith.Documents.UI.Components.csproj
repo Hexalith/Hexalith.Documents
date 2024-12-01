@@ -59,6 +59,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DocumentSummaryGrid.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ImportExport\ImportFile.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ImportFile.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\FileTypes\FileTypeAutocomplete.resx">
@@ -84,6 +89,10 @@
     <EmbeddedResource Update="Resources\Documents\DocumentSummaryGrid.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DocumentSummaryGrid.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ImportExport\ImportFile.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImportFile.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

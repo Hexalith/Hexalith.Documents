@@ -14,7 +14,7 @@ using Hexalith.UI.Components.ViewModels;
 /// </summary>
 public class MemoryFileTypeQueryService : IFileTypeQueryService
 {
-    private readonly IEnumerable<FileTypeDetails> _data;
+    private readonly IEnumerable<FileTypeDetailsViewModel> _data;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MemoryFileTypeQueryService"/> class with an empty data set.
@@ -29,14 +29,14 @@ public class MemoryFileTypeQueryService : IFileTypeQueryService
     /// </summary>
     /// <param name="data">The initial set of document details.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="data"/> is null.</exception>
-    public MemoryFileTypeQueryService([NotNull] IEnumerable<FileTypeDetails> data)
+    public MemoryFileTypeQueryService([NotNull] IEnumerable<FileTypeDetailsViewModel> data)
     {
         ArgumentNullException.ThrowIfNull(data);
         _data = data;
     }
 
     /// <inheritdoc/>
-    public Task<FileTypeDetails> GetDetailsAsync(string id)
+    public Task<FileTypeDetailsViewModel> GetDetailsAsync(string id)
         => Task.FromResult(_data.Single(p => p.Id == id));
 
     /// <inheritdoc/>
@@ -64,9 +64,9 @@ public class MemoryFileTypeQueryService : IFileTypeQueryService
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<FileTypeSummary>> GetSummariesAsync(int skip, int count)
+    public Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync(int skip, int count)
     {
-        IEnumerable<FileTypeDetails> factories = _data;
+        IEnumerable<FileTypeDetailsViewModel> factories = _data;
         if (skip > 0)
         {
             factories = factories.Skip(skip);
@@ -77,7 +77,7 @@ public class MemoryFileTypeQueryService : IFileTypeQueryService
             factories = factories.Take(count);
         }
 
-        return Task.FromResult(factories.Select(p => new FileTypeSummary(p)));
+        return Task.FromResult(factories.Select(p => new FileTypeSummaryViewModel(p)));
     }
 
     /// <inheritdoc/>
@@ -105,9 +105,9 @@ public class MemoryFileTypeQueryService : IFileTypeQueryService
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<FileTypeSummary>> SearchSummariesAsync(string searchText)
+    public Task<IEnumerable<FileTypeSummaryViewModel>> SearchSummariesAsync(string searchText)
     {
-        IEnumerable<FileTypeDetails> factories = _data;
+        IEnumerable<FileTypeDetailsViewModel> factories = _data;
         if (!string.IsNullOrWhiteSpace(searchText))
         {
             factories = factories.Where(f =>
@@ -115,6 +115,6 @@ public class MemoryFileTypeQueryService : IFileTypeQueryService
                 f.Id.Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 
-        return Task.FromResult(factories.Select(p => new FileTypeSummary(p)));
+        return Task.FromResult(factories.Select(p => new FileTypeSummaryViewModel(p)));
     }
 }

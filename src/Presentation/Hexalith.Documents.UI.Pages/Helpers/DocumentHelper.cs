@@ -2,8 +2,10 @@
 
 using Hexalith.Documents.UI.Components.Documents.Services;
 using Hexalith.Documents.UI.Components.DocumentTypes.Services;
+using Hexalith.Documents.UI.Components.FileTypes.Services;
 using Hexalith.Documents.UI.Pages.Documents.Services;
 using Hexalith.Documents.UI.Pages.DocumentTypes.Services;
+using Hexalith.Documents.UI.Pages.FileTypes.Services;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +23,8 @@ public static class DocumentHelper
     {
         _ = services.AddScoped<IDocumentQueryService, DemoDocumentQueryService>();
         _ = services.AddScoped<IDocumentTypeQueryService, DemoDocumentTypeQueryService>();
+        _ = services.AddScoped<IFileTypeQueryService, DemoFileTypeQueryService>();
+        _ = services.AddScoped<IDocumentUploadService, DocumentUploadService>();
         return services;
     }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
+namespace Hexalith.Documents.UI.Components.Resources.ImportExport {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class FileTypeIndex {
+    internal class ImportFile {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal FileTypeIndex() {
+        internal ImportFile() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeIndex", typeof(FileTypeIndex).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Components.Resources.ImportExport.ImportFile", typeof(ImportFile).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,24 +61,6 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
-        /// </summary>
-        internal static string Add {
-            get {
-                return ResourceManager.GetString("Add", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export.
-        /// </summary>
-        internal static string Export {
-            get {
-                return ResourceManager.GetString("Export", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         internal static string Import {
@@ -88,16 +70,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not authorized to read documents.
-        /// </summary>
-        internal static string ReadNotAuthorized {
-            get {
-                return ResourceManager.GetString("ReadNotAuthorized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Documents.
+        ///   Looks up a localized string similar to Import a file.
         /// </summary>
         internal static string Title {
             get {

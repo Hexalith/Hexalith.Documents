@@ -12,7 +12,7 @@ public class FileTypeEditViewModel
     /// Initializes a new instance of the <see cref="FileTypeEditViewModel"/> class.
     /// </summary>
     /// <param name="factoryDetails">The details of the document type.</param>
-    public FileTypeEditViewModel(FileTypeDetails factoryDetails)
+    public FileTypeEditViewModel(FileTypeDetailsViewModel factoryDetails)
     {
         ArgumentNullException.ThrowIfNull(factoryDetails);
         Original = factoryDetails;
@@ -25,7 +25,7 @@ public class FileTypeEditViewModel
     /// Initializes a new instance of the <see cref="FileTypeEditViewModel"/> class.
     /// </summary>
     public FileTypeEditViewModel()
-        : this(new FileTypeDetails(
+        : this(new FileTypeDetailsViewModel(
         UniqueIdHelper.GenerateUniqueStringId(),
         string.Empty,
         string.Empty,
@@ -61,5 +61,5 @@ public class FileTypeEditViewModel
     /// <summary>
     /// Gets the original details of the document type.
     /// </summary>
-    public FileTypeDetails Original { get; }
+    public FileTypeDetailsViewModel Original { get; }
 }

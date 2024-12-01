@@ -117,19 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Title" xml:space="preserve">
-    <value>Documents</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>Ajouter</value>
-  </data>
-  <data name="ReadNotAuthorized" xml:space="preserve">
-    <value>Vous n'êtes pas autorisés à lire des documents</value>
-  </data>
   <data name="Import" xml:space="preserve">
     <value>Importer</value>
   </data>
-  <data name="Export" xml:space="preserve">
-    <value>Exporter</value>
+  <data name="Title" xml:space="preserve">
+    <value>Importer un fichier</value>
   </data>
 </root>

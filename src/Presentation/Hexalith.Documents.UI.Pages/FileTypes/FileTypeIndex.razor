@@ -2,29 +2,29 @@
 @inject NavigationManager NavigationManager;
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeIndex;
 <FluentToolbar Style="width:100%;">
-    <AuthorizeView Policy="@DocumentPolicies.Contributors" Context="contribute">
-        <Authorized Context="contribute">
-            <FluentButton IconStart="@(new Icons.Filled.Size16.Add())" OnClick="AddAsync">@Labels.Add</FluentButton>
-        </Authorized>
-    </AuthorizeView>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="AddAsync">@Labels.Add</FluentButton>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowImport())" OnClick="ImportAsync">@Labels.Import</FluentButton>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowExport())" OnClick="ExportAsync">@Labels.Export</FluentButton>
 </FluentToolbar>
 <FluentStack Orientation="Orientation.Vertical">
     <h3>@Labels.Title</h3>
-    <AuthorizeView Policy="@DocumentPolicies.Readers" Context="read">
-        <Authorized Context="read">
-            <FileTypeSummaryGrid />
-        </Authorized>
-        <NotAuthorized>
-            <FluentLabel Color="@Color.Error" Typo="Typography.H4">@Labels.ReadNotAuthorized</FluentLabel>
-        </NotAuthorized>
-    </AuthorizeView>
+    <FileTypeSummaryGrid />
 </FluentStack>
 
 
 @code {
+    bool _importing; 
 
     private void AddAsync()
     {
         NavigationManager.NavigateTo("/Documents/Add");
+    }
+    private Task ImportAsync()
+    {
+        return Task.CompletedTask;
+    }
+    private Task ExportAsync()
+    {
+        return Task.CompletedTask;
     }
 }

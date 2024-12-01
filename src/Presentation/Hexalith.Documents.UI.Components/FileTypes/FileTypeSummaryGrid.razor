@@ -1,33 +1,41 @@
-﻿@inject Services.IFileTypeQueryService DocumentQueryService;
+﻿@inject Services.IFileTypeQueryService FileTypeQueryService;
 @inject IStringLocalizer<FileTypeSummaryGrid> L;
 @inject NavigationManager NavigationManager;
+@using Hexalith.Documents.Application
 @using Labels = Resources.FileTypes.FileTypeSummaryGrid
 
 @if (elements is not null)
 {
-	<FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
-					Items="@elements"
-					ResizableColumns="true"
-					ShowHover="true"
-					OnRowDoubleClick="@((FluentDataGridRow<ViewModels.FileTypeSummary> row) => HandleRowDoubleClick(row))">
-		<PropertyColumn Title="@Labels.Id" Property="@(p => p.Id)" Sortable="true" />
-		<PropertyColumn Title="@Labels.Name" Property="@(p => p.Name)" Sortable="true" />
-		<TemplateColumn Title="@Labels.Disabled">
-			<FluentCheckbox Value="@(context.Disabled)"/>
-		</TemplateColumn>
-	</FluentDataGrid>
+    <FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
+                    Items="@elements"
+                    ResizableColumns="true"
+                    ShowHover="true"
+                    OnRowDoubleClick="@((FluentDataGridRow<ViewModels.FileTypeSummaryViewModel> row) => HandleRowDoubleClick(row))">
+        <PropertyColumn Title="@Labels.Id" Property="@(p => p.Id)" Sortable="true" />
+        <PropertyColumn Title="@Labels.Name" Property="@(p => p.Name)" Sortable="true" />
+        <TemplateColumn Title="@Labels.Disabled">
+            <FluentCheckbox Value="@(context.Disabled)" />
+        </TemplateColumn>
+        <TemplateColumn Title="Actions" Align="@Align.End">
+            <FluentButton aria-label="Edit" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEdit(context))" />
+        </TemplateColumn>
+    </FluentDataGrid>
 }
 
 @code {
-	protected override async Task OnInitializedAsync()
-	{
-		elements = (await DocumentQueryService.GetSummariesAsync()).AsQueryable();
-	}
-	IQueryable<ViewModels.FileTypeSummary>? elements = null;
-	private Task HandleRowDoubleClick(FluentDataGridRow<ViewModels.FileTypeSummary> row)
-	{
-		if (row.Item is not null && !string.IsNullOrEmpty(row.Item.Id))
-			NavigationManager.NavigateTo($"/Documents/{row.Item.Id}");
-		return Task.CompletedTask;
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        elements = (await FileTypeQueryService.GetSummariesAsync()).AsQueryable();
+    }
+    IQueryable<ViewModels.FileTypeSummaryViewModel>? elements = null;
+    private Task HandleRowDoubleClick(FluentDataGridRow<ViewModels.FileTypeSummaryViewModel> row)
+    {
+        if (row.Item is not null && !string.IsNullOrEmpty(row.Item.Id))
+            NavigationManager.NavigateTo($"/Documents/FileType/{row.Item.Id}");
+        return Task.CompletedTask;
+    }
+    private void OnEdit(FileTypeSummaryViewModel context)
+    {
+        NavigationManager.NavigateTo($"/Documents/FileType/{context.Id}/Edit");
+    }
 }

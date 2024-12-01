@@ -12,14 +12,14 @@ public static class DemoFileTypeData
     /// Gets a collection of sample document type details.
     /// </summary>
     /// <value>
-    /// An enumerable collection of <see cref="FileTypeDetails"/> containing predefined document types.
+    /// An enumerable collection of <see cref="FileTypeDetailsViewModel"/> containing predefined document types.
     /// </value>
-    internal static IEnumerable<FileTypeDetails> Data => new[] { Excel, HTML, Markdown, Pdf, PowerPoint, Text, Word };
+    internal static IEnumerable<FileTypeDetailsViewModel> Data => new[] { Excel, HTML, Markdown, Pdf, PowerPoint, Text, Word };
 
     /// <summary>
     /// Gets the details for the Excel document type.
     /// </summary>
-    internal static FileTypeDetails Excel => new(
+    internal static FileTypeDetailsViewModel Excel => new(
         "Excel",
         "Microsoft Excel",
         "Type for Microsoft Excel files",
@@ -28,7 +28,7 @@ public static class DemoFileTypeData
     /// <summary>
     /// Gets the details for the HTML document type.
     /// </summary>
-    internal static FileTypeDetails HTML => new(
+    internal static FileTypeDetailsViewModel HTML => new(
         "HTML",
         "HTML file",
         "Type for HTML files",
@@ -37,7 +37,7 @@ public static class DemoFileTypeData
     /// <summary>
     /// Gets the details for the Markdown document type.
     /// </summary>
-    internal static FileTypeDetails Markdown => new(
+    internal static FileTypeDetailsViewModel Markdown => new(
         "MD",
         "Markdown file",
         "Type for Markdown files",
@@ -46,7 +46,7 @@ public static class DemoFileTypeData
     /// <summary>
     /// Gets the details for the PDF document type.
     /// </summary>
-    internal static FileTypeDetails Pdf => new(
+    internal static FileTypeDetailsViewModel Pdf => new(
         "PDF",
         "Adobe PDF",
         "Type for Adobe PDF files",
@@ -55,7 +55,7 @@ public static class DemoFileTypeData
     /// <summary>
     /// Gets the details for the PowerPoint document type.
     /// </summary>
-    internal static FileTypeDetails PowerPoint => new(
+    internal static FileTypeDetailsViewModel PowerPoint => new(
         "PowerPoint",
         "Microsoft PowerPoint",
         "Type for Microsoft PowerPoint files",
@@ -64,7 +64,7 @@ public static class DemoFileTypeData
     /// <summary>
     /// Gets the details for the Text document type.
     /// </summary>
-    internal static FileTypeDetails Text => new(
+    internal static FileTypeDetailsViewModel Text => new(
         "TXT",
         "Text file",
         "Type for text files",
@@ -73,7 +73,7 @@ public static class DemoFileTypeData
     /// <summary>
     /// Gets the details for the Word document type.
     /// </summary>
-    internal static FileTypeDetails Word => new(
+    internal static FileTypeDetailsViewModel Word => new(
         "Word",
         "Microsoft Word",
         "Type for Microsoft Word files",

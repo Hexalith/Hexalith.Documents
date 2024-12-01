@@ -24,7 +24,7 @@ public interface IFileTypeQueryService : IIdDescriptionService
     /// <returns>A task that represents the asynchronous operation. The task result contains the document type details.</returns>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="id"/> is null or empty.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the document type with the specified ID is not found.</exception>
-    Task<FileTypeDetails> GetDetailsAsync(string id);
+    Task<FileTypeDetailsViewModel> GetDetailsAsync(string id);
 
     /// <summary>
     /// Retrieves summaries for all document types in the system.
@@ -34,7 +34,7 @@ public interface IFileTypeQueryService : IIdDescriptionService
     /// This method is equivalent to calling <see cref="GetSummariesAsync(int, int)"/> with skip = 0 and count = 0,
     /// which retrieves all document types without pagination.
     /// </remarks>
-    Task<IEnumerable<FileTypeSummary>> GetSummariesAsync()
+    Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync()
         => GetSummariesAsync(0, 0);
 
     /// <summary>
@@ -48,7 +48,7 @@ public interface IFileTypeQueryService : IIdDescriptionService
     /// This method supports pagination by allowing the caller to specify how many items to skip and how many to return.
     /// When count is 0, the method returns all document types starting from the skip position.
     /// </remarks>
-    Task<IEnumerable<FileTypeSummary>> GetSummariesAsync(int skip, int count);
+    Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync(int skip, int count);
 
     /// <summary>
     /// Searches for document types based on the provided search text.
@@ -61,5 +61,5 @@ public interface IFileTypeQueryService : IIdDescriptionService
     /// The exact search algorithm and matched fields depend on the implementation.
     /// The search is typically case-insensitive and may support partial matches.
     /// </remarks>
-    Task<IEnumerable<FileTypeSummary>> SearchSummariesAsync(string searchText);
+    Task<IEnumerable<FileTypeSummaryViewModel>> SearchSummariesAsync(string searchText);
 }

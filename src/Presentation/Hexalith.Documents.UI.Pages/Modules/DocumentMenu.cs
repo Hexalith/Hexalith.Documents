@@ -43,6 +43,13 @@ public static class DocumentMenu
                             [
                                 new MenuItemInformation(
                                     Labels.DocumentTypeMenuItem,
+                                    "Documents/DocumentPartition",
+                                    new IconInformation("DocumentBulletListCube", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
+                                    false,
+                                    10,
+                                    []),
+                                new MenuItemInformation(
+                                    Labels.DocumentTypeMenuItem,
                                     "Documents/DocumentType",
                                     new IconInformation("BookQuestionMarkRtl", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,

@@ -6,14 +6,14 @@
 /// <param name="Id">The unique identifier of the document type.</param>
 /// <param name="Name">The name of the document type.</param>
 /// <param name="Disabled">Indicates whether the document type is disabled.</param>
-public record FileTypeSummary(string Id, string Name, bool Disabled)
+public record FileTypeSummaryViewModel(string Id, string Name, bool Disabled)
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="FileTypeSummary"/> class from a <see cref="FileTypeDetails"/> object.
+    /// Initializes a new instance of the <see cref="FileTypeSummaryViewModel"/> class from a <see cref="FileTypeDetailsViewModel"/> object.
     /// </summary>
     /// <param name="details">The document type details to create the summary from.</param>
     /// <exception cref="ArgumentNullException">Thrown when details is null.</exception>
-    public FileTypeSummary(FileTypeDetails details)
+    public FileTypeSummaryViewModel(FileTypeDetailsViewModel details)
         : this(
               (details ?? throw new ArgumentNullException(nameof(details))).Id,
               details.Name,
