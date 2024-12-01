@@ -36,9 +36,7 @@ public class AddFileTypeHandler : DomainCommandHandler<AddFileType>
             command.Id,
             command.Name,
             command.Description,
-            command.TextExtractionModeId,
-            command.SummarizationEnabled,
-            command.SummarizationInstructions,
+            command.FileToTextConverter,
             command.Targets);
 
         if (aggregate is null)

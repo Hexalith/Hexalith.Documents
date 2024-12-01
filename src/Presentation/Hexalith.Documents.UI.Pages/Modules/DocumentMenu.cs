@@ -57,7 +57,7 @@ public static class DocumentMenu
                                     []),
                                 new MenuItemInformation(
                                     Labels.FileTextExtractionTypeMenuItem,
-                                    "Documents/FileTextExtractionType",
+                                    "Documents/DocumentInformationExtraction",
                                     new IconInformation("ScanType", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     10,

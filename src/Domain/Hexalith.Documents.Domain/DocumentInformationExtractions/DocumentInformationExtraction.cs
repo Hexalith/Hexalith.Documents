@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Domain.FileTextExtractionModes;
+﻿namespace Hexalith.Documents.Domain.DocumentInformationExtractions;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;

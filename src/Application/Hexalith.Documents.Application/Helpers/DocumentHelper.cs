@@ -15,7 +15,7 @@ using Hexalith.Documents.Domain.FileTypes;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Hexalith.Documents.Domain.FileTextExtractionModes;
+using Hexalith.Documents.Domain.DocumentInformationExtractions;
 
 /// <summary>
 /// Class DocumentHelper.

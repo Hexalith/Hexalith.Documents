@@ -13,9 +13,9 @@ public class FileTypeAddViewModel
     public string? Description { get; set; }
 
     /// <summary>
-    /// Gets or sets the list of file type identifiers.
+    /// Gets or sets the file to text converter for the document type.
     /// </summary>
-    public IEnumerable<string> FileTypeIds { get; set; } = [];
+    public string? FileToTextConverter { get; set; }
 
     /// <summary>
     /// Gets or sets the unique identifier of the document type.
@@ -28,4 +28,9 @@ public class FileTypeAddViewModel
     /// </summary>
     [Required]
     public string? Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the targets for the document type.
+    /// </summary>
+    public IEnumerable<string> Targets { get; set; } = [];
 }

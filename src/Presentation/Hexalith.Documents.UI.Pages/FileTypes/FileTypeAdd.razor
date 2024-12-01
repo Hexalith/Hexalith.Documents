@@ -64,15 +64,14 @@
         _addClicked = true;
         if (!ValidationResult.IsValid)
             return;
-        await CommandService.SubmitCommandAsync(new AddFileType(
-            _data.Id!, 
-            _data.Name!, 
-            _data.Description,
-            _data.TextExtractionModelId,
-            _data.SummarizationEnabled,
-            _data.SummarizationInstractions,
-            _data.Targets,
-            _data.FileTypeIds), CancellationToken.None);
+        await CommandService.SubmitCommandAsync(
+            new AddFileType(
+                _data.Id!, 
+                _data.Name!, 
+                _data.Description,
+                _data.FileToTextConverter,
+                _data.Targets), 
+            CancellationToken.None);
         NavigationManager.NavigateTo(Module.Path);
     }
 }

@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 using Hexalith.Documents.Domain;
-using Hexalith.Documents.Events.DocumentTypes;
 using Hexalith.Documents.Events.FileTypes;
 using Hexalith.Domain.Aggregates;
 using Hexalith.Domain.Events;
@@ -15,19 +14,14 @@ using Hexalith.Domain.Events;
 /// <param name="Id">The unique identifier of the file type.</param>
 /// <param name="Name">The name of the file type.</param>
 /// <param name="Description">The description of the file type.</param>
-/// <param name="TextExtractionModeId">The identifier of the text extraction mode to be used for this file type.</param>
-/// <param name="SummarizationEnabled">Indicates whether text summarization is enabled for this file type.</param>
-/// <param name="SummarizationInstructions">Optional instructions for text summarization.</param>
 /// <param name="Targets">Collection of target identifiers associated with this file type.</param>
 /// <param name="Disabled">Indicates whether this file type is disabled.</param>
 [DataContract]
 public record FileType(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] string Description,
-    [property: DataMember(Order = 4)] string? TextExtractionModeId,
-    [property: DataMember(Order = 5)] bool SummarizationEnabled,
-    [property: DataMember(Order = 6)] string? SummarizationInstructions,
+    [property: DataMember(Order = 3)] string? Description,
+    [property: DataMember(Order = 3)] string? FileToTextConverter,
     [property: DataMember(Order = 7)] IEnumerable<string> Targets,
     [property: DataMember(Order = 8)] bool Disabled) : IDomainAggregate
 {
@@ -38,9 +32,7 @@ public record FileType(
         : this(
               string.Empty,
               string.Empty,
-              string.Empty,
               null,
-              false,
               null,
               [],
               false)
@@ -57,9 +49,7 @@ public record FileType(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               added.Name,
               added.Description,
-              added.TextExtractionModeId,
-              added.SummarizationEnabled,
-              added.SummarizationInstructions,
+              added.FileToTextConverter,
               added.Targets,
               false)
     {
@@ -92,9 +82,7 @@ public record FileType(
             FileTypeDescriptionChanged e => ApplyEvent(e),
             FileTypeDisabled e => ApplyEvent(e),
             FileTypeEnabled e => ApplyEvent(e),
-            FileTypeTextSummarizationDisabled e => ApplyEvent(e),
-            FileTypeTextSummarizationEnabled e => ApplyEvent(e),
-            FileTypeTextExtractionModeChanged e => ApplyEvent(e),
+            FileTypeFileToTextConverterChanged e => ApplyEvent(e),
             FileTypeEvent e => new ApplyResult(
                 this,
                 [new FileTypeEventCancelled(e, "Event not implemented")],
@@ -149,37 +137,13 @@ public record FileType(
             : new ApplyResult(this, [new FileTypeEventCancelled(e, "The document is already disabled.")], true);
 
     /// <summary>
-    /// Applies a FileTypeTextSummarizationEnabled event to the aggregate.
-    /// </summary>
-    /// <param name="e">The FileTypeTextSummarizationEnabled event to apply.</param>
-    /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeTextSummarizationEnabled e) => !SummarizationEnabled || SummarizationInstructions != e.SummarizationInstructions
-            ? new ApplyResult(
-            this with { SummarizationEnabled = true, SummarizationInstructions = e.SummarizationInstructions },
-            [e],
-            false)
-            : new ApplyResult(this, [new FileTypeEventCancelled(e, "The document is already enabled.")], true);
-
-    /// <summary>
-    /// Applies a FileTypeTextSummarizationDisabled event to the aggregate.
-    /// </summary>
-    /// <param name="e">The FileTypeTextSummarizationDisabled event to apply.</param>
-    /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeTextSummarizationDisabled e) => SummarizationEnabled || SummarizationInstructions != null
-            ? new ApplyResult(
-            this with { SummarizationEnabled = false, SummarizationInstructions = null },
-            [e],
-            false)
-            : new ApplyResult(this, [new FileTypeEventCancelled(e, "The document is already disabled.")], true);
-
-    /// <summary>
     /// Applies a FileTypeTextExtractionModeChanged event to the aggregate.
     /// </summary>
     /// <param name="e">The FileTypeTextExtractionModeChanged event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeTextExtractionModeChanged e) => e.TextExtractionModeId != TextExtractionModeId
+    private ApplyResult ApplyEvent(FileTypeFileToTextConverterChanged e) => e.FileToTextConverter != FileToTextConverter
         ? new ApplyResult(
-            this with { TextExtractionModeId = e.TextExtractionModeId },
+            this with { FileToTextConverter = e.FileToTextConverter },
             [e],
             false)
         : new ApplyResult(this, [], false);

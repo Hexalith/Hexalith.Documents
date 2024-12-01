@@ -20,13 +20,9 @@ public partial record FileTypeAdded(
     [property: DataMember(Order = 2)]
     string Name,
     [property: DataMember(Order = 3)]
-    string Description,
+    string? Description,
     [property: DataMember(Order = 4)]
-    string? TextExtractionModeId,
-    [property: DataMember(Order = 5)]
-    bool SummarizationEnabled,
-    [property: DataMember(Order = 6)]
-    string? SummarizationInstructions,
+    string? FileToTextConverter,
     [property: DataMember(Order = 7)]
     IEnumerable<string> Targets)
     : FileTypeEvent(Id)
