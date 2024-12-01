@@ -11,14 +11,15 @@ public class DocumentEditViewModel
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentEditViewModel"/> class.
     /// </summary>
-    /// <param name="factoryDetails">The details of the document to be edited.</param>
-    public DocumentEditViewModel(DocumentDetails factoryDetails)
+    /// <param name="details">The details of the document to be edited.</param>
+    public DocumentEditViewModel(DocumentDetails details)
     {
-        ArgumentNullException.ThrowIfNull(factoryDetails);
-        Original = factoryDetails;
-        Name = factoryDetails.Name;
-        Description = factoryDetails.Description;
-        Disabled = factoryDetails.Disabled;
+        ArgumentNullException.ThrowIfNull(details);
+        Original = details;
+        Name = details.Name;
+        Description = details.Description;
+        Disabled = details.Disabled;
+        DocumentTypeId = details.DocumentTypeId;
     }
 
     /// <summary>
@@ -27,6 +28,7 @@ public class DocumentEditViewModel
     public DocumentEditViewModel()
         : this(new DocumentDetails(
         UniqueIdHelper.GenerateUniqueStringId(),
+        string.Empty,
         string.Empty,
         string.Empty,
         false))
@@ -51,7 +53,7 @@ public class DocumentEditViewModel
     /// <summary>
     /// Gets a value indicating whether the document has changes.
     /// </summary>
-    public bool HasChanges => Name != Original.Name || Description != Original.Description || Disabled != Original.Disabled;
+    public bool HasChanges => Name != Original.Name || Description != Original.Description || Disabled != Original.Disabled || DocumentTypeId != Original.DocumentTypeId;
 
     /// <summary>
     /// Gets the identifier of the document.

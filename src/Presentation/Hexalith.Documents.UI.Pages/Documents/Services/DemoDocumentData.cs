@@ -23,6 +23,7 @@ public static class DemoDocumentData
     /// </value>
     internal static DocumentDetails JB => new(
         "JB",
+        "Livres",
         "Un livre de SF",
         "Un roman de science fiction",
         false);
@@ -35,6 +36,7 @@ public static class DemoDocumentData
     /// </value>
     internal static DocumentDetails PJ => new(
         "PJ",
+        "Photos",
         "Photo Paris",
         "Une photo de Paris",
         false);

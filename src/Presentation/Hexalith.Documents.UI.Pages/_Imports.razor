@@ -1,5 +1,6 @@
 ﻿@inject IApplication Application
 @inject IDocumentModule Module
+@attribute [Authorize(Roles = ApplicationRoles.GlobalAdministrator)]
 @using System.Net.Http
 @using System.Net.Http.Json
 @using Hexalith.Application.Modules.Applications

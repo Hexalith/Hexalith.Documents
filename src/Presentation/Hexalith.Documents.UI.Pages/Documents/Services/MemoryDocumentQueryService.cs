@@ -100,7 +100,7 @@ public class MemoryDocumentQueryService : IDocumentQueryService
             result = result.Take(count);
         }
 
-        List<IdDescription> list = result.ToList();
+        List<IdDescription> list = [];
         return Task.FromResult<IEnumerable<IdDescription>>(list);
     }
 

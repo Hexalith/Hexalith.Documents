@@ -13,6 +13,7 @@ using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.UI.Pages.Helpers;
 using Hexalith.Documents.UI.Pages.Modules;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
@@ -79,6 +80,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
 
         _ = services.AddDocumentCommandHandlers();
         _ = services.AddDocumentEventValidators();
+        _ = services.AddDocumentUI();
 
         _ = services.AddScoped<IFileService, AzureBlobStorageFileService>();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
