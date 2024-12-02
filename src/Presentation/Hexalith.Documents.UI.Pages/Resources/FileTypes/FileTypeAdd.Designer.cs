@@ -97,7 +97,34 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document type.
+        ///   Looks up a localized string similar to New target.
+        /// </summary>
+        internal static string NewTarget {
+            get {
+                return ResourceManager.GetString("NewTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        internal static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File MIME targets.
+        /// </summary>
+        internal static string Targets {
+            get {
+                return ResourceManager.GetString("Targets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new file type.
         /// </summary>
         internal static string Title {
             get {

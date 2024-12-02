@@ -1,4 +1,4 @@
-﻿@page "/Documents/DocumentType/Add"
+﻿@page "/Documents/Add/DocumentType"
 @attribute [Authorize(Roles = DocumentRoles.Contributor)]
 @inject IDocumentTypeQueryService DocumentQueryService
 @inject NavigationManager NavigationManager
@@ -22,7 +22,7 @@
                           IconStart="@(new Icons.Regular.Size24.Add())"
                           OnClick="OnAdd">@Labels.Add</FluentButton>
             <FluentSpacer />
-            <HexValidationSummary ValidationSummary="ValidationResult" />
+            <HexValidationSummary ValidationResult="ValidationResult" />
         </FluentStack>
     }
 </FluentStack>
@@ -61,10 +61,10 @@
 
     public async Task OnAdd()
     {
-		if (_data is null || _user is null)
-		{
-			return;
-		}
+        if (_data is null || _user is null)
+        {
+            return;
+        }
         _addClicked = true;
         if (!ValidationResult.IsValid)
             return;

@@ -1,4 +1,5 @@
 ﻿@page "/Documents/FileType"
+@rendermode InteractiveAuto
 @inject NavigationManager NavigationManager;
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeIndex;
 <FluentToolbar Style="width:100%;">
@@ -8,7 +9,7 @@
 </FluentToolbar>
 <FluentStack Orientation="Orientation.Vertical">
     <h3>@Labels.Title</h3>
-    <FileTypeSummaryGrid />
+    <FileTypeSummaryGrid @rendermode="InteractiveAuto" />
 </FluentStack>
 
 
@@ -17,7 +18,7 @@
 
     private void AddAsync()
     {
-        NavigationManager.NavigateTo("/Documents/Add");
+        NavigationManager.NavigateTo("/Documents/Add/FileType");
     }
     private Task ImportAsync()
     {

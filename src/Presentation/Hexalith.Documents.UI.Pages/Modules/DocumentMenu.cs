@@ -42,7 +42,7 @@ public static class DocumentMenu
                             10,
                             [
                                 new MenuItemInformation(
-                                    Labels.DocumentTypeMenuItem,
+                                    Labels.DocumentPartitionMenuItem,
                                     "Documents/DocumentPartition",
                                     new IconInformation("DocumentBulletListCube", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,

@@ -79,6 +79,15 @@ namespace Hexalith.Documents.UI.Pages.Resources.Modules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Document partitions.
+        /// </summary>
+        internal static string DocumentPartitionMenuItem {
+            get {
+                return ResourceManager.GetString("DocumentPartitionMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Document types.
         /// </summary>
         internal static string DocumentTypeMenuItem {

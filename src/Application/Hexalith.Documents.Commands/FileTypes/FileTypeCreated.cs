@@ -18,7 +18,7 @@ public partial record AddFileType(
     [property: DataMember(Order = 2)]
     string Name,
     [property: DataMember(Order = 3)]
-    string Description,
+    string? Description,
     [property: DataMember(Order = 4)]
     string? FileToTextConverter,
     [property: DataMember(Order = 5)]

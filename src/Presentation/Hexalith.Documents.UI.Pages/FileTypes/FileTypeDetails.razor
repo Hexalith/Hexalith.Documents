@@ -1,5 +1,4 @@
 ﻿@page "/Documents/FileType/{FileTypeId}"
-@attribute [Authorize(Roles = DocumentRoles.Contributor)]
 @inject IFileTypeQueryService QueryService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<FileTypeDetails> L
@@ -47,7 +46,7 @@
         if (AuthenticationStateTask is not null)
         {
             var authState = await AuthenticationStateTask;
-            if (!authState.User.Identity?.IsAuthenticated == false)
+            if (!authState.User.Identity?.IsAuthenticated == true)
             {
                 NavigationManager.NavigateTo(Application.LoginPath);
             }

@@ -123,6 +123,9 @@
   <data name="DocumentMenuItem" xml:space="preserve">
     <value>Document</value>
   </data>
+  <data name="DocumentPartitionMenuItem" xml:space="preserve">
+    <value>Partitions de documents</value>
+  </data>
   <data name="DocumentTypeMenuItem" xml:space="preserve">
     <value>Types de document</value>
   </data>

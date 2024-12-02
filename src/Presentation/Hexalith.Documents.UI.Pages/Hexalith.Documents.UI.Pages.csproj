@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\DocumentPartition\DocumentPartitionIndex.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentPartitionIndex.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Documents\DocumentAddValidation.Designer.cs">
       <DependentUpon>DocumentAddValidation.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -82,6 +87,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\DocumentPartition\DocumentPartitionIndex.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DocumentPartitionIndex.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Documents\DocumentAddValidation.resx">
       <LastGenOutput>DocumentAddValidation.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>

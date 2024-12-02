@@ -16,6 +16,7 @@ using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.UI.Components.Documents.Services;
 using Hexalith.Documents.UI.Pages.Documents.Services;
+using Hexalith.Documents.UI.Pages.Helpers;
 using Hexalith.Documents.UI.Pages.Modules;
 
 using Microsoft.AspNetCore.Authorization;
@@ -77,6 +78,8 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
 
         // Add application module
         services.TryAddSingleton<IDocumentModule, HexalithDocumentsWebAppModule>();
+
+        _ = services.AddDocumentUI();
 
         _ = services
             .AddTransient(p => DocumentMenu.Menu);

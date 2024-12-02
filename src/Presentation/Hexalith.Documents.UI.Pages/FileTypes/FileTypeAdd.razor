@@ -1,84 +1,121 @@
-﻿@page "/Documents/FileType/Add"
+﻿@page "/Documents/Add/FileType"
+@rendermode InteractiveAuto
 @inject IFileTypeQueryService DocumentQueryService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<FileTypeAdd> L
 @inject IStringLocalizer<FileTypeAddValidation> ValidationLabels
 @inject ICommandService CommandService
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeAdd;
+
 <FluentToolbar>
-    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size16.Add())">@Labels.Add</FluentButton>
+	<FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size16.Add())">@Labels.Add</FluentButton>
 </FluentToolbar>
+
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
-    <h3>@L[Labels.Title, _documentId]</h3>
-    @if (_data is not null)
-    {
-        <FluentStack Orientation="Orientation.Vertical">
-            <FluentStack Orientation="Orientation.Vertical">
-                <FluentTextField @bind-Value="_data.Id" Label="@Labels.Id"></FluentTextField>
-                <FluentTextField @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
-                <FluentTextField @bind-Value="@_data.Description" Label="@Labels.Description"></FluentTextField>
-            </FluentStack>
-            <FluentSpacer />
-            <FluentButton Disabled="@(_addClicked && !ValidationResult.IsValid)"
-            Appearance="Appearance.Accent"
-            IconStart="@(new Icons.Regular.Size24.Add())"
-            OnClick="OnAdd">@Labels.Add</FluentButton>
-            <FluentSpacer />
-            <HexValidationSummary ValidationSummary="ValidationResult" />
-        </FluentStack>
-    }
+	<FluentLabel Typo="Typography.PageTitle">@L[Labels.Title]</FluentLabel>
+	@if (_data is not null)
+	{
+		<FluentStack Orientation="Orientation.Vertical">
+			<FluentStack Orientation="Orientation.Vertical">
+				<FluentTextField @bind-Value="_data.Id" Label="@Labels.Id"></FluentTextField>
+				<FluentTextField @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
+				<FluentTextField @bind-Value="_data.Description" Label="@Labels.Description"></FluentTextField>
+				<FluentLabel Typo="Typography.PaneHeader">@L[Labels.Targets]</FluentLabel>
+
+				<FluentStack Orientation="Orientation.Horizontal">
+					<FluentTextField @bind-Value="_newTarget" Label="@Labels.NewTarget"></FluentTextField>
+					<FluentButton OnClick="AddTarget"
+								  IconStart="@(new Icons.Regular.Size16.Add())"
+								  Style="margin-left: 8px;">
+						@Labels.Add
+					</FluentButton>
+				</FluentStack>
+
+				@foreach (string target in _data.Targets)
+				{
+					<FluentStack Orientation="Orientation.Horizontal" Style="margin: 4px 0;">
+						<FluentTextField Value="@target" Readonly="true"></FluentTextField>
+						<FluentButton OnClick="@(() =>RemoveTarget(target))"
+									  IconStart="@(new Icons.Regular.Size16.Delete())"
+									  Style="margin-left: 8px;">
+							@Labels.Remove
+						</FluentButton>
+					</FluentStack>
+				}
+			</FluentStack>
+
+			<FluentSpacer></FluentSpacer>
+
+			<FluentButton Disabled="@(_addClicked && !ValidationResult.IsValid)"
+						  Appearance="Appearance.Accent"
+						  IconStart="@(new Icons.Regular.Size24.Add())"
+						  OnClick="OnAdd">
+				@Labels.Add
+			</FluentButton>
+
+			<FluentSpacer></FluentSpacer>
+			<HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
+		</FluentStack>
+	}
 </FluentStack>
 
 @code {
-    [Parameter]
-    public string? DocumentId { get; set; }
+	[CascadingParameter]
+	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
-    [CascadingParameter]
-    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+	private ClaimsPrincipal? _user;
+	private FileTypeAddViewModel _data = new();
+	private string _newTarget = string.Empty;
+	private bool _addClicked;
 
-    private string _documentId => DocumentId ?? Hexalith.Extensions.Helpers.UniqueIdHelper.GenerateUniqueStringId();
+	private ValidationResult ValidationResult => new FileTypeAddValidation(ValidationLabels).Validate(_data);
 
-    private FileDescription? file;
+	protected override async Task OnInitializedAsync()
+	{
+		if (AuthenticationStateTask is not null)
+		{
+			var authState = await AuthenticationStateTask;
+			if (!authState.User.Identity?.IsAuthenticated == true)
+			{
+				NavigationManager.NavigateTo(Application.LoginPath);
+			}
+			_user = authState.User;
+		}
+	}
 
-    ClaimsPrincipal? _user;
+	private async Task OnAdd()
+	{
+		if (_data is null || _user is null)
+		{
+			return;
+		}
+		_addClicked = true;
+		if (!ValidationResult.IsValid)
+			return;
 
-    FileTypeAddViewModel _data = new();
+		var command = new AddFileType(
+			_data.Id!,
+			_data.Name!,
+			_data.Description,
+			_data.FileToTextConverter,
+			_data.Targets);
 
-    ValidationResult ValidationResult => new FileTypeAddValidation(ValidationLabels).Validate(_data);
+		await CommandService.SubmitCommandAsync(_user, command, CancellationToken.None);
+		NavigationManager.NavigateTo(Module.Path);
+	}
 
-    bool _addClicked;
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (AuthenticationStateTask is not null)
-        {
-            var authState = await AuthenticationStateTask;
-            if (!authState.User.Identity?.IsAuthenticated == false)
-            {
-                NavigationManager.NavigateTo(Application.LoginPath);
-            }
-            _user = authState.User;
-        }
-    }
-
-    public async Task OnAdd()
-    {
-        if (_data is null || _user is null)
-        {
-            return;
-        }
-            _addClicked = true;
-        if (!ValidationResult.IsValid)
-            return;
-        await CommandService.SubmitCommandAsync(
-            _user,
-            new AddFileType(
-                _data.Id!, 
-                _data.Name!, 
-                _data.Description,
-                _data.FileToTextConverter,
-                _data.Targets), 
-            CancellationToken.None);
-        NavigationManager.NavigateTo(Module.Path);
-    }
+	private void AddTarget()
+	{
+		if (!string.IsNullOrWhiteSpace(_newTarget))
+		{
+			_data.Targets = _data.Targets.Concat([_newTarget]).Distinct().OrderBy(p => p);
+			StateHasChanged();
+			_newTarget = string.Empty;
+		}
+	}
+	private void RemoveTarget(string target)
+	{
+		_data.Targets = _data.Targets.Where(p => p != target);
+		StateHasChanged();
+	}
 }
