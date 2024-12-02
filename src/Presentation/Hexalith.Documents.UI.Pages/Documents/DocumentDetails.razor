@@ -7,13 +7,13 @@
 @using System.Security.Claims
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
     <h3>@L[Labels.Title, _documentId]</h3>
-    @if (data is not null)
+    @if (_data is not null)
     {
         <FluentStack Orientation="Orientation.Vertical">
             <FluentStack Orientation="Orientation.Vertical">
-                <FluentTextField @bind-Value="data.Name" Label="@Labels.Name"></FluentTextField>
-                <FluentTextField @bind-Value="@data.Description" Label="@Labels.Description"></FluentTextField>
-                <FluentCheckbox @bind-Value="@data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
+                <FluentTextField @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
+                <FluentTextField @bind-Value="@_data.Description" Label="@Labels.Description"></FluentTextField>
+                <FluentCheckbox @bind-Value="@_data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
             </FluentStack>
             <FluentSpacer />
             <AuthorizeView Roles="@DocumentRoles.Contributor">
@@ -24,7 +24,7 @@
                     }
                     else
                     {
-                        <FluentButton Appearance="Appearance.Accent" Disabled="@(!data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
+                        <FluentButton Appearance="Appearance.Accent" Disabled="@(!_data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
                     }
                 </Authorized>
                 <NotAuthorized>
@@ -43,8 +43,6 @@
 
     private string _documentId => DocumentId ?? Hexalith.Extensions.Helpers.UniqueIdHelper.GenerateUniqueStringId();
 
-    private FileDescription? file;
-
     ClaimsPrincipal? _user;
 
 
@@ -61,38 +59,38 @@
         }
         if (string.IsNullOrWhiteSpace(DocumentId))
         {
-            data = new ViewModels.DocumentEditViewModel();
+            _data = new ViewModels.DocumentEditViewModel();
             return;
         }
         else
         {
-            data = new(await DocumentQueryService.GetDetailsAsync(DocumentId));
+            _data = new(await DocumentQueryService.GetDetailsAsync(DocumentId));
         }
 
         await base.OnInitializedAsync();
     }
 
-    DocumentEditViewModel? data = null;
+    DocumentEditViewModel? _data = null;
 
     public async Task OnSave()
     {
-        if (data is null)
+        if (_data is null || _user is null)
         {
             return;
         }
-        if (data.Name == data.Original.Name || data.Description != data.Original.Description)
+        if (_data.Name == _data.Original.Name || _data.Description != _data.Original.Description)
         {
-            await CommandService.SubmitCommandAsync(new ChangeDocumentDescription(data.Id, data.Name, data.Description), CancellationToken.None);
+            await CommandService.SubmitCommandAsync(_user, new ChangeDocumentDescription(_data.Id, _data.Name, _data.Description), CancellationToken.None);
         }
-        if (data.Disabled == data.Original?.Disabled)
+        if (_data.Disabled == _data.Original?.Disabled)
         {
-            await CommandService.SubmitCommandAsync(new DisableDocument(data.Id), CancellationToken.None);
+            await CommandService.SubmitCommandAsync(_user, new DisableDocument(_data.Id), CancellationToken.None);
         }
         NavigationManager.NavigateTo("/Documents");
     }
     public async Task OnAdd()
     {
-        if (data is null)
+        if (_data is null)
         {
             return;
         }
@@ -100,14 +98,14 @@
         {
             throw new InvalidOperationException("User not authenticated");
         }
-        await CommandService.SubmitCommandAsync(new AddDocument(
-                data.Id,
-                data.Name,
-                data.Description,
-                file,
+        await CommandService.SubmitCommandAsync(_user, new AddDocument(
+                _data.Id,
+                _data.Name,
+                _data.Description,
+				new FileDescription(string.Empty, string.Empty, string.Empty, string.Empty),
                 _user.Identity.Name,
                 TimeProvider.System.GetLocalNow(),
-                data.DocumentTypeId)
+                _data.DocumentTypeId)
             , CancellationToken.None);
         NavigationManager.NavigateTo("/Documents");
     }

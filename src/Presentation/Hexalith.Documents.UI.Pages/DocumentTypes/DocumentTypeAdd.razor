@@ -61,10 +61,14 @@
 
     public async Task OnAdd()
     {
+		if (_data is null || _user is null)
+		{
+			return;
+		}
         _addClicked = true;
         if (!ValidationResult.IsValid)
             return;
-        await CommandService.SubmitCommandAsync(new AddDocumentType(
+        await CommandService.SubmitCommandAsync(_user, new AddDocumentType(
             _data.Id!, 
             _data.Name!, 
             _data.Description,

@@ -65,7 +65,10 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="configuration">The configuration.</param>
+#pragma warning disable IDE0060 // Remove unused parameter
+
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
+#pragma warning restore IDE0060 // Remove unused parameter
     {
         _ = services
             .AddSingleton<IDocumentQueryService, DemoDocumentQueryService>();

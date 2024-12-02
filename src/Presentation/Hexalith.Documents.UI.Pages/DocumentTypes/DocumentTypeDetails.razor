@@ -72,7 +72,7 @@
         {
             throw new InvalidOperationException("User not authenticated");
         }
-        await CommandService.SubmitCommandAsync(new ChangeDocumentTypeDescription(
+        await CommandService.SubmitCommandAsync(_user, new ChangeDocumentTypeDescription(
                 data.Id,
                 data.Name,
                 data.Description)

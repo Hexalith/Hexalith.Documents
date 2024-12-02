@@ -9,13 +9,13 @@
 @using System.Security.Claims
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
     <h3>@L[Labels.Title, _documentId]</h3>
-    @if (data is not null)
+    @if (_data is not null)
     {
         <FluentStack Orientation="Orientation.Vertical">
             <FluentStack Orientation="Orientation.Vertical">
-                <FluentTextField @bind-Value="data.DocumentTypeId" Label="@Labels.DocumentTypeId"></FluentTextField>
-                <FluentTextField @bind-Value="data.Name" Label="@Labels.Name"></FluentTextField>
-                <FluentTextField @bind-Value="@data.Description" Label="@Labels.Description"></FluentTextField>
+                <FluentTextField @bind-Value="_data.DocumentTypeId" Label="@Labels.DocumentTypeId"></FluentTextField>
+                <FluentTextField @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
+                <FluentTextField @bind-Value="@_data.Description" Label="@Labels.Description"></FluentTextField>
             </FluentStack>
             <FluentSpacer />
             <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.Add())" OnClick="OnAdd">@Labels.Add</FluentButton>
@@ -32,11 +32,9 @@
 
     private string _documentId => DocumentId ?? Hexalith.Extensions.Helpers.UniqueIdHelper.GenerateUniqueStringId();
 
-    private FileDescription? file;
-
     ClaimsPrincipal? _user;
 
-    DocumentAddViewModel? data = new DocumentAddViewModel();
+    DocumentAddViewModel? _data = new DocumentAddViewModel();
 
     protected override async Task OnInitializedAsync()
     {
@@ -53,7 +51,7 @@
 
     public async Task OnAdd()
     {
-        if (data is null)
+        if (_data is null || _user is null)
         {
             return;
         }
@@ -61,14 +59,14 @@
         {
             throw new InvalidOperationException("User not authenticated");
         }
-        await CommandService.SubmitCommandAsync(new AddDocument(
-                data.Id,
-                data.Name!,
-                data.Description!,
-                file!,
+        await CommandService.SubmitCommandAsync(_user, new AddDocument(
+                _data.Id,
+                _data.Name!,
+                _data.Description!,
+                new FileDescription(string.Empty, string.Empty, string.Empty, string.Empty),
                 _user.Identity.Name,
                 TimeProvider.System.GetLocalNow(),
-                data.DocumentTypeId!)
+                _data.DocumentTypeId!)
             , CancellationToken.None);
         NavigationManager.NavigateTo(Module.Path);
     }

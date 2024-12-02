@@ -1,6 +1,6 @@
-﻿@page "/Documents/FileType/{DocumentId}"
+﻿@page "/Documents/FileType/{FileTypeId}"
 @attribute [Authorize(Roles = DocumentRoles.Contributor)]
-@inject IFileTypeQueryService DocumentQueryService
+@inject IFileTypeQueryService QueryService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<FileTypeDetails> L
 @inject ICommandService CommandService
@@ -8,35 +8,39 @@
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeDetails;
 @using System.Security.Claims
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
-    <h3>@L[Labels.Title, _documentId]</h3>
-    @if (data is not null)
+    <h3>@L[Labels.Title, FileTypeId]</h3>
+    @if (_data is not null)
     {
         <FluentStack Orientation="Orientation.Vertical">
             <FluentStack Orientation="Orientation.Vertical">
-                <FluentTextField @bind-Value="data.Name" Label="@Labels.Name"></FluentTextField>
-                <FluentTextField @bind-Value="@data.Description" Label="@Labels.Description"></FluentTextField>
-                <FluentCheckbox @bind-Value="@data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
+                <FluentTextField @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
+                <FluentTextField @bind-Value="@_data.Description" Label="@Labels.Description"></FluentTextField>
+                <FluentCheckbox @bind-Value="@_data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
+                <FluentLabel Typo="Typography.PaneHeader">@Labels.Targets</FluentLabel>
+                <FluentListbox TOption="string">
+                    @foreach (string target in _data.Targets)
+                    {
+                        <FluentOption>@target</FluentOption>
+                    }
+                </FluentListbox>
             </FluentStack>
             <FluentSpacer />
-            <FluentButton Appearance="Appearance.Accent" Disabled="@(!data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
+            <FluentButton Appearance="Appearance.Accent" Disabled="@(!_data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
         </FluentStack>
     }
 </FluentStack>
 
 @code {
     [Parameter]
-    public string? DocumentId { get; set; }
+    [EditorRequired]
+    public string FileTypeId { get; set; } = string.Empty;
 
     [CascadingParameter]
     public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
-    private string _documentId => DocumentId ?? Hexalith.Extensions.Helpers.UniqueIdHelper.GenerateUniqueStringId();
-
-    private FileDescription? file;
-
     ClaimsPrincipal? _user;
 
-    FileTypeEditViewModel? data = null;
+    FileTypeEditViewModel? _data = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,14 +53,14 @@
             }
             _user = authState.User;
         }
-        if (string.IsNullOrWhiteSpace(DocumentId))
+        if (string.IsNullOrWhiteSpace(FileTypeId))
         {
-            data = new FileTypeEditViewModel();
+            _data = new FileTypeEditViewModel();
             return;
         }
         else
         {
-            data = new(await DocumentQueryService.GetDetailsAsync(DocumentId));
+            _data = new(await QueryService.GetDetailsAsync(FileTypeId));
         }
 
         await base.OnInitializedAsync();
@@ -64,7 +68,7 @@
 
     public async Task OnSave()
     {
-        if (data is null)
+        if (_data is null)
         {
             return;
         }
@@ -72,12 +76,12 @@
         {
             throw new InvalidOperationException("User not authenticated");
         }
-        await CommandService.SubmitCommandAsync(new ChangeFileTypeDescription(
-                data.Id,
-                data.Name,
-                data.Description)
+        await CommandService.SubmitCommandAsync(_user, new ChangeFileTypeDescription(
+                _data.Id,
+                _data.Name,
+                _data.Description)
             , CancellationToken.None);
-        NavigationManager.NavigateTo("/Documents");
+        NavigationManager.NavigateTo("/Documents/FileType");
     }
 
 }

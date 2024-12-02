@@ -141,4 +141,7 @@
   <data name="ReadNotAuthorized" xml:space="preserve">
     <value>Vous n'êtes pas autorisés à lire des documents</value>
   </data>
+  <data name="Targets" xml:space="preserve">
+    <value>Types de fichiers MIME</value>
+  </data>
 </root>

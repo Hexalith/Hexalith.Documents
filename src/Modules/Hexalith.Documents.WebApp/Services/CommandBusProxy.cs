@@ -4,7 +4,7 @@
 //     See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Hexalith.Documents.Client.Services;
+namespace Hexalith.Documents.WebApp.Services;
 
 using System.Net.Http.Json;
 
@@ -19,19 +19,16 @@ using Hexalith.PolymorphicSerialization;
 public class CommandBusProxy : ICommandBus
 {
     private readonly HttpClient _httpClient;
-    private readonly TimeProvider _timeProvider;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CommandBusProxy"/> class.
     /// </summary>
     /// <param name="httpClient">The HTTP client used for sending commands.</param>
     /// <param name="timeProvider">The time provider used for getting the current time.</param>
-    public CommandBusProxy(HttpClient httpClient, TimeProvider timeProvider)
+    public CommandBusProxy(HttpClient httpClient)
     {
         ArgumentNullException.ThrowIfNull(httpClient);
-        ArgumentNullException.ThrowIfNull(timeProvider);
         _httpClient = httpClient;
-        _timeProvider = timeProvider;
     }
 
     /// <inheritdoc/>
@@ -41,16 +38,5 @@ public class CommandBusProxy : ICommandBus
             .PostAsJsonAsync("/api/command/publish", new MessageState((PolymorphicRecordBase)message, metadata), cancellationToken)
             .ConfigureAwait(false);
         _ = response.EnsureSuccessStatusCode();
-    }
-
-    /// <inheritdoc/>
-    public async Task PublishAsync(MessageState message, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(message);
-        await PublishAsync(
-                    message.Message,
-                    message.Metadata,
-                    cancellationToken)
-            .ConfigureAwait(false);
     }
 }

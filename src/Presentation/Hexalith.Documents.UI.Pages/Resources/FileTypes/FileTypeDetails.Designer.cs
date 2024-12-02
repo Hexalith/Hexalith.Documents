@@ -124,6 +124,15 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MIME file type targets.
+        /// </summary>
+        internal static string Targets {
+            get {
+                return ResourceManager.GetString("Targets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Document {0}.
         /// </summary>
         internal static string Title {

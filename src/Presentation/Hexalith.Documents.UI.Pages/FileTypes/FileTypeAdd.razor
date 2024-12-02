@@ -20,9 +20,9 @@
             </FluentStack>
             <FluentSpacer />
             <FluentButton Disabled="@(_addClicked && !ValidationResult.IsValid)"
-                          Appearance="Appearance.Accent"
-                          IconStart="@(new Icons.Regular.Size24.Add())"
-                          OnClick="OnAdd">@Labels.Add</FluentButton>
+            Appearance="Appearance.Accent"
+            IconStart="@(new Icons.Regular.Size24.Add())"
+            OnClick="OnAdd">@Labels.Add</FluentButton>
             <FluentSpacer />
             <HexValidationSummary ValidationSummary="ValidationResult" />
         </FluentStack>
@@ -63,10 +63,15 @@
 
     public async Task OnAdd()
     {
-        _addClicked = true;
+        if (_data is null || _user is null)
+        {
+            return;
+        }
+            _addClicked = true;
         if (!ValidationResult.IsValid)
             return;
         await CommandService.SubmitCommandAsync(
+            _user,
             new AddFileType(
                 _data.Id!, 
                 _data.Name!, 

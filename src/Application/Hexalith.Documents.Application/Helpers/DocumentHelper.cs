@@ -9,13 +9,13 @@ using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Commands.DocumentTypes;
 using Hexalith.Documents.Commands.FileTypes;
 using Hexalith.Documents.Domain.DocumentContainers;
+using Hexalith.Documents.Domain.DocumentInformationExtractions;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.DocumentTypes;
 using Hexalith.Documents.Domain.FileTypes;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Hexalith.Documents.Domain.DocumentInformationExtractions;
 
 /// <summary>
 /// Class DocumentHelper.

@@ -17,7 +17,7 @@ public partial record DocumentTypeAdded(
     [property: DataMember(Order = 2)]
     string Name,
     [property: DataMember(Order = 3)]
-    string Description,
+    string? Description,
     [property: DataMember(Order = 4)]
     IEnumerable<string> FileTypeIds)
     : DocumentTypeEvent(Id)

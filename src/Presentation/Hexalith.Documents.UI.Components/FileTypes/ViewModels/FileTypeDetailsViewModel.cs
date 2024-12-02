@@ -1,10 +1,13 @@
 ﻿namespace Hexalith.Documents.UI.Components.FileTypes.ViewModels;
 
+using System.Collections.Generic;
+
 /// <summary>
-/// Represents detailed information about a document type.
+/// Represents the details of a file type.
 /// </summary>
-/// <param name="Id">The unique identifier of the document type.</param>
-/// <param name="Name">The name of the document type.</param>
-/// <param name="Description">The description of the document type.</param>
-/// <param name="Disabled">Indicates whether the document type is disabled.</param>
-public record FileTypeDetailsViewModel(string Id, string Name, string Description, bool Disabled);
+/// <param name="Id">The unique identifier of the file type.</param>
+/// <param name="Name">The name of the file type.</param>
+/// <param name="Description">The description of the file type.</param>
+/// <param name="Targets">The targets associated with the file type.</param>
+/// <param name="Disabled">Indicates whether the file type is disabled.</param>
+public record FileTypeDetailsViewModel(string Id, string Name, string Description, IEnumerable<string> Targets, bool Disabled);

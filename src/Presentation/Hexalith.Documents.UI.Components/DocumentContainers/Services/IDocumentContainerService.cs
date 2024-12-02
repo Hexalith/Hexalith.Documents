@@ -1,10 +1,8 @@
 ﻿namespace Hexalith.Documents.UI.Components.DocumentContainers.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
+/// <summary>
+/// Provides methods for managing document containers.
+/// </summary>
 internal interface IDocumentContainerService
 {
 }
