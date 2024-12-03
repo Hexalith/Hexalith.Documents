@@ -7,6 +7,4 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Id">The unique identifier of the extraction mode that was enabled.</param>
 [PolymorphicSerialization]
-public partial record DocumentInformationExtractionEnabled(string Id) : DocumentInformationExtractionEvent(Id)
-{
-}
+public partial record DocumentInformationExtractionEnabled(string Id) : DocumentInformationExtractionEvent(Id);
