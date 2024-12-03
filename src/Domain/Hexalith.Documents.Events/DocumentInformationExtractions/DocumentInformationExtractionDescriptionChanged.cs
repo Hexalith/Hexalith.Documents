@@ -1,6 +1,7 @@
 ﻿namespace Hexalith.Documents.Events.DocumentInformationExtractions;
 
 using System.Runtime.Serialization;
+
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>

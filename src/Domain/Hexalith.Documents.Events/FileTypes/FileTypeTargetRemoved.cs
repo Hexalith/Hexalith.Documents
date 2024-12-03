@@ -1,6 +1,7 @@
 ﻿namespace Hexalith.Documents.Events.FileTypes;
 
 using System.Runtime.Serialization;
+
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
@@ -10,7 +11,7 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="Target">The identifier of the target being removed from the file type.</param>
 [PolymorphicSerialization]
 public partial record FileTypeTargetRemoved(
-    string Id, 
+    string Id,
     [property: DataMember(Order = 2)] string Target)
     : FileTypeEvent(Id)
 {

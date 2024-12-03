@@ -1,7 +1,7 @@
 ﻿namespace Hexalith.Documents.Events.FileTypes;
 
 using System.Runtime.Serialization;
-using Hexalith.Documents.Domain.ValueObjects;
+
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
@@ -11,7 +11,7 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="Target">The identifier of the target being added to the file type.</param>
 [PolymorphicSerialization]
 public partial record FileTypeTargetAdded(
-    string Id, 
+    string Id,
     [property: DataMember(Order = 2)] string Target)
     : FileTypeEvent(Id)
 {
