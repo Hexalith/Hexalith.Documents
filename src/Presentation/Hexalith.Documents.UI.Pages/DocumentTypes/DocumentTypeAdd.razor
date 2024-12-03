@@ -36,8 +36,6 @@
 
     private string _documentId => DocumentId ?? Hexalith.Extensions.Helpers.UniqueIdHelper.GenerateUniqueStringId();
 
-    private FileDescription? file;
-
     ClaimsPrincipal? _user;
 
     DocumentTypeAddViewModel _data = new();
