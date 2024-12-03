@@ -41,7 +41,7 @@
         if (AuthenticationStateTask is not null)
         {
             var authState = await AuthenticationStateTask;
-            if (!authState.User.Identity?.IsAuthenticated == false)
+            if (!authState.User.Identity?.IsAuthenticated == true)
             {
                 NavigationManager.NavigateTo(Application.LoginPath);
             }
