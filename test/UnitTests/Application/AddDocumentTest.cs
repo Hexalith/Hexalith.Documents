@@ -6,9 +6,9 @@ using System.Text.Json;
 using FluentAssertions;
 
 using Hexalith.Application.Metadatas;
-using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Commands.Extensions;
+using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Infrastructure.DaprRuntime.Actors;
 using Hexalith.PolymorphicSerialization;
 

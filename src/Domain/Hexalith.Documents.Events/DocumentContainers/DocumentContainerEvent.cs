@@ -8,9 +8,9 @@ using Hexalith.PolymorphicSerialization;
 /// <summary>
 /// Represents the base class for all document container events.
 /// </summary>
+/// <param name="Id">The identifier of the document container.</param>
 [PolymorphicSerialization]
 public abstract partial record DocumentContainerEvent(
-    /// <param name="Id">The unique identifier of the document container.</param>
     [property: DataMember(Order = 1)] string Id)
 {
     /// <summary>
