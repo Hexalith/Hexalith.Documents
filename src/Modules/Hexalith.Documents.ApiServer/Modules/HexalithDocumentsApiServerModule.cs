@@ -11,6 +11,7 @@ using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.Documents;
+using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
@@ -90,8 +91,10 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
             throw new ArgumentException($"{nameof(RegisterActors)} parameter must be an {nameof(ActorRegistrationCollection)}. Actual type : {actorCollection.GetType().Name}.", nameof(actorCollection));
         }
 
+        actorRegistrations.RegisterActor<DomainAggregateActor>(DomainAggregateActorBase.GetAggregateActorName(DocumentDomainHelper.FileTypeAggregateName));
         actorRegistrations.RegisterActor<DomainAggregateActor>(DomainAggregateActorBase.GetAggregateActorName(DocumentDomainHelper.DocumentAggregateName));
-        actorRegistrations.RegisterProjectionActor<Document>("Document");
+        actorRegistrations.RegisterProjectionActor<FileType>(nameof(Hexalith.Documents));
+        actorRegistrations.RegisterProjectionActor<Document>(nameof(Hexalith.Documents));
     }
 
     /// <inheritdoc/>

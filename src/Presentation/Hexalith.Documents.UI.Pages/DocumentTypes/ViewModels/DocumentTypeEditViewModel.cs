@@ -36,7 +36,7 @@ public class DocumentTypeEditViewModel
     /// <summary>
     /// Gets or sets the description of the document type.
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the document type is disabled.
