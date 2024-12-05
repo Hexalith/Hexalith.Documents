@@ -150,6 +150,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{9368C4ED-9BE9-48B5-8EC6-861CEA560C5D}"
 	ProjectSection(SolutionItems) = preProject
 		Hexalith\src\Hexalith.Build\Dependencies.props = Hexalith\src\Hexalith.Build\Dependencies.props
+		Hexalith\Directory.Build.props = Hexalith\Directory.Build.props
 		Hexalith\.github\workflows\hexalith_build.yml = Hexalith\.github\workflows\hexalith_build.yml
 		Hexalith\src\Hexalith.Build\Project.Common.props = Hexalith\src\Hexalith.Build\Project.Common.props
 		Hexalith\.github\workflows\semgrep.yml = Hexalith\.github\workflows\semgrep.yml
