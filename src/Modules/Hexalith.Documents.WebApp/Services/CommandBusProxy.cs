@@ -35,7 +35,7 @@ public class CommandBusProxy : ICommandBus
     public async Task PublishAsync(object message, Metadata metadata, CancellationToken cancellationToken)
     {
         HttpResponseMessage response = await _httpClient
-            .PostAsJsonAsync("/api/command/publish", new MessageState((PolymorphicRecordBase)message, metadata), cancellationToken)
+            .PostAsJsonAsync("/api/command/publish", new MessageState((PolymorphicRecordBase)message, metadata), PolymorphicHelper.DefaultJsonSerializerOptions, cancellationToken)
             .ConfigureAwait(false);
         _ = response.EnsureSuccessStatusCode();
     }
