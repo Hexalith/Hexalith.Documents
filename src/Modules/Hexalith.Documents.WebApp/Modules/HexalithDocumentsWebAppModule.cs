@@ -48,7 +48,7 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
     public int OrderWeight => 0;
 
     /// <inheritdoc/>
-    public string Path => "Document";
+    public string Path => nameof(Documents);
 
     /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [

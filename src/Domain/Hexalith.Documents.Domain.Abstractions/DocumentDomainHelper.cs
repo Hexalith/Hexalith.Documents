@@ -10,9 +10,28 @@ public static class DocumentDomainHelper
     /// </summary>
     public const string DocumentAggregateName = "Document";
 
+    /// <summary>
+    /// The name of the document container aggregate.
+    /// </summary>
     public const string DocumentContainerAggregateName = "DocumentContainer";
+
+    /// <summary>
+    /// The name of the document information extraction aggregate.
+    /// </summary>
     public const string DocumentInformationExtractionAggregateName = "DocumentInformationExtraction";
+
+    /// <summary>
+    /// The name of the document partition aggregate.
+    /// </summary>
     public const string DocumentPartitionAggregateName = "DocumentPartition";
+
+    /// <summary>
+    /// The name of the document type aggregate.
+    /// </summary>
     public const string DocumentTypeAggregateName = "DocumentType";
+
+    /// <summary>
+    /// The name of the file type aggregate.
+    /// </summary>
     public const string FileTypeAggregateName = "FileType";
 }

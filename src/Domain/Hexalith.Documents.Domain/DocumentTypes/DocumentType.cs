@@ -23,7 +23,7 @@ using Hexalith.Domain.Events;
 public record DocumentType(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] string Description,
+    [property: DataMember(Order = 3)] string? Description,
     [property: DataMember(Order = 7)] IImmutableDictionary<string, string> DataInstructions,
     [property: DataMember(Order = 8)] IEnumerable<string> FileTypeIds,
     [property: DataMember(Order = 9)] IImmutableDictionary<string, string> Tags,
@@ -37,7 +37,7 @@ public record DocumentType(
         : this(
               string.Empty,
               string.Empty,
-              string.Empty,
+              null,
               new Dictionary<string, string>().ToImmutableDictionary(),
               [],
               new Dictionary<string, string>().ToImmutableDictionary(),
@@ -70,7 +70,7 @@ public record DocumentType(
     /// <summary>
     /// Gets the name of the aggregate type.
     /// </summary>
-    public string AggregateName => DocumentDomainHelper.DocumentAggregateName;
+    public string AggregateName => DocumentDomainHelper.DocumentTypeAggregateName;
 
     /// <summary>
     /// Applies a domain event to the document type.

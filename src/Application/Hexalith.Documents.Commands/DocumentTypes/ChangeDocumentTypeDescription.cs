@@ -9,6 +9,6 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="Name">New name for the document type.</param>
 /// <param name="Description">New description for the document type.</param>
 [PolymorphicSerialization]
-public partial record ChangeDocumentTypeDescription(string Id, string Name, string Description) : DocumentTypeCommand(Id)
+public partial record ChangeDocumentTypeDescription(string Id, string Name, string? Description) : DocumentTypeCommand(Id)
 {
 }

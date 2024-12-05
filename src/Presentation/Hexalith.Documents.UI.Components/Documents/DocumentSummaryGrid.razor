@@ -27,7 +27,7 @@
 	private Task HandleRowDoubleClick(FluentDataGridRow<ViewModels.DocumentSummary> row)
 	{
 		if (row.Item is not null && !string.IsNullOrEmpty(row.Item.Id))
-			NavigationManager.NavigateTo($"/Document/Document/{row.Item.Id}");
+			NavigationManager.NavigateTo($"/Documents/Document/{row.Item.Id}");
 		return Task.CompletedTask;
 	}
 }

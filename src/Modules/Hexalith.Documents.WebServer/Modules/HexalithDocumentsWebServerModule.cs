@@ -64,7 +64,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     /// <inheritdoc/>
     public string Version => "1.0";
 
-    private static string Path => "Document";
+    private static string Path => nameof(Documents);
 
     /// <summary>
     /// Adds services to the service collection.
@@ -106,7 +106,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
         }
 
         actorRegistrations.RegisterActor<DomainAggregateActor>(DomainAggregateActorBase.GetAggregateActorName(DocumentDomainHelper.DocumentAggregateName));
-        actorRegistrations.RegisterProjectionActor<Document>("Document");
+        actorRegistrations.RegisterProjectionActor<Document>(nameof(Documents));
     }
 
     /// <inheritdoc/>

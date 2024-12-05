@@ -54,7 +54,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
     /// <inheritdoc/>
     public string Version => "1.0";
 
-    private static string Path => "Document";
+    private static string Path => nameof(Documents);
 
     /// <summary>
     /// Adds services to the service collection.

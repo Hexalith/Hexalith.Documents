@@ -8,36 +8,17 @@ using Hexalith.Domain.Aggregates;
 /// <summary>
 /// Represents the descriptive information of a document.
 /// </summary>
+/// <param name="Name">The name of the document.</param>
+/// <param name="Description">The description of the document.</param>
+/// <param name="Comments">The comments associated with the document.</param>
+/// <param name="DocumentTypeId">The unique identifier of the document type.</param>
+/// <param name="Summary">The summary of the document.</param>
 [DataContract]
 public record DocumentDescription(
-    /// <summary>
-    /// Gets the name of the document.
-    /// </summary>
-    /// <value>The document's display name.</value>
     [property: DataMember(Order = 1)] string Name,
-
-    /// <summary>
-    /// Gets the detailed description of the document.
-    /// </summary>
-    /// <value>The document's description text.</value>
     [property: DataMember(Order = 2)] string Description,
-
-    /// <summary>
-    /// Gets additional comments about the document.
-    /// </summary>
-    /// <value>The document's additional comments.</value>
     [property: DataMember(Order = 3)] string? Comments,
-
-    /// <summary>
-    /// Gets the type identifier of the document.
-    /// </summary>
-    /// <value>The document's type identifier string.</value>
     [property: DataMember(Order = 5)] string? DocumentTypeId,
-
-    /// <summary>
-    /// Gets a brief summary of the document's content.
-    /// </summary>
-    /// <value>The document's summary text.</value>
     [property: DataMember(Order = 6)] string? Summary)
 {
     /// <summary>

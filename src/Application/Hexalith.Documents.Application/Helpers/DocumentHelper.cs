@@ -29,11 +29,12 @@ public static class DocumentHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentAggregateProviders(this IServiceCollection services)
     {
-        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>();
-        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentType>>();
-        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentContainer>>();
-        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentInformationExtraction>>();
-        services.TryAddSingleton<IDomainAggregateProvider, DomainAggregateProvider<FileType>>();
+        _ = services
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>()
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentType>>()
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentContainer>>()
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentInformationExtraction>>()
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<FileType>>();
         return services;
     }
 
