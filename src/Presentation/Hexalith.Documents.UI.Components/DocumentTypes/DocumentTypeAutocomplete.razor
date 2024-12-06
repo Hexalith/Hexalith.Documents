@@ -17,7 +17,7 @@
 
     public IIdDescriptionService? _autocompleteService;
     public IIdDescriptionService AutocompleteService 
-        => Service ?? (_autocompleteService ??= ServiceProvider.GetRequiredService<Services.IDocumentTypeQueryService>());
+        => Service ?? (_autocompleteService ??= ServiceProvider.GetRequiredService<IDocumentTypeQueryService>());
 
     [Parameter]
     public string? Id { get; set; }

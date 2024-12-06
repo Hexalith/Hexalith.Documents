@@ -1,4 +1,4 @@
-﻿@inject Services.IFileTypeQueryService FileTypeQueryService;
+﻿@inject IFileTypeQueryService FileTypeQueryService;
 @inject IStringLocalizer<FileTypeSummaryGrid> L;
 @inject NavigationManager NavigationManager;
 @using Hexalith.Documents.Application
@@ -10,7 +10,7 @@
                     Items="@elements"
                     ResizableColumns="true"
                     ShowHover="true"
-                    OnRowDoubleClick="@((FluentDataGridRow<ViewModels.FileTypeSummaryViewModel> row) => HandleRowDoubleClick(row))">
+                    OnRowDoubleClick="@((FluentDataGridRow<FileTypeSummaryViewModel> row) => HandleRowDoubleClick(row))">
         <PropertyColumn Title="@Labels.Id" Property="@(p => p.Id)" Sortable="true" />
         <PropertyColumn Title="@Labels.Name" Property="@(p => p.Name)" Sortable="true" />
         <TemplateColumn Title="@Labels.Disabled">
@@ -27,8 +27,8 @@
     {
         elements = (await FileTypeQueryService.GetSummariesAsync()).AsQueryable();
     }
-    IQueryable<ViewModels.FileTypeSummaryViewModel>? elements = null;
-    private Task HandleRowDoubleClick(FluentDataGridRow<ViewModels.FileTypeSummaryViewModel> row)
+    IQueryable<FileTypeSummaryViewModel>? elements = null;
+    private Task HandleRowDoubleClick(FluentDataGridRow<FileTypeSummaryViewModel> row)
     {
         if (row.Item is not null && !string.IsNullOrEmpty(row.Item.Id))
             NavigationManager.NavigateTo($"/Documents/FileType/{row.Item.Id}");

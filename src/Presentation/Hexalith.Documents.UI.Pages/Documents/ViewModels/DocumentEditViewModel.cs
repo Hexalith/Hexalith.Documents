@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.UI.Pages.Documents.ViewModels;
 
-using Hexalith.Documents.UI.Components.Documents.ViewModels;
+using Hexalith.Documents.UI.Services.Documents.ViewModels;
 using Hexalith.Extensions.Helpers;
 
 /// <summary>
@@ -12,7 +12,7 @@ public class DocumentEditViewModel
     /// Initializes a new instance of the <see cref="DocumentEditViewModel"/> class.
     /// </summary>
     /// <param name="details">The details of the document to be edited.</param>
-    public DocumentEditViewModel(DocumentDetails details)
+    public DocumentEditViewModel(DocumentDetailsViewModel details)
     {
         ArgumentNullException.ThrowIfNull(details);
         Original = details;
@@ -26,7 +26,7 @@ public class DocumentEditViewModel
     /// Initializes a new instance of the <see cref="DocumentEditViewModel"/> class.
     /// </summary>
     public DocumentEditViewModel()
-        : this(new DocumentDetails(
+        : this(new DocumentDetailsViewModel(
         UniqueIdHelper.GenerateUniqueStringId(),
         string.Empty,
         string.Empty,
@@ -68,5 +68,5 @@ public class DocumentEditViewModel
     /// <summary>
     /// Gets the original details of the document.
     /// </summary>
-    public DocumentDetails Original { get; }
+    public DocumentDetailsViewModel Original { get; }
 }

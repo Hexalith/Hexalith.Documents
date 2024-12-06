@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.UI.Pages.DocumentTypes.Services;
 
-using Hexalith.Documents.UI.Components.DocumentTypes.ViewModels;
+using Hexalith.Documents.UI.Services.DocumentTypes.ViewModels;
 
 /// <summary>
 /// Provides demo document type data for testing and demonstration purposes.
@@ -14,12 +14,12 @@ public static class DemoDocumentTypeData
     /// <value>
     /// An enumerable collection of <see cref="DocumentTypeDetails"/> containing predefined document types.
     /// </value>
-    internal static IEnumerable<DocumentTypeDetails> Data => [Triage];
+    internal static IEnumerable<DocumentTypeDetailsViewModel> Data => [Triage];
 
     /// <summary>
     /// Gets the details for the Excel document type.
     /// </summary>
-    internal static DocumentTypeDetails Triage => new(
+    internal static DocumentTypeDetailsViewModel Triage => new(
         "Triage",
         "Triage",
         null,

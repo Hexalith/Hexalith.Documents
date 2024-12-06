@@ -1,11 +1,11 @@
 ﻿namespace Hexalith.Documents.UI.Pages.Helpers;
 
-using Hexalith.Documents.UI.Components.Documents.Services;
-using Hexalith.Documents.UI.Components.DocumentTypes.Services;
-using Hexalith.Documents.UI.Components.FileTypes.Services;
 using Hexalith.Documents.UI.Pages.Documents.Services;
 using Hexalith.Documents.UI.Pages.DocumentTypes.Services;
 using Hexalith.Documents.UI.Pages.FileTypes.Services;
+using Hexalith.Documents.UI.Services.Documents.Services;
+using Hexalith.Documents.UI.Services.DocumentTypes.Services;
+using Hexalith.Documents.UI.Services.FileTypes.Services;
 
 using Microsoft.Extensions.DependencyInjection;
 

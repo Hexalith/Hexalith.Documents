@@ -14,10 +14,10 @@ using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Events.Extensions;
-using Hexalith.Documents.UI.Components.Documents.Services;
 using Hexalith.Documents.UI.Pages.Documents.Services;
 using Hexalith.Documents.UI.Pages.Helpers;
 using Hexalith.Documents.UI.Pages.Modules;
+using Hexalith.Documents.UI.Services.Documents.Services;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;

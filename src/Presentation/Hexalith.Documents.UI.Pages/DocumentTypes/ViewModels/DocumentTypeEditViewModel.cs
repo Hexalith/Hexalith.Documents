@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.UI.Pages.DocumentTypes.ViewModels;
 
-using Hexalith.Documents.UI.Components.DocumentTypes.ViewModels;
+using Hexalith.Documents.UI.Services.DocumentTypes.ViewModels;
 using Hexalith.Extensions.Helpers;
 
 /// <summary>
@@ -12,7 +12,7 @@ public class DocumentTypeEditViewModel
     /// Initializes a new instance of the <see cref="DocumentTypeEditViewModel"/> class.
     /// </summary>
     /// <param name="factoryDetails">The details of the document type.</param>
-    public DocumentTypeEditViewModel(DocumentTypeDetails factoryDetails)
+    public DocumentTypeEditViewModel(DocumentTypeDetailsViewModel factoryDetails)
     {
         ArgumentNullException.ThrowIfNull(factoryDetails);
         Original = factoryDetails;
@@ -25,7 +25,7 @@ public class DocumentTypeEditViewModel
     /// Initializes a new instance of the <see cref="DocumentTypeEditViewModel"/> class.
     /// </summary>
     public DocumentTypeEditViewModel()
-        : this(new DocumentTypeDetails(
+        : this(new DocumentTypeDetailsViewModel(
         UniqueIdHelper.GenerateUniqueStringId(),
         string.Empty,
         string.Empty,
@@ -61,5 +61,5 @@ public class DocumentTypeEditViewModel
     /// <summary>
     /// Gets the original details of the document type.
     /// </summary>
-    public DocumentTypeDetails Original { get; }
+    public DocumentTypeDetailsViewModel Original { get; }
 }

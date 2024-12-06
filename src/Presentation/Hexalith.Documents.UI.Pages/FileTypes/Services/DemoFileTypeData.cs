@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.UI.Pages.FileTypes.Services;
 
-using Hexalith.Documents.UI.Components.FileTypes.ViewModels;
+using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
 
 /// <summary>
 /// Provides demo document type data for testing and demonstration purposes.

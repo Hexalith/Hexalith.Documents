@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Components.DocumentTypes.ViewModels;
+﻿namespace Hexalith.Documents.UI.Services.FileTypes.ViewModels;
 
 /// <summary>
 /// Represents a summary view of a document type with essential information.
@@ -6,14 +6,14 @@
 /// <param name="Id">The unique identifier of the document type.</param>
 /// <param name="Name">The name of the document type.</param>
 /// <param name="Disabled">Indicates whether the document type is disabled.</param>
-public record DocumentTypeSummary(string Id, string Name, bool Disabled)
+public record FileTypeSummaryViewModel(string Id, string Name, bool Disabled)
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="DocumentTypeSummary"/> class from a <see cref="DocumentTypeDetails"/> object.
+    /// Initializes a new instance of the <see cref="FileTypeSummaryViewModel"/> class from a <see cref="FileTypeDetailsViewModel"/> object.
     /// </summary>
     /// <param name="details">The document type details to create the summary from.</param>
     /// <exception cref="ArgumentNullException">Thrown when details is null.</exception>
-    public DocumentTypeSummary(DocumentTypeDetails details)
+    public FileTypeSummaryViewModel(FileTypeDetailsViewModel details)
         : this(
               (details ?? throw new ArgumentNullException(nameof(details))).Id,
               details.Name,

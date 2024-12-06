@@ -1,4 +1,4 @@
-﻿@inject Services.IDocumentQueryService DocumentQueryService;
+﻿@inject IDocumentQueryService DocumentQueryService;
 @inject IStringLocalizer<DocumentSummaryGrid> L;
 @inject NavigationManager NavigationManager;
 @using Labels = Resources.Documents.DocumentSummaryGrid
@@ -9,7 +9,7 @@
 					Items="@elements"
 					ResizableColumns="true"
 					ShowHover="true"
-					OnRowDoubleClick="@((FluentDataGridRow<ViewModels.DocumentSummary> row) => HandleRowDoubleClick(row))">
+					OnRowDoubleClick="@((FluentDataGridRow<DocumentSummaryViewModel> row) => HandleRowDoubleClick(row))">
 		<PropertyColumn Title="@Labels.Id" Property="@(p => p.Id)" Sortable="true" />
 		<PropertyColumn Title="@Labels.Name" Property="@(p => p.Name)" Sortable="true" />
 		<TemplateColumn Title="@Labels.Disabled">
@@ -23,8 +23,8 @@
 	{
 		elements = (await DocumentQueryService.GetSummariesAsync()).AsQueryable();
 	}
-	IQueryable<ViewModels.DocumentSummary>? elements = null;
-	private Task HandleRowDoubleClick(FluentDataGridRow<ViewModels.DocumentSummary> row)
+	IQueryable<DocumentSummaryViewModel>? elements = null;
+	private Task HandleRowDoubleClick(FluentDataGridRow<DocumentSummaryViewModel> row)
 	{
 		if (row.Item is not null && !string.IsNullOrEmpty(row.Item.Id))
 			NavigationManager.NavigateTo($"/Documents/Document/{row.Item.Id}");

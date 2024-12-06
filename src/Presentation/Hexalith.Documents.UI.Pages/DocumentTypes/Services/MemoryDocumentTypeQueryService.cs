@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-using Hexalith.Documents.UI.Components.DocumentTypes.Services;
-using Hexalith.Documents.UI.Components.DocumentTypes.ViewModels;
+using Hexalith.Documents.UI.Services.DocumentTypes.Services;
+using Hexalith.Documents.UI.Services.DocumentTypes.ViewModels;
 using Hexalith.UI.Components.ViewModels;
 
 /// <summary>
@@ -14,7 +14,7 @@ using Hexalith.UI.Components.ViewModels;
 /// </summary>
 public class MemoryDocumentTypeQueryService : IDocumentTypeQueryService
 {
-    private readonly IEnumerable<DocumentTypeDetails> _data;
+    private readonly IEnumerable<DocumentTypeDetailsViewModel> _data;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MemoryDocumentTypeQueryService"/> class with an empty data set.
@@ -29,14 +29,14 @@ public class MemoryDocumentTypeQueryService : IDocumentTypeQueryService
     /// </summary>
     /// <param name="data">The initial set of document details.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="data"/> is null.</exception>
-    public MemoryDocumentTypeQueryService([NotNull] IEnumerable<DocumentTypeDetails> data)
+    public MemoryDocumentTypeQueryService([NotNull] IEnumerable<DocumentTypeDetailsViewModel> data)
     {
         ArgumentNullException.ThrowIfNull(data);
         _data = data;
     }
 
     /// <inheritdoc/>
-    public Task<DocumentTypeDetails> GetDetailsAsync(string id)
+    public Task<DocumentTypeDetailsViewModel> GetDetailsAsync(string id)
         => Task.FromResult(_data.Single(p => p.Id == id));
 
     /// <inheritdoc/>
@@ -64,9 +64,9 @@ public class MemoryDocumentTypeQueryService : IDocumentTypeQueryService
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<DocumentTypeSummary>> GetSummariesAsync(int skip, int count)
+    public Task<IEnumerable<DocumentTypeSummaryViewModel>> GetSummariesAsync(int skip, int count)
     {
-        IEnumerable<DocumentTypeDetails> factories = _data;
+        IEnumerable<DocumentTypeDetailsViewModel> factories = _data;
         if (skip > 0)
         {
             factories = factories.Skip(skip);
@@ -77,7 +77,7 @@ public class MemoryDocumentTypeQueryService : IDocumentTypeQueryService
             factories = factories.Take(count);
         }
 
-        return Task.FromResult(factories.Select(p => new DocumentTypeSummary(p)));
+        return Task.FromResult(factories.Select(p => new DocumentTypeSummaryViewModel(p)));
     }
 
     /// <inheritdoc/>
@@ -105,9 +105,9 @@ public class MemoryDocumentTypeQueryService : IDocumentTypeQueryService
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<DocumentTypeSummary>> SearchSummariesAsync(string searchText)
+    public Task<IEnumerable<DocumentTypeSummaryViewModel>> SearchSummariesAsync(string searchText)
     {
-        IEnumerable<DocumentTypeDetails> factories = _data;
+        IEnumerable<DocumentTypeDetailsViewModel> factories = _data;
         if (!string.IsNullOrWhiteSpace(searchText))
         {
             factories = factories.Where(f =>
@@ -115,6 +115,6 @@ public class MemoryDocumentTypeQueryService : IDocumentTypeQueryService
                 f.Id.Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
 
-        return Task.FromResult(factories.Select(p => new DocumentTypeSummary(p)));
+        return Task.FromResult(factories.Select(p => new DocumentTypeSummaryViewModel(p)));
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Components.ImportExport.Services;
+﻿namespace Hexalith.Documents.UI.Services.ImportExport.Services;
 
 using System;
 using System.Threading.Tasks;

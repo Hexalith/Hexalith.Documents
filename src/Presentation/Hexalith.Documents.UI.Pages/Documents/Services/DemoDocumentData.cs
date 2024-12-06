@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.UI.Pages.Documents.Services;
 
-using Hexalith.Documents.UI.Components.Documents.ViewModels;
+using Hexalith.Documents.UI.Services.Documents.ViewModels;
 
 /// <summary>
 /// Provides demo document data for testing and demonstration purposes.
@@ -13,7 +13,7 @@ public static class DemoDocumentData
     /// <value>
     /// An <see cref="IEnumerable{T}"/> of <see cref="DocumentDetails"/> containing all demo documents.
     /// </value>
-    internal static IEnumerable<DocumentDetails> Data => [PJ, JB];
+    internal static IEnumerable<DocumentDetailsViewModel> Data => [PJ, JB];
 
     /// <summary>
     /// Gets a demo document for JB (Jean Bernard).
@@ -21,7 +21,7 @@ public static class DemoDocumentData
     /// <value>
     /// A <see cref="DocumentDetails"/> object representing JB's document information.
     /// </value>
-    internal static DocumentDetails JB => new(
+    internal static DocumentDetailsViewModel JB => new(
         "JB",
         "Livres",
         "Un livre de SF",
@@ -34,7 +34,7 @@ public static class DemoDocumentData
     /// <value>
     /// A <see cref="DocumentDetails"/> object representing PJ's document information.
     /// </value>
-    internal static DocumentDetails PJ => new(
+    internal static DocumentDetailsViewModel PJ => new(
         "PJ",
         "Photos",
         "Photo Paris",

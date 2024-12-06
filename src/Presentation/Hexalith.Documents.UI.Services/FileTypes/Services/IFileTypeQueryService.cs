@@ -1,9 +1,9 @@
-﻿namespace Hexalith.Documents.UI.Components.DocumentTypes.Services;
+﻿namespace Hexalith.Documents.UI.Services.FileTypes.Services;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Hexalith.Documents.UI.Components.DocumentTypes.ViewModels;
+using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
 using Hexalith.UI.Components.Services;
 
 /// <summary>
@@ -15,7 +15,7 @@ using Hexalith.UI.Components.Services;
 /// The service supports operations such as getting detailed information about a specific document type,
 /// retrieving paginated lists of document type summaries, and searching document types based on text criteria.
 /// </remarks>
-public interface IDocumentTypeQueryService : IIdDescriptionService
+public interface IFileTypeQueryService : IIdDescriptionService
 {
     /// <summary>
     /// Retrieves the detailed information for a document type with the specified ID.
@@ -24,7 +24,7 @@ public interface IDocumentTypeQueryService : IIdDescriptionService
     /// <returns>A task that represents the asynchronous operation. The task result contains the document type details.</returns>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="id"/> is null or empty.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the document type with the specified ID is not found.</exception>
-    Task<DocumentTypeDetails> GetDetailsAsync(string id);
+    Task<FileTypeDetailsViewModel> GetDetailsAsync(string id);
 
     /// <summary>
     /// Retrieves summaries for all document types in the system.
@@ -34,7 +34,7 @@ public interface IDocumentTypeQueryService : IIdDescriptionService
     /// This method is equivalent to calling <see cref="GetSummariesAsync(int, int)"/> with skip = 0 and count = 0,
     /// which retrieves all document types without pagination.
     /// </remarks>
-    Task<IEnumerable<DocumentTypeSummary>> GetSummariesAsync()
+    Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync()
         => GetSummariesAsync(0, 0);
 
     /// <summary>
@@ -48,7 +48,7 @@ public interface IDocumentTypeQueryService : IIdDescriptionService
     /// This method supports pagination by allowing the caller to specify how many items to skip and how many to return.
     /// When count is 0, the method returns all document types starting from the skip position.
     /// </remarks>
-    Task<IEnumerable<DocumentTypeSummary>> GetSummariesAsync(int skip, int count);
+    Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync(int skip, int count);
 
     /// <summary>
     /// Searches for document types based on the provided search text.
@@ -61,5 +61,5 @@ public interface IDocumentTypeQueryService : IIdDescriptionService
     /// The exact search algorithm and matched fields depend on the implementation.
     /// The search is typically case-insensitive and may support partial matches.
     /// </remarks>
-    Task<IEnumerable<DocumentTypeSummary>> SearchSummariesAsync(string searchText);
+    Task<IEnumerable<FileTypeSummaryViewModel>> SearchSummariesAsync(string searchText);
 }

@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Components.DocumentContainers.Services;
+﻿namespace Hexalith.Documents.UI.Services.DocumentContainers.Services;
 
 /// <summary>
 /// Provides methods for managing document containers.

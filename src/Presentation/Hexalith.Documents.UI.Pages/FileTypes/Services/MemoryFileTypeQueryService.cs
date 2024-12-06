@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-using Hexalith.Documents.UI.Components.FileTypes.Services;
-using Hexalith.Documents.UI.Components.FileTypes.ViewModels;
+using Hexalith.Documents.UI.Services.FileTypes.Services;
+using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
 using Hexalith.UI.Components.ViewModels;
 
 /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Components.Documents.Services;
+﻿namespace Hexalith.Documents.UI.Services.Documents.Services;
 
 using System.Threading.Tasks;
 
