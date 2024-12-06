@@ -13,60 +13,25 @@ using Hexalith.Domain.Events;
 /// <summary>
 /// Represents a document in the domain.
 /// </summary>
+/// <param name="Id">The ID of the document.</param>
+/// <param name="Description">The description of the document.</param>
+/// <param name="Routing">The routing of the document.</param>
+/// <param name="ParentDocumentId">The ID of the parent document.</param>
+/// <param name="State">The state of the document.</param>
+/// <param name="Actors">The actors of the document.</param>
+/// <param name="File">The file of the document.</param>
+/// <param name="Tags">The tags of the document.</param>
+/// <param name="Disabled">Indicates whether the document is disabled.</param>
 [DataContract]
 public record Document(
-    /// <summary>
-    /// Gets the unique identifier of the document.
-    /// </summary>
-    /// <value>The document's unique identifier string.</value>
     [property: DataMember(Order = 1)] string Id,
-
-    /// <summary>
-    /// Gets the descriptive information of the document.
-    /// </summary>
-    /// <value>The document's descriptive information.</value>
     [property: DataMember(Order = 2)] DocumentDescription Description,
-
-    /// <summary>
-    /// Gets the routing information for the document.
-    /// </summary>
-    /// <value>The document's routing configuration.</value>
     [property: DataMember(Order = 3)] DocumentRouting? Routing,
-
-    /// <summary>
-    /// Gets the identifier of the parent document.
-    /// </summary>
-    /// <value>The parent document's identifier string.</value>
     [property: DataMember(Order = 4)] string? ParentDocumentId,
-
-    /// <summary>
-    /// Gets the current state of the document.
-    /// </summary>
-    /// <value>The document's current state information.</value>
     [property: DataMember(Order = 5)] DocumentState State,
-
-    /// <summary>
-    /// Gets the collection of actors associated with the document.
-    /// </summary>
-    /// <value>The enumerable collection of document actors.</value>
     [property: DataMember(Order = 6)] IEnumerable<DocumentActor> Actors,
-
-    /// <summary>
-    /// Gets the file description associated with the document.
-    /// </summary>
-    /// <value>The document's file description.</value>
     [property: DataMember(Order = 7)] FileDescription File,
-
-    /// <summary>
-    /// Gets the collection of tags associated with the document.
-    /// </summary>
-    /// <value>The enumerable collection of tag strings.</value>
     [property: DataMember(Order = 8)] IEnumerable<DocumentTag> Tags,
-
-    /// <summary>
-    /// Gets a value indicating whether the document is disabled.
-    /// </summary>
-    /// <value>True if the document is disabled; otherwise, false.</value>
     [property: DataMember(Order = 9)] bool Disabled) : IDomainAggregate
 {
     /// <summary>

@@ -13,46 +13,23 @@ using Hexalith.Domain.Events;
 /// <summary>
 /// Represents a container for documents with associated metadata and behaviors.
 /// </summary>
+/// <param name="Id">The unique identifier of the document container.</param>
+/// <param name="Name">The name of the document container.</param>
+/// <param name="Description">The description of the document container.</param>
+/// <param name="AutomaticRoutingInstructions">The instructions for automatic routing of documents.</param>
+/// <param name="Actors">The collection of actors associated with the document container.</param>
+/// <param name="FileTypeIds">The collection of file type identifiers supported by this container.</param>
+/// <param name="Tags">The collection of tags associated with the document container.</param>
+/// <param name="Disabled">A value indicating whether the document container is disabled.</param>
 [DataContract]
 public record DocumentContainer(
-    /// <summary>
-    /// Gets the unique identifier of the document container.
-    /// </summary>
     [property: DataMember(Order = 1)] string Id,
-
-    /// <summary>
-    /// Gets the name of the document container.
-    /// </summary>
     [property: DataMember(Order = 2)] string Name,
-
-    /// <summary>
-    /// Gets the description of the document container.
-    /// </summary>
     [property: DataMember(Order = 3)] string Description,
-
-    /// <summary>
-    /// Gets the automatic routing instructions for documents in this container.
-    /// </summary>
     [property: DataMember(Order = 4)] string? AutomaticRoutingInstructions,
-
-    /// <summary>
-    /// Gets the collection of actors associated with this document container.
-    /// </summary>
     [property: DataMember(Order = 5)] IEnumerable<DocumentActor> Actors,
-
-    /// <summary>
-    /// Gets the collection of file type identifiers supported by this container.
-    /// </summary>
     [property: DataMember(Order = 6)] IEnumerable<string> FileTypeIds,
-
-    /// <summary>
-    /// Gets the dictionary of tags associated with this container.
-    /// </summary>
     [property: DataMember(Order = 7)] IImmutableDictionary<string, string> Tags,
-
-    /// <summary>
-    /// Gets a value indicating whether this container is disabled.
-    /// </summary>
     [property: DataMember(Order = 8)] bool Disabled) : IDomainAggregate
 {
     /// <summary>

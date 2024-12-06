@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Events.Document;
+﻿namespace Hexalith.Documents.Events.Documents;
 
 using Hexalith.PolymorphicSerialization;
 
