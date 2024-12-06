@@ -19,15 +19,20 @@ public class FileTypeDescriptionChangedOnDetailsProjectionHandler(IProjectionFac
     : FileTypeDetailsProjectionHandler<FileTypeDescriptionChanged>(factory)
 {
     /// <inheritdoc/>
-    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeDescriptionChanged baseEvent, FileTypeDetailsViewModel? summary, CancellationToken cancellationToken)
+    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeDescriptionChanged baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        return Task.FromResult<FileTypeDetailsViewModel?>(new FileTypeDetailsViewModel(
-            baseEvent.Id,
-            baseEvent.Name,
-            baseEvent.Description,
-            null,
-            [],
-            false));
+        if (model == null)
+        {
+            return Task.FromResult<FileTypeDetailsViewModel?>(new FileTypeDetailsViewModel(
+                baseEvent.Id,
+                baseEvent.Name,
+                baseEvent.Description,
+                null,
+                [],
+                false));
+        }
+
+        return Task.FromResult<FileTypeDetailsViewModel?>(model with { Name = baseEvent.Name, Description = baseEvent.Description });
     }
 }

@@ -44,8 +44,8 @@ public abstract class FileTypeDetailsProjectionHandler<TFileTypeEvent>(IProjecti
     /// Applies the event to the file type summary view model.
     /// </summary>
     /// <param name="baseEvent">The file type event.</param>
-    /// <param name="summary">The existing file type summary view model, if any.</param>
+    /// <param name="model">The current file type detail view model.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The updated file type summary view model.</returns>
-    protected abstract Task<FileTypeDetailsViewModel?> ApplyEventAsync(TFileTypeEvent baseEvent, FileTypeDetailsViewModel? summary, CancellationToken cancellationToken);
+    protected abstract Task<FileTypeDetailsViewModel?> ApplyEventAsync(TFileTypeEvent baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken);
 }

@@ -16,7 +16,7 @@ public class FileTypeAddedOnDetailsProjectionHandler(IProjectionFactory<FileType
     : FileTypeDetailsProjectionHandler<FileTypeAdded>(factory)
 {
     /// <inheritdoc/>
-    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeAdded baseEvent, FileTypeDetailsViewModel? summary, CancellationToken cancellationToken)
+    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeAdded baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
         return Task.FromResult<FileTypeDetailsViewModel?>(new FileTypeDetailsViewModel(

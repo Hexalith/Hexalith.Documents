@@ -16,21 +16,15 @@ using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
 public class FileTypeEnabledOnDetailsProjectionHandler(IProjectionFactory<FileTypeDetailsViewModel> factory)
     : FileTypeDetailsProjectionHandler<FileTypeEnabled>(factory)
 {
-    /// <summary>
-    /// Applies the event to the summary projection.
-    /// </summary>
-    /// <param name="baseEvent">The event to apply.</param>
-    /// <param name="summary">The current summary projection.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The updated summary projection.</returns>
-    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeEnabled baseEvent, FileTypeDetailsViewModel? summary, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeEnabled baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (summary == null || summary.Disabled == false)
+        if (model == null || model.Disabled == false)
         {
             return Task.FromResult<FileTypeDetailsViewModel?>(null);
         }
 
-        return Task.FromResult<FileTypeDetailsViewModel?>(summary with { Disabled = true });
+        return Task.FromResult<FileTypeDetailsViewModel?>(model with { Disabled = true });
     }
 }
