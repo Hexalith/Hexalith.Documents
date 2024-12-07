@@ -134,14 +134,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.Application.Modules", "Hexalith\src\Core\Application\Hexalith.Application.Modules\Hexalith.Application.Modules.csproj", "{8F25EBB4-BF9E-40C2-9B16-7D2E875AFFBC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HexalithApp", "HexalithApp", "{01ECF18B-80EF-4B78-875B-AC460AC0D5CC}"
+	ProjectSection(SolutionItems) = preProject
+		HexalithApp\src\Directory.Build.props = HexalithApp\src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{6C4BEC38-313B-4E69-A837-0A23AD8BCF26}"
 	ProjectSection(SolutionItems) = preProject
 		HexalithApp\src\HexalithApp.Build\Dependencies.props = HexalithApp\src\HexalithApp.Build\Dependencies.props
 		HexalithApp\Directory.Build.props = HexalithApp\Directory.Build.props
 		HexalithApp\Hexalith.Modules.ApiServer.props = HexalithApp\Hexalith.Modules.ApiServer.props
-		HexalithApp\Hexalith.Modules.SharedUIElements.props = HexalithApp\Hexalith.Modules.SharedUIElements.props
-		HexalithApp\Hexalith.Modules.StoreApp.props = HexalithApp\Hexalith.Modules.StoreApp.props
 		HexalithApp\Hexalith.Modules.WebApp.props = HexalithApp\Hexalith.Modules.WebApp.props
 		HexalithApp\Hexalith.Modules.WebServer.props = HexalithApp\Hexalith.Modules.WebServer.props
 		HexalithApp\src\HexalithApp.Build\Project.Common.props = HexalithApp\src\HexalithApp.Build\Project.Common.props
