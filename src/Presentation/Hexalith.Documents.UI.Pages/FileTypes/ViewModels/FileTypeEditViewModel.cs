@@ -31,7 +31,8 @@ public class FileTypeEditViewModel
         : this(new FileTypeDetailsViewModel(
         UniqueIdHelper.GenerateUniqueStringId(),
         string.Empty,
-        string.Empty,
+        null,
+        null,
         [],
         false))
     {
@@ -40,7 +41,7 @@ public class FileTypeEditViewModel
     /// <summary>
     /// Gets or sets the description of the file type.
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the file type is disabled.

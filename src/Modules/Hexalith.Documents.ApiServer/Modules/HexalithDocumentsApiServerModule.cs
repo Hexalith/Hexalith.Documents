@@ -13,6 +13,8 @@ using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.UI.Services;
+using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
 using Hexalith.Infrastructure.AzureBlobStorage.Services;
@@ -94,6 +96,9 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         actorRegistrations.RegisterActor<DomainAggregateActor>(DomainAggregateActorBase.GetAggregateActorName(DocumentDomainHelper.FileTypeAggregateName));
         actorRegistrations.RegisterActor<DomainAggregateActor>(DomainAggregateActorBase.GetAggregateActorName(DocumentDomainHelper.DocumentAggregateName));
         actorRegistrations.RegisterProjectionActor<FileType>(nameof(Hexalith.Documents));
+        actorRegistrations.RegisterProjectionActor<FileTypeSummaryViewModel>(nameof(Hexalith.Documents));
+        actorRegistrations.RegisterProjectionActor<FileTypeDetailsViewModel>(nameof(Hexalith.Documents));
+        actorRegistrations.RegisterProjectionActor<IEnumerable<string>>(DocumentUIConstants.FileTypeIdsCollectionProjectionName, nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<Document>(nameof(Hexalith.Documents));
     }
 

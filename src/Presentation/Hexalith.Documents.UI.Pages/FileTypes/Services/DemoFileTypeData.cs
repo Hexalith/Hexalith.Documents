@@ -23,6 +23,7 @@ public static class DemoFileTypeData
         "Excel",
         "Microsoft Excel",
         "Type for Microsoft Excel files",
+        null,
         [
             "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
             "application/vnd.ms-excel.sheet.macroEnabled.12",
@@ -40,6 +41,7 @@ public static class DemoFileTypeData
         "HTML",
         "HTML file",
         "Type for HTML files",
+        null,
         ["application/html", "text/html"],
         false);
 
@@ -50,6 +52,7 @@ public static class DemoFileTypeData
         "MD",
         "Markdown file",
         "Type for Markdown files",
+        null,
         ["text/markdown", "text/x-markdown"],
         false);
 
@@ -60,6 +63,7 @@ public static class DemoFileTypeData
         "PDF",
         "Adobe PDF",
         "Type for Adobe PDF files",
+        null,
         ["application/pdf"],
         false);
 
@@ -70,6 +74,7 @@ public static class DemoFileTypeData
         "PowerPoint",
         "Microsoft PowerPoint",
         "Type for Microsoft PowerPoint files",
+        null,
         [
             "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
             "application/vnd.ms-powerpoint.slideshow",
@@ -86,6 +91,7 @@ public static class DemoFileTypeData
         "TXT",
         "Text file",
         "Type for text files",
+        null,
         ["application/txt", "text/plain", "text/txt", "text/x-log"],
         false);
 
@@ -96,6 +102,7 @@ public static class DemoFileTypeData
         "Word",
         "Microsoft Word",
         "Type for Microsoft Word files",
+        null,
         [
             "application/msword",
             "application/doc",

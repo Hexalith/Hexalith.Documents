@@ -16,7 +16,7 @@ public static class DocumentUIHelper
     /// </summary>
     /// <param name="services">The service collection to add the handlers to.</param>
     /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDocumentProjections(this IServiceCollection services)
+    public static IServiceCollection AddDocumentUIProjections(this IServiceCollection services)
     {
         _ = services
             .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, FileTypeAddedOnDetailsProjectionHandler>()
