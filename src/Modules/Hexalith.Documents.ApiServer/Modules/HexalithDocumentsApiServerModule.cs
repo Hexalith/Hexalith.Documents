@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Dapr.Actors.Runtime;
 
 using Hexalith.Application.Modules.Modules;
+using Hexalith.Application.Projections;
 using Hexalith.Application.Services;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Application.Modules;
@@ -13,7 +14,6 @@ using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Events.Extensions;
-using Hexalith.Documents.UI.Services;
 using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
@@ -98,8 +98,8 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         actorRegistrations.RegisterProjectionActor<FileType>(nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<FileTypeSummaryViewModel>(nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<FileTypeDetailsViewModel>(nameof(Hexalith.Documents));
-        actorRegistrations.RegisterProjectionActor<IEnumerable<string>>(DocumentUIConstants.FileTypeIdsCollectionProjectionName, nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<Document>(nameof(Hexalith.Documents));
+        actorRegistrations.RegisterProjectionActor<IdCollection>(nameof(Hexalith.Documents));
     }
 
     /// <inheritdoc/>

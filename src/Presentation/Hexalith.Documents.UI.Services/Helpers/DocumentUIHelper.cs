@@ -2,7 +2,10 @@
 
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Events.FileTypes;
+using Hexalith.Documents.UI.Services.FileTypes.Projections.Collections;
 using Hexalith.Documents.UI.Services.FileTypes.Projections.Details;
+using Hexalith.Documents.UI.Services.FileTypes.Projections.Summaries;
+using Hexalith.Domain.Events;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,10 +22,19 @@ public static class DocumentUIHelper
     public static IServiceCollection AddDocumentUIProjections(this IServiceCollection services)
     {
         _ = services
-            .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, FileTypeAddedOnDetailsProjectionHandler>()
-            .AddScoped<IProjectionUpdateHandler<FileTypeDescriptionChanged>, FileTypeDescriptionChangedOnDetailsProjectionHandler>()
-            .AddScoped<IProjectionUpdateHandler<FileTypeDisabled>, FileTypeDisabledOnDetailsProjectionHandler>()
-            .AddScoped<IProjectionUpdateHandler<FileTypeEnabled>, FileTypeEnabledOnDetailsProjectionHandler>()
+
+            // Collection projections
+            .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, FileTypeAddedOnIdsCollectionProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<SnapshotEvent>, FileTypeSnapshotOnIdsCollectionProjectionHandler>()
+
+            // Summary projections
+            .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, FileTypeAddedOnSummaryProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeDescriptionChanged>, FileTypeDescriptionChangedOnSummaryProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeDisabled>, FileTypeDisabledOnSummaryProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeEnabled>, FileTypeEnabledOnSummaryProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<SnapshotEvent>, FileTypeSnapshotOnSummaryProjectionHandler>()
+
+            // Details
             .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, FileTypeAddedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeDescriptionChanged>, FileTypeDescriptionChangedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeDisabled>, FileTypeDisabledOnDetailsProjectionHandler>()
