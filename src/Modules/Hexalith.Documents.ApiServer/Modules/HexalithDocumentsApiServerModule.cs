@@ -16,6 +16,7 @@ using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.UI.Services;
 using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
 using Hexalith.Documents.UI.Services.Helpers;
 using Hexalith.Extensions.Configuration;
@@ -110,6 +111,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         actorRegistrations.RegisterProjectionActor<FileTypeDetailsViewModel>(nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<Document>(nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<IdCollection>(nameof(Hexalith.Documents));
+        actorRegistrations.RegisterActor<SequentialStringListActor>(DocumentUIConstants.FileTypeIdsProjectionName);
     }
 
     /// <inheritdoc/>

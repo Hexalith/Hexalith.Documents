@@ -8,7 +8,7 @@ public static class DocumentUIConstants
     /// <summary>
     /// Gets the name of the file type IDs collection projection.
     /// </summary>
-    public static string FileTypeIdsCollectionProjectionName => "FileTypeIdsCollectionProjection";
+    public static string FileTypeIdsProjectionName => "FileTypeIdsProjection";
 
     /// <summary>
     /// Gets the name of the IDs collection.
