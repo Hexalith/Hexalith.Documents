@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager;
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeIndex;
 <FluentToolbar Style="width:100%;">
-    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="AddAsync">@Labels.Add</FluentButton>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="Add">@Labels.Add</FluentButton>
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowImport())" OnClick="ImportAsync">@Labels.Import</FluentButton>
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowExport())" OnClick="ExportAsync">@Labels.Export</FluentButton>
 </FluentToolbar>
@@ -15,7 +15,7 @@
 
 @code {
 
-    private void AddAsync()
+    private void Add()
     {
         NavigationManager.NavigateTo("/Documents/Add/FileType");
     }

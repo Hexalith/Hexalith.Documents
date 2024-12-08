@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.ApiServer.Helpers;
 
-using Hexalith.Documents.ApiServer.Controllers;
+using Hexalith.Application.Projections;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
 using Hexalith.Documents.UI.Services.Helpers;
@@ -24,14 +24,11 @@ public static class DocumentsWebApiHelpers
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentException.ThrowIfNullOrWhiteSpace(applicationId);
-        _ = services.AddDocumentUIProjections();
+        _ = services.AddDocumentProjectionHandlers();
         _ = services.AddActorProjectionFactory<FileType>(applicationId);
         _ = services.AddActorProjectionFactory<FileTypeSummaryViewModel>(applicationId);
         _ = services.AddActorProjectionFactory<FileTypeDetailsViewModel>(applicationId);
-        _ = services.AddActorProjectionFactory<IEnumerable<string>>(applicationId);
-        _ = services
-         .AddControllers()
-         .AddApplicationPart(typeof(DocumentsIntegrationEventsController).Assembly);
+        _ = services.AddActorProjectionFactory<IdCollection>(applicationId);
         return services;
     }
 }

@@ -19,7 +19,7 @@ public static class DocumentUIHelper
     /// </summary>
     /// <param name="services">The service collection to add the handlers to.</param>
     /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDocumentUIProjections(this IServiceCollection services)
+    public static IServiceCollection AddDocumentProjectionHandlers(this IServiceCollection services)
     {
         _ = services
 

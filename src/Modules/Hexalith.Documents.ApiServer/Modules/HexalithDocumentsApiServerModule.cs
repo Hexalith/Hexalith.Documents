@@ -7,6 +7,8 @@ using Dapr.Actors.Runtime;
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Projections;
 using Hexalith.Application.Services;
+using Hexalith.Documents.ApiServer.Controllers;
+using Hexalith.Documents.ApiServer.Helpers;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
@@ -15,6 +17,7 @@ using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
+using Hexalith.Documents.UI.Services.Helpers;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
 using Hexalith.Infrastructure.AzureBlobStorage.Services;
@@ -78,7 +81,14 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         services.TryAddSingleton<IDocumentModule, HexalithDocumentsApiServerModule>();
 
         // Add command handlers
-        _ = services.AddDocumentManagement();
+        _ = services
+            .AddDocumentManagement()
+            .AddDocumentsProjections(nameof(Hexalith.Documents))
+            .AddDocumentProjectionHandlers();
+
+        _ = services
+         .AddControllers()
+         .AddApplicationPart(typeof(DocumentsIntegrationEventsController).Assembly);
     }
 
     /// <summary>

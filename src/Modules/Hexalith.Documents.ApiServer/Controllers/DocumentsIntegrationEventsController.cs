@@ -28,11 +28,14 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <param name="hostEnvironment">The host environment.</param>
 /// <param name="logger">The logger.</param>
 [ApiController]
-public abstract class DocumentsIntegrationEventsController(
+[Route("/api/documents/events")]
+[SwaggerTag("Document Integration Events Receiver")]
+public class DocumentsIntegrationEventsController(
     IIntegrationEventProcessor eventProcessor,
     IProjectionUpdateProcessor projectionProcessor,
     IHostEnvironment hostEnvironment,
-    ILogger logger) : EventIntegrationController(eventProcessor, projectionProcessor, hostEnvironment, logger)
+    ILogger<DocumentsIntegrationEventsController> logger)
+    : EventIntegrationController(eventProcessor, projectionProcessor, hostEnvironment, logger)
 {
     /// <summary>
     /// Handle aggregate external reference events as an asynchronous operation.
@@ -43,7 +46,7 @@ public abstract class DocumentsIntegrationEventsController(
     [TopicMetadata("requireSessions", "true")]
     [TopicMetadata("sessionIdleTimeoutInSec ", "15")]
     [TopicMetadata("maxConcurrentSessions", "32")]
-    [HttpPost("api/events/documents/filetype")]
+    [HttpPost("filetype")]
     [SwaggerOperation(Summary = "Handles file type events", Description = "Processes file type events and updates projections accordingly.")]
     [SwaggerResponse(StatusCodes.Status200OK, "Event processed successfully.")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid event data.")]
