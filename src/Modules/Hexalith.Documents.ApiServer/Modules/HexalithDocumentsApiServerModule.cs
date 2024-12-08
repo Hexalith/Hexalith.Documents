@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Dapr.Actors.Runtime;
 
 using Hexalith.Application.Modules.Modules;
-using Hexalith.Application.Projections;
 using Hexalith.Application.Services;
 using Hexalith.Documents.ApiServer.Controllers;
 using Hexalith.Documents.ApiServer.Helpers;
@@ -110,7 +109,6 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         actorRegistrations.RegisterProjectionActor<FileTypeSummaryViewModel>(nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<FileTypeDetailsViewModel>(nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<Document>(nameof(Hexalith.Documents));
-        actorRegistrations.RegisterProjectionActor<IdCollection>(nameof(Hexalith.Documents));
         actorRegistrations.RegisterActor<SequentialStringListActor>(DocumentUIConstants.FileTypeIdsProjectionName);
     }
 
