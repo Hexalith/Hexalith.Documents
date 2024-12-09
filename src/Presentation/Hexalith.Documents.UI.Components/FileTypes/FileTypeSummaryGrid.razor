@@ -3,6 +3,7 @@
 @inject NavigationManager NavigationManager;
 @using Hexalith.Documents.Application
 @using Labels = Resources.FileTypes.FileTypeSummaryGrid
+@using System.Security.Claims
 
 @if (elements is not null)
 {
@@ -23,9 +24,18 @@
 }
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+    private ClaimsPrincipal? user;
+
     protected override async Task OnInitializedAsync()
     {
-        elements = (await FileTypeQueryService.GetSummariesAsync()).AsQueryable();
+        // Obtain the authentication state from the cascading parameter.
+        var authState = await AuthenticationStateTask!;
+
+        // Get the ClaimsPrincipal that represents the current user.
+        user = authState.User;
+        elements = (await FileTypeQueryService.GetSummariesAsync(user, CancellationToken.None)).AsQueryable();
     }
     IQueryable<FileTypeSummaryViewModel>? elements = null;
     private Task HandleRowDoubleClick(FluentDataGridRow<FileTypeSummaryViewModel> row)

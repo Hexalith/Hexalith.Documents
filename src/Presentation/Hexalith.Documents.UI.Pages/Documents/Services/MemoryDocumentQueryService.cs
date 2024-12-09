@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 using Hexalith.Documents.UI.Services.Documents.Services;
@@ -40,11 +41,11 @@ public class MemoryDocumentQueryService : IDocumentQueryService
         => Task.FromResult(_data.Single(p => p.Id == id));
 
     /// <inheritdoc/>
-    public Task<IdDescription> GetIdDescriptionAsync(string id, CancellationToken cancellationToken)
+    public Task<IdDescription> GetIdDescriptionAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken)
         => Task.FromResult(_data.Select(p => new IdDescription(p.Id, p.Name)).Single(d => d.Id == id));
 
     /// <inheritdoc/>
-    public Task<IEnumerable<IdDescription>> GetIdDescriptionsAsync(int skip, int count, CancellationToken cancellationToken)
+    public Task<IEnumerable<IdDescription>> GetIdDescriptionsAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken)
     {
         IQueryable<IdDescription> result = _data
             .Select(p => new IdDescription(p.Id, p.Name))
@@ -55,9 +56,9 @@ public class MemoryDocumentQueryService : IDocumentQueryService
             result = result.Skip(skip);
         }
 
-        if (count > 0)
+        if (take > 0)
         {
-            result = result.Take(count);
+            result = result.Take(take);
         }
 
         return Task.FromResult<IEnumerable<IdDescription>>([.. result]);
@@ -81,7 +82,7 @@ public class MemoryDocumentQueryService : IDocumentQueryService
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<IdDescription>> SearchIdDescriptionsAsync(string searchText, int skip, int count, CancellationToken cancellationToken)
+    public Task<IEnumerable<IdDescription>> SearchIdDescriptionsAsync(ClaimsPrincipal user, string searchText, int skip, int count, CancellationToken cancellationToken)
     {
         IQueryable<IdDescription> result = _data
             .Select(p => new IdDescription(p.Id, p.Name))

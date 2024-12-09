@@ -52,14 +52,14 @@
             }
             _user = authState.User;
         }
-        if (string.IsNullOrWhiteSpace(FileTypeId))
+        if (string.IsNullOrWhiteSpace(FileTypeId) || _user is null)
         {
             _data = new FileTypeEditViewModel();
             return;
         }
         else
         {
-            _data = new(await QueryService.GetDetailsAsync(FileTypeId));
+            _data = new(await QueryService.GetDetailsAsync(_user, FileTypeId, CancellationToken.None));
         }
 
         await base.OnInitializedAsync();

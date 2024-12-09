@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
     <ProjectReference Include="..\Hexalith.Documents.UI.Components\Hexalith.Documents.UI.Components.csproj" />
   </ItemGroup>
 

@@ -268,6 +268,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{E2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.UI.Services", "src\Presentation\Hexalith.Documents.UI.Services\Hexalith.Documents.UI.Services.csproj", "{AEE8CE63-5C41-42B5-BB33-BA9281FDBB93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.Requests", "src\Application\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj", "{D6B6B120-BBA4-7B0F-F15E-A47B8A4CC2A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -550,6 +552,10 @@ Global
 		{AEE8CE63-5C41-42B5-BB33-BA9281FDBB93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEE8CE63-5C41-42B5-BB33-BA9281FDBB93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEE8CE63-5C41-42B5-BB33-BA9281FDBB93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B6B120-BBA4-7B0F-F15E-A47B8A4CC2A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B6B120-BBA4-7B0F-F15E-A47B8A4CC2A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B6B120-BBA4-7B0F-F15E-A47B8A4CC2A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B6B120-BBA4-7B0F-F15E-A47B8A4CC2A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -646,6 +652,7 @@ Global
 		{A08D5780-90F6-42BA-97CF-74504A095FDA} = {2A01A18A-F858-44A1-9AD0-8F7C4FA112B5}
 		{4036B763-2DAB-8705-C17A-F8CA5FC19E38} = {8B5B1376-6E74-4BE2-8688-5F4B604B0370}
 		{AEE8CE63-5C41-42B5-BB33-BA9281FDBB93} = {D60398F7-C3C0-4306-ADE4-F5660DCA736F}
+		{D6B6B120-BBA4-7B0F-F15E-A47B8A4CC2A3} = {2A01A18A-F858-44A1-9AD0-8F7C4FA112B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09CBB595-8996-4C7F-9C48-4C58AD9293AC}

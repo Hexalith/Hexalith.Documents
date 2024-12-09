@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 using Hexalith.Documents.UI.Services.FileTypes.Services;
@@ -36,15 +37,15 @@ public class MemoryFileTypeQueryService : IFileTypeQueryService
     }
 
     /// <inheritdoc/>
-    public Task<FileTypeDetailsViewModel> GetDetailsAsync(string id)
+    public Task<FileTypeDetailsViewModel> GetDetailsAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken)
         => Task.FromResult(_data.Single(p => p.Id == id));
 
     /// <inheritdoc/>
-    public Task<IdDescription> GetIdDescriptionAsync(string id, CancellationToken cancellationToken)
+    public Task<IdDescription> GetIdDescriptionAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken)
         => Task.FromResult(_data.Select(p => new IdDescription(p.Id, p.Name)).Single(d => d.Id == id));
 
     /// <inheritdoc/>
-    public Task<IEnumerable<IdDescription>> GetIdDescriptionsAsync(int skip, int count, CancellationToken cancellationToken)
+    public Task<IEnumerable<IdDescription>> GetIdDescriptionsAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken)
     {
         IQueryable<IdDescription> result = _data
             .Select(p => new IdDescription(p.Id, p.Name))
@@ -55,16 +56,16 @@ public class MemoryFileTypeQueryService : IFileTypeQueryService
             result = result.Skip(skip);
         }
 
-        if (count > 0)
+        if (take > 0)
         {
-            result = result.Take(count);
+            result = result.Take(take);
         }
 
         return Task.FromResult<IEnumerable<IdDescription>>([.. result]);
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync(int skip, int count)
+    public Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken)
     {
         IEnumerable<FileTypeDetailsViewModel> factories = _data;
         if (skip > 0)
@@ -72,16 +73,16 @@ public class MemoryFileTypeQueryService : IFileTypeQueryService
             factories = factories.Skip(skip);
         }
 
-        if (count > 0)
+        if (take > 0)
         {
-            factories = factories.Take(count);
+            factories = factories.Take(take);
         }
 
         return Task.FromResult(factories.Select(p => new FileTypeSummaryViewModel(p)));
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<IdDescription>> SearchIdDescriptionsAsync(string searchText, int skip, int count, CancellationToken cancellationToken)
+    public Task<IEnumerable<IdDescription>> SearchIdDescriptionsAsync(ClaimsPrincipal user, string searchText, int skip, int count, CancellationToken cancellationToken)
     {
         IQueryable<IdDescription> result = _data
             .Select(p => new IdDescription(p.Id, p.Name))
@@ -100,12 +101,12 @@ public class MemoryFileTypeQueryService : IFileTypeQueryService
             result = result.Take(count);
         }
 
-        List<IdDescription> list = result.ToList();
+        List<IdDescription> list = [.. result];
         return Task.FromResult<IEnumerable<IdDescription>>(list);
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<FileTypeSummaryViewModel>> SearchSummariesAsync(string searchText)
+    public Task<IEnumerable<FileTypeSummaryViewModel>> SearchSummariesAsync(ClaimsPrincipal user, string searchText, CancellationToken cancellationToken)
     {
         IEnumerable<FileTypeDetailsViewModel> factories = _data;
         if (!string.IsNullOrWhiteSpace(searchText))
