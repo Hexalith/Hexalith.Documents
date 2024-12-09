@@ -28,7 +28,6 @@ public static class DocumentsWebApiHelpers
         _ = services.AddActorProjectionFactory<FileType>(applicationId);
         _ = services.AddActorProjectionFactory<FileTypeSummaryViewModel>(applicationId);
         _ = services.AddActorProjectionFactory<FileTypeDetailsViewModel>(applicationId);
-        _ = services.AddActorProjectionFactory<IdCollection>(applicationId);
         return services;
     }
 }
