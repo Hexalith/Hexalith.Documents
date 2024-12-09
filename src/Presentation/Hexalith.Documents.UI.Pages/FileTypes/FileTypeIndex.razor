@@ -1,11 +1,12 @@
 ﻿@page "/Documents/FileType"
-@rendermode InteractiveAuto
+@inject IFileTypeQueryService DocumentQueryService;
 @inject NavigationManager NavigationManager;
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeIndex;
 <FluentToolbar Style="width:100%;">
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="Add">@Labels.Add</FluentButton>
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowImport())" OnClick="ImportAsync">@Labels.Import</FluentButton>
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowExport())" OnClick="ExportAsync">@Labels.Export</FluentButton>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Wand())" OnClick="ImportQuickStartDataAsync">@Labels.QuickStartData</FluentButton>
 </FluentToolbar>
 <FluentStack Orientation="Orientation.Vertical">
     <h3>@Labels.Title</h3>
@@ -14,6 +15,19 @@
 
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+    private ClaimsPrincipal? _user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            _user = authState.User;
+        }
+    }
 
     private void Add()
     {
