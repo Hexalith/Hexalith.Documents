@@ -1,5 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Services.FileTypes.ViewModels;
-
+﻿namespace Hexalith.Documents.Requests.FileTypes;
 /// <summary>
 /// Represents a summary view of a document type with essential information.
 /// </summary>

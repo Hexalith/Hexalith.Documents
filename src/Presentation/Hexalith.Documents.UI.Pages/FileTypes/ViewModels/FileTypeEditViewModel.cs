@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
+using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Extensions.Helpers;
 
 /// <summary>

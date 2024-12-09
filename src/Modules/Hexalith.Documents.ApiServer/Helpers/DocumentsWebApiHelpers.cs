@@ -2,7 +2,7 @@
 
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Domain.FileTypes;
-using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
+using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Documents.UI.Services.Helpers;
 using Hexalith.Infrastructure.DaprRuntime.Helpers;
 

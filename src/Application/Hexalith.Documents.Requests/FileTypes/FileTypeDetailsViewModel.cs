@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Services.FileTypes.ViewModels;
+﻿namespace Hexalith.Documents.Requests.FileTypes;
 
 using System.Collections.Generic;
 

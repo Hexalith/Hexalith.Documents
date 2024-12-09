@@ -15,9 +15,9 @@ using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.UI.Pages.Documents.Services;
-using Hexalith.Documents.UI.Pages.Helpers;
 using Hexalith.Documents.UI.Pages.Modules;
 using Hexalith.Documents.UI.Services.Documents.Services;
+using Hexalith.Documents.UI.Services.Helpers;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;

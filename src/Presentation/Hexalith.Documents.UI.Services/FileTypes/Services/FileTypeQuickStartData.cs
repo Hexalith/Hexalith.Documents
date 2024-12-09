@@ -1,12 +1,12 @@
-﻿namespace Hexalith.Documents.UI.Pages.FileTypes.Services;
+﻿namespace Hexalith.Documents.UI.Services.FileTypes.Services;
 
-using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
+using Hexalith.Documents.Requests.FileTypes;
 
 /// <summary>
 /// Provides demo document type data for testing and demonstration purposes.
 /// This static class contains sample document types that can be used during development and testing.
 /// </summary>
-public static class DemoFileTypeData
+public static class FileTypeQuickStartData
 {
     /// <summary>
     /// Gets a collection of sample document type details.
@@ -14,7 +14,7 @@ public static class DemoFileTypeData
     /// <value>
     /// An enumerable collection of <see cref="FileTypeDetailsViewModel"/> containing predefined document types.
     /// </value>
-    internal static IEnumerable<FileTypeDetailsViewModel> Data => [Excel, HTML, Markdown, Pdf, PowerPoint, Text, Word];
+    public static IEnumerable<FileTypeDetailsViewModel> Data => [Excel, HTML, Markdown, Pdf, PowerPoint, Text, Word];
 
     /// <summary>
     /// Gets the details for the Excel document type.

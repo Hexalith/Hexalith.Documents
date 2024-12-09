@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Events.FileTypes;
-using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
+using Hexalith.Documents.Requests.FileTypes;
 
 /// <summary>
 /// Handles the projection update when a FileTypeTargetAdded event is received.

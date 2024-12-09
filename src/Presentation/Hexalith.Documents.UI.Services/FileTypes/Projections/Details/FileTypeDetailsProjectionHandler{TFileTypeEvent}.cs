@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Events.FileTypes;
-using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
+using Hexalith.Documents.Requests.FileTypes;
 
 /// <summary>
 /// Abstract base class for handling updates to FileType projections based on events.

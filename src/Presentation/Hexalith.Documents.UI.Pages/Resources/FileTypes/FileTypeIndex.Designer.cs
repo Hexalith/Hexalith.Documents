@@ -88,6 +88,15 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert base data.
+        /// </summary>
+        internal static string QuickStartData {
+            get {
+                return ResourceManager.GetString("QuickStartData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are not authorized to read documents.
         /// </summary>
         internal static string ReadNotAuthorized {

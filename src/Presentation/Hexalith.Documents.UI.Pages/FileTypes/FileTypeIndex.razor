@@ -1,12 +1,18 @@
 ﻿@page "/Documents/FileType"
-@inject IFileTypeQueryService DocumentQueryService;
-@inject NavigationManager NavigationManager;
+@inject IFileTypeQueryService DocumentQueryService
+@inject NavigationManager NavigationManager
+@inject ICommandService CommandService
+@inject IRequestService RequestService
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeIndex;
 <FluentToolbar Style="width:100%;">
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="Add">@Labels.Add</FluentButton>
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowImport())" OnClick="ImportAsync">@Labels.Import</FluentButton>
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowExport())" OnClick="ExportAsync">@Labels.Export</FluentButton>
-    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Wand())" OnClick="ImportQuickStartDataAsync">@Labels.QuickStartData</FluentButton>
+    <AuthorizeView Roles="@(ApplicationRoles.GlobalAdministrator)">
+        <Authorized>
+            <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.TextGrammarWand())" OnClick="ImportQuickStartDataAsync">@Labels.QuickStartData</FluentButton>
+        </Authorized>    
+    </AuthorizeView>
 </FluentToolbar>
 <FluentStack Orientation="Orientation.Vertical">
     <h3>@Labels.Title</h3>
@@ -40,5 +46,19 @@
     private Task ExportAsync()
     {
         return Task.CompletedTask;
+    }
+    private async Task ImportQuickStartDataAsync()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        List<Task> tasks = new();
+        foreach (var item in FileTypeQuickStartData.Data)
+        {
+            var command = new AddFileType(item.Id, item.Name, item.Description, item.FileToTextConverter, item.Targets);
+            tasks.Add(CommandService.SubmitCommandAsync(_user, command, CancellationToken.None));
+        }
+        await Task.WhenAll(tasks);
     }
 }

@@ -132,4 +132,7 @@
   <data name="Export" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="QuickStartData" xml:space="preserve">
+    <value>Insert base data</value>
+  </data>
 </root>

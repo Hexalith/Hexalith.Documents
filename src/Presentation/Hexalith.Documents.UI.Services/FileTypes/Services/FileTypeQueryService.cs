@@ -5,7 +5,8 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Hexalith.Documents.UI.Services.FileTypes.ViewModels;
+using Hexalith.Application.Requests;
+using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.UI.Components.ViewModels;
 
 /// <summary>
@@ -13,11 +14,27 @@ using Hexalith.UI.Components.ViewModels;
 /// </summary>
 public class FileTypeQueryService : IFileTypeQueryService
 {
-    /// <inheritdoc/>
-    public Task<FileTypeDetailsViewModel> GetDetailsAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken) => throw new NotImplementedException();
+    private readonly IRequestService _requestService;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FileTypeQueryService"/> class.
+    /// </summary>
+    /// <param name="requestService">The request service.</param>
+    public FileTypeQueryService(IRequestService requestService)
+    {
+        ArgumentNullException.ThrowIfNull(requestService);
+        _requestService = requestService;
+    }
 
     /// <inheritdoc/>
-    public Task<IdDescription> GetIdDescriptionAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task<FileTypeDetailsViewModel> GetDetailsAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken)
+        => CheckValidResult((await _requestService.SubmitAsync(user, new GetFileTypeDetails(id), cancellationToken)
+            .ConfigureAwait(false)).Result);
+
+    /// <inheritdoc/>
+    public async Task<IdDescription> GetIdDescriptionAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken)
+        => CheckValidResult((await _requestService.SubmitAsync(user, new GetFileTypeIdDescription(id), cancellationToken)
+            .ConfigureAwait(false)).Result);
 
     /// <inheritdoc/>
     public Task<IEnumerable<IdDescription>> GetIdDescriptionsAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken) => throw new NotImplementedException();
@@ -30,4 +47,7 @@ public class FileTypeQueryService : IFileTypeQueryService
 
     /// <inheritdoc/>
     public Task<IEnumerable<FileTypeSummaryViewModel>> SearchSummariesAsync(ClaimsPrincipal user, string searchText, CancellationToken cancellationToken) => throw new NotImplementedException();
+
+    private static TResult CheckValidResult<TResult>(TResult? result)
+        => result ?? throw new InvalidOperationException("The request result is null or empty in file type query service");
 }
