@@ -59,7 +59,7 @@ public static class DocumentUIHelper
     /// </summary>
     /// <param name="services">The service collection to add the services to.</param>
     /// <returns>The service collection with the added services.</returns>
-    public static IServiceCollection AddDocumentUI(this IServiceCollection services)
+    public static IServiceCollection AddDocumentUIServices(this IServiceCollection services)
     {
         _ = services.AddScoped<IDocumentQueryService, DemoDocumentQueryService>();
         _ = services.AddScoped<IDocumentTypeQueryService, DemoDocumentTypeQueryService>();

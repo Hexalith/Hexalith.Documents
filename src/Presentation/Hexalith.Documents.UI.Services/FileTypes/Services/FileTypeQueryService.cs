@@ -37,16 +37,64 @@ public class FileTypeQueryService : IFileTypeQueryService
             .ConfigureAwait(false)).Result);
 
     /// <inheritdoc/>
-    public Task<IEnumerable<IdDescription>> GetIdDescriptionsAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task<IEnumerable<IdDescription>> GetIdDescriptionsAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        IEnumerable<string> ids = CheckValidResult((await _requestService.SubmitAsync(user, new GetFileTypeIds(skip, take), cancellationToken)
+            .ConfigureAwait(false)).Result);
+        List<Task<IdDescription>> tasks = [];
+        foreach (string id in ids)
+        {
+            tasks.Add(GetIdDescriptionAsync(user, id, cancellationToken));
+        }
+
+        return await Task.WhenAll(tasks).ConfigureAwait(false);
+    }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken)
+        => CheckValidResult((await _requestService.SubmitAsync(user, new GetFileTypeSummaries(skip, take), cancellationToken)
+            .ConfigureAwait(false)).Result);
 
     /// <inheritdoc/>
-    public Task<IEnumerable<IdDescription>> SearchIdDescriptionsAsync(ClaimsPrincipal user, string searchText, int skip, int count, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task<IEnumerable<IdDescription>> SearchIdDescriptionsAsync(ClaimsPrincipal user, string searchText, int skip, int take, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        IEnumerable<IdDescription> data = await GetIdDescriptionsAsync(user, skip, take, cancellationToken).ConfigureAwait(false);
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            data = data.Where(d =>
+                d.Description.Contains(searchText, StringComparison.CurrentCultureIgnoreCase) ||
+                d.Id.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        if (skip > 0)
+        {
+            data = data.Skip(skip);
+        }
+
+        if (take > 0)
+        {
+            data = data.Take(take);
+        }
+
+        return data;
+    }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<FileTypeSummaryViewModel>> SearchSummariesAsync(ClaimsPrincipal user, string searchText, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task<IEnumerable<FileTypeSummaryViewModel>> SearchSummariesAsync(ClaimsPrincipal user, string searchText, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        IEnumerable<FileTypeSummaryViewModel> data = await GetSummariesAsync(user, 0, 0, cancellationToken).ConfigureAwait(false);
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            data = data.Where(d =>
+                d.Id.Contains(searchText, StringComparison.CurrentCultureIgnoreCase) ||
+                d.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        return data;
+    }
 
     private static TResult CheckValidResult<TResult>(TResult? result)
         => result ?? throw new InvalidOperationException("The request result is null or empty in file type query service");
