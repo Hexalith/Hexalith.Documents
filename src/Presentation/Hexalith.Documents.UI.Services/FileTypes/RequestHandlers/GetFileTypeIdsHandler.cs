@@ -28,17 +28,22 @@ public class GetFileTypeIdsHandler : RequestHandlerBase<GetFileTypeIds>
     /// <summary>
     /// Executes the request to get file type IDs.
     /// </summary>
-    /// <param name="baseRequest">The base request containing parameters.</param>
+    /// <param name="request">The base request containing parameters.</param>
     /// <param name="metadata">The metadata associated with the request.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public override async Task<GetFileTypeIds> ExecuteAsync(GetFileTypeIds baseRequest, Metadata metadata, CancellationToken cancellationToken)
+    public override async Task<GetFileTypeIds> ExecuteAsync(GetFileTypeIds request, Metadata metadata, CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(baseRequest);
+        ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(metadata);
         IIdCollectionService service = _factory.CreateService(
             IIdCollectionFactory.GetAggregateCollectionName(metadata.Message.Aggregate.Name),
             metadata.Context.PartitionId);
-        return await service.GetAsync(CancellationToken.None).ConfigureAwait(false);
+        return request with
+        {
+            Result = await service
+                .GetAsync(request.Skip, request.Take, CancellationToken.None)
+                .ConfigureAwait(false),
+        };
     }
 }

@@ -16,7 +16,6 @@ using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.Requests.FileTypes;
-using Hexalith.Documents.UI.Services;
 using Hexalith.Documents.UI.Services.Helpers;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
@@ -109,7 +108,12 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         actorRegistrations.RegisterProjectionActor<FileTypeSummaryViewModel>(nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<FileTypeDetailsViewModel>(nameof(Hexalith.Documents));
         actorRegistrations.RegisterProjectionActor<Document>(nameof(Hexalith.Documents));
-        actorRegistrations.RegisterActor<SequentialStringListActor>(DocumentUIConstants.FileTypeIdsProjectionName);
+        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentAggregateName));
+        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentTypeAggregateName));
+        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentContainerAggregateName));
+        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.FileTypeAggregateName));
+        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentInformationExtractionAggregateName));
+        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentPartitionAggregateName));
     }
 
     /// <inheritdoc/>
