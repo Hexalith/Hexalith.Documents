@@ -5,13 +5,4 @@
 /// </summary>
 public static class DocumentUIConstants
 {
-    /// <summary>
-    /// Gets the name of the file type IDs collection projection.
-    /// </summary>
-    public static string FileTypeIdsProjectionName => "FileTypeIdsProjection";
-
-    /// <summary>
-    /// Gets the name of the IDs collection.
-    /// </summary>
-    public static string IdsCollectionName => "Ids";
 }

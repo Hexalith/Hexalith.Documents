@@ -1,18 +1,19 @@
 ﻿namespace Hexalith.Documents.UI.Services.Helpers;
 
 using Hexalith.Application.Projections;
+using Hexalith.Application.Requests;
 using Hexalith.Documents.Events.FileTypes;
 using Hexalith.Documents.UI.Pages.Documents.Services;
 using Hexalith.Documents.UI.Pages.DocumentTypes.Services;
 using Hexalith.Documents.UI.Services.Documents.Services;
 using Hexalith.Documents.UI.Services.DocumentTypes.Services;
-using Hexalith.Documents.UI.Services.FileTypes.Projections.Collections;
 using Hexalith.Documents.UI.Services.FileTypes.Projections.Details;
 using Hexalith.Documents.UI.Services.FileTypes.Projections.Summaries;
 using Hexalith.Documents.UI.Services.FileTypes.Services;
 using Hexalith.Domain.Events;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 /// <summary>
 /// Provides extension methods for adding document projections to the service collection.
@@ -26,11 +27,13 @@ public static class DocumentUIHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentProjectionHandlers(this IServiceCollection services)
     {
-        _ = services
+        services
 
             // Collection projections
-            .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, FileTypeAddedOnIdsCollectionProjectionHandler>()
-            .AddScoped<IProjectionUpdateHandler<SnapshotEvent>, FileTypeSnapshotOnIdsCollectionProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, IdsCollectionProjectionHandler<FileTypeAdded>>()
+            .TryAddScoped<IProjectionUpdateHandler<SnapshotEvent>, IdsCollectionProjectionHandler<SnapshotEvent>>();
+
+        _ = services
 
             // Summary projections
             .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, FileTypeAddedOnSummaryProjectionHandler>()
