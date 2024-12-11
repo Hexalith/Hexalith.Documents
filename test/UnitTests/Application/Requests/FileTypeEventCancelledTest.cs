@@ -4,6 +4,7 @@ using System.Text.Json;
 
 using FluentAssertions;
 
+using Hexalith.Application.Events;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.States;
 using Hexalith.Documents.Events.Extensions;
@@ -24,7 +25,7 @@ public class FileTypeEventCancelledTest
             ["*.md", "*.markdown"]);
         Metadata metadataAdded = Metadata.CreateNew(added, "test", "part1", DateTime.UtcNow);
         MessageState addedState = new(added, metadataAdded);
-        FileTypeEventCancelled cancelled = new(addedState, "testing");
+        DomainEventCancelled cancelled = new("testing", addedState);
         Metadata metadataCancelled = Metadata.CreateNew(cancelled, "test", "part1", DateTime.UtcNow);
         MessageState messageState = new(cancelled, metadataCancelled);
 
@@ -34,8 +35,8 @@ public class FileTypeEventCancelledTest
 
         // Assert
         _ = deserializedMessageState.Should().BeEquivalentTo(messageState);
-        _ = deserializedMessageState.MessageObject.Should().BeOfType<FileTypeEventCancelled>();
-        FileTypeEventCancelled cancelledEvent = (FileTypeEventCancelled)deserializedMessageState.MessageObject;
+        _ = deserializedMessageState.MessageObject.Should().BeOfType<DomainEventCancelled>();
+        DomainEventCancelled cancelledEvent = (DomainEventCancelled)deserializedMessageState.MessageObject;
         _ = cancelledEvent.Should().BeEquivalentTo(cancelled);
         _ = cancelledEvent.Event.Should().BeEquivalentTo(addedState);
         _ = deserializedMessageState.Metadata.Should().BeEquivalentTo(metadataCancelled);
