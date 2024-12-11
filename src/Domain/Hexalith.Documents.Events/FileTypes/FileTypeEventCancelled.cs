@@ -2,6 +2,8 @@ namespace Hexalith.Documents.Events.FileTypes;
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.States;
+using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
@@ -11,8 +13,16 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="Reason">The reason why the event was cancelled.</param>
 [PolymorphicSerialization]
 public partial record FileTypeEventCancelled(
-    [property: DataMember(Order = 2)] FileTypeEvent Event,
+    [property: DataMember(Order = 2)] MessageState Event,
     [property: DataMember(Order = 3)] string Reason)
-    : FileTypeEvent(Event.Id)
 {
+    /// <summary>
+    /// Gets the aggregate ID of the document command.
+    /// </summary>
+    public string AggregateId => Event.Metadata.Message.Aggregate.Id;
+
+    /// <summary>
+    /// Gets the aggregate name of the document command.
+    /// </summary>
+    public static string AggregateName => DocumentDomainHelper.FileTypeAggregateName;
 }

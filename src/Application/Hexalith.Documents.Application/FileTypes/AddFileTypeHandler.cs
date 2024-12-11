@@ -2,6 +2,7 @@
 
 using Hexalith.Application.Commands;
 using Hexalith.Application.Metadatas;
+using Hexalith.Application.States;
 using Hexalith.Documents.Commands.FileTypes;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.FileTypes;
@@ -19,6 +20,18 @@ using Hexalith.Domain.Aggregates;
 /// </remarks>
 public class AddFileTypeHandler : DomainCommandHandler<AddFileType>
 {
+    private readonly TimeProvider _timeProvider;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AddFileTypeHandler"/> class.
+    /// </summary>
+    /// <param name="timeProvider"></param>
+    public AddFileTypeHandler(TimeProvider timeProvider)
+    {
+        ArgumentNullException.ThrowIfNull(timeProvider);
+        _timeProvider = timeProvider;
+    }
+
     /// <inheritdoc/>
     /// <remarks>
     /// Creates a new document or applies changes to an existing one by generating and applying
@@ -47,6 +60,19 @@ public class AddFileTypeHandler : DomainCommandHandler<AddFileType>
         if (aggregate is FileType a)
         {
             ApplyResult result = a.Apply(ev);
+            if (result.Failed)
+            {
+                return Task.FromResult(new ExecuteCommandResult(
+                    aggregate,
+                    [],
+                    [new
+                        FileTypeEventCancelled(
+                            new MessageState(
+                                ev,
+                                Metadata.CreateNew(ev, metadata, _timeProvider.GetLocalNow())),
+                            result.Reason ?? string.Empty)]));
+            }
+
             return Task.FromResult(new ExecuteCommandResult(aggregate, result.Failed ? [] : [ev], result.Messages));
         }
 

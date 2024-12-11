@@ -66,12 +66,13 @@ public record FileType(
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (domainEvent is FileTypeEvent ev && domainEvent is not FileTypeEnabled && Disabled)
+        if (domainEvent is FileTypeEvent && domainEvent is not FileTypeEnabled && Disabled)
         {
             return new ApplyResult(
                 this,
-                [new FileTypeEventCancelled(ev, "File type is disabled.")],
-                true);
+                [],
+                true,
+                "File type is disabled.");
         }
 
         return domainEvent switch
@@ -83,10 +84,11 @@ public record FileType(
             FileTypeDisabled e => ApplyEvent(e),
             FileTypeEnabled e => ApplyEvent(e),
             FileTypeFileToTextConverterChanged e => ApplyEvent(e),
-            FileTypeEvent e => new ApplyResult(
+            FileTypeEvent => new ApplyResult(
                 this,
-                [new FileTypeEventCancelled(e, "Event not implemented")],
-                true),
+                [],
+                true,
+                "Event not implemented"),
             _ => new ApplyResult(
                 this,
                 [InvalidEventApplied.CreateNotSupportedAppliedEvent(
@@ -110,7 +112,7 @@ public record FileType(
             new FileType(e),
             [e],
             false)
-        : new ApplyResult(this, [new FileTypeEventCancelled(e, "The document already exists.")], true);
+        : new ApplyResult(this, [], true, "The document already exists.");
 
     /// <summary>
     /// Applies a FileTypeEnabled event to the aggregate.
@@ -122,7 +124,7 @@ public record FileType(
             this with { Disabled = false },
             [e],
             false)
-            : new ApplyResult(this, [new FileTypeEventCancelled(e, "The document is already enabled.")], true);
+            : new ApplyResult(this, [], true, "The document is already enabled.");
 
     /// <summary>
     /// Applies a FileTypeDisabled event to the aggregate.
@@ -134,7 +136,7 @@ public record FileType(
             this with { Disabled = true },
             [e],
             false)
-            : new ApplyResult(this, [new FileTypeEventCancelled(e, "The document is already disabled.")], true);
+            : new ApplyResult(this, [], true, "The document is already disabled.");
 
     /// <summary>
     /// Applies a FileTypeTextExtractionModeChanged event to the aggregate.
@@ -173,7 +175,7 @@ public record FileType(
                 this with { Targets = currentTargets.Concat([e.Target]) },
                 [e],
                 false)
-            : new ApplyResult(this, [new FileTypeEventCancelled(e, "The target is already added.")], true);
+            : new ApplyResult(this, [], true, "The target is already added.");
     }
 
     /// <summary>
@@ -189,6 +191,6 @@ public record FileType(
                 this with { Targets = currentTargets.Where(t => t != e.Target) },
                 [e],
                 false)
-            : new ApplyResult(this, [new FileTypeEventCancelled(e, "The target is not present.")], true);
+            : new ApplyResult(this, [], true, "The target is not present.");
     }
 }
