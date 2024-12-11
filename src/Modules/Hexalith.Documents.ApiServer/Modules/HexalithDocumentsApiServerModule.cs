@@ -7,7 +7,6 @@ using Dapr.Actors.Runtime;
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
 using Hexalith.Documents.ApiServer.Controllers;
-using Hexalith.Documents.ApiServer.Helpers;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
@@ -15,7 +14,9 @@ using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Documents.Servers.Helpers;
 using Hexalith.Documents.UI.Services.Helpers;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
@@ -75,6 +76,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         _ = services.AddScoped<IFileService, AzureBlobStorageFileService>();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
+        HexalithDocumentsRequests.RegisterPolymorphicMappers();
 
         // Add application module
         services.TryAddSingleton<IDocumentModule, HexalithDocumentsApiServerModule>();
@@ -83,6 +85,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         _ = services
             .AddDocumentManagement()
             .AddDocumentsProjections(nameof(Hexalith.Documents))
+            .AddDocumentRequestHandlers()
             .AddDocumentProjectionHandlers();
 
         _ = services

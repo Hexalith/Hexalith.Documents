@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Pages.DocumentTypes.Services;
+﻿namespace Hexalith.Documents.UI.Services.DocumentTypes.Services;
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-using Hexalith.Documents.UI.Services.DocumentTypes.Services;
 using Hexalith.Documents.UI.Services.DocumentTypes.ViewModels;
 using Hexalith.UI.Components.ViewModels;
 
@@ -82,7 +81,7 @@ public class MemoryDocumentTypeQueryService : IDocumentTypeQueryService
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<IdDescription>> SearchIdDescriptionsAsync(ClaimsPrincipal user, string searchText, int skip, int count, CancellationToken cancellationToken)
+    public Task<IEnumerable<IdDescription>> SearchIdDescriptionsAsync(ClaimsPrincipal user, string searchText, int skip, int take, CancellationToken cancellationToken)
     {
         IQueryable<IdDescription> result = _data
             .Select(p => new IdDescription(p.Id, p.Name))
@@ -96,9 +95,9 @@ public class MemoryDocumentTypeQueryService : IDocumentTypeQueryService
             result = result.Skip(skip);
         }
 
-        if (count > 0)
+        if (take > 0)
         {
-            result = result.Take(count);
+            result = result.Take(take);
         }
 
         List<IdDescription> list = [.. result];

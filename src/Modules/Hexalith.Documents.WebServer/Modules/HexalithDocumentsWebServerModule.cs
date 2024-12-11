@@ -13,6 +13,8 @@ using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.Requests.Extensions;
+using Hexalith.Documents.Servers.Helpers;
 using Hexalith.Documents.UI.Pages.Modules;
 using Hexalith.Documents.UI.Services.Helpers;
 using Hexalith.Extensions.Configuration;
@@ -78,13 +80,17 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
             .ConfigureSettings<CosmosDbSettings>(configuration)
             .ConfigureSettings<AzureBlobFileServiceSettings>(configuration);
 
-        _ = services.AddDocumentCommandHandlers();
-        _ = services.AddDocumentEventValidators();
-        _ = services.AddDocumentUIServices();
+        _ = services
+            .AddDocumentCommandHandlers()
+            .AddDocumentEventValidators()
+            .AddDocumentsProjections(nameof(Hexalith.Documents))
+            .AddDocumentRequestHandlers()
+            .AddDocumentUIServices();
 
         _ = services.AddScoped<IFileService, AzureBlobStorageFileService>();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
+        HexalithDocumentsRequests.RegisterPolymorphicMappers();
 
         // Add application module
         services.TryAddSingleton<IDocumentModule, HexalithDocumentsWebServerModule>();

@@ -1,6 +1,5 @@
-﻿namespace Hexalith.Documents.ApiServer.Helpers;
+﻿namespace Hexalith.Documents.Servers.Helpers;
 
-using Hexalith.Application.Projections;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Documents.UI.Services.Helpers;

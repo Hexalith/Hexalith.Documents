@@ -3,12 +3,14 @@
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Events.FileTypes;
+using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Documents.UI.Pages.Documents.Services;
 using Hexalith.Documents.UI.Pages.DocumentTypes.Services;
 using Hexalith.Documents.UI.Services.Documents.Services;
 using Hexalith.Documents.UI.Services.DocumentTypes.Services;
 using Hexalith.Documents.UI.Services.FileTypes.Projections.Details;
 using Hexalith.Documents.UI.Services.FileTypes.Projections.Summaries;
+using Hexalith.Documents.UI.Services.FileTypes.RequestHandlers;
 using Hexalith.Documents.UI.Services.FileTypes.Services;
 using Hexalith.Domain.Events;
 
@@ -53,6 +55,15 @@ public static class DocumentUIHelper
 
         return services;
     }
+
+    /// <summary>
+    /// Adds document request handlers to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection to add the handlers to.</param>
+    /// <returns>The updated service collection.</returns>
+    public static IServiceCollection AddDocumentRequestHandlers(this IServiceCollection services) => services
+        .AddScoped<IRequestHandler<GetFileTypeSummaries>, GetFileTypeSummariesHandler>()
+        .AddScoped<IRequestHandler<GetFileTypeDetails>, GetFileTypeDetailsHandler>();
 
     /// <summary>
     /// Adds document UI services to the specified service collection.

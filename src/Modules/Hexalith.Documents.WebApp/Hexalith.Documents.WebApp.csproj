@@ -21,6 +21,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Application\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
+		<ProjectReference Include="..\..\Application\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
 		<ProjectReference Include="..\..\Presentation\Hexalith.Documents.UI.Pages\Hexalith.Documents.UI.Pages.csproj" />
 	</ItemGroup>
 </Project>

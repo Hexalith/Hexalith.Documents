@@ -14,6 +14,7 @@ using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.UI.Pages.Documents.Services;
 using Hexalith.Documents.UI.Pages.Modules;
 using Hexalith.Documents.UI.Services.Documents.Services;
@@ -75,6 +76,7 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
             .AddSingleton<IDocumentQueryService, DemoDocumentQueryService>();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
+        HexalithDocumentsRequests.RegisterPolymorphicMappers();
 
         // Add application module
         services.TryAddSingleton<IDocumentModule, HexalithDocumentsWebAppModule>();

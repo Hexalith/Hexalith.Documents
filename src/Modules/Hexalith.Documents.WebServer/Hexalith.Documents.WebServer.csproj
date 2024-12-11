@@ -19,6 +19,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Application\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
 	  <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\Hexalith.Documents.Servers\Hexalith.Documents.Servers.csproj" />
 	  <ProjectReference Include="..\..\Presentation\Hexalith.Documents.UI.Pages\Hexalith.Documents.UI.Pages.csproj" />
 	</ItemGroup>
 	<ItemGroup>

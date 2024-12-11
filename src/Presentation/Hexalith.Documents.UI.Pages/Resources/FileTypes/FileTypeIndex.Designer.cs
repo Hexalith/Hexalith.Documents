@@ -106,7 +106,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Documents.
+        ///   Looks up a localized string similar to File types.
         /// </summary>
         internal static string Title {
             get {

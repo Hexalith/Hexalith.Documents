@@ -18,6 +18,8 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Application\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
+	  <ProjectReference Include="..\..\Application\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\Hexalith.Documents.Servers\Hexalith.Documents.Servers.csproj" />
 	  <ProjectReference Include="..\..\Presentation\Hexalith.Documents.UI.Services\Hexalith.Documents.UI.Services.csproj" />
 	</ItemGroup>
 </Project>
