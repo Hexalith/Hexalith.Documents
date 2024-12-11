@@ -192,7 +192,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{0BFC2A
 		Hexalith.Security\.stylecop.ruleset = Hexalith.Security\.stylecop.ruleset
 		Hexalith.Security\Directory.Build.props = Hexalith.Security\Directory.Build.props
 		Hexalith.Security\Hexalith.Modules.ApiServer.props = Hexalith.Security\Hexalith.Modules.ApiServer.props
-		Hexalith.Security\Hexalith.Modules.SharedUIElements.props = Hexalith.Security\Hexalith.Modules.SharedUIElements.props
 		Hexalith.Security\Hexalith.Modules.StoreApp.props = Hexalith.Security\Hexalith.Modules.StoreApp.props
 		Hexalith.Security\Hexalith.Modules.WebApp.props = Hexalith.Security\Hexalith.Modules.WebApp.props
 		Hexalith.Security\Hexalith.Modules.WebServer.props = Hexalith.Security\Hexalith.Modules.WebServer.props
