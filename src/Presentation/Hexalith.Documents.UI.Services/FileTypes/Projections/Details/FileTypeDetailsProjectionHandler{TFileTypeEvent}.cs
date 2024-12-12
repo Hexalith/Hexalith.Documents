@@ -37,7 +37,7 @@ public abstract class FileTypeDetailsProjectionHandler<TFileTypeEvent>(IProjecti
             return;
         }
 
-        await SaveProjectionAsync(baseEvent.AggregateId, newValue, cancellationToken).ConfigureAwait(false);
+        await SaveProjectionAsync(metadata.AggregateGlobalId, newValue, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
