@@ -1,12 +1,20 @@
 ﻿namespace Hexalith.Documents.Requests.FileTypes;
 
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
 /// <summary>
 /// Represents a summary view of a document type with essential information.
 /// </summary>
 /// <param name="Id">The unique identifier of the document type.</param>
 /// <param name="Name">The name of the document type.</param>
 /// <param name="Disabled">Indicates whether the document type is disabled.</param>
-public record FileTypeSummaryViewModel(string Id, string Name, bool Disabled)
+[DataContract]
+[method: JsonConstructor]
+public partial record FileTypeSummaryViewModel(
+    [property: DataMember(Order = 1)] string Id,
+    [property: DataMember(Order = 2)] string Name,
+    [property: DataMember(Order = 3)] bool Disabled)
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="FileTypeSummaryViewModel"/> class from a <see cref="FileTypeDetailsViewModel"/> object.

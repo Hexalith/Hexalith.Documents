@@ -1,9 +1,10 @@
-﻿namespace UnitTests.Application.Requests;
+﻿namespace UnitTests.Application.Events;
 
 using System.Text.Json;
 
 using FluentAssertions;
 
+using Hexalith.Application.Abstractions.Extensions;
 using Hexalith.Application.Events;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.States;
@@ -13,9 +14,10 @@ using Hexalith.Documents.Events.FileTypes;
 public class FileTypeEventCancelledTest
 {
     [Fact]
-    public void SerializeAndDeserializeFileTypeAddedShouldBeEquivalentToOriginal()
+    public void SerializeAndDeserializeShouldBeEquivalentToOriginal()
     {
         // Arrange
+        HexalithApplicationAbstractions.RegisterPolymorphicMappers();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         FileTypeAdded added = new(
             "MD",
