@@ -1,86 +1,205 @@
-﻿@page "/Documents/FileType/{FileTypeId}"
+﻿@page "/Documents/Add/FileType"
+@page "/Documents/FileType/{Id}"
+
 @rendermode InteractiveServer
-@inject IFileTypeQueryService QueryService
+@inject IFileTypeQueryService DocumentQueryService
 @inject NavigationManager NavigationManager
-@inject IStringLocalizer<FileTypeDetails> L
 @inject ICommandService CommandService
+@inject IStringLocalizer<FileTypeDetails> L
+@inject IStringLocalizer<FileTypeEditValidation> ValidationLabels
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeDetails;
-@using System.Security.Claims
+
+<FluentToolbar>
+	@if (Id is not null)
+	{
+		<FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())">@Labels.Add</FluentButton>
+	}
+	<FluentAnchor Href="/Documents/FileType" Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.AppsList())">@Labels.List</FluentAnchor>
+</FluentToolbar>
+
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
-    <h3>@L[Labels.Title, FileTypeId]</h3>
-    @if (_data is not null)
-    {
-        <FluentStack Orientation="Orientation.Vertical">
-            <FluentStack Orientation="Orientation.Vertical">
-                <FluentTextField @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
-                <FluentTextField @bind-Value="@_data.Description" Label="@Labels.Description"></FluentTextField>
-                <FluentCheckbox @bind-Value="@_data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
-                <FluentLabel Typo="Typography.PaneHeader">@Labels.Targets</FluentLabel>
-                <FluentListbox TOption="string">
-                    @foreach (string target in _data.Targets)
-                    {
-                        <FluentOption>@target</FluentOption>
-                    }
-                </FluentListbox>
-            </FluentStack>
-            <FluentSpacer />
-            <FluentButton Appearance="Appearance.Accent" Disabled="@(!_data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
-        </FluentStack>
-    }
+	@if (Id is null) // Add
+	{
+		<FluentLabel Typo="Typography.PageTitle">@Labels.AddTitle</FluentLabel>
+	}
+	else // Edit
+	{
+		<FluentLabel Typo="Typography.PageTitle">@L[Labels.Title, Id]</FluentLabel>
+	}
+	@if (_data is not null)
+	{
+		<FluentGrid Orientation="Orientation.Vertical">
+			<FluentGridItem xs="12" md="3">
+				<FluentTextField Style="width:100%;" Disabled="@(Id is not null)" @bind-Value="_data.Id" Label="@Labels.Id"></FluentTextField>
+			</FluentGridItem>
+			<FluentGridItem xs="12" md="3">
+				<FluentTextField Style="width:100%;" @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
+			</FluentGridItem>
+			<FluentGridItem xs="12" xl="6">
+				<FluentTextField Style="width:100%;" @bind-Value="_data.Description" Label="@Labels.Description"></FluentTextField>
+			</FluentGridItem>
+			<FluentGridItem md="12">
+				<FluentLabel Typo="Typography.PaneHeader">@Labels.Targets</FluentLabel>
+			</FluentGridItem>
+			<FluentGridItem xs="12" md="6">
+				<FluentTextField Style="width:100%;" @bind-Value="_newTarget" Label="@Labels.NewTarget"></FluentTextField>
+			</FluentGridItem>
+			<FluentGridItem xs="12" md="12">
+				<FluentButton OnClick="AddTarget"
+							  IconStart="@(new Icons.Regular.Size16.Add())"
+							  Style="margin-left: 8px;">
+					@Labels.Add
+				</FluentButton>
+			</FluentGridItem>
+			@foreach (string target in _data.Targets)
+			{
+				<FluentGridItem xs="12" xl="6">
+
+					<FluentStack Orientation="Orientation.Horizontal" Style="margin: 4px 0;">
+						<FluentTextField Style="width:75%;" Value="@target" Readonly="true"></FluentTextField>
+						<FluentButton OnClick="@(() =>RemoveTarget(target))"
+									  IconStart="@(new Icons.Regular.Size16.Delete())"
+									  Style="margin-left: 8px;">
+							@Labels.Remove
+						</FluentButton>
+					</FluentStack>
+				</FluentGridItem>
+			}
+
+			<FluentGridItem md="12">
+				<FluentButton Disabled="@((_saveClicked && !ValidationResult.IsValid) || !_data.HasChanges)"
+							  Appearance="Appearance.Accent"
+							  IconStart="@(new Icons.Regular.Size24.Add())"
+							  OnClick="OnSave">
+					@Labels.Save
+				</FluentButton>
+			</FluentGridItem>
+			<FluentGridItem>
+				<HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
+			</FluentGridItem>
+		</FluentGrid>
+	}
 </FluentStack>
 
 @code {
-    [Parameter]
-    [EditorRequired]
-    public string FileTypeId { get; set; } = string.Empty;
+	[CascadingParameter]
+	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+	[Parameter]
+	public string? Id { get; set; }
 
-    [CascadingParameter]
-    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+	private ClaimsPrincipal? _user;
+	private FileTypeEditViewModel _data = new();
+	private string _newTarget = string.Empty;
+	private bool _saveClicked;
 
-    ClaimsPrincipal? _user;
+	private ValidationResult ValidationResult => new FileTypeEditValidation(ValidationLabels).Validate(_data);
 
-    FileTypeEditViewModel? _data = null;
+	protected override async Task OnInitializedAsync()
+	{
+		if (AuthenticationStateTask is not null)
+		{
+			var authState = await AuthenticationStateTask;
+			if (!authState.User.Identity?.IsAuthenticated == true)
+			{
+				NavigationManager.NavigateTo(Application.LoginPath);
+			}
+			_user = authState.User;
+		}
+		if (_user is null)
+		{
+			return;
+		}
+		if (Id is not null)
+		{
+			_data = new FileTypeEditViewModel(await DocumentQueryService.GetDetailsAsync(_user, Id, CancellationToken.None));
+		}
+	}
 
-    protected override async Task OnInitializedAsync()
-    {
-        if (AuthenticationStateTask is not null)
-        {
-            var authState = await AuthenticationStateTask;
-            if (!authState.User.Identity?.IsAuthenticated == true)
-            {
-                NavigationManager.NavigateTo(Application.LoginPath);
-            }
-            _user = authState.User;
-        }
-        if (string.IsNullOrWhiteSpace(FileTypeId) || _user is null)
-        {
-            _data = new FileTypeEditViewModel();
-            return;
-        }
-        else
-        {
-            _data = new(await QueryService.GetDetailsAsync(_user, FileTypeId, CancellationToken.None));
-        }
+	private async Task OnSave()
+	{
+		if (_data is null || _user is null)
+		{
+			return;
+		}
+		_saveClicked = true;
+		if (!_data.HasChanges)
+		{
+			return;
+		}
+		if (!ValidationResult.IsValid)
+			return;
+		FileTypeCommand fileTypeCommand;
+		if (Id is null)
+		{
+			fileTypeCommand = new AddFileType(
+						_data.Id!,
+						_data.Name!,
+						_data.Description,
+						_data.FileToTextConverter,
+						_data.Targets);
+			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+			_data = new();
+			StateHasChanged();
+			return;
+		}
+		if (_data.DescriptionChanged)
+		{
+			fileTypeCommand = new ChangeFileTypeDescription(
+						_data.Id!,
+						_data.Name!,
+						_data.Description);
+			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+		}
+		if (_data.FileToTextConverterChanged)
+		{
+			fileTypeCommand = new ChangeFileTypeFileToTextConverter(
+						_data.Id!,
+						_data.FileToTextConverter);
+			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+		}
+		if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
+		{
+			fileTypeCommand = new DisableFileType(_data.Id);
+			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+		}
+		if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
+		{
+			fileTypeCommand = new EnableFileType(_data.Id);
+			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+		}
+		// for each target in _data.Targets, add it if it does not exist
+		foreach (var target in _data.Targets)
+		{
+			if (!_data.Original.Targets.Contains(target))
+			{
+				fileTypeCommand = new AddFileTypeTarget(_data.Id, target);
+				await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+			}
+		}
+		// for each target in _data.Original.Targets, remove it if it does not exist
+		foreach (var target in _data.Original.Targets)
+		{
+			if (!_data.Targets.Contains(target))
+			{
+				fileTypeCommand = new RemoveFileTypeTarget(_data.Id, target);
+				await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+			}
+		}
+		NavigationManager.NavigateTo("/Documents/FileType");
+	}
 
-        await base.OnInitializedAsync();
-    }
-
-    public async Task OnSave()
-    {
-        if (_data is null)
-        {
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(_user?.Identity?.Name))
-        {
-            throw new InvalidOperationException("User not authenticated");
-        }
-        await CommandService.SubmitCommandAsync(_user, new ChangeFileTypeDescription(
-                _data.Id,
-                _data.Name,
-                _data.Description)
-            , CancellationToken.None);
-        NavigationManager.NavigateTo("/Documents/FileType");
-    }
-
+	private void AddTarget()
+	{
+		if (!string.IsNullOrWhiteSpace(_newTarget))
+		{
+			_data.Targets.Add(_newTarget);
+			StateHasChanged();
+			_newTarget = string.Empty;
+		}
+	}
+	private void RemoveTarget(string target)
+	{
+		_data.Targets.Remove(target);
+		StateHasChanged();
+	}
 }

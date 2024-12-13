@@ -1,10 +1,11 @@
 ﻿namespace Hexalith.Documents.Application.DocumentTypes;
 
+using System;
+
 using Hexalith.Application.Commands;
 using Hexalith.Application.Metadatas;
 using Hexalith.Documents.Commands.DocumentTypes;
 using Hexalith.Documents.Domain.DocumentTypes;
-using Hexalith.Documents.Events;
 using Hexalith.Documents.Events.DocumentTypes;
 using Hexalith.Domain.Aggregates;
 
@@ -18,12 +19,10 @@ using Microsoft.Extensions.Logging;
 /// through domain events. It implements the command handling pattern for document creation
 /// and provides both execution and rollback capabilities.
 /// </remarks>
-/// <remarks>
-/// Initializes a new instance of the <see cref="AddDocumentTypeHandler"/> class.
-/// </remarks>
-/// <param name="timeProvider">The time provider.</param>
-/// <param name="logger">The logger instance.</param>
-public class AddDocumentTypeHandler(TimeProvider timeProvider, ILogger<AddDocumentTypeHandler> logger) : DomainCommandHandler<AddDocumentType>(timeProvider, logger)
+public class ChangeDocumentTypeDescriptionHandler(
+    TimeProvider timeProvider,
+    ILogger<ChangeDocumentTypeDescriptionHandler> logger)
+    : DomainCommandHandler<ChangeDocumentTypeDescription>(timeProvider, logger)
 {
     /// <inheritdoc/>
     /// <remarks>
@@ -31,19 +30,13 @@ public class AddDocumentTypeHandler(TimeProvider timeProvider, ILogger<AddDocume
     /// a DocumentCreated event. If the aggregate is null, a new Document is created. If the
     /// aggregate exists, the event is applied to it.
     /// </remarks>
-    public override Task<ExecuteCommandResult> DoAsync(AddDocumentType command, Metadata metadata, IDomainAggregate? aggregate, CancellationToken cancellationToken)
+    public override Task<ExecuteCommandResult> DoAsync(ChangeDocumentTypeDescription command, Metadata metadata, IDomainAggregate? aggregate, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(command);
-        DocumentTypeAdded ev = new(
+        DocumentTypeDescriptionChanged ev = new(
             command.Id,
             command.Name,
-            command.Description,
-            command.FileTypeIds);
-
-        if (aggregate is null)
-        {
-            return Task.FromResult(new ExecuteCommandResult(new DocumentType(ev), [ev], [ev], false));
-        }
+            command.Description);
 
         return Task.FromResult(CheckAggregateIsValid<DocumentType>(aggregate, metadata)
             .Apply(ev)
@@ -55,12 +48,6 @@ public class AddDocumentTypeHandler(TimeProvider timeProvider, ILogger<AddDocume
     /// Rolls back a document creation by disabling the document through a DocumentDisabled event.
     /// This operation can only be performed on an existing document aggregate.
     /// </remarks>
-    public override Task<ExecuteCommandResult> UndoAsync(AddDocumentType command, Metadata metadata, IDomainAggregate? aggregate, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(command);
-        DocumentDisabled ev = new(command.Id);
-        return Task.FromResult(CheckAggregateIsValid<DocumentType>(aggregate, metadata)
-            .Apply(ev)
-            .CreateCommandResult(ev, metadata, Time));
-    }
+    public override Task<ExecuteCommandResult> UndoAsync(ChangeDocumentTypeDescription command, Metadata metadata, IDomainAggregate? aggregate, CancellationToken cancellationToken)
+        => Task.FromException<ExecuteCommandResult>(new NotSupportedException());
 }

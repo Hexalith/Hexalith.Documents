@@ -22,14 +22,14 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class FileTypeAddValidation {
+    internal class FileTypeEditValidation {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal FileTypeAddValidation() {
+        internal FileTypeEditValidation() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeAddValidation", typeof(FileTypeAddValidation).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeEditValidation", typeof(FileTypeEditValidation).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,11 +70,29 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Identifier is required.
+        /// </summary>
+        internal static string IdRequired {
+            get {
+                return ResourceManager.GetString("IdRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description must not exceed {0} characters.
         /// </summary>
         internal static string MaxDescriptionLengthExceeded {
             get {
                 return ResourceManager.GetString("MaxDescriptionLengthExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identifier must not exceed {0} characters.
+        /// </summary>
+        internal static string MaxIdLengthExceeded {
+            get {
+                return ResourceManager.GetString("MaxIdLengthExceeded", resourceCulture);
             }
         }
         

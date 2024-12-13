@@ -7,7 +7,6 @@ using Hexalith.Documents.Application.DocumentTypes;
 using Hexalith.Documents.Application.FileTypes;
 using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Commands.DocumentTypes;
-using Hexalith.Documents.Commands.FileTypes;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Domain.DocumentInformationExtractions;
 using Hexalith.Documents.Domain.Documents;
@@ -39,19 +38,6 @@ public static class DocumentHelper
     }
 
     /// <summary>
-    /// Adds the document command handlers to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDocumentCommandHandlers(this IServiceCollection services)
-    {
-        services.TryAddSingleton<IDomainCommandHandler<AddDocument>, AddDocumentHandler>();
-        services.TryAddSingleton<IDomainCommandHandler<AddDocumentType>, AddDocumentTypeHandler>();
-        services.TryAddSingleton<IDomainCommandHandler<AddFileType>, AddFileTypeHandler>();
-        return services;
-    }
-
-    /// <summary>
     /// Adds the document event validators to the service collection.
     /// </summary>
     /// <param name="services">The service collection.</param>
@@ -68,9 +54,22 @@ public static class DocumentHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentManagement(this IServiceCollection services)
     {
-        _ = services.AddDocumentCommandHandlers();
+        _ = services.AddDocumentsCommandHandlers();
         _ = services.AddDocumentAggregateProviders();
         _ = services.AddDocumentEventValidators();
+        return services;
+    }
+
+    /// <summary>
+    /// Adds the document command handlers to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The updated service collection.</returns>
+    public static IServiceCollection AddDocumentsCommandHandlers(this IServiceCollection services)
+    {
+        services.TryAddSingleton<IDomainCommandHandler<AddDocument>, AddDocumentHandler>();
+        services.TryAddSingleton<IDomainCommandHandler<AddDocumentType>, AddDocumentTypeHandler>();
+        _ = services.AddFileTypeCommandHandlers();
         return services;
     }
 }

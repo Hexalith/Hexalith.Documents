@@ -70,6 +70,15 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new file type.
+        /// </summary>
+        internal static string AddTitle {
+            get {
+                return ResourceManager.GetString("AddTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string Description {
@@ -97,6 +106,15 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List.
+        /// </summary>
+        internal static string List {
+            get {
+                return ResourceManager.GetString("List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string Name {
@@ -106,11 +124,29 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New target.
+        /// </summary>
+        internal static string NewTarget {
+            get {
+                return ResourceManager.GetString("NewTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are not authorized to read documents.
         /// </summary>
         internal static string ReadNotAuthorized {
             get {
                 return ResourceManager.GetString("ReadNotAuthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        internal static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         
@@ -133,7 +169,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document {0}.
+        ///   Looks up a localized string similar to File type {0}.
         /// </summary>
         internal static string Title {
             get {

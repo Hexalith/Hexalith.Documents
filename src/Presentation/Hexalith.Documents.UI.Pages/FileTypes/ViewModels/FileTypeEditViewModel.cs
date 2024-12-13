@@ -1,7 +1,5 @@
 ﻿namespace Hexalith.Documents.UI.Pages.FileTypes.ViewModels;
 
-using System.Collections.Immutable;
-
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Extensions.Helpers;
 
@@ -10,6 +8,8 @@ using Hexalith.Extensions.Helpers;
 /// </summary>
 public class FileTypeEditViewModel
 {
+    private string _id = string.Empty;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="FileTypeEditViewModel"/> class.
     /// </summary>
@@ -21,7 +21,8 @@ public class FileTypeEditViewModel
         Name = details.Name;
         Description = details.Description;
         Disabled = details.Disabled;
-        Targets = details.Targets.ToImmutableList();
+        FileToTextConverter = details.FileToTextConverter;
+        Targets = [.. details.Targets];
     }
 
     /// <summary>
@@ -44,19 +45,43 @@ public class FileTypeEditViewModel
     public string? Description { get; set; }
 
     /// <summary>
+    /// Gets a value indicating whether the description has changed.
+    /// </summary>
+    public bool DescriptionChanged => Description != Original.Description || Name != Original.Name;
+
+    /// <summary>
     /// Gets or sets a value indicating whether the file type is disabled.
     /// </summary>
     public bool Disabled { get; set; }
 
     /// <summary>
-    /// Gets a value indicating whether there are changes in the file type details.
+    /// Gets or sets the file to text converter.
     /// </summary>
-    public bool HasChanges => Name != Original.Name || Description != Original.Description || Disabled != Original.Disabled;
+    public string? FileToTextConverter { get; set; }
 
     /// <summary>
-    /// Gets the ID of the file type.
+    /// Gets a value indicating whether the file to text converter has changed.
     /// </summary>
-    public string Id => Original.Id;
+    public bool FileToTextConverterChanged => FileToTextConverter != Original.FileToTextConverter;
+
+    /// <summary>
+    /// Gets a value indicating whether there are changes in the file type details.
+    /// </summary>
+    public bool HasChanges =>
+        Id != Original.Id ||
+        DescriptionChanged ||
+        FileToTextConverterChanged ||
+        TargetsChanged ||
+        Disabled != Original.Disabled;
+
+    /// <summary>
+    /// Gets or sets the ID of the file type.
+    /// </summary>
+    public string Id
+    {
+        get => string.IsNullOrWhiteSpace(Original.Id) ? _id : Original.Id;
+        set => _id = string.IsNullOrWhiteSpace(Original.Id) ? value : Original.Id;
+    }
 
     /// <summary>
     /// Gets or sets the name of the file type.
@@ -71,5 +96,10 @@ public class FileTypeEditViewModel
     /// <summary>
     /// Gets the targets associated with the file type.
     /// </summary>
-    public IEnumerable<string> Targets { get; }
+    public ICollection<string> Targets { get; } = [];
+
+    /// <summary>
+    /// Gets a value indicating whether the targets have changed.
+    /// </summary>
+    public bool TargetsChanged => !Targets.SequenceEqual(Original.Targets);
 }

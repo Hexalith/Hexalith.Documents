@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 using Hexalith.PolymorphicSerialization;
 
 [PolymorphicSerialization]
-public partial record ChangeFileTypeTextExtractionMode(
+public partial record ChangeFileTypeFileToTextConverter(
     string Id,
-    [property: DataMember(Order = 2)] string? TextExtractionModeId)
+    [property: DataMember(Order = 2)] string? FileToTextConverter)
     : FileTypeCommand(Id)
 {
 }

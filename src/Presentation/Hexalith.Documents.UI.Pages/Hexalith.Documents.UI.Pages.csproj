@@ -59,15 +59,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DocumentIndex.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\FileTypes\FileTypeAdd.Designer.cs">
+    <Compile Update="Resources\FileTypes\FileTypeEditValidation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>FileTypeAdd.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\FileTypes\FileTypeAddValidation.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FileTypeAddValidation.resx</DependentUpon>
+      <DependentUpon>FileTypeEditValidation.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\FileTypes\FileTypeDetails.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -95,13 +90,9 @@
       <LastGenOutput>DocumentAddValidation.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\FileTypes\FileTypeAdd.resx">
-      <LastGenOutput>FileTypeAdd.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Resources\FileTypes\FileTypeEditValidation.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\FileTypes\FileTypeAddValidation.resx">
-      <LastGenOutput>FileTypeAddValidation.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileTypeEditValidation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\FileTypes\FileTypeDetails.resx">
       <LastGenOutput>FileTypeDetails.Designer.cs</LastGenOutput>

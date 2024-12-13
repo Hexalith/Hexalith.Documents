@@ -14,9 +14,6 @@
 		<ProjectReference Include="..\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="CommandHandlers\" />
-	</ItemGroup>
-	<ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.0" />
 	</ItemGroup>
 </Project>

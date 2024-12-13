@@ -8,6 +8,8 @@ using Hexalith.Documents.Events;
 using Hexalith.Documents.Events.Documents;
 using Hexalith.Domain.Aggregates;
 
+using Microsoft.Extensions.Logging;
+
 /// <summary>
 /// Handles the creation of documents by processing CreateDocument commands.
 /// </summary>
@@ -16,7 +18,8 @@ using Hexalith.Domain.Aggregates;
 /// through domain events. It implements the command handling pattern for document creation
 /// and provides both execution and rollback capabilities.
 /// </remarks>
-public class AddDocumentHandler : DomainCommandHandler<AddDocument>
+public class AddDocumentHandler(TimeProvider timeProvider, ILogger<AddDocumentHandler> logger)
+    : DomainCommandHandler<AddDocument>(timeProvider, logger)
 {
     /// <inheritdoc/>
     /// <remarks>
@@ -38,16 +41,12 @@ public class AddDocumentHandler : DomainCommandHandler<AddDocument>
 
         if (aggregate is null)
         {
-            return Task.FromResult(new ExecuteCommandResult(new Document(ev), [ev], [ev]));
+            return Task.FromResult(new ExecuteCommandResult(new Document(ev), [ev], [ev], false));
         }
 
-        if (aggregate is Document a)
-        {
-            ApplyResult result = a.Apply(ev);
-            return Task.FromResult(new ExecuteCommandResult(aggregate, result.Failed ? [] : [ev], result.Messages));
-        }
-
-        return Task.FromException<ExecuteCommandResult>(new InvalidAggregateTypeException<Document>(aggregate));
+        return Task.FromResult(CheckAggregateIsValid<Document>(aggregate, metadata)
+            .Apply(ev)
+            .CreateCommandResult(ev, metadata, Time));
     }
 
     /// <inheritdoc/>
@@ -59,17 +58,8 @@ public class AddDocumentHandler : DomainCommandHandler<AddDocument>
     {
         ArgumentNullException.ThrowIfNull(command);
         DocumentDisabled ev = new(command.Id);
-        if (aggregate is null)
-        {
-            return Task.FromException<ExecuteCommandResult>(new NotSupportedException("Cannot undo a command that has not been executed. Aggregate is null."));
-        }
-
-        if (aggregate is Document factory)
-        {
-            ApplyResult result = factory.Apply(ev);
-            return Task.FromResult(new ExecuteCommandResult(aggregate, result.Failed ? [] : [ev], result.Messages));
-        }
-
-        return Task.FromException<ExecuteCommandResult>(new InvalidAggregateTypeException<Document>(aggregate));
+        return Task.FromResult(CheckAggregateIsValid<Document>(aggregate, metadata)
+            .Apply(ev)
+            .CreateCommandResult(ev, metadata, Time));
     }
 }

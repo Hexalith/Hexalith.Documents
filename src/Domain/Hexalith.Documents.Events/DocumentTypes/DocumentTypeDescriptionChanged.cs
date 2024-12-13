@@ -16,6 +16,6 @@ public partial record DocumentTypeDescriptionChanged(
     [property: DataMember(Order = 2)]
     string Name,
     [property: DataMember(Order = 3)]
-    string Description) : DocumentTypeEvent(Id)
+    string? Description) : DocumentTypeEvent(Id)
 {
 }

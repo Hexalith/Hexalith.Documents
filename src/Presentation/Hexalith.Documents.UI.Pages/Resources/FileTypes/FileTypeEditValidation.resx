@@ -117,28 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
-    <value>Add</value>
+  <data name="MaxNameLengthExceeded" xml:space="preserve">
+    <value>Name must not exceed {0} characters</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="MaxDescriptionLengthExceeded" xml:space="preserve">
+    <value>Description must not exceed {0} characters</value>
   </data>
-  <data name="Id" xml:space="preserve">
-    <value>Identier</value>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Name is required</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
+  <data name="DocumentTypeId" xml:space="preserve">
+    <value>Document type</value>
   </data>
-  <data name="NewTarget" xml:space="preserve">
-    <value>New target</value>
+  <data name="IdRequired" xml:space="preserve">
+    <value>The identifier is required</value>
   </data>
-  <data name="Remove" xml:space="preserve">
-    <value>Remove</value>
-  </data>
-  <data name="Targets" xml:space="preserve">
-    <value>File MIME targets</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Add a new file type</value>
+  <data name="MaxIdLengthExceeded" xml:space="preserve">
+    <value>Identifier must not exceed {0} characters</value>
   </data>
 </root>

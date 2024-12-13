@@ -14,7 +14,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record FileTypeDescriptionChanged(
     string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] string Description)
+    [property: DataMember(Order = 3)] string? Description)
     : FileTypeEvent(Id)
 {
 }
