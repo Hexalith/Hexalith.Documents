@@ -181,7 +181,7 @@ public record DocumentContainer(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerFileTypeAdded e)
     {
-        List<string> fileTypes = FileTypeIds.ToList();
+        List<string> fileTypes = [.. FileTypeIds];
         if (fileTypes.Contains(e.FileTypeId))
         {
             return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The file type {e.FileTypeId} already exists in document container {Id}/{Name}.")], true);
@@ -201,7 +201,7 @@ public record DocumentContainer(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerFileTypeRemoved e)
     {
-        List<string> fileTypes = FileTypeIds.ToList();
+        List<string> fileTypes = [.. FileTypeIds];
         if (!fileTypes.Remove(e.FileTypeId))
         {
             return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The file type {e.FileTypeId} does not exist in document container {Id}/{Name}.")], true);
@@ -260,7 +260,7 @@ public record DocumentContainer(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerActorAdded e)
     {
-        List<DocumentActor> actors = Actors.ToList();
+        List<DocumentActor> actors = [.. Actors];
         if (actors.Any(a => a.ContactId == e.Actor.ContactId))
         {
             return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The actor {e.Actor.ContactId} already exists in document container {Id}/{Name}.")], true);
@@ -280,7 +280,7 @@ public record DocumentContainer(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerActorRemoved e)
     {
-        List<DocumentActor> actors = Actors.ToList();
+        List<DocumentActor> actors = [.. Actors];
         if (actors.RemoveAll(a => a.ContactId == e.ContactId) == 0)
         {
             return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The actor {e.ContactId} does not exist in document container {Id}/{Name}.")], true);

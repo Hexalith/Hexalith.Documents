@@ -1,5 +1,8 @@
 ﻿namespace Hexalith.Documents.Servers.Helpers;
 
+using Hexalith.Documents.Domain.DocumentContainers;
+using Hexalith.Documents.Domain.DocumentInformationExtractions;
+using Hexalith.Documents.Domain.DocumentPartitions;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.DocumentTypes;
 using Hexalith.Documents.Domain.FileTypes;
@@ -37,6 +40,15 @@ public static class DocumentsWebApiHelpers
         _ = services.AddActorProjectionFactory<Document>(applicationId);
         _ = services.AddActorProjectionFactory<DocumentSummaryViewModel>(applicationId);
         _ = services.AddActorProjectionFactory<DocumentDetailsViewModel>(applicationId);
+        _ = services.AddActorProjectionFactory<DocumentContainer>(applicationId);
+        _ = services.AddActorProjectionFactory<DocumentContainerSummaryViewModel>(applicationId);
+        _ = services.AddActorProjectionFactory<DocumentContainerDetailsViewModel>(applicationId);
+        _ = services.AddActorProjectionFactory<DocumentPartition>(applicationId);
+        _ = services.AddActorProjectionFactory<DocumentPartitionSummaryViewModel>(applicationId);
+        _ = services.AddActorProjectionFactory<DocumentPartitionDetailsViewModel>(applicationId);
+        _ = services.AddActorProjectionFactory<DocumentInformationExtraction>(applicationId);
+        _ = services.AddActorProjectionFactory<DocumentInformationExtractionSummaryViewModel>(applicationId);
+        _ = services.AddActorProjectionFactory<DocumentInformationExtractionDetailsViewModel>(applicationId);
         return services;
     }
 }
