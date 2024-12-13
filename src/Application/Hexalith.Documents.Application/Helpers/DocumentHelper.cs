@@ -6,7 +6,6 @@ using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.DocumentTypes;
 using Hexalith.Documents.Application.FileTypes;
 using Hexalith.Documents.Commands.Documents;
-using Hexalith.Documents.Commands.DocumentTypes;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Domain.DocumentInformationExtractions;
 using Hexalith.Documents.Domain.Documents;
@@ -68,8 +67,8 @@ public static class DocumentHelper
     public static IServiceCollection AddDocumentsCommandHandlers(this IServiceCollection services)
     {
         services.TryAddSingleton<IDomainCommandHandler<AddDocument>, AddDocumentHandler>();
-        services.TryAddSingleton<IDomainCommandHandler<AddDocumentType>, AddDocumentTypeHandler>();
         _ = services.AddFileTypeCommandHandlers();
+        _ = services.AddDocumentTypeCommandHandlers();
         return services;
     }
 }
