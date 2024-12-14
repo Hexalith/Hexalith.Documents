@@ -18,6 +18,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Domain\" />
+	  <Folder Include="ActorHttpTests\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Modules\Hexalith.Documents.ApiServer\Hexalith.Documents.ApiServer.csproj" />

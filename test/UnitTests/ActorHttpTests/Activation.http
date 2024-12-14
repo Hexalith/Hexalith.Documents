@@ -1,0 +1,8 @@
+### Activate Actor
+POST http://localhost:53883/v1.0/actors/UserNameIndex/jpiquot
+
+### Invoke Actor Method
+POST http://localhost:3500/v1.0/actors/UserNameIndex/jpiquot/method/GetAsync
+
+### Deactivate Actor
+DELETE http://localhost:3500/v1.0/actors/UserNameIndex/jpiquot
