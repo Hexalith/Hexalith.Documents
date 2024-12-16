@@ -13,7 +13,4 @@
 		<ProjectReference Include="..\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
 		<ProjectReference Include="..\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.0" />
-	</ItemGroup>
 </Project>
