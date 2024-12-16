@@ -1,17 +1,19 @@
 ﻿@inject IFileTypeQueryService FileTypeQueryService;
 @inject IStringLocalizer<FileTypeSummaryGrid> L;
+@inject ILogger<FileTypeSummaryGrid> Logger
 @inject NavigationManager NavigationManager;
 @using Hexalith.Documents.Application
 @using Labels = Resources.FileTypes.FileTypeSummaryGrid
 @using System.Security.Claims
-
+@using Microsoft.Extensions.Logging
+<FluentLabel>@RendererInfo.Name Interactive : @RendererInfo.IsInteractive</FluentLabel>
 @if (elements is not null)
 {
     <FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
-                    Items="@elements"
-                    ResizableColumns="true"
-                    ShowHover="true"
-                    OnRowDoubleClick="@((FluentDataGridRow<FileTypeSummaryViewModel> row) => HandleRowDoubleClick(row))">
+    Items="@elements"
+    ResizableColumns="true"
+    ShowHover="true"
+    OnRowDoubleClick="@((FluentDataGridRow<FileTypeSummaryViewModel> row) => HandleRowDoubleClick(row))">
         <PropertyColumn Title="@Labels.Id" Property="@(p => p.Id)" Sortable="true" />
         <PropertyColumn Title="@Labels.Name" Property="@(p => p.Name)" Sortable="true" />
         <TemplateColumn Title="@Labels.Disabled">
@@ -30,12 +32,16 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Logger.LogInformation($"FileTypeSummaryGrid: Initializing {RendererInfo.Name} Interactive: {RendererInfo.IsInteractive}");
         // Obtain the authentication state from the cascading parameter.
         var authState = await AuthenticationStateTask!;
 
         // Get the ClaimsPrincipal that represents the current user.
         user = authState.User;
-        elements = (await FileTypeQueryService.GetSummariesAsync(user, CancellationToken.None)).AsQueryable();
+        var result = await FileTypeQueryService.GetSummariesAsync(user, CancellationToken.None);
+        Logger.LogInformation($"FileTypeSummaryGrid: {result.Count()} elements loaded.");
+        elements = result.AsQueryable();
+        StateHasChanged();
     }
     IQueryable<FileTypeSummaryViewModel>? elements = null;
     private Task HandleRowDoubleClick(FluentDataGridRow<FileTypeSummaryViewModel> row)

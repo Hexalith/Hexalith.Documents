@@ -62,6 +62,8 @@ public class GetFileTypeSummariesHandler : RequestHandlerBase<GetFileTypeSummari
 
         FileTypeSummaryViewModel?[] results = await Task.WhenAll(summaryTasks).ConfigureAwait(false);
 
-        return request with { Result = results.OfType<FileTypeSummaryViewModel>() };
+        IEnumerable<FileTypeSummaryViewModel> queryResult = results.Where(p => p is not null).OfType<FileTypeSummaryViewModel>();
+
+        return request with { Result = queryResult };
     }
 }

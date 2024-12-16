@@ -1,5 +1,5 @@
 ﻿@page "/Documents/FileType"
-@rendermode InteractiveServer
+@rendermode InteractiveAuto
 @inject IFileTypeQueryService DocumentQueryService
 @inject NavigationManager NavigationManager
 @inject ICommandService CommandService
@@ -17,7 +17,7 @@
 </FluentToolbar>
 <FluentStack Orientation="Orientation.Vertical">
     <FluentLabel Typo="Typography.PageTitle">@Labels.Title</FluentLabel>
-    <FileTypeSummaryGrid @rendermode="InteractiveAuto" />
+    <FileTypeSummaryGrid />
 </FluentStack>
 
 

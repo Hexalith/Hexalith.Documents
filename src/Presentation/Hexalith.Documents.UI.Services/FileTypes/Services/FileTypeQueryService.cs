@@ -1,6 +1,7 @@
 ﻿namespace Hexalith.Documents.UI.Services.FileTypes.Services;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,22 +10,30 @@ using Hexalith.Application.Requests;
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.UI.Components.ViewModels;
 
+using Microsoft.Extensions.Logging;
+
 /// <summary>
 /// Provides query operations for file types.
 /// </summary>
-public class FileTypeQueryService : IFileTypeQueryService
+public partial class FileTypeQueryService : IFileTypeQueryService
 {
+    private readonly ILogger<FileTypeQueryService> _logger;
     private readonly IRequestService _requestService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FileTypeQueryService"/> class.
     /// </summary>
     /// <param name="requestService">The request service.</param>
-    public FileTypeQueryService(IRequestService requestService)
+    public FileTypeQueryService(IRequestService requestService, ILogger<FileTypeQueryService> logger)
     {
         ArgumentNullException.ThrowIfNull(requestService);
+        ArgumentNullException.ThrowIfNull(logger);
         _requestService = requestService;
+        _logger = logger;
     }
+
+    [LoggerMessage(EventId = 1, Level = LogLevel.Information, Message = "GetSummariesAsync: received {Count} summaries.")]
+    public static partial void LogGetSummaries(ILogger logger, int count);
 
     /// <inheritdoc/>
     public async Task<FileTypeDetailsViewModel> GetDetailsAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken)
@@ -53,8 +62,14 @@ public class FileTypeQueryService : IFileTypeQueryService
 
     /// <inheritdoc/>
     public async Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken)
-        => CheckValidResult((await _requestService.SubmitAsync(user, new GetFileTypeSummaries(skip, take), cancellationToken)
-            .ConfigureAwait(false)).Result);
+    {
+        ArgumentNullException.ThrowIfNull(user);
+
+        GetFileTypeSummaries request = await _requestService.SubmitAsync(user, new GetFileTypeSummaries(skip, take), cancellationToken).ConfigureAwait(false);
+        _ = CheckValidResult(request);
+        LogGetSummaries(_logger, request.Result.Count());
+        return request.Result;
+    }
 
     /// <inheritdoc/>
     public async Task<IEnumerable<IdDescription>> SearchIdDescriptionsAsync(ClaimsPrincipal user, string searchText, int skip, int take, CancellationToken cancellationToken)
@@ -96,6 +111,6 @@ public class FileTypeQueryService : IFileTypeQueryService
         return data;
     }
 
-    private static TResult CheckValidResult<TResult>(TResult? result)
+    private static TResult CheckValidResult<TResult>([NotNull] TResult? result)
         => result ?? throw new InvalidOperationException("The request result is null or empty in file type query service");
 }
