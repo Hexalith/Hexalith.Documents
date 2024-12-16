@@ -70,7 +70,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Identifier is required.
+        ///   Looks up a localized string similar to The identifier is required.
         /// </summary>
         internal static string IdRequired {
             get {
