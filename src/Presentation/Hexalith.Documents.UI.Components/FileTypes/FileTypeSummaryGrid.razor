@@ -6,7 +6,6 @@
 @using Labels = Resources.FileTypes.FileTypeSummaryGrid
 @using System.Security.Claims
 @using Microsoft.Extensions.Logging
-<FluentLabel>@RendererInfo.Name Interactive : @RendererInfo.IsInteractive</FluentLabel>
 @if (elements is not null)
 {
     <FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
@@ -41,7 +40,6 @@
         var result = await FileTypeQueryService.GetSummariesAsync(user, CancellationToken.None);
         Logger.LogInformation($"FileTypeSummaryGrid: {result.Count()} elements loaded.");
         elements = result.AsQueryable();
-        StateHasChanged();
     }
     IQueryable<FileTypeSummaryViewModel>? elements = null;
     private Task HandleRowDoubleClick(FluentDataGridRow<FileTypeSummaryViewModel> row)
