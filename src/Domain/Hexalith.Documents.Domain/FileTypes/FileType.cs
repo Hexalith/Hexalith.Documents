@@ -84,18 +84,8 @@ public record FileType(
             FileTypeDisabled e => ApplyEvent(e),
             FileTypeEnabled e => ApplyEvent(e),
             FileTypeFileToTextConverterChanged e => ApplyEvent(e),
-            FileTypeEvent => new ApplyResult(
-                this,
-                [],
-                true,
-                "Event not implemented"),
-            _ => new ApplyResult(
-                this,
-                [InvalidEventApplied.CreateNotSupportedAppliedEvent(
-                    AggregateName,
-                    AggregateId,
-                    domainEvent)],
-                true),
+            FileTypeEvent => ApplyResult.NotImplemented(this),
+            _ => ApplyResult.InvalidEvent(this, domainEvent),
         };
     }
 
