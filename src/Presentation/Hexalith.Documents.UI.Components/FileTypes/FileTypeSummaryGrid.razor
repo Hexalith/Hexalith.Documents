@@ -2,10 +2,8 @@
 @inject IStringLocalizer<FileTypeSummaryGrid> L;
 @inject ILogger<FileTypeSummaryGrid> Logger
 @inject NavigationManager NavigationManager;
-@using Hexalith.Documents.Application
 @using Labels = Resources.FileTypes.FileTypeSummaryGrid
 @using System.Security.Claims
-@using Microsoft.Extensions.Logging
 @if (elements is not null)
 {
     <FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"

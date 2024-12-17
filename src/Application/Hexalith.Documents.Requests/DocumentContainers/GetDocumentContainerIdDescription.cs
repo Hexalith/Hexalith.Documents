@@ -2,8 +2,8 @@
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Services;
 using Hexalith.PolymorphicSerialization;
-using Hexalith.UI.Components.ViewModels;
 
 /// <summary>
 /// Represents a request to get the description of a document container by its ID.

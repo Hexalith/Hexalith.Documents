@@ -3,8 +3,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Hexalith.Application.Services;
 using Hexalith.Documents.UI.Services.DocumentTypes.ViewModels;
-using Hexalith.UI.Components.Services;
 
 /// <summary>
 /// Defines the contract for a service that provides query operations for document types.

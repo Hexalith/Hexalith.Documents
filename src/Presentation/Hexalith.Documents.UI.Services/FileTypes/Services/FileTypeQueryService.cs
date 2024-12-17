@@ -7,8 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Hexalith.Application.Requests;
+using Hexalith.Application.Services;
 using Hexalith.Documents.Requests.FileTypes;
-using Hexalith.UI.Components.ViewModels;
 
 using Microsoft.Extensions.Logging;
 
