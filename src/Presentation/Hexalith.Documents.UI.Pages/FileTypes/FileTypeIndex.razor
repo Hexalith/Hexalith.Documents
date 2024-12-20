@@ -3,7 +3,6 @@
 @inject IFileTypeQueryService DocumentQueryService
 @inject NavigationManager NavigationManager
 @inject ICommandService CommandService
-@inject IRequestService RequestService
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeIndex;
 <FluentToolbar Style="width:100%;">
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="Add">@Labels.Add</FluentButton>
