@@ -8,6 +8,7 @@
 @inject IStringLocalizer<FileTypeDetails> L
 @inject IStringLocalizer<FileTypeEditValidation> ValidationLabels
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeDetails;
+    using Hexalith.Documents.Application.Documents;
 
 <FluentToolbar>
 	@if (Id is not null)

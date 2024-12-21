@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Application.Modules;
+﻿namespace Hexalith.Documents.Application.Documents;
 
 using Hexalith.Application.Modules.Modules;
 

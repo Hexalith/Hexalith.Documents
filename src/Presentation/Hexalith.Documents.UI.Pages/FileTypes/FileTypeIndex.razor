@@ -4,6 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject ICommandService CommandService
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeIndex;
+    using Hexalith.Documents.Application.Documents;
 <FluentToolbar Style="width:100%;">
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="Add">@Labels.Add</FluentButton>
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowImport())" OnClick="ImportAsync">@Labels.Import</FluentButton>

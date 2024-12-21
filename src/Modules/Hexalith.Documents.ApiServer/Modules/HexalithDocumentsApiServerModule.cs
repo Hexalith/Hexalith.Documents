@@ -7,8 +7,8 @@ using Dapr.Actors.Runtime;
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
 using Hexalith.Documents.ApiServer.Controllers;
+using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.Helpers;
-using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.Documents;
@@ -105,12 +105,12 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
             throw new ArgumentException($"{nameof(RegisterActors)} parameter must be an {nameof(ActorRegistrationCollection)}. Actual type : {actorCollection.GetType().Name}.", nameof(actorCollection));
         }
 
-        actorRegistrations.RegisterActor<DomainAggregateActor>(DomainAggregateActorBase.GetAggregateActorName(DocumentDomainHelper.FileTypeAggregateName));
-        actorRegistrations.RegisterActor<DomainAggregateActor>(DomainAggregateActorBase.GetAggregateActorName(DocumentDomainHelper.DocumentAggregateName));
-        actorRegistrations.RegisterProjectionActor<FileType>(nameof(Hexalith.Documents));
-        actorRegistrations.RegisterProjectionActor<FileTypeSummaryViewModel>(nameof(Hexalith.Documents));
-        actorRegistrations.RegisterProjectionActor<FileTypeDetailsViewModel>(nameof(Hexalith.Documents));
-        actorRegistrations.RegisterProjectionActor<Document>(nameof(Hexalith.Documents));
+        actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.FileTypeAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.DocumentAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterProjectionActor<FileType>();
+        actorRegistrations.RegisterProjectionActor<FileTypeSummaryViewModel>();
+        actorRegistrations.RegisterProjectionActor<FileTypeDetailsViewModel>();
+        actorRegistrations.RegisterProjectionActor<Document>();
         actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentAggregateName));
         actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentTypeAggregateName));
         actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentContainerAggregateName));

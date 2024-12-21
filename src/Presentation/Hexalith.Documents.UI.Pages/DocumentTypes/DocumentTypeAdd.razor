@@ -6,6 +6,7 @@
 @inject IStringLocalizer<DocumentTypeAddValidation> ValidationLabels
 @inject ICommandService CommandService
 @using Labels = Hexalith.Documents.UI.Pages.Resources.DocumentTypes.DocumentTypeAdd;
+    using Hexalith.Documents.Application.Documents;
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
     <h3>@L[Labels.Title, _documentId]</h3>
     @if (_data is not null)

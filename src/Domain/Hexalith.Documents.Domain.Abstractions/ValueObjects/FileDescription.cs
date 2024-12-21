@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 /// <param name="Id">The unique identifier of the file.</param>
 /// <param name="Name">The name of the file.</param>
 /// <param name="OriginalName">The original name of the file.</param>
+/// <param name="Size">The size of the file.</param>
 /// <param name="ContentType">The content type of the file.</param>
 [DataContract]
 public record FileDescription(
@@ -18,4 +19,6 @@ public record FileDescription(
     [property : DataMember(Order = 3)]
     string OriginalName,
     [property:DataMember(Order = 4)]
+    long Size,
+    [property:DataMember(Order = 5)]
     string ContentType);

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 using System.Reflection;
 
 using Hexalith.Application.Modules.Modules;
+using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.Helpers;
-using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.Requests.Extensions;

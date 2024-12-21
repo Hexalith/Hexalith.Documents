@@ -3,15 +3,11 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-using Dapr.Actors.Runtime;
-
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
+using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.Helpers;
-using Hexalith.Documents.Application.Modules;
 using Hexalith.Documents.Commands.Extensions;
-using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.Servers.Helpers;
@@ -21,8 +17,6 @@ using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
 using Hexalith.Infrastructure.AzureBlobStorage.Services;
 using Hexalith.Infrastructure.CosmosDb.Configurations;
-using Hexalith.Infrastructure.DaprRuntime.Actors;
-using Hexalith.Infrastructure.DaprRuntime.Helpers;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -105,14 +99,6 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     /// <param name="actorCollection">The actor collection.</param>
     public static void RegisterActors(object actorCollection)
     {
-        ArgumentNullException.ThrowIfNull(actorCollection);
-        if (actorCollection is not ActorRegistrationCollection actorRegistrations)
-        {
-            throw new ArgumentException($"{nameof(RegisterActors)} parameter must be an {nameof(ActorRegistrationCollection)}. Actual type : {actorCollection.GetType().Name}.", nameof(actorCollection));
-        }
-
-        actorRegistrations.RegisterActor<DomainAggregateActor>(DomainAggregateActorBase.GetAggregateActorName(DocumentDomainHelper.DocumentAggregateName));
-        actorRegistrations.RegisterProjectionActor<Document>(nameof(Documents));
     }
 
     /// <inheritdoc/>

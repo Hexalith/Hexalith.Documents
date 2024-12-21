@@ -8,6 +8,7 @@ using Hexalith.PolymorphicSerialization;
 /// Represents an event that occurs when a new document container is created.
 /// </summary>
 /// <param name="Id">The unique identifier of the document container.</param>
+/// <param name="DocumentPartitionId">The unique identifier of the document partition.</param>
 /// <param name="Name">The name of the document container.</param>
 /// <param name="Description">The description of the document container.</param>
 /// <param name="FileTypeIds">The collection of file type identifiers supported by this container.</param>
@@ -15,10 +16,14 @@ using Hexalith.PolymorphicSerialization;
 public partial record DocumentContainerCreated(
     string Id,
     [property: DataMember(Order = 2)]
-    string Name,
+    string DocumentPartitionId,
     [property: DataMember(Order = 3)]
-    string Description,
+    string Name,
     [property: DataMember(Order = 4)]
+    string Path,
+    [property: DataMember(Order = 5)]
+    string? Description,
+    [property: DataMember(Order = 6)]
     IEnumerable<string> FileTypeIds)
     : DocumentContainerEvent(Id)
 {

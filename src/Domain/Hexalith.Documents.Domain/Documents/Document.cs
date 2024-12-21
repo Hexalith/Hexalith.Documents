@@ -50,7 +50,7 @@ public record Document(
               null,
               new DocumentState(DateTimeOffset.MinValue, string.Empty),
               [],
-              new FileDescription(string.Empty, string.Empty, string.Empty, string.Empty),
+              new FileDescription(string.Empty, string.Empty, string.Empty, 0L, string.Empty),
               [],
               false)
     {

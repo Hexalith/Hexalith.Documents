@@ -3,15 +3,20 @@
     <TargetFramework>$(CommonTargetFrameworks)</TargetFramework>
   </PropertyGroup>
   <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
+    <ProjectReference Include="$(HexalithPath)src\Core\Infrastructure\Hexalith.Infrastructure.AzureBlobStorage\Hexalith.Infrastructure.AzureBlobStorage.csproj" />
     <ProjectReference Include="$(HexalithPath)src\Core\Infrastructure\Hexalith.Infrastructure.DaprRuntime\Hexalith.Infrastructure.DaprRuntime.csproj" />
     <ProjectReference Include="$(HexalithPath)src\Core\UI\Hexalith.UI.Components.Abstractions\Hexalith.UI.Components.Abstractions.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
+    <PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage" Version="$(HexalithVersion)" />
     <PackageReference Include="Hexalith.Infrastructure.DaprRuntime" Version="$(HexalithVersion)" />
     <PackageReference Include="Hexalith.UI.Components.Abstractions" Version="$(HexalithVersion)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\..\Presentation\Hexalith.Documents.UI.Services\Hexalith.Documents.UI.Services.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Documents\" />
   </ItemGroup>
 </Project>
