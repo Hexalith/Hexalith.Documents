@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Commands.DataExports;
+namespace Hexalith.Documents.Commands.DataExports;
 
 using System.Runtime.Serialization;
 using System.Text.Json;
@@ -13,6 +13,7 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="UserId">The identifier of the user who requested the export.</param>
 /// <param name="Request">The query to execute to export the data.</param>
 [PolymorphicSerialization]
+[method: JsonConstructor]
 public partial record ExportRequestDataToDocument(
     string Id,
     [property: DataMember(Order = 2)] string Request)

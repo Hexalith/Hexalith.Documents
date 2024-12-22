@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.UI.Services.FileTypes.Projections.Summaries;
+namespace Hexalith.Documents.Projections.FileTypes.Projections.Summaries;
 
 using System.Diagnostics.CodeAnalysis;
 

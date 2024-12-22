@@ -1,14 +1,11 @@
-namespace Hexalith.Documents.UI.Services.Helpers;
+namespace Hexalith.Documents.Projections.Helpers;
 
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Events.FileTypes;
+using Hexalith.Documents.Projections.FileTypes.RequestHandlers;
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Documents.UI.Services.Documents.Services;
-using Hexalith.Documents.UI.Services.DocumentTypes.Services;
-using Hexalith.Documents.UI.Services.FileTypes.Projections.Details;
-using Hexalith.Documents.UI.Services.FileTypes.Projections.Summaries;
-using Hexalith.Documents.UI.Services.FileTypes.RequestHandlers;
 using Hexalith.Documents.UI.Services.FileTypes.Services;
 using Hexalith.Domain.Events;
 
@@ -18,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 /// <summary>
 /// Provides extension methods for adding document projections to the service collection.
 /// </summary>
-public static class DocumentUIHelper
+public static class DocumentProjectionHelper
 {
     /// <summary>
     /// Adds document projection handlers to the service collection.
@@ -54,21 +51,18 @@ public static class DocumentUIHelper
         return services;
     }
 
-    /// <summary>
-    /// Adds document request handlers to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection to add the handlers to.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDocumentRequestHandlers(this IServiceCollection services) => services
-        .AddScoped<IRequestHandler<GetFileTypeSummaries>, GetFileTypeSummariesHandler>()
-        .AddScoped<IRequestHandler<GetFileTypeDetails>, GetFileTypeDetailsHandler>();
+    public static IServiceCollection AddDocumentProjections(this IServiceCollection services)
+        => services
+            .AddDocumentProjectionHandlers()
+            .AddDocumentQueryServices()
+            .AddDocumentRequestHandlers();
 
     /// <summary>
     /// Adds document UI services to the specified service collection.
     /// </summary>
     /// <param name="services">The service collection to add the services to.</param>
     /// <returns>The service collection with the added services.</returns>
-    public static IServiceCollection AddDocumentUIServices(this IServiceCollection services)
+    public static IServiceCollection AddDocumentQueryServices(this IServiceCollection services)
     {
         _ = services.AddScoped<IDataExportQueryService, DataExportQueryService>();
         _ = services.AddScoped<IDocumentContainerQueryService, DocumentContainerQueryService>();
@@ -79,4 +73,13 @@ public static class DocumentUIHelper
         _ = services.AddScoped<IFileTypeQueryService, FileTypeQueryService>();
         return services;
     }
+
+    /// <summary>
+    /// Adds document request handlers to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection to add the handlers to.</param>
+    /// <returns>The updated service collection.</returns>
+    public static IServiceCollection AddDocumentRequestHandlers(this IServiceCollection services) => services
+        .AddScoped<IRequestHandler<GetFileTypeSummaries>, GetFileTypeSummariesHandler>()
+        .AddScoped<IRequestHandler<GetFileTypeDetails>, GetFileTypeDetailsHandler>();
 }
