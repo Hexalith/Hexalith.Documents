@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Services.FileTypes.Projections.Summaries;
+namespace Hexalith.Documents.Projections.DocumentContainers.Projections.Summaries;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.FileTypes;
-using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Documents.Domain.DocumentContainers;
+using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Domain.Events;
 
 /// <summary>
-/// Handles the projection updates for file type snapshots on summary.
+/// Handles the projection updates for document container snapshots on summary.
 /// </summary>
 /// <param name="factory">The projection factory.</param>
-public partial class FileTypeSnapshotOnSummaryProjectionHandler(IProjectionFactory<FileTypeSummaryViewModel> factory)
+public partial class DocumentContainerSnapshotOnSummaryProjectionHandler(IProjectionFactory<DocumentContainerSummaryViewModel> factory)
     : IProjectionUpdateHandler<SnapshotEvent>
 {
     /// <inheritdoc/>
@@ -22,17 +22,17 @@ public partial class FileTypeSnapshotOnSummaryProjectionHandler(IProjectionFacto
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
         ArgumentNullException.ThrowIfNull(metadata);
-        if (baseEvent?.AggregateName != DocumentDomainHelper.FileTypeAggregateName)
+        if (baseEvent?.AggregateName != DocumentDomainHelper.DocumentContainerAggregateName)
         {
             return;
         }
 
-        FileTypeSummaryViewModel? currentValue = await factory
+        DocumentContainerSummaryViewModel? currentValue = await factory
             .GetStateAsync(metadata.AggregateGlobalId, cancellationToken)
             .ConfigureAwait(false);
 
-        FileType fileType = baseEvent.GetAggregate<FileType>();
-        FileTypeSummaryViewModel newValue = new(fileType.Id, fileType.Name, fileType.Disabled);
+        DocumentContainer documentContainer = baseEvent.GetAggregate<DocumentContainer>();
+        DocumentContainerSummaryViewModel newValue = new(documentContainer.Id, documentContainer.Name, documentContainer.Disabled);
         if (currentValue is not null && currentValue == newValue)
         {
             return;

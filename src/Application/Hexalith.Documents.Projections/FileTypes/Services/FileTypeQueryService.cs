@@ -25,6 +25,7 @@ public partial class FileTypeQueryService : IFileTypeQueryService
     /// Initializes a new instance of the <see cref="FileTypeQueryService"/> class.
     /// </summary>
     /// <param name="requestService">The request service.</param>
+    /// <param name="logger">The logger instance.</param>
     public FileTypeQueryService(IRequestService requestService, ILogger<FileTypeQueryService> logger)
     {
         ArgumentNullException.ThrowIfNull(requestService);

@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Services.FileTypes.Services;
+namespace Hexalith.Documents.UI.Services.DocumentContainers.Services;
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -8,23 +8,25 @@ using System.Threading.Tasks;
 
 using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
-using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Documents.Projections.DocumentContainers.Services;
+using Hexalith.Documents.Requests.DocumentContainers;
 
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-/// Provides query operations for file types.
+/// Provides query operations for document containers.
 /// </summary>
-public partial class FileTypeQueryService : IFileTypeQueryService
+public partial class DocumentContainerQueryService : IDocumentContainerQueryService
 {
-    private readonly ILogger<FileTypeQueryService> _logger;
+    private readonly ILogger<DocumentContainerQueryService> _logger;
     private readonly IRequestService _requestService;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FileTypeQueryService"/> class.
+    /// Initializes a new instance of the <see cref="DocumentContainerQueryService"/> class.
     /// </summary>
     /// <param name="requestService">The request service.</param>
-    public FileTypeQueryService(IRequestService requestService, ILogger<FileTypeQueryService> logger)
+    /// <param name="logger">The logger instance.</param>
+    public DocumentContainerQueryService(IRequestService requestService, ILogger<DocumentContainerQueryService> logger)
     {
         ArgumentNullException.ThrowIfNull(requestService);
         ArgumentNullException.ThrowIfNull(logger);
@@ -36,20 +38,20 @@ public partial class FileTypeQueryService : IFileTypeQueryService
     public static partial void LogGetSummaries(ILogger logger, int count);
 
     /// <inheritdoc/>
-    public async Task<FileTypeDetailsViewModel> GetDetailsAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken)
-        => CheckValidResult((await _requestService.SubmitAsync(user, new GetFileTypeDetails(id), cancellationToken)
+    public async Task<DocumentContainerDetailsViewModel> GetDetailsAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken)
+        => CheckValidResult((await _requestService.SubmitAsync(user, new GetDocumentContainerDetails(id), cancellationToken)
             .ConfigureAwait(false)).Result);
 
     /// <inheritdoc/>
     public async Task<IdDescription> GetIdDescriptionAsync(ClaimsPrincipal user, string id, CancellationToken cancellationToken)
-        => CheckValidResult((await _requestService.SubmitAsync(user, new GetFileTypeIdDescription(id), cancellationToken)
+        => CheckValidResult((await _requestService.SubmitAsync(user, new GetDocumentContainerIdDescription(id), cancellationToken)
             .ConfigureAwait(false)).Result);
 
     /// <inheritdoc/>
     public async Task<IEnumerable<IdDescription>> GetIdDescriptionsAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(user);
-        IEnumerable<string> ids = CheckValidResult((await _requestService.SubmitAsync(user, new GetFileTypeIds(skip, take), cancellationToken)
+        IEnumerable<string> ids = CheckValidResult((await _requestService.SubmitAsync(user, new GetDocumentContainerIds(skip, take), cancellationToken)
             .ConfigureAwait(false)).Result);
         List<Task<IdDescription>> tasks = [];
         foreach (string id in ids)
@@ -61,11 +63,11 @@ public partial class FileTypeQueryService : IFileTypeQueryService
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<FileTypeSummaryViewModel>> GetSummariesAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken)
+    public async Task<IEnumerable<DocumentContainerSummaryViewModel>> GetSummariesAsync(ClaimsPrincipal user, int skip, int take, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(user);
 
-        GetFileTypeSummaries request = await _requestService.SubmitAsync(user, new GetFileTypeSummaries(skip, take), cancellationToken).ConfigureAwait(false);
+        GetDocumentContainerSummaries request = await _requestService.SubmitAsync(user, new GetDocumentContainerSummaries(skip, take), cancellationToken).ConfigureAwait(false);
         _ = CheckValidResult(request);
         LogGetSummaries(_logger, request.Result.Count());
         return request.Result;
@@ -97,10 +99,10 @@ public partial class FileTypeQueryService : IFileTypeQueryService
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<FileTypeSummaryViewModel>> SearchSummariesAsync(ClaimsPrincipal user, string searchText, CancellationToken cancellationToken)
+    public async Task<IEnumerable<DocumentContainerSummaryViewModel>> SearchSummariesAsync(ClaimsPrincipal user, string searchText, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(user);
-        IEnumerable<FileTypeSummaryViewModel> data = await GetSummariesAsync(user, 0, 0, cancellationToken).ConfigureAwait(false);
+        IEnumerable<DocumentContainerSummaryViewModel> data = await GetSummariesAsync(user, 0, 0, cancellationToken).ConfigureAwait(false);
         if (!string.IsNullOrWhiteSpace(searchText))
         {
             data = data.Where(d =>
@@ -112,5 +114,5 @@ public partial class FileTypeQueryService : IFileTypeQueryService
     }
 
     private static TResult CheckValidResult<TResult>([NotNull] TResult? result)
-        => result ?? throw new InvalidOperationException("The request result is null or empty in file type query service");
+        => result ?? throw new InvalidOperationException("The request result is null or empty in document container query service");
 }

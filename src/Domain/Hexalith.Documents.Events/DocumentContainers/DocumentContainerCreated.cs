@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Events.DocumentContainers;
+namespace Hexalith.Documents.Events.DocumentContainers;
 
 using System.Runtime.Serialization;
 

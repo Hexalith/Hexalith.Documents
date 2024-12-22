@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Services.FileTypes.Projections.Summaries;
+namespace Hexalith.Documents.UI.Services.DocumentContainers.Projections.Summaries;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,41 +6,43 @@ using System.Threading.Tasks;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.FileTypes;
-using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Documents.Domain.DocumentContainers;
+using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Domain.Events;
 
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-/// Handles the snapshot events for file type details.
+/// Handles the snapshot events for document container details.
 /// </summary>
-public partial class FileTypeDetailsSnapshotHandler(
-    IProjectionFactory<FileTypeDetailsViewModel> factory,
-    ILogger<FileTypeDetailsSnapshotHandler> logger) : IProjectionUpdateHandler<SnapshotEvent>
+public partial class DocumentContainerDetailsSnapshotHandler(
+    IProjectionFactory<DocumentContainerDetailsViewModel> factory,
+    ILogger<DocumentContainerDetailsSnapshotHandler> logger) : IProjectionUpdateHandler<SnapshotEvent>
 {
     /// <inheritdoc/>
     public async Task ApplyAsync(SnapshotEvent baseEvent, Metadata metadata, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
         ArgumentNullException.ThrowIfNull(metadata);
-        if (baseEvent?.AggregateName != DocumentDomainHelper.FileTypeAggregateName)
+        if (baseEvent?.AggregateName != DocumentDomainHelper.DocumentContainerAggregateName)
         {
             return;
         }
 
-        FileTypeDetailsViewModel? currentValue = await factory
+        DocumentContainerDetailsViewModel? currentValue = await factory
             .GetStateAsync(metadata.AggregateGlobalId, cancellationToken)
             .ConfigureAwait(false);
 
-        FileType fileType = baseEvent.GetAggregate<FileType>();
-        FileTypeDetailsViewModel newValue = new(
-            fileType.Id,
-            fileType.Name,
-            fileType.Description,
-            fileType.FileToTextConverter,
-            fileType.Targets,
-            fileType.Disabled);
+        DocumentContainer documentContainer = baseEvent.GetAggregate<DocumentContainer>();
+        DocumentContainerDetailsViewModel newValue = new(
+            documentContainer.Id,
+            documentContainer.Name,
+            documentContainer.Description,
+            documentContainer.AutomaticRoutingInstructions,
+            documentContainer.Actors,
+            documentContainer.FileTypeIds,
+            documentContainer.Tags,
+            documentContainer.Disabled);
         if (currentValue is not null && currentValue == newValue)
         {
             return;
@@ -63,7 +65,7 @@ public partial class FileTypeDetailsSnapshotHandler(
     [LoggerMessage(
         EventId = 1,
         Level = LogLevel.Warning,
-        Message = "The file type details view model with id '{AggregateGlobalId}' was outdated and needed to be synchronized with a snapshot. MessageId='{MessageId}'; CorrelationId='{CorrelationId}'.")]
+        Message = "The document container details view model with id '{AggregateGlobalId}' was outdated and needed to be synchronized with a snapshot. MessageId='{MessageId}'; CorrelationId='{CorrelationId}'.")]
     private static partial void LogProjectionSynchronizedWarning(
         ILogger logger,
         string? aggregateGlobalId,

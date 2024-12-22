@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Services.FileTypes.RequestHandlers;
+﻿namespace Hexalith.Documents.Projections.DocumentContainers.RequestHandlers;
 
 using System;
 using System.Collections.Generic;
@@ -10,22 +10,22 @@ using Hexalith.Application.Metadatas;
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
-using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Documents.Requests.DocumentContainers;
 
 /// <summary>
-/// Handler for getting file type summaries.
+/// Handler for getting document container summaries.
 /// </summary>
-public class GetFileTypeSummariesHandler : RequestHandlerBase<GetFileTypeSummaries>
+public class GetDocumentContainerSummariesHandler : RequestHandlerBase<GetDocumentContainerSummaries>
 {
     private readonly IIdCollectionFactory _collectionFactory;
-    private readonly IProjectionFactory<FileTypeSummaryViewModel> _projectionFactory;
+    private readonly IProjectionFactory<DocumentContainerSummaryViewModel> _projectionFactory;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetFileTypeSummariesHandler"/> class.
+    /// Initializes a new instance of the <see cref="GetDocumentContainerSummariesHandler"/> class.
     /// </summary>
     /// <param name="collectionFactory">The collection factory.</param>
     /// <param name="projectionFactory">The projection factory.</param>
-    public GetFileTypeSummariesHandler(IIdCollectionFactory collectionFactory, IProjectionFactory<FileTypeSummaryViewModel> projectionFactory)
+    public GetDocumentContainerSummariesHandler(IIdCollectionFactory collectionFactory, IProjectionFactory<DocumentContainerSummaryViewModel> projectionFactory)
     {
         ArgumentNullException.ThrowIfNull(collectionFactory);
         ArgumentNullException.ThrowIfNull(projectionFactory);
@@ -34,13 +34,13 @@ public class GetFileTypeSummariesHandler : RequestHandlerBase<GetFileTypeSummari
     }
 
     /// <summary>
-    /// Executes the request to get file type summaries.
+    /// Executes the request to get document container summaries.
     /// </summary>
     /// <param name="request">The request.</param>
     /// <param name="metadata">The metadata.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The updated request with the result.</returns>
-    public override async Task<GetFileTypeSummaries> ExecuteAsync(GetFileTypeSummaries request, Metadata metadata, CancellationToken cancellationToken)
+    public override async Task<GetDocumentContainerSummaries> ExecuteAsync(GetDocumentContainerSummaries request, Metadata metadata, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(metadata);
@@ -53,16 +53,16 @@ public class GetFileTypeSummariesHandler : RequestHandlerBase<GetFileTypeSummari
                 .GetAsync(request.Skip, request.Take, cancellationToken)
                 .ConfigureAwait(false);
 
-        List<Task<FileTypeSummaryViewModel?>> summaryTasks = [];
+        List<Task<DocumentContainerSummaryViewModel?>> summaryTasks = [];
 
         foreach (string id in ids)
         {
             summaryTasks.Add(_projectionFactory.GetStateAsync(id, cancellationToken));
         }
 
-        FileTypeSummaryViewModel?[] results = await Task.WhenAll(summaryTasks).ConfigureAwait(false);
+        DocumentContainerSummaryViewModel?[] results = await Task.WhenAll(summaryTasks).ConfigureAwait(false);
 
-        IEnumerable<FileTypeSummaryViewModel> queryResult = results.Where(p => p is not null).OfType<FileTypeSummaryViewModel>();
+        IEnumerable<DocumentContainerSummaryViewModel> queryResult = results.Where(p => p is not null).OfType<DocumentContainerSummaryViewModel>();
 
         return request with { Result = queryResult };
     }

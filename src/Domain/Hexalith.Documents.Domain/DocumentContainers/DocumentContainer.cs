@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Domain.DocumentContainers;
+namespace Hexalith.Documents.Domain.DocumentContainers;
 
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -31,7 +31,7 @@ public record DocumentContainer(
     [property: DataMember(Order = 5)] string? AutomaticRoutingInstructions,
     [property: DataMember(Order = 6)] IEnumerable<DocumentActor> Actors,
     [property: DataMember(Order = 7)] IEnumerable<string> FileTypeIds,
-    [property: DataMember(Order = 8)] IImmutableDictionary<string, string> Tags,
+    [property: DataMember(Order = 8)] IEnumerable<DocumentTag> Tags,
     [property: DataMember(Order = 9)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
@@ -47,7 +47,7 @@ public record DocumentContainer(
               null,
               [],
               [],
-              new Dictionary<string, string>().ToImmutableDictionary(),
+              [],
               false)
     {
     }
@@ -67,7 +67,7 @@ public record DocumentContainer(
               null,
               [],
               added.FileTypeIds,
-              new Dictionary<string, string>().ToImmutableDictionary(),
+              [],
               false)
     {
     }
@@ -226,13 +226,13 @@ public record DocumentContainer(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerTagAdded e)
     {
-        if (Tags.ContainsKey(e.TagId))
+        if (Tags.ContainsKey(e.Key))
         {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The tag {e.TagId} already exists in document container {Id}/{Name}.")], true);
+            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The tag {e.Key} already exists in document container {Id}/{Name}.")], true);
         }
 
         Dictionary<string, string> tags = Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        tags[e.TagId] = e.TagValue;
+        tags[e.Key] = e.Value;
 
         return new ApplyResult(
             this with { Tags = tags.ToImmutableDictionary() },
@@ -248,9 +248,9 @@ public record DocumentContainer(
     private ApplyResult ApplyEvent(DocumentContainerTagRemoved e)
     {
         Dictionary<string, string> tags = Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        if (!tags.Remove(e.TagId))
+        if (!tags.Remove(e.Key))
         {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The tag {e.TagId} does not exist in document container {Id}/{Name}.")], true);
+            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The tag {e.Key} does not exist in document container {Id}/{Name}.")], true);
         }
 
         return new ApplyResult(
