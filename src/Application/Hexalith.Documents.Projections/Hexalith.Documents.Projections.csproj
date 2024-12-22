@@ -1,8 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>$(CommonTargetFrameworks)</TargetFramework>
   </PropertyGroup>
-  <ItemGroup>
+    <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
+        <ProjectReference Include="$(HexalithPath)\src\Core\Application\Hexalith.Application\Hexalith.Application.csproj" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
+        <PackageReference Include="Hexalith.Application" Version="$(HexalithVersion)" />
+    </ItemGroup>
+    <ItemGroup>
     <ProjectReference Include="..\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
     <ProjectReference Include="..\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
   </ItemGroup>

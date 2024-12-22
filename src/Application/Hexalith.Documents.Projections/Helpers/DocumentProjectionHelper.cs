@@ -7,6 +7,7 @@ using Hexalith.Documents.Projections.DataExports.Services;
 using Hexalith.Documents.Projections.DocumentContainers.Services;
 using Hexalith.Documents.Projections.DocumentPartitions.Services;
 using Hexalith.Documents.Projections.Documents.Services;
+using Hexalith.Documents.Projections.DocumentTypes.Services;
 using Hexalith.Documents.Projections.FileTypes.Projections.Details;
 using Hexalith.Documents.Projections.FileTypes.Projections.Summaries;
 using Hexalith.Documents.Projections.FileTypes.RequestHandlers;
@@ -16,6 +17,7 @@ using Hexalith.Documents.UI.Services.DataExports.Services;
 using Hexalith.Documents.UI.Services.DocumentContainers.Services;
 using Hexalith.Documents.UI.Services.DocumentPartitions.Services;
 using Hexalith.Documents.UI.Services.Documents.Services;
+using Hexalith.Documents.UI.Services.DocumentTypes.Services;
 using Hexalith.Documents.UI.Services.FileTypes.Services;
 using Hexalith.Domain.Events;
 

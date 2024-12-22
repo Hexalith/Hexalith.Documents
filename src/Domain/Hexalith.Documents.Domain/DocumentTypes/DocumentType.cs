@@ -1,13 +1,12 @@
-﻿namespace Hexalith.Documents.Domain.DocumentTypes;
+namespace Hexalith.Documents.Domain.DocumentTypes;
 
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 using Hexalith.Documents.Domain;
+using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Events.DocumentTypes;
 using Hexalith.Domain.Aggregates;
-using Hexalith.Domain.Events;
 
 /// <summary>
 /// Represents a document type in the system, defining metadata and processing rules for documents.
@@ -15,7 +14,7 @@ using Hexalith.Domain.Events;
 /// <param name="Id">The unique identifier of the document type.</param>
 /// <param name="Name">The name of the document type.</param>
 /// <param name="Description">A detailed description of the document type.</param>
-/// <param name="DataInstructions">A collection of instructions for extracting data from documents of this type.</param>
+/// <param name="DataExtractionIds">A collection of instructions for extracting data from documents of this type.</param>
 /// <param name="FileTypeIds">A collection of supported file type identifiers.</param>
 /// <param name="Tags">A collection of tags associated with this document type.</param>
 /// <param name="Disabled">A value indicating whether this document type is disabled.</param>
@@ -24,9 +23,9 @@ public record DocumentType(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] string? Description,
-    [property: DataMember(Order = 7)] IImmutableDictionary<string, string> DataInstructions,
+    [property: DataMember(Order = 7)] IEnumerable<string> DataExtractionIds,
     [property: DataMember(Order = 8)] IEnumerable<string> FileTypeIds,
-    [property: DataMember(Order = 9)] IImmutableDictionary<string, string> Tags,
+    [property: DataMember(Order = 9)] IEnumerable<DocumentTag> Tags,
     [property: DataMember(Order = 10)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
@@ -38,9 +37,9 @@ public record DocumentType(
               string.Empty,
               string.Empty,
               null,
-              new Dictionary<string, string>().ToImmutableDictionary(),
               [],
-              new Dictionary<string, string>().ToImmutableDictionary(),
+              [],
+              [],
               false)
     {
     }
@@ -55,9 +54,9 @@ public record DocumentType(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               added.Name,
               added.Description,
-              new Dictionary<string, string>().ToImmutableDictionary(),
+              [],
               added.FileTypeIds,
-              new Dictionary<string, string>().ToImmutableDictionary(),
+              [],
               false)
     {
     }
@@ -81,12 +80,9 @@ public record DocumentType(
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (domainEvent is DocumentTypeEvent ev && domainEvent is not DocumentTypeEnabled && Disabled)
+        if (domainEvent is DocumentTypeEvent && domainEvent is not DocumentTypeEnabled && Disabled)
         {
-            return new ApplyResult(
-                this,
-                [new DocumentTypeEventCancelled(ev, "Document is disabled.")],
-                true);
+            return ApplyResult.Error(this, "Document is disabled.");
         }
 
         return domainEvent switch
@@ -101,17 +97,8 @@ public record DocumentType(
             DocumentTypeFileTypeRemoved e => ApplyEvent(e),
             DocumentTypeTagAdded e => ApplyEvent(e),
             DocumentTypeTagRemoved e => ApplyEvent(e),
-            DocumentTypeEvent e => new ApplyResult(
-                this,
-                [new DocumentTypeEventCancelled(e, "Event not implemented")],
-                true),
-            _ => new ApplyResult(
-                this,
-                [InvalidEventApplied.CreateNotSupportedAppliedEvent(
-                    AggregateName,
-                    AggregateId,
-                    domainEvent)],
-                true),
+            DocumentTypeEvent => ApplyResult.NotImplemented(this),
+            _ => ApplyResult.InvalidEvent(this, domainEvent),
         };
     }
 
@@ -127,11 +114,8 @@ public record DocumentType(
     /// <param name="e">The creation event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeAdded e) => !IsInitialized()
-        ? new ApplyResult(
-            new DocumentType(e),
-            [e],
-            false)
-        : new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The document already exists.")], true);
+        ? ApplyResult.Success(new DocumentType(e), [e])
+        : ApplyResult.Error(this, "The document already exists.");
 
     /// <summary>
     /// Applies a document type enable event.
@@ -139,11 +123,8 @@ public record DocumentType(
     /// <param name="e">The enable event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeEnabled e) => Disabled
-            ? new ApplyResult(
-            this with { Disabled = false },
-            [e],
-            false)
-            : new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The document is already enabled.")], true);
+            ? ApplyResult.Success(this with { Disabled = false }, [e])
+            : ApplyResult.Error(this, "The document is already enabled.");
 
     /// <summary>
     /// Applies a document type disable event.
@@ -151,11 +132,8 @@ public record DocumentType(
     /// <param name="e">The disable event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeDisabled e) => !Disabled
-            ? new ApplyResult(
-            this with { Disabled = true },
-            [e],
-            false)
-            : new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The document is already disabled.")], true);
+            ? ApplyResult.Success(this with { Disabled = true }, [e])
+            : ApplyResult.Error(this, "The document is already disabled.");
 
     /// <summary>
     /// Applies a document type description change event.
@@ -163,11 +141,8 @@ public record DocumentType(
     /// <param name="e">The description change event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeDescriptionChanged e) => e.Name != Name || e.Description != Description
-        ? new ApplyResult(
-            this with { Name = e.Name, Description = e.Description },
-            [e],
-            false)
-        : new ApplyResult(this, [], false);
+        ? ApplyResult.Success(this with { Name = e.Name, Description = e.Description }, [e])
+        : ApplyResult.Error(this, "No changes to apply.");
 
     /// <summary>
     /// Applies an event to add a file type.
@@ -179,14 +154,11 @@ public record DocumentType(
         List<string> fileTypes = FileTypeIds.ToList();
         if (fileTypes.Contains(e.FileTypeId))
         {
-            return new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The file type already exists.")], true);
+            return ApplyResult.Error(this, "The file type already exists.");
         }
 
         fileTypes.Add(e.FileTypeId);
-        return new ApplyResult(
-            this with { FileTypeIds = fileTypes },
-            [e],
-            false);
+        return ApplyResult.Success(this with { FileTypeIds = fileTypes }, [e]);
     }
 
     /// <summary>
@@ -199,7 +171,7 @@ public record DocumentType(
         List<string> fileTypes = FileTypeIds.ToList();
         if (!fileTypes.Remove(e.FileTypeId))
         {
-            return new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The file type does not exist.")], true);
+            return ApplyResult.Error(this, "The file type does not exist.");
         }
 
         return new ApplyResult(
@@ -215,18 +187,19 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeDataExtractionAdded e)
     {
-        if (DataInstructions.ContainsKey(e.ExtractionId))
+        if (DataExtractionIds.Any(p => p == e.DataInformationExtractionId))
         {
-            return new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The data extraction instruction already exists.")], true);
+            return ApplyResult.Error(this, "The data extraction instruction already exists.");
         }
 
-        Dictionary<string, string> instructions = DataInstructions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        instructions[e.ExtractionId] = e.DataInstructions ?? string.Empty;
-
-        return new ApplyResult(
-            this with { DataInstructions = instructions.ToImmutableDictionary() },
-            [e],
-            false);
+        return ApplyResult.Success(
+            this with
+            {
+                DataExtractionIds = [..DataExtractionIds
+                .Append(e.DataInformationExtractionId)
+                .OrderBy(p => p)],
+            },
+            [e]);
     }
 
     /// <summary>
@@ -236,16 +209,12 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeDataExtractionRemoved e)
     {
-        Dictionary<string, string> instructions = DataInstructions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        if (!instructions.Remove(e.ExtractionId))
+        if (!DataExtractionIds.Any(p => p == e.DataInformationExtractionId))
         {
-            return new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The data extraction instruction does not exist.")], true);
+            return ApplyResult.Error(this, "The data extraction instruction does not exist.");
         }
 
-        return new ApplyResult(
-            this with { DataInstructions = instructions.ToImmutableDictionary() },
-            [e],
-            false);
+        return ApplyResult.Success(this with { DataExtractionIds = [.. DataExtractionIds.Where(p => p != e.DataInformationExtractionId)] }, [e]);
     }
 
     /// <summary>
@@ -255,18 +224,26 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeTagAdded e)
     {
-        if (Tags.ContainsKey(e.TagId))
+        if (Tags.Any(p => p.Key == e.Key && p.Value == e.Value))
         {
-            return new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The tag already exists.")], true);
+            return ApplyResult.Error(this, $"The tag {e.Key}={e.Value} already exists in document type {Id}/{Name}.");
         }
 
-        Dictionary<string, string> tags = Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        tags[e.TagId] = e.TagValue;
+        if (Tags.Any(p => p.Key == e.Key && (e.Unique || p.Unique)))
+        {
+            return ApplyResult.Error(this, $"The unique tag with key={e.Key} already exists in document type {Id}/{Name}.");
+        }
 
-        return new ApplyResult(
-            this with { Tags = tags.ToImmutableDictionary() },
-            [e],
-            false);
+        return ApplyResult.Success(
+            this with
+            {
+                Tags = [..Tags
+                    .Append(new DocumentTag(e.Key, e.Value, e.Unique))
+                    .Distinct()
+                    .OrderBy(p => p.Key)
+                    .ThenBy(p => p.Value)],
+            },
+            [e]);
     }
 
     /// <summary>
@@ -276,15 +253,13 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeTagRemoved e)
     {
-        Dictionary<string, string> tags = Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        if (!tags.Remove(e.TagId))
+        if (!Tags.Any(p => p.Key == e.Key && p.Value == e.Value))
         {
-            return new ApplyResult(this, [new DocumentTypeEventCancelled(e, "The tag does not exist.")], true);
+            return ApplyResult.Error(this, $"The tag {e.Key} does not exist in document type {Id}/{Name}.");
         }
 
-        return new ApplyResult(
-            this with { Tags = tags.ToImmutableDictionary() },
-            [e],
-            false);
+        return ApplyResult.Success(
+            this with { Tags = [.. Tags.Where(p => p.Key != e.Key || p.Value != e.Value)] },
+            [e]);
     }
 }

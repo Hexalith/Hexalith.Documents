@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Events.DocumentTypes;
+namespace Hexalith.Documents.Events.DocumentTypes;
 
 using System.Runtime.Serialization;
 
@@ -14,8 +14,6 @@ using Hexalith.PolymorphicSerialization;
 public partial record DocumentTypeDataExtractionAdded(
     string Id,
     [property: DataMember(Order = 2)]
-    string ExtractionId,
-    [property: DataMember(Order = 3)]
-    string? DataInstructions) : DocumentTypeEvent(Id)
+    string DataInformationExtractionId) : DocumentTypeEvent(Id)
 {
 }
