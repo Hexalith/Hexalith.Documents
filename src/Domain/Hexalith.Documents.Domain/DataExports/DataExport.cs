@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Domain.DataExports;
+namespace Hexalith.Documents.Domain.DataExports;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -14,8 +14,9 @@ using Hexalith.Domain.Aggregates;
 [DataContract]
 public record DataExport(
     [property: DataMember(Order = 1)] string Id,
-    [property: DataMember(Order = 2)] DateTimeOffset StartedAt,
-    [property: DataMember(Order = 3)] DateTimeOffset? CompletedAt)
+    [property: DataMember(Order = 2)] long Size,
+    [property: DataMember(Order = 3)] DateTimeOffset StartedAt,
+    [property: DataMember(Order = 4)] DateTimeOffset? CompletedAt)
     : IDomainAggregate
 {
     /// <summary>
@@ -24,6 +25,7 @@ public record DataExport(
     public DataExport()
         : this(
               string.Empty,
+              0L,
               DateTimeOffset.Now,
               null)
     {
@@ -36,6 +38,7 @@ public record DataExport(
     public DataExport(DataExportStarted started)
         : this(
               (started ?? throw new ArgumentNullException(nameof(started))).Id,
+              0L,
               started.DateTime,
               null)
     {
@@ -77,7 +80,7 @@ public record DataExport(
         if (IsInitialized())
         {
             return new ApplyResult(
-                this with { CompletedAt = e.DateTime },
+                this with { Size = e.Size, CompletedAt = e.DateTime },
                 [e],
                 true);
         }

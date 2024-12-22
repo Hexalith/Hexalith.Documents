@@ -25,6 +25,7 @@ public partial class DataExportQueryService : IDataExportQueryService
     /// Initializes a new instance of the <see cref="DataExportQueryService"/> class.
     /// </summary>
     /// <param name="requestService">The request service.</param>
+    /// <param name="logger">The logger instance.</param>
     public DataExportQueryService(IRequestService requestService, ILogger<DataExportQueryService> logger)
     {
         ArgumentNullException.ThrowIfNull(requestService);
@@ -105,8 +106,7 @@ public partial class DataExportQueryService : IDataExportQueryService
         if (!string.IsNullOrWhiteSpace(searchText))
         {
             data = data.Where(d =>
-                d.Id.Contains(searchText, StringComparison.CurrentCultureIgnoreCase) ||
-                d.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+                d.Id.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
         }
 
         return data;

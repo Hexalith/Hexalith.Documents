@@ -36,11 +36,9 @@ public partial class DataExportDetailsSnapshotHandler(
         DataExport dataExport = baseEvent.GetAggregate<DataExport>();
         DataExportDetailsViewModel newValue = new(
             dataExport.Id,
-            dataExport.Name,
-            dataExport.Description,
-            dataExport.FileToTextConverter,
-            dataExport.Targets,
-            dataExport.Disabled);
+            dataExport.Size,
+            dataExport.StartedAt,
+            dataExport.CompletedAt);
         if (currentValue is not null && currentValue == newValue)
         {
             return;

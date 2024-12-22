@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Projections.DataExports.RequestHandlers;
+﻿namespace Hexalith.Documents.Projections.DataExports.RequestHandlers;
 
 using System;
 using System.Threading.Tasks;

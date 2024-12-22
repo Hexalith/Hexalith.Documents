@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Projections.DataExports.Projections.Summaries;
+﻿namespace Hexalith.Documents.Projections.DataExports.Projections.Summaries;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;

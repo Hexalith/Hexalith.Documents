@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Projections.DataExports.Services;
+﻿namespace Hexalith.Documents.Projections.DataExports.Services;
 
 using System.Collections.Generic;
 using System.Security.Claims;

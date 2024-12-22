@@ -32,7 +32,7 @@ public partial class DataExportSnapshotOnSummaryProjectionHandler(IProjectionFac
             .ConfigureAwait(false);
 
         DataExport dataExport = baseEvent.GetAggregate<DataExport>();
-        DataExportSummaryViewModel newValue = new(dataExport.Id, dataExport.Name, dataExport.Disabled);
+        DataExportSummaryViewModel newValue = new(dataExport.Id, dataExport.Size, dataExport.StartedAt, dataExport.CompletedAt);
         if (currentValue is not null && currentValue == newValue)
         {
             return;
