@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.ApiServer.Modules;
+namespace Hexalith.Documents.ApiServer.Modules;
 
 using System.Collections.Generic;
 
@@ -11,9 +11,20 @@ using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain;
+using Hexalith.Documents.Domain.DataExports;
+using Hexalith.Documents.Domain.DocumentContainers;
+using Hexalith.Documents.Domain.DocumentInformationExtractions;
+using Hexalith.Documents.Domain.DocumentPartitions;
 using Hexalith.Documents.Domain.Documents;
+using Hexalith.Documents.Domain.DocumentTypes;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.Requests.DataExports;
+using Hexalith.Documents.Requests.DocumentContainers;
+using Hexalith.Documents.Requests.DocumentInformationExtractions;
+using Hexalith.Documents.Requests.DocumentPartitions;
+using Hexalith.Documents.Requests.Documents;
+using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Documents.Servers.Helpers;
@@ -105,18 +116,41 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
             throw new ArgumentException($"{nameof(RegisterActors)} parameter must be an {nameof(ActorRegistrationCollection)}. Actual type : {actorCollection.GetType().Name}.", nameof(actorCollection));
         }
 
-        actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.FileTypeAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.DataExportAggregateName.ToAggregateActorName());
         actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.DocumentAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.DocumentContainerAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.DocumentInformationExtractionAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.DocumentPartitionAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.DocumentTypeAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.FileTypeAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterProjectionActor<DataExport>();
+        actorRegistrations.RegisterProjectionActor<Document>();
+        actorRegistrations.RegisterProjectionActor<DocumentContainer>();
+        actorRegistrations.RegisterProjectionActor<DocumentInformationExtraction>();
+        actorRegistrations.RegisterProjectionActor<DocumentPartition>();
+        actorRegistrations.RegisterProjectionActor<DocumentType>();
         actorRegistrations.RegisterProjectionActor<FileType>();
+        actorRegistrations.RegisterProjectionActor<DataExportSummaryViewModel>();
+        actorRegistrations.RegisterProjectionActor<DataExportDetailsViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentSummaryViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentDetailsViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentContainerSummaryViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentContainerDetailsViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentInformationExtractionSummaryViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentInformationExtractionDetailsViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentPartitionSummaryViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentPartitionDetailsViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentTypeSummaryViewModel>();
+        actorRegistrations.RegisterProjectionActor<DocumentTypeDetailsViewModel>();
         actorRegistrations.RegisterProjectionActor<FileTypeSummaryViewModel>();
         actorRegistrations.RegisterProjectionActor<FileTypeDetailsViewModel>();
-        actorRegistrations.RegisterProjectionActor<Document>();
+        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DataExportAggregateName));
         actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentAggregateName));
-        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentTypeAggregateName));
         actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentContainerAggregateName));
-        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.FileTypeAggregateName));
         actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentInformationExtractionAggregateName));
         actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentPartitionAggregateName));
+        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.DocumentTypeAggregateName));
+        actorRegistrations.RegisterActor<SequentialStringListActor>(IIdCollectionFactory.GetAggregateCollectionName(DocumentDomainHelper.FileTypeAggregateName));
     }
 
     /// <inheritdoc/>

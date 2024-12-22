@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Domain;
+namespace Hexalith.Documents.Domain;
 
 /// <summary>
 /// Helper class for the Document domain.
@@ -8,7 +8,7 @@ public static class DocumentDomainHelper
     /// <summary>
     /// The name of the data export aggregate.
     /// </summary>
-    public const string DataExportAggregateName = "DatExport";
+    public const string DataExportAggregateName = "DataExport";
 
     /// <summary>
     /// The name of the document aggregate.
