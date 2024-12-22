@@ -62,7 +62,11 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         ArgumentNullException.ThrowIfNull(metadata);
         DocumentContainer container = await _userDataService.GetUserDocumentContainerGlobalIdAsync(metadata.Context.PartitionId, metadata.Context.UserId, cancellationToken).ConfigureAwait(false);
         GetDocumentPartition getDocumentPartition = new(container.DocumentPartitionId);
-        DocumentPartition? documentPartition = (await _requestProcessor.ProcessAsync(getDocumentPartition, Metadata.CreateNew(getDocumentPartition, metadata, Time.GetLocalNow()), cancellationToken).ConfigureAwait(false)).Result;
+        DocumentPartition? documentPartition = (await _requestProcessor.ProcessAsync(
+                getDocumentPartition,
+                Metadata.CreateNew(getDocumentPartition, metadata, Time.GetLocalNow()),
+                cancellationToken)
+            .ConfigureAwait(false) as GetDocumentPartition)?.Result;
         DataExportStarted exportStarted = new(command.Id, Time.GetLocalNow());
         aggregate = new DataExport(exportStarted);
         if (documentPartition is null)
@@ -87,7 +91,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
             object? request = command.RequestObject;
             if (request is IChunkableRequest chunkedRequest && chunkedRequest.Take > 0)
             {
-                await WriteRequestChunkableResultAsync(file, chunkedRequest, metadata, cancellationToken).ConfigureAwait(false);
+                await WriteRequestChunksResultAsync(file, chunkedRequest, metadata, cancellationToken).ConfigureAwait(false);
             }
             else
             {
@@ -220,24 +224,24 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
     }
 
     /// <summary>
-    /// Writes the request chunkable result to the file asynchronously.
+    /// Writes the request chunks result to the file asynchronously.
     /// </summary>
     /// <param name="file">The file.</param>
     /// <param name="initialRequest">The initial request.</param>
     /// <param name="metadata">The metadata.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    private async Task WriteRequestChunkableResultAsync(IWritableFile file, IChunkableRequest initialRequest, Metadata metadata, CancellationToken cancellationToken)
+    private async Task WriteRequestChunksResultAsync(IWritableFile file, IChunkableRequest initialRequest, Metadata metadata, CancellationToken cancellationToken)
     {
         file.Stream.Write(Encoding.UTF8.GetBytes("[\n"));
         IChunkableRequest? request = initialRequest;
         bool first = true;
         do
         {
-            request = await _requestProcessor.ProcessAsync(
+            request = (IChunkableRequest)await _requestProcessor.ProcessAsync(
                     request,
                     Metadata.CreateNew(request, metadata, Time.GetLocalNow()),
                     cancellationToken).ConfigureAwait(false);
-            foreach (object result in request.Results ?? Array.Empty<object>())
+            foreach (object result in request.Results ?? [])
             {
                 if (first)
                 {
