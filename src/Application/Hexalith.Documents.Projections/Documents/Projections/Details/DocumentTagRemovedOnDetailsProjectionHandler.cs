@@ -24,7 +24,7 @@ public class DocumentTagRemovedOnDetailsProjectionHandler(IProjectionFactory<Doc
             return Task.FromResult<DocumentDetailsViewModel?>(null);
         }
 
-        return Task.FromResult(model with
+        return Task.FromResult<DocumentDetailsViewModel?>(model with
         {
             Tags = [.. model.Tags.Where(p => p.Key != baseEvent.Key)],
         });

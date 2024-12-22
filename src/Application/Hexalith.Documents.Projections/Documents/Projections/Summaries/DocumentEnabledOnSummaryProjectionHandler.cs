@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Events;
-using Hexalith.Documents.Events.Documents;
 using Hexalith.Documents.Requests.Documents;
 
 /// <summary>
@@ -32,6 +31,6 @@ public class DocumentEnabledOnSummaryProjectionHandler(IProjectionFactory<Docume
             return Task.FromResult<DocumentSummaryViewModel?>(null);
         }
 
-        return Task.FromResult(summary with { Disabled = false });
+        return Task.FromResult<DocumentSummaryViewModel?>(summary with { Disabled = false });
     }
 }

@@ -36,7 +36,7 @@ public class DocumentTagAddedOnDetailsProjectionHandler(IProjectionFactory<Docum
             .Distinct()
             .OrderBy(p => p.Key)
             .ThenBy(p => p.Value);
-        return Task.FromResult(model with
+        return Task.FromResult<DocumentDetailsViewModel?>(model with
         {
             Tags = [.. tags],
         });

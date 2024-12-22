@@ -27,6 +27,6 @@ public class DocumentDescriptionChangedOnSummaryProjectionHandler(IProjectionFac
             return Task.FromResult<DocumentSummaryViewModel?>(null);
         }
 
-        return Task.FromResult(summary with { Name = baseEvent.Name });
+        return Task.FromResult<DocumentSummaryViewModel?>(summary with { Name = baseEvent.Name });
     }
 }

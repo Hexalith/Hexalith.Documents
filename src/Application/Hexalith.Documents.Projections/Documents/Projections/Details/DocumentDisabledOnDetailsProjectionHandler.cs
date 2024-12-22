@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Events;
-using Hexalith.Documents.Events.Documents;
 using Hexalith.Documents.Requests.Documents;
 
 /// <summary>
@@ -28,6 +27,6 @@ public class DocumentDisabledOnDetailsProjectionHandler(IProjectionFactory<Docum
             return Task.FromResult<DocumentDetailsViewModel?>(null);
         }
 
-        return Task.FromResult(model with { Disabled = true });
+        return Task.FromResult<DocumentDetailsViewModel?>(model with { Disabled = true });
     }
 }
