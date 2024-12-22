@@ -1,7 +1,6 @@
-﻿namespace Hexalith.Documents.Projections.DocumentContainers.Services;
+namespace Hexalith.Documents.Projections.DocumentContainers.Services;
 
-using Hexalith.Documents.Domain.ValueObjects;
-using Hexalith.Documents.Requests.DocumentContainers;
+using Hexalith.Documents.Commands.DocumentContainers;
 
 /// <summary>
 /// Provides demo document container data for testing and demonstration purposes.
@@ -13,20 +12,18 @@ public static class DocumentContainerQuickStartData
     /// Gets a collection of sample document container details.
     /// </summary>
     /// <value>
-    /// An enumerable collection of <see cref="DocumentContainerDetailsViewModel"/> containing predefined document containers.
+    /// An enumerable collection of <see cref="CreateDocumentContainer"/> containing predefined document containers.
     /// </value>
-    public static IEnumerable<DocumentContainerDetailsViewModel> Data => [JohnDoe];
+    public static IEnumerable<CreateDocumentContainer> Data => [JohnDoe];
 
     /// <summary>
     /// Gets the details for the Excel document container.
     /// </summary>
-    internal static DocumentContainerDetailsViewModel JohnDoe => new(
+    internal static CreateDocumentContainer JohnDoe => new(
         "john.doe@test.com",
+        "Default",
         "John Doe Data",
+        "john.doe@test.com",
         "John Doe default container for user files.",
-        null,
-        [new DocumentActor("john.doe@test.com", DocumentActorRole.Owner)],
-        [],
-        [new("Owner", "john.doe@test.com", true)], 
-        false);
+        []);
 }

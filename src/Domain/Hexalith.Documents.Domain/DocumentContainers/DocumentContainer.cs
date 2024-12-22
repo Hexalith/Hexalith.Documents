@@ -1,6 +1,5 @@
 namespace Hexalith.Documents.Domain.DocumentContainers;
 
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
@@ -226,16 +225,25 @@ public record DocumentContainer(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerTagAdded e)
     {
-        if (Tags.ContainsKey(e.Key))
+        if (Tags.Any(p => p.Key == e.Key && p.Value == e.Value))
         {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The tag {e.Key} already exists in document container {Id}/{Name}.")], true);
+            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The tag {e.Key}={e.Value} already exists in document container {Id}/{Name}.")], true);
         }
 
-        Dictionary<string, string> tags = Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        tags[e.Key] = e.Value;
+        if (Tags.Any(p => p.Key == e.Key && (e.Unique || p.Unique)))
+        {
+            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The unique tag with key={e.Key} already exists in document container {Id}/{Name}.")], true);
+        }
 
         return new ApplyResult(
-            this with { Tags = tags.ToImmutableDictionary() },
+            this with
+            {
+                Tags = [..Tags
+                    .Append(new DocumentTag(e.Key, e.Value, e.Unique))
+                    .Distinct()
+                    .OrderBy(p => p.Key)
+                    .ThenBy(p => p.Value)],
+            },
             [e],
             false);
     }
@@ -247,14 +255,13 @@ public record DocumentContainer(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerTagRemoved e)
     {
-        Dictionary<string, string> tags = Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        if (!tags.Remove(e.Key))
+        if (!Tags.Any(p => p.Key == e.Key && p.Value == e.Value))
         {
             return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The tag {e.Key} does not exist in document container {Id}/{Name}.")], true);
         }
 
         return new ApplyResult(
-            this with { Tags = tags.ToImmutableDictionary() },
+            this with { Tags = [.. Tags.Where(p => p.Key != e.Key || p.Value != e.Value)] },
             [e],
             false);
     }

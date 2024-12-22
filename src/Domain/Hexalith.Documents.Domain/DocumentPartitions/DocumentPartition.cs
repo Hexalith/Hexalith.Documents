@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Domain.DocumentPartitions;
+namespace Hexalith.Documents.Domain.DocumentPartitions;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
@@ -82,7 +82,7 @@ public record DocumentPartition(
         return domainEvent switch
         {
             DocumentPartitionAdded e => ApplyEvent(e),
-            DocumentPartitionConnectionStringNameChanged e => ApplyEvent(e),
+            DocumentPartitionConnectionStringChanged e => ApplyEvent(e),
             DocumentPartitionDescriptionChanged e => ApplyEvent(e),
             DocumentPartitionDisabled e => ApplyEvent(e),
             DocumentPartitionEnabled e => ApplyEvent(e),
@@ -133,15 +133,15 @@ public record DocumentPartition(
             false)
         : new ApplyResult(this, [], false);
 
-    private ApplyResult ApplyEvent(DocumentPartitionConnectionStringNameChanged e)
+    private ApplyResult ApplyEvent(DocumentPartitionConnectionStringChanged e)
     {
-        if (ConnectionString == e.ConnectionStringName)
+        if (ConnectionString == e.ConnectionString)
         {
             return new ApplyResult(this, [], false);
         }
 
         return new ApplyResult(
-            this with { ConnectionString = e.ConnectionStringName },
+            this with { ConnectionString = e.ConnectionString },
             [e],
             false);
     }
