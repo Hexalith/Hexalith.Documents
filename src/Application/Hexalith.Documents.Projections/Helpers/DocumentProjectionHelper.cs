@@ -5,6 +5,7 @@ using Hexalith.Application.Requests;
 using Hexalith.Documents.Events.FileTypes;
 using Hexalith.Documents.Projections.DataExports.Services;
 using Hexalith.Documents.Projections.DocumentContainers.Services;
+using Hexalith.Documents.Projections.DocumentInformationExtractions.Services;
 using Hexalith.Documents.Projections.DocumentPartitions.Services;
 using Hexalith.Documents.Projections.Documents.Services;
 using Hexalith.Documents.Projections.DocumentTypes.Services;
@@ -15,6 +16,7 @@ using Hexalith.Documents.Projections.FileTypes.Services;
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Documents.UI.Services.DataExports.Services;
 using Hexalith.Documents.UI.Services.DocumentContainers.Services;
+using Hexalith.Documents.UI.Services.DocumentInformationExtractions.Services;
 using Hexalith.Documents.UI.Services.DocumentPartitions.Services;
 using Hexalith.Documents.UI.Services.Documents.Services;
 using Hexalith.Documents.UI.Services.DocumentTypes.Services;
@@ -63,6 +65,11 @@ public static class DocumentProjectionHelper
         return services;
     }
 
+    /// <summary>
+    /// Adds document projections to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection to add the projections to.</param>
+    /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentProjections(this IServiceCollection services)
         => services
             .AddDocumentProjectionHandlers()

@@ -1,53 +1,48 @@
-﻿@inject IFileTypeQueryService FileTypeQueryService;
-@inject IStringLocalizer<FileTypeSummaryGrid> L;
-@inject ILogger<FileTypeSummaryGrid> Logger
-@inject NavigationManager NavigationManager;
-@using Labels = Resources.FileTypes.FileTypeSummaryGrid
-@using System.Security.Claims
-@if (elements is not null)
+@if (Items is not null)
 {
     <FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
-    Items="@elements"
-    ResizableColumns="true"
-    ShowHover="true"
-    OnRowDoubleClick="@((FluentDataGridRow<FileTypeSummaryViewModel> row) => HandleRowDoubleClick(row))">
+                    Items="@Items.AsQueryable()"
+                    TGridItem="FileTypeSummaryViewModel"
+                    ResizableColumns="true"
+                    ShowHover="true"
+                    OnRowDoubleClick="OnRowDoubleClick">
         <PropertyColumn Title="@Labels.Id" Property="@(p => p.Id)" Sortable="true" />
         <PropertyColumn Title="@Labels.Name" Property="@(p => p.Name)" Sortable="true" />
         <TemplateColumn Title="@Labels.Disabled">
-            <FluentCheckbox Value="@(context.Disabled)" />
-        </TemplateColumn>
-        <TemplateColumn Title="Actions" Align="@Align.End">
-            <FluentButton aria-label="Edit" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEdit(context))" />
+            <FluentCheckbox Value="@(context.Disabled)" ValueChanged="@(c => DisabledChanged(context.Id, c))" />
         </TemplateColumn>
     </FluentDataGrid>
 }
 
 @code {
-    [CascadingParameter]
-    private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-    private ClaimsPrincipal? user;
 
-    protected override async Task OnInitializedAsync()
-    {
-        Logger.LogInformation($"FileTypeSummaryGrid: Initializing {RendererInfo.Name} Interactive: {RendererInfo.IsInteractive}");
-        // Obtain the authentication state from the cascading parameter.
-        var authState = await AuthenticationStateTask!;
+    [Parameter]
+    public bool ShowDisabledItems { get; set; }
 
-        // Get the ClaimsPrincipal that represents the current user.
-        user = authState.User;
-        var result = await FileTypeQueryService.GetSummariesAsync(user, CancellationToken.None);
-        Logger.LogInformation($"FileTypeSummaryGrid: {result.Count()} elements loaded.");
-        elements = result.AsQueryable();
-    }
-    IQueryable<FileTypeSummaryViewModel>? elements = null;
-    private Task HandleRowDoubleClick(FluentDataGridRow<FileTypeSummaryViewModel> row)
+    [Parameter]
+    public IEnumerable<FileTypeSummaryViewModel>? Items { get; set; }
+
+    [Parameter]
+    public EventCallback<FileTypeSummaryViewModel> OnDisabledChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<FileTypeSummaryViewModel> OnSummaryDoubleClick { get; set; }
+
+    private void OnRowDoubleClick(FluentDataGridRow<FileTypeSummaryViewModel> row)
     {
-        if (row.Item is not null && !string.IsNullOrEmpty(row.Item.Id))
-            NavigationManager.NavigateTo($"/Documents/FileType/{row.Item.Id}");
-        return Task.CompletedTask;
+        if (row.Item is not null)
+        {
+            OnSummaryDoubleClick.InvokeAsync(row.Item);
+        }
     }
-    private void OnEdit(FileTypeSummaryViewModel context)
+
+    private void DisabledChanged(string id, bool disabled)
     {
-        NavigationManager.NavigateTo($"/Documents/FileType/{context.Id}");
+        var item = Items?.FirstOrDefault(p => p.Id == id);
+        if (item is not null && item.Disabled != disabled)
+        {
+            OnDisabledChanged.InvokeAsync(item with { Disabled = disabled });
+        }
     }
+
 }

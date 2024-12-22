@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Events;
-using Hexalith.Documents.Events.Documents;
 using Hexalith.Documents.Requests.Documents;
 
 /// <summary>

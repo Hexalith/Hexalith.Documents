@@ -1,0 +1,62 @@
+<FluentLabel>@Labels.Title</FluentLabel>
+
+<FluentCard>
+    <FluentInputFile Id="my-file-uploader"
+                     Mode="InputFileMode.Stream"
+                     Multiple="false"
+                     MaximumFileSize="@(10*1024*1024)"
+                     Accept="application/json"
+                     OnFileUploaded="@OnFileUploadedAsync"
+                     OnCompleted="@OnCompletedAsync"
+                     Style="height: 300px;">
+        <ChildContent>
+            <label for="my-file-uploader">
+                <FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+            </label>
+
+            <div>
+                Drag files here you wish to upload,
+                or <label for="my-file-uploader">browse</label>
+                for them<span style="color: red;">*</span>.
+                <br />
+                <em>Maximum of 4 files allowed.</em>
+            </div>
+
+            <div>
+                <br />
+                <a href="#">Read more about our supported file formats.</a>
+            </div>
+        </ChildContent>
+    </FluentInputFile>
+    <FluentButton>@Labels.Import</FluentButton>
+</FluentCard>
+
+@code {
+    FluentInputFile? myFileByStream = default!;
+    int? progressPercent;
+    string? progressTitle;
+
+    List<string> Files = new();
+    Task OnFileUploadedAsync(FluentInputFileEventArgs file)
+    {
+        progressPercent = file.ProgressPercent;
+        progressTitle = file.ProgressTitle;
+
+        // await file.Stream!.CopyToAsync(fs);
+        // await file.Stream!.DisposeAsync();
+        return Task.CompletedTask;
+    }
+
+    private Task OnCompletedAsync(IEnumerable<FluentInputFileEventArgs> files)
+    {
+        progressPercent = myFileByStream!.ProgressPercent;
+        progressTitle = myFileByStream!.ProgressTitle;
+
+        // For the demo, delete these files.
+        foreach (var file in Files)
+        {
+            File.Delete(file);
+        }
+        return Task.CompletedTask;
+    }
+}

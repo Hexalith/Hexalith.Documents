@@ -26,74 +26,47 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
     <ProjectReference Include="..\..\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
+    <ProjectReference Include="..\..\Application\Hexalith.Documents.Projections\Hexalith.Documents.Projections.csproj" />
     <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
-    <ProjectReference Include="..\Hexalith.Documents.UI.Services\Hexalith.Documents.UI.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Resources\FileTypes\FileTypeAutocomplete.Designer.cs">
-      <DependentUpon>FileTypeAutocomplete.resx</DependentUpon>
+    <Compile Update="Resources\Documents.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Documents.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\DocumentTypes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\FileTypes.Designer.cs">
+      <DependentUpon>FileTypes.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Resources\FileTypes\FileTypeSummaryGrid.Designer.cs">
-      <DependentUpon>FileTypeSummaryGrid.resx</DependentUpon>
+    <Compile Update="Resources\DataExports.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\DocumentTypes\DocumentTypeAutocomplete.Designer.cs">
-      <DependentUpon>DocumentTypeAutocomplete.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\DocumentTypes\DocumentTypeSummaryGrid.Designer.cs">
-      <DependentUpon>DocumentTypeSummaryGrid.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\Documents\DocumentAutocomplete.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DocumentAutocomplete.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\Documents\DocumentSummaryGrid.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DocumentSummaryGrid.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\ImportExport\ImportFile.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ImportFile.resx</DependentUpon>
+      <DependentUpon>DataExports.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Resources\FileTypes\FileTypeAutocomplete.resx">
-      <LastGenOutput>FileTypeAutocomplete.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Resources\FileTypes.resx">
+      <LastGenOutput>FileTypes.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\FileTypes\FileTypeSummaryGrid.resx">
-      <LastGenOutput>FileTypeSummaryGrid.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Resources\DocumentTypes.resx">
+      <LastGenOutput>DocumentTypes.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeAutocomplete.resx">
-      <LastGenOutput>DocumentTypeAutocomplete.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Resources\Documents.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Documents.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeSummaryGrid.resx">
-      <LastGenOutput>DocumentTypeSummaryGrid.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Resources\DataExports.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Documents\DocumentAutocomplete.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DocumentAutocomplete.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Documents\DocumentSummaryGrid.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DocumentSummaryGrid.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ImportExport\ImportFile.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ImportFile.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataExports.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

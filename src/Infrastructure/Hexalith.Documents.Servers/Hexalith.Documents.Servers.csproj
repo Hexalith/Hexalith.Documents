@@ -13,8 +13,10 @@
     <PackageReference Include="Hexalith.UI.Components.Abstractions" Version="$(HexalithVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\Hexalith.Documents.Projections\Hexalith.Documents.Projections.csproj" />
+    <ProjectReference Include="..\..\Application\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
     <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
-    <ProjectReference Include="..\..\Presentation\Hexalith.Documents.UI.Services\Hexalith.Documents.UI.Services.csproj" />
+    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documents\" />

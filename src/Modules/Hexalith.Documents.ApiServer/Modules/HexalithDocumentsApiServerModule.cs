@@ -28,7 +28,6 @@ using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Documents.Servers.Helpers;
-using Hexalith.Documents.UI.Services.Helpers;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
 using Hexalith.Infrastructure.AzureBlobStorage.Services;
@@ -95,9 +94,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         // Add command handlers
         _ = services
             .AddDocumentManagement()
-            .AddDocumentsProjections(nameof(Hexalith.Documents))
-            .AddDocumentRequestHandlers()
-            .AddDocumentProjectionHandlers();
+            .AddDocumentsProjectionActorFactories(nameof(Hexalith.Documents));
 
         _ = services
          .AddControllers()

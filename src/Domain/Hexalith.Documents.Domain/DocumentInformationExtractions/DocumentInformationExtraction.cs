@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Domain.DocumentInformationExtractions;
+namespace Hexalith.Documents.Domain.DocumentInformationExtractions;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
@@ -21,7 +21,12 @@ public record DocumentInformationExtraction(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] string Model,
+    [property: DataMember(Order = 3)] string SystemMessage,
+    [property: DataMember(Order = 3)] string OutputFormat,
+    [property: DataMember(Order = 3)] string OutputSample,
     [property: DataMember(Order = 3)] string Instructions,
+    [property: DataMember(Order = 3)] string ValidationModel,
+    [property: DataMember(Order = 3)] string ValidationInstructions,
     [property: DataMember(Order = 4)] string? Description,
     [property: DataMember(Order = 5)] bool Disabled) : IDomainAggregate
 {
@@ -30,6 +35,11 @@ public record DocumentInformationExtraction(
     /// </summary>
     public DocumentInformationExtraction()
         : this(
+              string.Empty,
+              string.Empty,
+              string.Empty,
+              string.Empty,
+              string.Empty,
               string.Empty,
               string.Empty,
               string.Empty,
@@ -50,6 +60,11 @@ public record DocumentInformationExtraction(
               added.Name,
               added.Model,
               added.Instructions,
+              string.Empty,
+              string.Empty,
+              string.Empty,
+              string.Empty,
+              string.Empty,
               added.Description,
               false)
     {

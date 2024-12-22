@@ -1,33 +1,48 @@
-﻿@inject IDocumentTypeQueryService DocumentQueryService;
-@inject IStringLocalizer<DocumentTypeSummaryGrid> L;
-@inject NavigationManager NavigationManager;
-@using Labels = Resources.DocumentTypes.DocumentTypeSummaryGrid
-
-@if (elements is not null)
+@if (Items is not null)
 {
-	<FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
-					Items="@elements"
-					ResizableColumns="true"
-					ShowHover="true"
-					OnRowDoubleClick="@((FluentDataGridRow<DocumentTypeSummaryViewModel> row) => HandleRowDoubleClick(row))">
-		<PropertyColumn Title="@Labels.Id" Property="@(p => p.Id)" Sortable="true" />
-		<PropertyColumn Title="@Labels.Name" Property="@(p => p.Name)" Sortable="true" />
-		<TemplateColumn Title="@Labels.Disabled">
-			<FluentCheckbox Value="@(context.Disabled)"/>
-		</TemplateColumn>
-	</FluentDataGrid>
+    <FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
+                    Items="@Items.AsQueryable()"
+                    TGridItem="DocumentTypeSummaryViewModel"
+                    ResizableColumns="true"
+                    ShowHover="true"
+                    OnRowDoubleClick="OnRowDoubleClick">
+        <PropertyColumn Title="@Labels.Id" Property="@(p => p.Id)" Sortable="true" />
+        <PropertyColumn Title="@Labels.Name" Property="@(p => p.Name)" Sortable="true" />
+        <TemplateColumn Title="@Labels.Disabled">
+            <FluentCheckbox Value="@(context.Disabled)" ValueChanged="@(c => DisabledChanged(context.Id, c))" />
+        </TemplateColumn>
+    </FluentDataGrid>
 }
 
 @code {
-	protected override async Task OnInitializedAsync()
-	{
-		elements = (await DocumentQueryService.GetSummariesAsync()).AsQueryable();
-	}
-	IQueryable<DocumentTypeSummaryViewModel>? elements = null;
-	private Task HandleRowDoubleClick(FluentDataGridRow<DocumentTypeSummaryViewModel> row)
-	{
-		if (row.Item is not null && !string.IsNullOrEmpty(row.Item.Id))
-			NavigationManager.NavigateTo($"/Documents/{row.Item.Id}");
-		return Task.CompletedTask;
-	}
+
+    [Parameter]
+    public bool ShowDisabledItems { get; set; }
+
+    [Parameter]
+    public IEnumerable<DocumentTypeSummaryViewModel>? Items { get; set; }
+
+    [Parameter]
+    public EventCallback<DocumentTypeSummaryViewModel> OnDisabledChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<DocumentTypeSummaryViewModel> OnSummaryDoubleClick { get; set; }
+
+    private void OnRowDoubleClick(FluentDataGridRow<DocumentTypeSummaryViewModel> row)
+    {
+        if (row.Item is not null)
+        {
+            OnSummaryDoubleClick.InvokeAsync(row.Item);
+        }
+    }
+
+    private void DisabledChanged(string id, bool disabled)
+    {
+        var item = Items?.FirstOrDefault(p => p.Id == id);
+        if (item is not null && item.Disabled != disabled)
+        {
+            OnDisabledChanged.InvokeAsync(item with { Disabled = disabled });
+        }
+    }
+
 }

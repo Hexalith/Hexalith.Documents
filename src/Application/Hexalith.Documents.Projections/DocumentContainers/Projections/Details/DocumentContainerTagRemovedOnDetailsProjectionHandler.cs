@@ -1,11 +1,10 @@
-﻿namespace Hexalith.Documents.Projections.DocumentContainers.Projections.Details;
+namespace Hexalith.Documents.Projections.DocumentContainers.Projections.Details;
 
 using System.Diagnostics.CodeAnalysis;
 
 using Hexalith.Application.Projections;
 using Hexalith.Documents.Events.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentContainers;
-using Hexalith.Documents.Requests.Documents;
 
 /// <summary>
 /// Handles the projection update when a DocumentContainerTagRemoved event is received.

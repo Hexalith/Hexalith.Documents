@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.WebServer.Modules;
+namespace Hexalith.Documents.WebServer.Modules;
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -77,7 +77,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
         _ = services
             .AddDocumentsCommandHandlers()
             .AddDocumentEventValidators()
-            .AddDocumentsProjections(nameof(Hexalith.Documents))
+            .AddDocumentsProjectionActorFactories(nameof(Hexalith.Documents))
             .AddDocumentRequestHandlers()
             .AddDocumentUIServices();
 
