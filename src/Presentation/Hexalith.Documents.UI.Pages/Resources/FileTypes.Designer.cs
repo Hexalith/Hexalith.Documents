@@ -293,5 +293,23 @@ namespace Hexalith.Documents.UI.Pages.Resources {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file type update failed : {0}.
+        /// </summary>
+        internal static string UpdateError {
+            get {
+                return ResourceManager.GetString("UpdateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File type update succeeded.
+        /// </summary>
+        internal static string UpdateSuccess {
+            get {
+                return ResourceManager.GetString("UpdateSuccess", resourceCulture);
+            }
+        }
     }
 }

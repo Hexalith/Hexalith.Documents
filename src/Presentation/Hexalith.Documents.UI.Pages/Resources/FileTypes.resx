@@ -195,4 +195,10 @@
   <data name="ImportError" xml:space="preserve">
     <value>The import failed : {0}</value>
   </data>
+  <data name="UpdateSuccess" xml:space="preserve">
+    <value>File type update succeeded</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>The file type update failed : {0}</value>
+  </data>
 </root>

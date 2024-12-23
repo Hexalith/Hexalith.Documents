@@ -18,9 +18,9 @@
     <FluentLabel Typo="Typography.PageTitle">@Labels.ListTitle</FluentLabel>
     @if (_summaries is not null)
     {
-        <FileTypeSummaryGrid Items="_summaries"
-                             OnDisabledChanged="OnDisabledChanged"
-                             OnSummaryDoubleClick="OnSummaryDoubleClick"/>
+        <FileTypeSummaryGrid Items="_summariesQuery"
+        OnDisabledChanged="OnDisabledChanged"
+        OnSummaryDoubleClick="OnSummaryDoubleClick"/>
     }
 </FluentStack>
 
@@ -32,6 +32,7 @@
     private ClaimsPrincipal? _user;
 
     private IEnumerable<FileTypeSummaryViewModel>? _summaries;
+    private IQueryable<FileTypeSummaryViewModel>? _summariesQuery;
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,6 +50,7 @@
             return;
         }
         _summaries = (await RequestService.SubmitAsync(_user, new GetFileTypeSummaries(), CancellationToken.None)).Result;
+        _summariesQuery = _summaries.AsQueryable();
     }
     private async Task SynchronizeAsync()
     {
@@ -68,7 +70,22 @@
         FileTypeCommand command = item.Disabled
             ? new DisableFileType(item.Id)
             : new EnableFileType(item.Id);
-        CommandService.SubmitCommandAsync(_user, command, CancellationToken.None);
+        try
+        {
+            CommandService.SubmitCommandAsync(_user, command, CancellationToken.None);
+            ToastService.ShowSuccess(Labels.UpdateSuccess);
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(string.Format(Labels.UpdateError, ex.FullMessage()));
+        }
+        if (_summaries is not null)
+        {
+            _summaries = [.._summaries
+            .Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled } : s)];
+            _summariesQuery = _summaries.AsQueryable();
+        }
+        StateHasChanged();
     }
     private void OnSummaryDoubleClick(FileTypeSummaryViewModel item)
     {

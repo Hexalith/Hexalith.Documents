@@ -1,7 +1,8 @@
-@if (Items is not null)
+﻿@if (Items is not null)
 {
     <FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
-                    Items="@Items.AsQueryable()"
+                    Items="Items"
+                    ItemKey="@((i) => i.Id)"
                     TGridItem="FileTypeSummaryViewModel"
                     ResizableColumns="true"
                     ShowHover="true"
@@ -20,7 +21,8 @@
     public bool ShowDisabledItems { get; set; }
 
     [Parameter]
-    public IEnumerable<FileTypeSummaryViewModel>? Items { get; set; }
+    [EditorRequired]
+    public required IQueryable<FileTypeSummaryViewModel> Items { get; set; }
 
     [Parameter]
     public EventCallback<FileTypeSummaryViewModel> OnDisabledChanged { get; set; }
