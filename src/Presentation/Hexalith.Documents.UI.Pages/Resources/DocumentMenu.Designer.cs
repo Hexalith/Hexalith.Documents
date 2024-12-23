@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hexalith.Documents.UI.Pages.Resources.DocumentTypes {
+namespace Hexalith.Documents.UI.Pages.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Hexalith.Documents.UI.Pages.Resources.DocumentTypes {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DocumentTypeAddValidation {
+    internal class DocumentMenu {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DocumentTypeAddValidation() {
+        internal DocumentMenu() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.DocumentTypes {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.DocumentTypes.DocumentTypeAddValidation", typeof(DocumentTypeAddValidation).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.DocumentMenu", typeof(DocumentMenu).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,74 @@ namespace Hexalith.Documents.UI.Pages.Resources.DocumentTypes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document type.
+        ///   Looks up a localized string similar to Containers.
         /// </summary>
-        internal static string DocumentTypeId {
+        internal static string DocumentContainerTypeMenuItem {
             get {
-                return ResourceManager.GetString("DocumentTypeId", resourceCulture);
+                return ResourceManager.GetString("DocumentContainerTypeMenuItem", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description must not exceed {0} characters.
+        ///   Looks up a localized string similar to Document.
         /// </summary>
-        internal static string MaxDescriptionLengthExceeded {
+        internal static string DocumentMenuItem {
             get {
-                return ResourceManager.GetString("MaxDescriptionLengthExceeded", resourceCulture);
+                return ResourceManager.GetString("DocumentMenuItem", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name must not exceed {0} characters.
+        ///   Looks up a localized string similar to Document partitions.
         /// </summary>
-        internal static string MaxNameLengthExceeded {
+        internal static string DocumentPartitionMenuItem {
             get {
-                return ResourceManager.GetString("MaxNameLengthExceeded", resourceCulture);
+                return ResourceManager.GetString("DocumentPartitionMenuItem", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name is required.
+        ///   Looks up a localized string similar to Document types.
         /// </summary>
-        internal static string NameRequired {
+        internal static string DocumentTypeMenuItem {
             get {
-                return ResourceManager.GetString("NameRequired", resourceCulture);
+                return ResourceManager.GetString("DocumentTypeMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text extraction.
+        /// </summary>
+        internal static string FileTextExtractionTypeMenuItem {
+            get {
+                return ResourceManager.GetString("FileTextExtractionTypeMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File types.
+        /// </summary>
+        internal static string FileTypeMenuItem {
+            get {
+                return ResourceManager.GetString("FileTypeMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setup.
+        /// </summary>
+        internal static string SetupMenuItem {
+            get {
+                return ResourceManager.GetString("SetupMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        internal static string UploadMenuItem {
+            get {
+                return ResourceManager.GetString("UploadMenuItem", resourceCulture);
             }
         }
     }

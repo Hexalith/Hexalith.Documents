@@ -6,8 +6,10 @@ using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.DocumentTypes;
 using Hexalith.Documents.Application.FileTypes;
 using Hexalith.Documents.Commands.Documents;
+using Hexalith.Documents.Domain.DataExports;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Domain.DocumentInformationExtractions;
+using Hexalith.Documents.Domain.DocumentPartitions;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.DocumentTypes;
 using Hexalith.Documents.Domain.FileTypes;
@@ -28,10 +30,12 @@ public static class DocumentHelper
     public static IServiceCollection AddDocumentAggregateProviders(this IServiceCollection services)
     {
         _ = services
-            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>()
-            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentType>>()
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DataExport>>()
             .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentContainer>>()
             .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentInformationExtraction>>()
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentPartition>>()
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>()
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentType>>()
             .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<FileType>>();
         return services;
     }

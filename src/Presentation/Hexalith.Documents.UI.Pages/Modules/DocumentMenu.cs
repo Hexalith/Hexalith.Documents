@@ -3,7 +3,7 @@
 using Hexalith.UI.Components;
 using Hexalith.UI.Components.Icons;
 
-using Labels = Hexalith.Documents.UI.Pages.Resources.Modules.DocumentMenu;
+using Labels = Hexalith.Documents.UI.Pages.Resources.DocumentMenu;
 
 /// <summary>
 /// Represents the Document menu.

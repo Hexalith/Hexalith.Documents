@@ -14,33 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\DocumentPartition\DocumentPartitionIndex.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DocumentPartitionIndex.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\Documents.Designer.cs">
       <DependentUpon>Documents.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\DocumentTypes\DocumentTypeAddValidation.Designer.cs">
-      <DependentUpon>DocumentTypeAddValidation.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\DocumentTypes\DocumentTypeAdd.Designer.cs">
-      <DependentUpon>DocumentTypeAdd.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\DocumentTypes\DocumentTypeDetails.Designer.cs">
-      <DependentUpon>DocumentTypeDetails.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\DocumentTypes\DocumentTypeIndex.Designer.cs">
-      <DependentUpon>DocumentTypeIndex.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -49,7 +24,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>FileTypes.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\Modules\DocumentMenu.Designer.cs">
+    <Compile Update="Resources\DocumentMenu.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DocumentMenu.resx</DependentUpon>
@@ -57,10 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\DocumentPartition\DocumentPartitionIndex.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DocumentPartitionIndex.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Documents.resx">
       <LastGenOutput>Documents.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -69,23 +40,7 @@
       <LastGenOutput>FileTypes.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeAddValidation.resx">
-      <LastGenOutput>DocumentTypeAddValidation.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeAdd.resx">
-      <LastGenOutput>DocumentTypeAdd.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeDetails.resx">
-      <LastGenOutput>DocumentTypeDetails.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\DocumentTypes\DocumentTypeIndex.resx">
-      <LastGenOutput>DocumentTypeIndex.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Modules\DocumentMenu.resx">
+    <EmbeddedResource Update="Resources\DocumentMenu.resx">
       <LastGenOutput>DocumentMenu.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -93,8 +48,6 @@
 
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="Resources\Documents\" />
-    <Folder Include="Resources\FileTypes\" />
   </ItemGroup>
 
 </Project>

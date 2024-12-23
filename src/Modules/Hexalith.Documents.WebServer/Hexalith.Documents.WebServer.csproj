@@ -22,17 +22,4 @@
 	  <ProjectReference Include="..\..\Infrastructure\Hexalith.Documents.Servers\Hexalith.Documents.Servers.csproj" />
 	  <ProjectReference Include="..\..\Presentation\Hexalith.Documents.UI.Pages\Hexalith.Documents.UI.Pages.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Compile Update="Resources\Documents\Pages\UploadFiles.Designer.cs">
-	    <DependentUpon>UploadFiles.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
-	</ItemGroup>
-	<ItemGroup>
-	  <EmbeddedResource Update="Resources\Documents\Pages\UploadFiles.resx">
-	    <LastGenOutput>UploadFiles.Designer.cs</LastGenOutput>
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	</ItemGroup>
 </Project>

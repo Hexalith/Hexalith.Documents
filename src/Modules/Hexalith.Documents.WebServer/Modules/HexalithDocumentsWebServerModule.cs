@@ -3,6 +3,8 @@ namespace Hexalith.Documents.WebServer.Modules;
 using System.Collections.Generic;
 using System.Reflection;
 
+using Dapr.Actors.Runtime;
+
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
 using Hexalith.Documents.Application.Documents;
@@ -99,6 +101,11 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     /// <param name="actorCollection">The actor collection.</param>
     public static void RegisterActors(object actorCollection)
     {
+        ArgumentNullException.ThrowIfNull(actorCollection);
+        if (actorCollection is not ActorRegistrationCollection actors)
+        {
+            throw new ArgumentException($"{nameof(RegisterActors)} parameter must be an {nameof(ActorRegistrationCollection)}. Actual type : {actorCollection.GetType().Name}.", nameof(actorCollection));
+        }
     }
 
     /// <inheritdoc/>
