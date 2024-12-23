@@ -186,4 +186,13 @@
   <data name="QuickStartData" xml:space="preserve">
     <value>Insert base data</value>
   </data>
+  <data name="Synchronize" xml:space="preserve">
+    <value>Synchronize</value>
+  </data>
+  <data name="ImportSuccess" xml:space="preserve">
+    <value>Import completed</value>
+  </data>
+  <data name="ImportError" xml:space="preserve">
+    <value>The import failed : {0}</value>
+  </data>
 </root>

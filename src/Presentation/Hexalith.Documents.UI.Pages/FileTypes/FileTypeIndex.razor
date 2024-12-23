@@ -5,17 +5,23 @@
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes;
 <FluentToolbar Style="width:100%;">
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="Add">@Labels.Add</FluentButton>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowSync())" OnClick="SynchronizeAsync">@Labels.Synchronize</FluentButton>
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowImport())" OnClick="ImportAsync">@Labels.Import</FluentButton>
     <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowExport())" OnClick="ExportAsync">@Labels.Export</FluentButton>
     <AuthorizeView Roles="@(ApplicationRoles.GlobalAdministrator)">
         <Authorized>
             <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.TextGrammarWand())" OnClick="ImportQuickStartDataAsync">@Labels.QuickStartData</FluentButton>
-        </Authorized>    
+        </Authorized>
     </AuthorizeView>
 </FluentToolbar>
 <FluentStack Orientation="Orientation.Vertical">
-    <FluentLabel Typo="Typography.PageTitle">@Labels.Title</FluentLabel>
-    <FileTypeSummaryGrid />
+    <FluentLabel Typo="Typography.PageTitle">@Labels.ListTitle</FluentLabel>
+    @if (_summaries is not null)
+    {
+        <FileTypeSummaryGrid Items="_summaries"
+                             OnDisabledChanged="OnDisabledChanged"
+                             OnSummaryDoubleClick="OnSummaryDoubleClick"/>
+    }
 </FluentStack>
 
 
@@ -25,22 +31,62 @@
 
     private ClaimsPrincipal? _user;
 
+    private IEnumerable<FileTypeSummaryViewModel>? _summaries;
+
     protected override async Task OnInitializedAsync()
     {
         if (AuthenticationStateTask is not null)
         {
             var authState = await AuthenticationStateTask;
             _user = authState.User;
+            await LoadSummaries();
         }
+    }
+    private async Task LoadSummaries()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        _summaries = (await RequestService.SubmitAsync(_user, new GetFileTypeSummaries(), CancellationToken.None)).Result;
+    }
+    private async Task SynchronizeAsync()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        await LoadSummaries();
+        StateHasChanged();
+    }
+    private void OnDisabledChanged(FileTypeSummaryViewModel item)
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        FileTypeCommand command = item.Disabled
+            ? new DisableFileType(item.Id)
+            : new EnableFileType(item.Id);
+        CommandService.SubmitCommandAsync(_user, command, CancellationToken.None);
+    }
+    private void OnSummaryDoubleClick(FileTypeSummaryViewModel item)
+    {
+        NavigationManager.NavigateTo($"/Documents/FileType/{item.Id}");
     }
 
     private void Add()
     {
         NavigationManager.NavigateTo("/Documents/Add/FileType");
     }
-    private Task ImportAsync()
+    private async Task ImportAsync()
     {
-        return Task.CompletedTask;
+        if (_user is null)
+        {
+            return;
+        }
+        await LoadSummaries();
+        StateHasChanged();
     }
     private Task ExportAsync()
     {
@@ -52,12 +98,16 @@
         {
             return;
         }
-        List<Task> tasks = new();
-        foreach (var item in FileTypeQuickStartData.Data)
+        try
         {
-            var command = new AddFileType(item.Id, item.Name, item.Description, item.FileToTextConverter, item.Targets);
-            tasks.Add(CommandService.SubmitCommandAsync(_user, command, CancellationToken.None));
+            await CommandService.SubmitCommandsAsync(_user, FileTypeQuickStartData.Data, CancellationToken.None);
+            ToastService.ShowSuccess(Labels.ImportSuccess);
         }
-        await Task.WhenAll(tasks);
+        catch (Exception ex)
+        {
+            ToastService.ShowError(string.Format(Labels.ImportError,ex.FullMessage()));
+        }
+        await LoadSummaries();
+        StateHasChanged();
     }
 }

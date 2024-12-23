@@ -38,8 +38,8 @@
 			</FluentGridItem>
 			<FluentGridItem xs="12" md="12">
 				<FluentButton OnClick="AddTarget"
-							  IconStart="@(new Icons.Regular.Size16.Add())"
-							  Style="margin-left: 8px;">
+				IconStart="@(new Icons.Regular.Size16.Add())"
+				Style="margin-left: 8px;">
 					@Labels.Add
 				</FluentButton>
 			</FluentGridItem>
@@ -50,8 +50,8 @@
 					<FluentStack Orientation="Orientation.Horizontal" Style="margin: 4px 0;">
 						<FluentTextField Style="width:75%;" Value="@target" Readonly="true"></FluentTextField>
 						<FluentButton OnClick="@(() =>RemoveTarget(target))"
-									  IconStart="@(new Icons.Regular.Size16.Delete())"
-									  Style="margin-left: 8px;">
+						IconStart="@(new Icons.Regular.Size16.Delete())"
+						Style="margin-left: 8px;">
 							@Labels.Remove
 						</FluentButton>
 					</FluentStack>
@@ -60,9 +60,9 @@
 
 			<FluentGridItem md="12">
 				<FluentButton Disabled="@((_saveClicked && !ValidationResult.IsValid) || !_data.HasChanges)"
-							  Appearance="Appearance.Accent"
-							  IconStart="@(new Icons.Regular.Size24.Add())"
-							  OnClick="OnSave">
+				Appearance="Appearance.Accent"
+				IconStart="@(new Icons.Regular.Size24.Add())"
+				OnClick="OnSave">
 					@Labels.Save
 				</FluentButton>
 			</FluentGridItem>
@@ -103,7 +103,11 @@
 		}
 		if (Id is not null)
 		{
-			_data = new FileTypeEditViewModel(await DocumentQueryService.GetDetailsAsync(_user, Id, CancellationToken.None));
+			var details = await RequestService.SubmitAsync(_user, new GetFileTypeDetails(Id), CancellationToken.None);
+            if (details.Result is not null)
+            {
+                _data = new FileTypeEditViewModel(details.Result);
+            }
 		}
 	}
 

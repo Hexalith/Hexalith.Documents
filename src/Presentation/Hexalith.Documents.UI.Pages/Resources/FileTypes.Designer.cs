@@ -142,6 +142,24 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The import failed : {0}.
+        /// </summary>
+        internal static string ImportError {
+            get {
+                return ResourceManager.GetString("ImportError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import completed.
+        /// </summary>
+        internal static string ImportSuccess {
+            get {
+                return ResourceManager.GetString("ImportSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List.
         /// </summary>
         internal static string List {
@@ -246,6 +264,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synchronize.
+        /// </summary>
+        internal static string Synchronize {
+            get {
+                return ResourceManager.GetString("Synchronize", resourceCulture);
             }
         }
         
