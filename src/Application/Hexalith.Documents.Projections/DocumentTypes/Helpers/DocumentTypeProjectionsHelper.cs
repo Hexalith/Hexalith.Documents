@@ -71,9 +71,9 @@ public static class DocumentTypeProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentTypeRequestHandlers(this IServiceCollection services)
     {
-        services.TryAddSingleton<IRequestHandler<GetDocumentTypeDetails>, GetDocumentTypeDetailsHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDocumentTypeSummaries>, GetDocumentTypeSummariesHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDocumentTypeIds>, GetDocumentTypeIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentTypeDetails>, GetDocumentTypeDetailsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentTypeSummaries>, GetDocumentTypeSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentTypeIds>, GetDocumentTypeIdsHandler>();
         return services;
     }
 }

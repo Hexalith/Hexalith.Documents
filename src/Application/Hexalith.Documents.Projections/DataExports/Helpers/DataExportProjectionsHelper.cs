@@ -63,9 +63,9 @@ public static class DataExportProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDataExportRequestHandlers(this IServiceCollection services)
     {
-        services.TryAddSingleton<IRequestHandler<GetDataExportDetails>, GetDataExportDetailsHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDataExportSummaries>, GetDataExportSummariesHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDataExportIds>, GetDataExportIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDataExportDetails>, GetDataExportDetailsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDataExportSummaries>, GetDataExportSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetDataExportIds>, GetDataExportIdsHandler>();
         return services;
     }
 }

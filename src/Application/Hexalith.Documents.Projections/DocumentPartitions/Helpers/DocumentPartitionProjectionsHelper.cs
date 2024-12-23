@@ -68,9 +68,10 @@ public static class DocumentPartitionProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentPartitionRequestHandlers(this IServiceCollection services)
     {
-        services.TryAddSingleton<IRequestHandler<GetDocumentPartitionDetails>, GetDocumentPartitionDetailsHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDocumentPartitionSummaries>, GetDocumentPartitionSummariesHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDocumentPartitionIds>, GetDocumentPartitionIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentPartition>, GetDocumentPartitionHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentPartitionDetails>, GetDocumentPartitionDetailsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentPartitionSummaries>, GetDocumentPartitionSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentPartitionIds>, GetDocumentPartitionIdsHandler>();
         return services;
     }
 }

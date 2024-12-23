@@ -70,9 +70,9 @@ public static class DocumentProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentRequestHandlers(this IServiceCollection services)
     {
-        services.TryAddSingleton<IRequestHandler<GetDocumentDetails>, GetDocumentDetailsHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDocumentSummaries>, GetDocumentSummariesHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDocumentIds>, GetDocumentIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentDetails>, GetDocumentDetailsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentSummaries>, GetDocumentSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentIds>, GetDocumentIdsHandler>();
         return services;
     }
 }

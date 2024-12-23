@@ -67,9 +67,9 @@ public static class DocumentInformationExtractionProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentInformationExtractionRequestHandlers(this IServiceCollection services)
     {
-        services.TryAddSingleton<IRequestHandler<GetDocumentInformationExtractionDetails>, GetDocumentInformationExtractionDetailsHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDocumentInformationExtractionSummaries>, GetDocumentInformationExtractionSummariesHandler>();
-        services.TryAddSingleton<IRequestHandler<GetDocumentInformationExtractionIds>, GetDocumentInformationExtractionIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentInformationExtractionDetails>, GetDocumentInformationExtractionDetailsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentInformationExtractionSummaries>, GetDocumentInformationExtractionSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentInformationExtractionIds>, GetDocumentInformationExtractionIdsHandler>();
         return services;
     }
 }

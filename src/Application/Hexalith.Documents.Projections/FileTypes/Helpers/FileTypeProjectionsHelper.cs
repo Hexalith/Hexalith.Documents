@@ -68,9 +68,9 @@ public static class FileTypeProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddFileTypeRequestHandlers(this IServiceCollection services)
     {
-        services.TryAddSingleton<IRequestHandler<GetFileTypeDetails>, GetFileTypeDetailsHandler>();
-        services.TryAddSingleton<IRequestHandler<GetFileTypeSummaries>, GetFileTypeSummariesHandler>();
-        services.TryAddSingleton<IRequestHandler<GetFileTypeIds>, GetFileTypeIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetFileTypeDetails>, GetFileTypeDetailsHandler>();
+        services.TryAddScoped<IRequestHandler<GetFileTypeSummaries>, GetFileTypeSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetFileTypeIds>, GetFileTypeIdsHandler>();
         return services;
     }
 }
