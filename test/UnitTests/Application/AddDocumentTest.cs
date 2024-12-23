@@ -24,7 +24,7 @@ public class AddDocumentTest
             "1",
             "Test AddDocumentBaseType",
             "This is a test AddDocumentBaseType",
-            new FileDescription("F1", "12354_File 1.pdf", "File 1.pdf", "application/pdf"),
+            new FileDescription("F1", "12354_File 1.pdf", "File 1.pdf", 4569L, "application/pdf"),
             "user1",
             DateTimeOffset.Now,
             null);
