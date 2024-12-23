@@ -78,7 +78,7 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
         services.TryAddSingleton<IDocumentModule, HexalithDocumentsWebAppModule>();
 
         _ = services
-            .AddDocumentQueryServices()
+            .AddDocumentsQueryServices()
             .AddTransient(p => DocumentMenu.Menu);
     }
 

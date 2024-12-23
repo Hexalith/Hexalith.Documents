@@ -80,7 +80,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
             .AddDocumentsCommandHandlers()
             .AddDocumentEventValidators()
             .AddDocumentsProjectionActorFactories()
-            .AddDocumentRequestHandlers()
+            .AddDocumentsRequestHandlers()
             .AddDocumentProjections();
 
         _ = services.AddScoped<IFileService, AzureBlobStorageFileService>();
