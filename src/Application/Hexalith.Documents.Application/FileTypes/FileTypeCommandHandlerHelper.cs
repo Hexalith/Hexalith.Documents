@@ -8,7 +8,7 @@ using Hexalith.Documents.Events.FileTypes;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Class DocumentHelper.
+/// Provides helper methods for adding file type command handlers to the service collection.
 /// </summary>
 public static class FileTypeCommandHandlerHelper
 {

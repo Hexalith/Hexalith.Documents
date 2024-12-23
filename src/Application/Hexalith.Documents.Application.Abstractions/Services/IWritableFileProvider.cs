@@ -1,6 +1,5 @@
-﻿namespace Hexalith.Documents.Application.DataExports;
+﻿namespace Hexalith.Documents.Application.Services;
 
-using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
 
 public interface IWritableFileProvider

@@ -23,9 +23,7 @@ public partial record DocumentPartitionAdded(
     [property: DataMember(Order = 4)]
     string? Description,
     [property: DataMember(Order = 5)]
-    string ConnectionString,
-    [property: DataMember(Order = 6)]
-    IEnumerable<string> Targets)
+    string ConnectionString)
     : DocumentPartitionEvent(Id)
 {
 }

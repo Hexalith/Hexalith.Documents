@@ -8,12 +8,12 @@ using Hexalith.Documents.Events.DocumentTypes;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Class DocumentHelper.
+/// Helper class for adding document type command handlers to the service collection.
 /// </summary>
 public static class DocumentTypeCommandHandlerHelper
 {
     /// <summary>
-    /// Adds the file type command handlers to the service collection.
+    /// Adds the document type command handlers to the service collection.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <returns>The updated service collection.</returns>

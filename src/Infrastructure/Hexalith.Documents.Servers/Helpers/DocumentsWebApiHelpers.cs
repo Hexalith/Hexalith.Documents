@@ -1,5 +1,7 @@
 namespace Hexalith.Documents.Servers.Helpers;
 
+using Hexalith.Documents.Application.Services;
+using Hexalith.Documents.Domain.DataExports;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Domain.DocumentInformationExtractions;
 using Hexalith.Documents.Domain.DocumentPartitions;
@@ -7,12 +9,14 @@ using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.DocumentTypes;
 using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Projections.Helpers;
+using Hexalith.Documents.Requests.DataExports;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentInformationExtractions;
 using Hexalith.Documents.Requests.DocumentPartitions;
 using Hexalith.Documents.Requests.Documents;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Documents.Servers.Services;
 using Hexalith.Infrastructure.DaprRuntime.Helpers;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +35,11 @@ public static class DocumentsWebApiHelpers
     public static IServiceCollection AddDocumentsProjectionActorFactories(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
+        _ = services.AddTransient<IWritableFileProvider, WritableFileProvider>();
         _ = services.AddDocumentProjections();
+        _ = services.AddActorProjectionFactory<DataExport>();
+        _ = services.AddActorProjectionFactory<DataExportSummaryViewModel>();
+        _ = services.AddActorProjectionFactory<DataExportDetailsViewModel>();
         _ = services.AddActorProjectionFactory<FileType>();
         _ = services.AddActorProjectionFactory<FileTypeSummaryViewModel>();
         _ = services.AddActorProjectionFactory<FileTypeDetailsViewModel>();

@@ -2,10 +2,15 @@
 
 using Hexalith.Application.Aggregates;
 using Hexalith.Application.Commands;
+using Hexalith.Documents.Application.DataExports;
+using Hexalith.Documents.Application.DocumentContainers;
+using Hexalith.Documents.Application.DocumentInformationExtractions;
+using Hexalith.Documents.Application.DocumentPartitions;
 using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.DocumentTypes;
 using Hexalith.Documents.Application.FileTypes;
-using Hexalith.Documents.Commands.Documents;
+using Hexalith.Documents.Application.Services;
+using Hexalith.Documents.Commands.DataExports;
 using Hexalith.Documents.Domain.DataExports;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Domain.DocumentInformationExtractions;
@@ -70,9 +75,16 @@ public static class DocumentHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentsCommandHandlers(this IServiceCollection services)
     {
-        services.TryAddSingleton<IDomainCommandHandler<AddDocument>, AddDocumentHandler>();
-        _ = services.AddFileTypeCommandHandlers();
+        _ = services.AddScoped<IUserDataService, UserDataService>();
+
+        // Needs to be Transient for the file stream to be disposed
+        services.TryAddTransient<IDomainCommandHandler<ExportRequestDataToDocument>, ExportRequestDataToDocumentHandler>();
+        _ = services.AddDocumentContainerCommandHandlers();
+        _ = services.AddDocumentInformationExtractionCommandHandlers();
+        _ = services.AddDocumentPartitionCommandHandlers();
+        _ = services.AddDocumentCommandHandlers();
         _ = services.AddDocumentTypeCommandHandlers();
+        _ = services.AddFileTypeCommandHandlers();
         return services;
     }
 }

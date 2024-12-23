@@ -15,7 +15,7 @@ public partial record AddDocumentPartition(
     [property: DataMember(Order = 4)]
     string? Description,
     [property: DataMember(Order = 5)]
-    string ConnectionStringName)
+    string ConnectionString)
     : DocumentPartitionCommand(Id)
 {
 }

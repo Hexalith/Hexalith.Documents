@@ -26,7 +26,6 @@ public record DocumentPartition(
     [property: DataMember(Order = 3)] DocumentStorageType StorageType,
     [property: DataMember(Order = 3)] string? Description,
     [property: DataMember(Order = 4)] string ConnectionString,
-    [property: DataMember(Order = 5)] IEnumerable<DocumentTag> Tags,
     [property: DataMember(Order = 6)] bool Disabled)
     : IDomainAggregate
 {
@@ -40,7 +39,6 @@ public record DocumentPartition(
               DocumentStorageType.LocalFile,
               null,
               string.Empty,
-              [],
               false)
     {
     }
@@ -56,7 +54,6 @@ public record DocumentPartition(
               added.StorageType,
               added.Description,
               added.ConnectionString,
-              [],
               false)
     {
     }
