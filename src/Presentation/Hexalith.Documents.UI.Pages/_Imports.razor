@@ -1,5 +1,8 @@
 ﻿@inject IApplication Application
 @inject IDocumentModule Module
+@inject NavigationManager NavigationManager
+@inject ICommandService CommandService
+@inject IRequestService RequestService
 @attribute [Authorize(Roles = ApplicationRoles.GlobalAdministrator)]
 @using System.Net.Http
 @using System.Net.Http.Json

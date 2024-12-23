@@ -9,10 +9,10 @@ using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.Projections.Helpers;
 using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.Servers.Helpers;
 using Hexalith.Documents.UI.Pages.Modules;
-using Hexalith.Documents.UI.Services.Helpers;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
 using Hexalith.Infrastructure.AzureBlobStorage.Services;
@@ -47,9 +47,6 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     public int OrderWeight => 0;
 
     /// <inheritdoc/>
-    string IApplicationModule.Path => Path;
-
-    /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [
         GetType().Assembly,
         typeof(Hexalith.UI.Components._Imports).Assembly,
@@ -59,6 +56,9 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
 
     /// <inheritdoc/>
     public string Version => "1.0";
+
+    /// <inheritdoc/>
+    string IApplicationModule.Path => Path;
 
     private static string Path => nameof(Documents);
 
@@ -77,9 +77,9 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
         _ = services
             .AddDocumentsCommandHandlers()
             .AddDocumentEventValidators()
-            .AddDocumentsProjectionActorFactories(nameof(Hexalith.Documents))
+            .AddDocumentsProjectionActorFactories()
             .AddDocumentRequestHandlers()
-            .AddDocumentUIServices();
+            .AddDocumentProjections();
 
         _ = services.AddScoped<IFileService, AzureBlobStorageFileService>();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();

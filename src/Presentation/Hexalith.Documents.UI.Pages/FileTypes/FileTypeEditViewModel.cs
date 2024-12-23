@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.UI.Pages.FileTypes.ViewModels;
+﻿namespace Hexalith.Documents.UI.Pages.FileTypes;
 
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Extensions.Helpers;

@@ -1,15 +1,6 @@
 ﻿@page "/Documents/Add/FileType"
 @page "/Documents/FileType/{Id}"
-
 @rendermode InteractiveAuto
-@inject IFileTypeQueryService DocumentQueryService
-@inject NavigationManager NavigationManager
-@inject ICommandService CommandService
-@inject IStringLocalizer<FileTypeDetails> L
-@inject IStringLocalizer<FileTypeEditValidation> ValidationLabels
-@using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeDetails;
-    using Hexalith.Documents.Application.Documents;
-
 <FluentToolbar>
 	@if (Id is not null)
 	{
@@ -25,7 +16,7 @@
 	}
 	else // Edit
 	{
-		<FluentLabel Typo="Typography.PageTitle">@L[Labels.Title, Id]</FluentLabel>
+		<FluentLabel Typo="Typography.PageTitle">@string.Format(Labels.Title, Id)</FluentLabel>
 	}
 	@if (_data is not null)
 	{
@@ -93,7 +84,7 @@
 	private string _newTarget = string.Empty;
 	private bool _saveClicked;
 
-	private ValidationResult ValidationResult => new FileTypeEditValidation(ValidationLabels).Validate(_data);
+	private ValidationResult ValidationResult => new FileTypeEditValidation().Validate(_data);
 
 	protected override async Task OnInitializedAsync()
 	{

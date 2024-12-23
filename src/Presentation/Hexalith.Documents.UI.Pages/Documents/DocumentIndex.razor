@@ -1,8 +1,5 @@
 ﻿@page "/Documents/Document"
 @page "/Documents"
-@inject NavigationManager NavigationManager;
-@using Labels = Resources.Documents.DocumentIndex;
-    using Hexalith.Documents.Application.Documents;
 <FluentToolbar Style="width:100%;">
     <AuthorizeView Policy="@DocumentPolicies.Contributors" Context="contribute">
         <Authorized Context="contribute">

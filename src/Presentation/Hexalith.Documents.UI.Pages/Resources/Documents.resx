@@ -118,21 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MaxNameLengthExceeded" xml:space="preserve">
-    <value>La longueur du nom ne doit pas dépasser {0} charactères</value>
+    <value>Name must not exceed {0} characters</value>
   </data>
   <data name="MaxDescriptionLengthExceeded" xml:space="preserve">
-    <value>La longueur de la description ne doit pas dépasser {0} charactères</value>
+    <value>Description must not exceed {0} characters</value>
   </data>
   <data name="NameRequired" xml:space="preserve">
-    <value>Le nom est obligatoire</value>
+    <value>Name is required</value>
   </data>
-  <data name="DocumentTypeId" xml:space="preserve">
-    <value>Type de document</value>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
   </data>
-  <data name="IdRequired" xml:space="preserve">
-    <value>Le code est requis</value>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="MaxIdLengthExceeded" xml:space="preserve">
-    <value>La longueur du code ne doit pas dépasser {0} charactères</value>
+  <data name="Disabled" xml:space="preserve">
+    <value>Désactivé</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Identifier</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ReadNotAuthorized" xml:space="preserve">
+    <value>You are not authorized to read documents</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Add a new document</value>
+  </data>
+  <data name="ReadNotAuthorized1" xml:space="preserve">
+    <value>You are not authorized to read documents</value>
+  </data>
+  <data name="AddTitle" xml:space="preserve">
+    <value>Document [0}</value>
+  </data>
+  <data name="ListTitle" xml:space="preserve">
+    <value>Documents</value>
   </data>
 </root>

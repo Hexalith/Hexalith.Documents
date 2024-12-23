@@ -14,11 +14,9 @@ using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.Projections.Helpers;
 using Hexalith.Documents.Requests.Extensions;
-using Hexalith.Documents.UI.Pages.Documents.Services;
 using Hexalith.Documents.UI.Pages.Modules;
-using Hexalith.Documents.UI.Services.Documents.Services;
-using Hexalith.Documents.UI.Services.Helpers;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -72,8 +70,6 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
 #pragma warning restore IDE0060 // Remove unused parameter
     {
-        _ = services
-            .AddSingleton<IDocumentQueryService, DemoDocumentQueryService>();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
         HexalithDocumentsRequests.RegisterPolymorphicMappers();
@@ -82,7 +78,7 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
         services.TryAddSingleton<IDocumentModule, HexalithDocumentsWebAppModule>();
 
         _ = services
-            .AddDocumentUIServices()
+            .AddDocumentQueryServices()
             .AddTransient(p => DocumentMenu.Menu);
     }
 

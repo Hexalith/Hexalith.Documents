@@ -1,38 +1,30 @@
 ﻿@page "/Documents/Document/{DocumentId}"
-@inject IDocumentQueryService DocumentQueryService
-@inject NavigationManager NavigationManager
-@inject IStringLocalizer<DocumentDetails> L
-@inject ICommandService CommandService
-@using Labels = Resources.Documents.DocumentDetails;
-@using System.Security.Claims
-<FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
-    <h3>@L[Labels.Title, _documentId]</h3>
-    @if (_data is not null)
-    {
+<h3>@string.Format(Labels.Title, _documentId)</h3>
+@if (_data is not null)
+{
+    <FluentStack Orientation="Orientation.Vertical">
         <FluentStack Orientation="Orientation.Vertical">
-            <FluentStack Orientation="Orientation.Vertical">
-                <FluentTextField @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
-                <FluentTextField @bind-Value="@_data.Description" Label="@Labels.Description"></FluentTextField>
-                <FluentCheckbox @bind-Value="@_data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
-            </FluentStack>
-            <FluentSpacer />
-            <AuthorizeView Roles="@DocumentRoles.Contributor">
-                <Authorized>
-                    @if (string.IsNullOrWhiteSpace(DocumentId))
-                    {
-                        <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.Add())" OnClick="OnAdd">@Labels.Add</FluentButton>
-                    }
-                    else
-                    {
-                        <FluentButton Appearance="Appearance.Accent" Disabled="@(!_data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
-                    }
-                </Authorized>
-                <NotAuthorized>
-                </NotAuthorized>
-            </AuthorizeView>
+            <FluentTextField @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
+            <FluentTextField @bind-Value="@_data.Description" Label="@Labels.Description"></FluentTextField>
+            <FluentCheckbox @bind-Value="@_data.Disabled" Label="@Labels.Disabled"></FluentCheckbox>
         </FluentStack>
-    }
-</FluentStack>
+        <FluentSpacer />
+        <AuthorizeView Roles="@DocumentRoles.Contributor">
+            <Authorized>
+                @if (string.IsNullOrWhiteSpace(DocumentId))
+                {
+                    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.Add())" OnClick="OnAdd">@Labels.Add</FluentButton>
+                }
+                else
+                {
+                    <FluentButton Appearance="Appearance.Accent" Disabled="@(!_data.HasChanges)" IconStart="@(new Icons.Regular.Size24.Save())" OnClick="OnSave">@Labels.Save</FluentButton>
+                }
+            </Authorized>
+            <NotAuthorized>
+            </NotAuthorized>
+        </AuthorizeView>
+    </FluentStack>
+}
 
 @code {
     [Parameter]
@@ -59,12 +51,12 @@
         }
         if (string.IsNullOrWhiteSpace(DocumentId))
         {
-            _data = new ViewModels.DocumentEditViewModel();
+            _data = new DocumentEditViewModel();
             return;
         }
         else
         {
-            _data = new(await DocumentQueryService.GetDetailsAsync(DocumentId));
+            _data = new(await DocumentQueryService.GetDetailsAsync(_user, DocumentId, CancellationToken.None));
         }
 
         await base.OnInitializedAsync();
@@ -78,7 +70,7 @@
         {
             return;
         }
-        if (_data.Name == _data.Original.Name || _data.Description != _data.Original.Description)
+        if (_data.DescriptionChanged)
         {
             await CommandService.SubmitCommandAsync(_user, new ChangeDocumentDescription(_data.Id, _data.Name, _data.Description), CancellationToken.None);
         }
@@ -86,7 +78,6 @@
         {
             await CommandService.SubmitCommandAsync(_user, new DisableDocument(_data.Id), CancellationToken.None);
         }
-        NavigationManager.NavigateTo("/Documents");
     }
     public async Task OnAdd()
     {

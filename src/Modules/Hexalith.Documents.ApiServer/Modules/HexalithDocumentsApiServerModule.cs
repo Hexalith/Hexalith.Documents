@@ -64,10 +64,10 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
     public int OrderWeight => 0;
 
     /// <inheritdoc/>
-    string IApplicationModule.Path => Path;
+    public string Version => "1.0";
 
     /// <inheritdoc/>
-    public string Version => "1.0";
+    string IApplicationModule.Path => Path;
 
     private static string Path => nameof(Documents);
 
@@ -94,7 +94,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         // Add command handlers
         _ = services
             .AddDocumentManagement()
-            .AddDocumentsProjectionActorFactories(nameof(Hexalith.Documents));
+            .AddDocumentsProjectionActorFactories();
 
         _ = services
          .AddControllers()

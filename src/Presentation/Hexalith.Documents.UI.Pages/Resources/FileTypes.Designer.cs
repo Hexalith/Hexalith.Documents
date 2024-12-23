@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
+namespace Hexalith.Documents.UI.Pages.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class FileTypeDetails {
+    internal class FileTypes {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal FileTypeDetails() {
+        internal FileTypes() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.FileTypes.FileTypeDetails", typeof(FileTypeDetails).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.FileTypes", typeof(FileTypes).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -97,11 +97,47 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Document type id.
+        /// </summary>
+        internal static string DocumentTypeId {
+            get {
+                return ResourceManager.GetString("DocumentTypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        internal static string Export {
+            get {
+                return ResourceManager.GetString("Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Identifier.
         /// </summary>
         internal static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The identifier is required.
+        /// </summary>
+        internal static string IdRequired {
+            get {
+                return ResourceManager.GetString("IdRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        internal static string Import {
+            get {
+                return ResourceManager.GetString("Import", resourceCulture);
             }
         }
         
@@ -115,6 +151,42 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File types.
+        /// </summary>
+        internal static string ListTitle {
+            get {
+                return ResourceManager.GetString("ListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description must not exceed {0} characters.
+        /// </summary>
+        internal static string MaxDescriptionLengthExceeded {
+            get {
+                return ResourceManager.GetString("MaxDescriptionLengthExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identifier must not exceed {0} characters.
+        /// </summary>
+        internal static string MaxIdLengthExceeded {
+            get {
+                return ResourceManager.GetString("MaxIdLengthExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name must not exceed {0} characters.
+        /// </summary>
+        internal static string MaxNameLengthExceeded {
+            get {
+                return ResourceManager.GetString("MaxNameLengthExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string Name {
@@ -124,11 +196,29 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name is required.
+        /// </summary>
+        internal static string NameRequired {
+            get {
+                return ResourceManager.GetString("NameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New target.
         /// </summary>
         internal static string NewTarget {
             get {
                 return ResourceManager.GetString("NewTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert base data.
+        /// </summary>
+        internal static string QuickStartData {
+            get {
+                return ResourceManager.GetString("QuickStartData", resourceCulture);
             }
         }
         
@@ -160,7 +250,7 @@ namespace Hexalith.Documents.UI.Pages.Resources.FileTypes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MIME file type targets.
+        ///   Looks up a localized string similar to File type targets.
         /// </summary>
         internal static string Targets {
             get {
