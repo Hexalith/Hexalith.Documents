@@ -5,10 +5,16 @@ using System.Runtime.Serialization;
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
-/// Represents an event that is raised when a tag is removed from a document type.
+/// Command to remove a metadata tag from a document type.
 /// </summary>
 /// <param name="Id">The unique identifier of the document type.</param>
-/// <param name="Key">The identifier of the tag that was removed.</param>
+/// <param name="Key">The key or name of the tag to remove.</param>
+/// <param name="Value">The specific value of the tag to remove.</param>
+/// <remarks>
+/// This command removes a specific tag and its value from the document type's metadata.
+/// After removal, the tag will no longer be associated with new documents of this type.
+/// Existing documents retain their tags but the removed tag cannot be used for new documents.
+/// </remarks>
 [PolymorphicSerialization]
 public partial record RemoveDocumentTypeTag(
     string Id,

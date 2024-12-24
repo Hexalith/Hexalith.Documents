@@ -6,8 +6,13 @@ using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
-/// Represents a base class for document commands.
+/// Represents the base command for all document type operations.
 /// </summary>
+/// <param name="Id">The unique identifier of the document type.</param>
+/// <remarks>
+/// This is the base record for all document type commands in the system.
+/// It provides common functionality and properties used across all document type operations.
+/// </remarks>
 [PolymorphicSerialization]
 public abstract partial record DocumentTypeCommand([property: DataMember(Order = 1)] string Id)
 {
