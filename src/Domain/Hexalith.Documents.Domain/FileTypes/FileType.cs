@@ -6,7 +6,6 @@ using System.Runtime.Serialization;
 using Hexalith.Documents.Domain;
 using Hexalith.Documents.Events.FileTypes;
 using Hexalith.Domain.Aggregates;
-using Hexalith.Domain.Events;
 
 /// <summary>
 /// Represents a file type in the document management system.
@@ -68,11 +67,7 @@ public record FileType(
         ArgumentNullException.ThrowIfNull(domainEvent);
         if (domainEvent is FileTypeEvent && domainEvent is not FileTypeEnabled && Disabled)
         {
-            return new ApplyResult(
-                this,
-                [],
-                true,
-                "File type is disabled.");
+            return ApplyResult.Error(this, "File type is disabled.");
         }
 
         return domainEvent switch
@@ -89,20 +84,14 @@ public record FileType(
         };
     }
 
-    /// <inheritdoc/>
-    public bool IsInitialized() => !string.IsNullOrWhiteSpace(Id);
-
     /// <summary>
     /// Applies a FileTypeCreated event to the aggregate.
     /// </summary>
     /// <param name="e">The FileTypeCreated event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeAdded e) => !IsInitialized()
-        ? new ApplyResult(
-            new FileType(e),
-            [e],
-            false)
-        : new ApplyResult(this, [], true, "The document already exists.");
+    private ApplyResult ApplyEvent(FileTypeAdded e) => !(this as IDomainAggregate).IsInitialized()
+        ? ApplyResult.Success(new FileType(e), [e])
+        : ApplyResult.Error(this, "The file type already exists.");
 
     /// <summary>
     /// Applies a FileTypeEnabled event to the aggregate.
@@ -110,11 +99,8 @@ public record FileType(
     /// <param name="e">The FileTypeEnabled event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeEnabled e) => Disabled
-            ? new ApplyResult(
-            this with { Disabled = false },
-            [e],
-            false)
-            : new ApplyResult(this, [], true, "The document is already enabled.");
+            ? ApplyResult.Success(this with { Disabled = false }, [e])
+            : ApplyResult.Error(this, "The file type is already enabled.");
 
     /// <summary>
     /// Applies a FileTypeDisabled event to the aggregate.
@@ -122,11 +108,8 @@ public record FileType(
     /// <param name="e">The FileTypeDisabled event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeDisabled e) => !Disabled
-            ? new ApplyResult(
-            this with { Disabled = true },
-            [e],
-            false)
-            : new ApplyResult(this, [], true, "The document is already disabled.");
+            ? ApplyResult.Success(this with { Disabled = true }, [e])
+            : ApplyResult.Error(this, "The file type is already disabled.");
 
     /// <summary>
     /// Applies a FileTypeTextExtractionModeChanged event to the aggregate.
@@ -134,11 +117,8 @@ public record FileType(
     /// <param name="e">The FileTypeTextExtractionModeChanged event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeFileToTextConverterChanged e) => e.FileToTextConverter != FileToTextConverter
-        ? new ApplyResult(
-            this with { FileToTextConverter = e.FileToTextConverter },
-            [e],
-            false)
-        : new ApplyResult(this, [], false);
+        ? ApplyResult.Success(this with { FileToTextConverter = e.FileToTextConverter }, [e])
+        : ApplyResult.Error(this, "No changes to apply to file to text converter.");
 
     /// <summary>
     /// Applies a FileTypeDescriptionChanged event to the aggregate.
@@ -146,11 +126,8 @@ public record FileType(
     /// <param name="e">The FileTypeDescriptionChanged event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeDescriptionChanged e) => e.Name != Name || e.Description != Description
-        ? new ApplyResult(
-            this with { Name = e.Name, Description = e.Description },
-            [e],
-            false)
-        : new ApplyResult(this, [], false);
+        ? ApplyResult.Success(this with { Name = e.Name, Description = e.Description }, [e])
+        : ApplyResult.Error(this, "No changes to apply to the file type name or description.");
 
     /// <summary>
     /// Applies a FileTypeTargetAdded event to the aggregate.
@@ -161,11 +138,8 @@ public record FileType(
     {
         List<string> currentTargets = Targets.ToList();
         return !currentTargets.Contains(e.Target)
-            ? new ApplyResult(
-                this with { Targets = currentTargets.Concat([e.Target]) },
-                [e],
-                false)
-            : new ApplyResult(this, [], true, "The target is already added.");
+            ? ApplyResult.Success(this with { Targets = currentTargets.Concat([e.Target]) }, [e])
+            : ApplyResult.Error(this, "The target is already added to the file type.");
     }
 
     /// <summary>
@@ -177,10 +151,7 @@ public record FileType(
     {
         List<string> currentTargets = Targets.ToList();
         return currentTargets.Contains(e.Target)
-            ? new ApplyResult(
-                this with { Targets = currentTargets.Where(t => t != e.Target) },
-                [e],
-                false)
-            : new ApplyResult(this, [], true, "The target is not present.");
+            ? ApplyResult.Success(this with { Targets = currentTargets.Where(t => t != e.Target) }, [e])
+            : ApplyResult.Error(this, "The target is not present in the file type.");
     }
 }
