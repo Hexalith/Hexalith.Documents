@@ -286,6 +286,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Synchronize database.
+        /// </summary>
+        internal static string SynchronizeDatabase {
+            get {
+                return ResourceManager.GetString("SynchronizeDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File type targets.
         /// </summary>
         internal static string Targets {

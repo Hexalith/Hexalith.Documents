@@ -204,4 +204,7 @@
   <data name="EnableSuccess" xml:space="preserve">
     <value>The file type has been enabled</value>
   </data>
+  <data name="SynchronizeDatabase" xml:space="preserve">
+    <value>Synchronize database</value>
+  </data>
 </root>

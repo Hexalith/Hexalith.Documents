@@ -11,6 +11,7 @@
     <AuthorizeView Roles="@(ApplicationRoles.GlobalAdministrator)">
         <Authorized>
             <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.TextGrammarWand())" OnClick="ImportQuickStartDataAsync">@Labels.QuickStartData</FluentButton>
+            <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowSync())" OnClick="SynchronizeDatabaseAsync">@Labels.SynchronizeDatabase</FluentButton>
         </Authorized>
     </AuthorizeView>
 </FluentToolbar>
@@ -53,6 +54,15 @@
         _summariesQuery = _summaries.AsQueryable();
     }
     private async Task SynchronizeAsync()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        await LoadSummaries();
+        StateHasChanged();
+    }
+    private async Task SynchronizeDatabaseAsync()
     {
         if (_user is null)
         {
