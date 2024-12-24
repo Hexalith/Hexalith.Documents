@@ -1,0 +1,146 @@
+﻿@page "/Documents/DocumentType"
+@rendermode InteractiveAuto
+@inject NavigationManager NavigationManager
+@inject ICommandService CommandService
+@using Labels = Hexalith.Documents.UI.Pages.Resources.DocumentTypes;
+<FluentToolbar Style="width:100%;">
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="Add">@Labels.Add</FluentButton>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowSync())" OnClick="SynchronizeAsync">@Labels.Synchronize</FluentButton>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowImport())" OnClick="ImportAsync">@Labels.Import</FluentButton>
+    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowExport())" OnClick="ExportAsync">@Labels.Export</FluentButton>
+    <AuthorizeView Roles="@(ApplicationRoles.GlobalAdministrator)">
+        <Authorized>
+            <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.TextGrammarWand())" OnClick="ImportQuickStartDataAsync">@Labels.QuickStartData</FluentButton>
+            <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowSync())" OnClick="SynchronizeDatabaseAsync">@Labels.SynchronizeDatabase</FluentButton>
+        </Authorized>
+    </AuthorizeView>
+</FluentToolbar>
+<FluentStack Orientation="Orientation.Vertical">
+    <FluentLabel Typo="Typography.PageTitle">@Labels.ListTitle</FluentLabel>
+    @if (_summaries is not null)
+    {
+        <DocumentTypeSummaryGrid Items="_summariesQuery"
+        OnDisabledChanged="OnDisabledChangedAsync"
+        OnSummaryDoubleClick="OnSummaryDoubleClick"/>
+    }
+</FluentStack>
+
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+    private ClaimsPrincipal? _user;
+
+    private IEnumerable<DocumentTypeSummaryViewModel>? _summaries;
+    private IQueryable<DocumentTypeSummaryViewModel>? _summariesQuery;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            _user = authState.User;
+            await LoadSummaries();
+        }
+    }
+    private async Task LoadSummaries()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        _summaries = (await RequestService.SubmitAsync(_user, new GetDocumentTypeSummaries(), CancellationToken.None)).Result;
+        _summariesQuery = _summaries.AsQueryable();
+    }
+    private async Task SynchronizeAsync()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        await LoadSummaries();
+        StateHasChanged();
+    }
+    private async Task SynchronizeDatabaseAsync()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        await LoadSummaries();
+        StateHasChanged();
+    }
+    private async Task OnDisabledChangedAsync(DocumentTypeSummaryViewModel item)
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        try
+        {
+            if (item.Disabled)
+            {
+                await CommandService.SubmitCommandAsync(_user, new DisableDocumentType(item.Id), CancellationToken.None);
+                ToastService.ShowSuccess(Labels.DisableSuccess);
+            }
+            else
+            {
+                await CommandService.SubmitCommandAsync(_user, new EnableDocumentType(item.Id), CancellationToken.None);
+                ToastService.ShowSuccess(Labels.EnableSuccess);
+            }
+            if (_summaries is not null)
+            {
+                // Update the disabled value of the item in the collection
+                _summaries = [.._summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled} : s)];
+                _summariesQuery = _summaries.AsQueryable();
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(string.Format(Labels.UpdateError, ex.FullMessage()));
+            await LoadSummaries();
+        }
+        StateHasChanged();
+    }
+    private void OnSummaryDoubleClick(DocumentTypeSummaryViewModel item)
+    {
+        NavigationManager.NavigateTo($"/Documents/DocumentType/{item.Id}");
+    }
+
+    private void Add()
+    {
+        NavigationManager.NavigateTo("/Documents/Add/DocumentType");
+    }
+    private async Task ImportAsync()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        await LoadSummaries();
+        StateHasChanged();
+    }
+    private Task ExportAsync()
+    {
+        return Task.CompletedTask;
+    }
+    private async Task ImportQuickStartDataAsync()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        try
+        {
+            await CommandService.SubmitCommandsAsync(_user, DocumentTypeQuickStartData.Data, CancellationToken.None);
+            ToastService.ShowSuccess(Labels.ImportSuccess);
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(string.Format(Labels.ImportError,ex.FullMessage()));
+        }
+        await LoadSummaries();
+        StateHasChanged();
+    }
+}

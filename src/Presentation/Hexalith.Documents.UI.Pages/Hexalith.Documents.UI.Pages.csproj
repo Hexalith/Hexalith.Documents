@@ -19,6 +19,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\DocumentTypes.Designer.cs">
+      <DependentUpon>DocumentTypes.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\FileTypes.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -34,6 +39,10 @@
   <ItemGroup>
     <EmbeddedResource Update="Resources\Documents.resx">
       <LastGenOutput>Documents.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentTypes.resx">
+      <LastGenOutput>DocumentTypes.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\FileTypes.resx">

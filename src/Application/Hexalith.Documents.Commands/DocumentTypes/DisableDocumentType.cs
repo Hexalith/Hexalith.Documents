@@ -3,9 +3,9 @@
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
-/// Command to deactivate a document type in the system.
+/// Represents an event that is raised when a document type is disabled in the system.
 /// </summary>
-/// <param name="Id">Identifier of the document type to disable.</param>
+/// <param name="Id">The unique identifier of the document type that was disabled.</param>
 [PolymorphicSerialization]
 public partial record DisableDocumentType(string Id) : DocumentTypeCommand(Id)
 {
