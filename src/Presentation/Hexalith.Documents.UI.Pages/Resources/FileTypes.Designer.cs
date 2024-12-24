@@ -88,11 +88,11 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Désactivé.
+        ///   Looks up a localized string similar to The file type has been disabled.
         /// </summary>
-        internal static string Disabled {
+        internal static string DisableSuccess {
             get {
-                return ResourceManager.GetString("Disabled", resourceCulture);
+                return ResourceManager.GetString("DisableSuccess", resourceCulture);
             }
         }
         
@@ -102,6 +102,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         internal static string DocumentTypeId {
             get {
                 return ResourceManager.GetString("DocumentTypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file type has been enabled.
+        /// </summary>
+        internal static string EnableSuccess {
+            get {
+                return ResourceManager.GetString("EnableSuccess", resourceCulture);
             }
         }
         

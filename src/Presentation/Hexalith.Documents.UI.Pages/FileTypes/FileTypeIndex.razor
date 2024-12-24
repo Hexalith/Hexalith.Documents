@@ -19,7 +19,7 @@
     @if (_summaries is not null)
     {
         <FileTypeSummaryGrid Items="_summariesQuery"
-        OnDisabledChanged="OnDisabledChanged"
+        OnDisabledChanged="OnDisabledChangedAsync"
         OnSummaryDoubleClick="OnSummaryDoubleClick"/>
     }
 </FluentStack>
@@ -61,29 +61,35 @@
         await LoadSummaries();
         StateHasChanged();
     }
-    private void OnDisabledChanged(FileTypeSummaryViewModel item)
+    private async Task OnDisabledChangedAsync(FileTypeSummaryViewModel item)
     {
         if (_user is null)
         {
             return;
         }
-        FileTypeCommand command = item.Disabled
-            ? new DisableFileType(item.Id)
-            : new EnableFileType(item.Id);
         try
         {
-            CommandService.SubmitCommandAsync(_user, command, CancellationToken.None);
-            ToastService.ShowSuccess(Labels.UpdateSuccess);
+            if (item.Disabled)
+            {
+                await CommandService.SubmitCommandAsync(_user, new DisableFileType(item.Id), CancellationToken.None);
+                ToastService.ShowSuccess(Labels.DisableSuccess);
+            }
+            else
+            {
+                await CommandService.SubmitCommandAsync(_user, new EnableFileType(item.Id), CancellationToken.None);
+                ToastService.ShowSuccess(Labels.EnableSuccess);
+            }
+            if (_summaries is not null)
+            {
+                // Update the disabled value of the item in the collection
+                _summaries = [.._summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled} : s)];
+                _summariesQuery = _summaries.AsQueryable();
+            }
         }
         catch (Exception ex)
         {
             ToastService.ShowError(string.Format(Labels.UpdateError, ex.FullMessage()));
-        }
-        if (_summaries is not null)
-        {
-            _summaries = [.._summaries
-            .Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled } : s)];
-            _summariesQuery = _summaries.AsQueryable();
+            await LoadSummaries();
         }
         StateHasChanged();
     }

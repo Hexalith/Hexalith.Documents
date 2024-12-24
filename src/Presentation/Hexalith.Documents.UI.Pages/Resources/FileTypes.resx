@@ -129,9 +129,6 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="Disabled" xml:space="preserve">
-    <value>Désactivé</value>
-  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -200,5 +197,11 @@
   </data>
   <data name="UpdateError" xml:space="preserve">
     <value>The file type update failed : {0}</value>
+  </data>
+  <data name="DisableSuccess" xml:space="preserve">
+    <value>The file type has been disabled</value>
+  </data>
+  <data name="EnableSuccess" xml:space="preserve">
+    <value>The file type has been enabled</value>
   </data>
 </root>

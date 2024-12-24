@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -124,7 +124,7 @@
     <value>Nom</value>
   </data>
   <data name="Disabled" xml:space="preserve">
-    <value>Desactiv</value>
+    <value>Desactivé</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>Telephone</value>
