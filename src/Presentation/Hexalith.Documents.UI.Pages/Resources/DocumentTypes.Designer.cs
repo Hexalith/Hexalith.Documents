@@ -232,11 +232,11 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New target.
+        ///   Looks up a localized string similar to New file type.
         /// </summary>
-        internal static string NewTarget {
+        internal static string NewFileType {
             get {
-                return ResourceManager.GetString("NewTarget", resourceCulture);
+                return ResourceManager.GetString("NewFileType", resourceCulture);
             }
         }
         

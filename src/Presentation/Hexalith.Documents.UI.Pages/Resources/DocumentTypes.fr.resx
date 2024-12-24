@@ -141,8 +141,8 @@
   <data name="FileTypes" xml:space="preserve">
     <value>Types de fichier</value>
   </data>
-  <data name="NewTarget" xml:space="preserve">
-    <value>Nouveau format</value>
+  <data name="NewFileType" xml:space="preserve">
+    <value>Nouveau type de fichier</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Retirer</value>
