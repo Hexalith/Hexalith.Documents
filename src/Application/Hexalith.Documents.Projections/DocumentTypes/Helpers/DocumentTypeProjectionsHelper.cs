@@ -6,10 +6,8 @@ using Hexalith.Documents.Events.DocumentTypes;
 using Hexalith.Documents.Projections.DocumentTypes.Projections.Details;
 using Hexalith.Documents.Projections.DocumentTypes.Projections.Summaries;
 using Hexalith.Documents.Projections.DocumentTypes.RequestHandlers;
-using Hexalith.Documents.Projections.DocumentTypes.Services;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.UI.Services.DocumentTypes.Projections.Summaries;
-using Hexalith.Documents.UI.Services.DocumentTypes.Services;
 using Hexalith.Domain.Events;
 
 using Microsoft.Extensions.DependencyInjection;

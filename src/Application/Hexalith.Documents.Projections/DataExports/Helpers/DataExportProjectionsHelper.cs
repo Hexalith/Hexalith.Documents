@@ -6,10 +6,8 @@ using Hexalith.Documents.Events.DataExports;
 using Hexalith.Documents.Projections.DataExports.Projections.Details;
 using Hexalith.Documents.Projections.DataExports.Projections.Summaries;
 using Hexalith.Documents.Projections.DataExports.RequestHandlers;
-using Hexalith.Documents.Projections.DataExports.Services;
 using Hexalith.Documents.Requests.DataExports;
 using Hexalith.Documents.UI.Services.DataExports.Projections.Summaries;
-using Hexalith.Documents.UI.Services.DataExports.Services;
 using Hexalith.Domain.Events;
 
 using Microsoft.Extensions.DependencyInjection;
