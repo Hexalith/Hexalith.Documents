@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Projections.Helpers;
+﻿namespace Hexalith.Documents.Projections.Helpers;
 
 using Hexalith.Documents.Projections.DataExports.Helpers;
 using Hexalith.Documents.Projections.DocumentContainers.Helpers;
@@ -47,14 +47,7 @@ public static class DocumentProjectionHelper
     /// <param name="services">The service collection to add the services to.</param>
     /// <returns>The service collection with the added services.</returns>
     public static IServiceCollection AddDocumentsQueryServices(this IServiceCollection services)
-        => services
-            .AddDataExportQueryServices()
-            .AddDocumentInformationExtractionQueryServices()
-            .AddDocumentContainerQueryServices()
-            .AddDocumentPartitionQueryServices()
-            .AddDocumentQueryServices()
-            .AddDocumentTypeQueryServices()
-            .AddFileTypeQueryServices();
+        => services;
 
     /// <summary>
     /// Adds document request handlers to the service collection.

@@ -49,17 +49,6 @@ public static class FileTypeProjectionsHelper
     }
 
     /// <summary>
-    /// Adds the file type query services to the specified service collection.
-    /// </summary>
-    /// <param name="services">The service collection to add the services to.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddFileTypeQueryServices(this IServiceCollection services)
-    {
-        services.TryAddScoped<IFileTypeQueryService, FileTypeQueryService>();
-        return services;
-    }
-
-    /// <summary>
     /// Adds the file type request handlers to the specified service collection.
     /// </summary>
     /// <param name="services">The service collection to add the handlers to.</param>

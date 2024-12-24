@@ -51,17 +51,6 @@ public static class DocumentProjectionsHelper
     }
 
     /// <summary>
-    /// Adds the document query services to the specified service collection.
-    /// </summary>
-    /// <param name="services">The service collection to add the services to.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDocumentQueryServices(this IServiceCollection services)
-    {
-        services.TryAddScoped<IDocumentQueryService, DocumentQueryService>();
-        return services;
-    }
-
-    /// <summary>
     /// Adds the document request handlers to the specified service collection.
     /// </summary>
     /// <param name="services">The service collection to add the handlers to.</param>

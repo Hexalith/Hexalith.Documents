@@ -49,17 +49,6 @@ public static class DocumentPartitionProjectionsHelper
     }
 
     /// <summary>
-    /// Adds the document partition query services to the specified service collection.
-    /// </summary>
-    /// <param name="services">The service collection to add the services to.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDocumentPartitionQueryServices(this IServiceCollection services)
-    {
-        services.TryAddScoped<IDocumentPartitionQueryService, DocumentPartitionQueryService>();
-        return services;
-    }
-
-    /// <summary>
     /// Adds the document partition request handlers to the specified service collection.
     /// </summary>
     /// <param name="services">The service collection to add the handlers to.</param>
