@@ -45,6 +45,26 @@ public class FileTypeTest
     }
 
     /// <summary>
+    /// Tests that a FileTypeAdded event can be applied to an uninitialized FileType.
+    /// </summary>
+    [Fact]
+    public void ShouldApplyFileTypeDisabledAndEventToInitializedFileType()
+    {
+        FileType fileType = new();
+        FileTypeAdded addedEvent = new("1", "PDF", "PDF File", "PDFConverter", _targets);
+        ApplyResult result = fileType.Apply(addedEvent);
+        result = result
+            .Aggregate
+            .Apply(new FileTypeDisabled("1"))
+            .Aggregate
+            .Apply(new FileTypeEnabled("1"));
+        _ = result.Failed.Should().BeFalse();
+        FileType updatedFileType = result.Aggregate as FileType;
+        _ = updatedFileType.Id.Should().Be("1");
+        _ = updatedFileType.Disabled.Should().BeFalse();
+    }
+
+    /// <summary>
     /// Tests that a FileTypeDisabled event can be applied to an enabled FileType.
     /// </summary>
     [Fact]

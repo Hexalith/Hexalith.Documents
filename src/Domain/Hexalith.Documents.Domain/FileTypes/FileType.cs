@@ -65,9 +65,14 @@ public record FileType(
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (domainEvent is FileTypeEvent && domainEvent is not FileTypeEnabled && Disabled)
+        if (Disabled && domainEvent is not FileTypeEnabled and not FileTypeDisabled)
         {
-            return ApplyResult.Error(this, "File type is disabled.");
+            return ApplyResult.Error(this, "Cannot apply changes to a disabled file type.");
+        }
+
+        if (!(this as IDomainAggregate).IsInitialized() && domainEvent is not FileTypeAdded)
+        {
+            return ApplyResult.Error(this, "Cannot apply changes to an uninitialized file type.");
         }
 
         return domainEvent switch
@@ -91,7 +96,7 @@ public record FileType(
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeAdded e) => !(this as IDomainAggregate).IsInitialized()
         ? ApplyResult.Success(new FileType(e), [e])
-        : ApplyResult.Error(this, "The file type already exists.");
+        : ApplyResult.Error(this, "The file type already exists and cannot be added again.");
 
     /// <summary>
     /// Applies a FileTypeEnabled event to the aggregate.
@@ -136,7 +141,7 @@ public record FileType(
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeTargetAdded e)
     {
-        List<string> currentTargets = Targets.ToList();
+        List<string> currentTargets = [.. Targets];
         return !currentTargets.Contains(e.Target)
             ? ApplyResult.Success(this with { Targets = currentTargets.Concat([e.Target]) }, [e])
             : ApplyResult.Error(this, "The target is already added to the file type.");
@@ -149,7 +154,7 @@ public record FileType(
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeTargetRemoved e)
     {
-        List<string> currentTargets = Targets.ToList();
+        List<string> currentTargets = [.. Targets];
         return currentTargets.Contains(e.Target)
             ? ApplyResult.Success(this with { Targets = currentTargets.Where(t => t != e.Target) }, [e])
             : ApplyResult.Error(this, "The target is not present in the file type.");
