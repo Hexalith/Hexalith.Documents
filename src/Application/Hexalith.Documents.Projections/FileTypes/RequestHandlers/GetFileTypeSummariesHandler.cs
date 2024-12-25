@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Projections.FileTypes.RequestHandlers;
+﻿namespace Hexalith.Documents.Projections.FileTypes.RequestHandlers;
 
 using System;
 using System.Collections.Generic;
@@ -62,8 +62,11 @@ public class GetFileTypeSummariesHandler : RequestHandlerBase<GetFileTypeSummari
 
         FileTypeSummaryViewModel?[] results = await Task.WhenAll(summaryTasks).ConfigureAwait(false);
 
-        IEnumerable<FileTypeSummaryViewModel> queryResult = results.Where(p => p is not null).OfType<FileTypeSummaryViewModel>();
+        IEnumerable<FileTypeSummaryViewModel> queryResult = results
+            .Where(p => p is not null)
+            .Select(p => p!)
+            .OrderBy(p => p.Id);
 
-        return request with { Result = queryResult };
+        return request with { Result = [.. queryResult] };
     }
 }

@@ -12,6 +12,7 @@ using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.ApiServer.Modules;
 using Hexalith.Documents.Application;
 using Hexalith.Security.ApiServer;
+using Hexalith.UI.ApiServer;
 
 /// <summary>
 /// Represents a server application.
@@ -20,6 +21,7 @@ public class HexalithDocumentsApiServerApplication : HexalithApiServerApplicatio
 {
     /// <inheritdoc/>
     public override IEnumerable<Type> ApiServerModules => [
+        typeof(HexalithUIComponentsApiServerModule),
         typeof(HexalithDocumentsApiServerModule),
         typeof(HexalithSecurityApiServerModule)];
 

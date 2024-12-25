@@ -1,4 +1,4 @@
-// <copyright file="AggregateFactory.cs" company="ITANEO">
+﻿// <copyright file="AggregateFactory.cs" company="ITANEO">
 // Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,6 +12,7 @@ using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.Application;
 using Hexalith.Documents.WebServer.Modules;
 using Hexalith.Security.WebServer;
+using Hexalith.UI.WebServer;
 
 using HexalithApp.WebApp;
 
@@ -34,6 +35,7 @@ public class HexalithDocumentsWebServerApplication : HexalithWebServerApplicatio
 
     /// <inheritdoc/>
     public override IEnumerable<Type> WebServerModules => [
+        typeof(HexalithUIComponentsWebServerModule),
         typeof(HexalithDocumentsWebServerModule),
         typeof(HexalithSecurityWebServerModule)];
 }

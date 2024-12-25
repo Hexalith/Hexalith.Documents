@@ -12,6 +12,7 @@ using Hexalith.Application.Modules.Applications;
 using Hexalith.Documents.Application;
 using Hexalith.Documents.WebApp.Modules;
 using Hexalith.Security.WebApp;
+using Hexalith.UI.WebApp;
 
 /// <summary>
 /// Represents a client application.
@@ -30,6 +31,7 @@ public class HexalithDocumentsWebAppApplication : HexalithWebAppApplication
     /// <inheritdoc/>
     public override IEnumerable<Type> WebAppModules
         => [
+            typeof(HexalithUIComponentsWebAppModule),
             typeof(HexalithDocumentsWebAppModule),
             typeof(HexalithSecurityWebAppModule)];
 }

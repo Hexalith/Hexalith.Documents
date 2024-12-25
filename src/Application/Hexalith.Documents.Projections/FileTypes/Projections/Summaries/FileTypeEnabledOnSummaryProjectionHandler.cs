@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Projections.FileTypes.Projections.Summaries;
+﻿namespace Hexalith.Documents.Projections.FileTypes.Projections.Summaries;
 
 using System.Diagnostics.CodeAnalysis;
 
@@ -26,7 +26,7 @@ public class FileTypeEnabledOnSummaryProjectionHandler(IProjectionFactory<FileTy
     protected override Task<FileTypeSummaryViewModel?> ApplyEventAsync([NotNull] FileTypeEnabled baseEvent, FileTypeSummaryViewModel? summary, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (summary == null)
+        if (summary == null || !summary.Disabled)
         {
             return Task.FromResult<FileTypeSummaryViewModel?>(null);
         }

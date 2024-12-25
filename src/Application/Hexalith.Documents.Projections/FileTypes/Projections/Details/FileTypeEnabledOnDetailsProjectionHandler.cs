@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Projections.FileTypes.Projections.Details;
+﻿namespace Hexalith.Documents.Projections.FileTypes.Projections.Details;
 
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,7 +20,7 @@ public class FileTypeEnabledOnDetailsProjectionHandler(IProjectionFactory<FileTy
     protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeEnabled baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (model == null || model.Disabled == false)
+        if (model == null || !model.Disabled)
         {
             return Task.FromResult<FileTypeDetailsViewModel?>(null);
         }

@@ -17,7 +17,6 @@
 		<PackageReference Include="Hexalith.TestMocks" Version="$(HexalithVersion)" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Domain\" />
 	  <Folder Include="ActorHttpTests\" />
 	</ItemGroup>
 	<ItemGroup>

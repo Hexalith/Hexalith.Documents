@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Domain.DocumentTypes;
+﻿namespace Hexalith.Documents.Domain.DocumentTypes;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
@@ -80,9 +80,9 @@ public record DocumentType(
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (domainEvent is DocumentTypeEvent && domainEvent is not DocumentTypeEnabled && Disabled)
+        if (domainEvent is DocumentTypeEvent && domainEvent is not DocumentTypeEnabled or DocumentTypeDisabled && Disabled)
         {
-            return ApplyResult.Error(this, "Document is disabled.");
+            return ApplyResult.Error(this, "Cannot change a disabled Document.");
         }
 
         return domainEvent switch
@@ -103,17 +103,11 @@ public record DocumentType(
     }
 
     /// <summary>
-    /// Determines whether the document type has been initialized with a valid identifier.
-    /// </summary>
-    /// <returns>true if the document type has a non-empty identifier; otherwise, false.</returns>
-    public bool IsInitialized() => !string.IsNullOrWhiteSpace(Id);
-
-    /// <summary>
     /// Applies a document type creation event.
     /// </summary>
     /// <param name="e">The creation event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
-    private ApplyResult ApplyEvent(DocumentTypeAdded e) => !IsInitialized()
+    private ApplyResult ApplyEvent(DocumentTypeAdded e) => !(this as IDomainAggregate).IsInitialized()
         ? ApplyResult.Success(new DocumentType(e), [e])
         : ApplyResult.Error(this, "The document already exists.");
 
@@ -151,7 +145,7 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeFileTypeAdded e)
     {
-        List<string> fileTypes = FileTypeIds.ToList();
+        List<string> fileTypes = [.. FileTypeIds];
         if (fileTypes.Contains(e.FileTypeId))
         {
             return ApplyResult.Error(this, "The file type already exists.");
@@ -168,7 +162,7 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeFileTypeRemoved e)
     {
-        List<string> fileTypes = FileTypeIds.ToList();
+        List<string> fileTypes = [.. FileTypeIds];
         if (!fileTypes.Remove(e.FileTypeId))
         {
             return ApplyResult.Error(this, "The file type does not exist.");

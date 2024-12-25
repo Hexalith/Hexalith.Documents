@@ -50,7 +50,10 @@
         {
             return;
         }
-        _summaries = (await RequestService.SubmitAsync(_user, new GetFileTypeSummaries(), CancellationToken.None)).Result;
+        _summaries = [..(await RequestService
+            .SubmitAsync(_user, new GetFileTypeSummaries(), CancellationToken.None))
+            .Result
+            .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
     }
     private async Task SynchronizeAsync()
