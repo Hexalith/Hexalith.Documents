@@ -115,15 +115,6 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export.
-        /// </summary>
-        internal static string Export {
-            get {
-                return ResourceManager.GetString("Export", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Identifier.
         /// </summary>
         internal static string Id {
@@ -138,15 +129,6 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         internal static string IdRequired {
             get {
                 return ResourceManager.GetString("IdRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import.
-        /// </summary>
-        internal static string Import {
-            get {
-                return ResourceManager.GetString("Import", resourceCulture);
             }
         }
         
@@ -241,15 +223,6 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insert base data.
-        /// </summary>
-        internal static string QuickStartData {
-            get {
-                return ResourceManager.GetString("QuickStartData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to You are not authorized to read documents.
         /// </summary>
         internal static string ReadNotAuthorized {
@@ -273,24 +246,6 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Synchronize.
-        /// </summary>
-        internal static string Synchronize {
-            get {
-                return ResourceManager.GetString("Synchronize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Synchronize database.
-        /// </summary>
-        internal static string SynchronizeDatabase {
-            get {
-                return ResourceManager.GetString("SynchronizeDatabase", resourceCulture);
             }
         }
         

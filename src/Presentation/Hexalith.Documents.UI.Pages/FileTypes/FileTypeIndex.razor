@@ -3,25 +3,21 @@
 @inject NavigationManager NavigationManager
 @inject ICommandService CommandService
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes;
-<FluentToolbar Style="width:100%;">
-    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())" OnClick="Add">@Labels.Add</FluentButton>
-    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowSync())" OnClick="SynchronizeAsync">@Labels.Synchronize</FluentButton>
-    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowImport())" OnClick="ImportAsync">@Labels.Import</FluentButton>
-    <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowExport())" OnClick="ExportAsync">@Labels.Export</FluentButton>
-    <AuthorizeView Roles="@(ApplicationRoles.GlobalAdministrator)">
-        <Authorized>
-            <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.TextGrammarWand())" OnClick="ImportQuickStartDataAsync">@Labels.QuickStartData</FluentButton>
-            <FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.ArrowSync())" OnClick="SynchronizeDatabaseAsync">@Labels.SynchronizeDatabase</FluentButton>
-        </Authorized>
-    </AuthorizeView>
-</FluentToolbar>
+<HexEntityIndexToolbar 
+    OnAdd="Add"
+    OnRefresh="RefreshAsync"
+    OnImport="ImportAsync"
+    OnExport="ExportAsync"
+    OnQuickStartData="ImportQuickStartDataAsync"
+    OnSynchronizeDatabase="SynchronizeDatabaseAsync" />
+
 <FluentStack Orientation="Orientation.Vertical">
     <FluentLabel Typo="Typography.PageTitle">@Labels.ListTitle</FluentLabel>
     @if (_summaries is not null)
     {
         <FileTypeSummaryGrid Items="_summariesQuery"
-        OnDisabledChanged="OnDisabledChangedAsync"
-        OnSummaryDoubleClick="OnSummaryDoubleClick"/>
+                             OnDisabledChanged="OnDisabledChangedAsync"
+                             OnSummaryDoubleClick="OnSummaryDoubleClick" />
     }
 </FluentStack>
 
@@ -51,12 +47,12 @@
             return;
         }
         _summaries = [..(await RequestService
-            .SubmitAsync(_user, new GetFileTypeSummaries(), CancellationToken.None))
-            .Result
-            .OrderBy(p => p.Id)];
+    .SubmitAsync(_user, new GetFileTypeSummaries(), CancellationToken.None))
+    .Result
+    .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
     }
-    private async Task SynchronizeAsync()
+    private async Task RefreshAsync()
     {
         if (_user is null)
         {
@@ -95,7 +91,7 @@
             if (_summaries is not null)
             {
                 // Update the disabled value of the item in the collection
-                _summaries = [.._summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled} : s)];
+                _summaries = [.. _summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled } : s)];
                 _summariesQuery = _summaries.AsQueryable();
             }
         }
@@ -141,7 +137,7 @@
         }
         catch (Exception ex)
         {
-            ToastService.ShowError(string.Format(Labels.ImportError,ex.FullMessage()));
+            ToastService.ShowError(string.Format(Labels.ImportError, ex.FullMessage()));
         }
         await LoadSummaries();
         StateHasChanged();

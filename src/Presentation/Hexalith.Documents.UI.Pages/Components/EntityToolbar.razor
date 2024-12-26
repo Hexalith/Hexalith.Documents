@@ -1,0 +1,74 @@
+@rendermode InteractiveAuto
+
+<FluentToolbar Style="width:100%;">
+    <FluentButton Title="@AddTitle"
+                  Appearance="Appearance.Stealth"
+                  IconStart="@(new Icons.Filled.Size20.Add())"
+                  OnClick="OnAdd"></FluentButton>
+    <FluentButton Title="@SynchronizeTitle"
+                  Appearance="Appearance.Stealth"
+                  IconStart="@(new Icons.Filled.Size20.ArrowSync())"
+                  OnClick="OnSynchronize"></FluentButton>
+    <FluentButton Title="@ImportTitle"
+                  Appearance="Appearance.Stealth"
+                  IconStart="@(new Icons.Filled.Size20.ArrowImport())"
+                  OnClick="OnImport"></FluentButton>
+    <FluentButton Title="@ExportTitle"
+                  Appearance="Appearance.Stealth"
+                  IconStart="@(new Icons.Filled.Size20.ArrowExport())"
+                  OnClick="OnExport"></FluentButton>
+    <AuthorizeView Roles="@(ApplicationRoles.GlobalAdministrator)">
+        <Authorized>
+            <FluentButton Title="@QuickStartDataTitle"
+                         Appearance="Appearance.Stealth"
+                         IconStart="@(new Icons.Filled.Size20.TextGrammarWand())"
+                         OnClick="OnQuickStartData"></FluentButton>
+            <FluentButton Title="@SynchronizeDatabaseTitle"
+                         Appearance="Appearance.Stealth"
+                         IconStart="@(new Icons.Filled.Size20.SaveSync())"
+                         OnClick="OnSynchronizeDatabase"></FluentButton>
+        </Authorized>
+    </AuthorizeView>
+    @ChildContent
+</FluentToolbar>
+
+@code {
+    [Parameter]
+    public string AddTitle { get; set; } = "Add";
+
+    [Parameter]
+    public string SynchronizeTitle { get; set; } = "Synchronize";
+
+    [Parameter]
+    public string ImportTitle { get; set; } = "Import";
+
+    [Parameter]
+    public string ExportTitle { get; set; } = "Export";
+
+    [Parameter]
+    public string QuickStartDataTitle { get; set; } = "Quick Start Data";
+
+    [Parameter]
+    public string SynchronizeDatabaseTitle { get; set; } = "Synchronize Database";
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdd { get; set; }
+
+    [Parameter]
+    public EventCallback OnSynchronize { get; set; }
+
+    [Parameter]
+    public EventCallback OnImport { get; set; }
+
+    [Parameter]
+    public EventCallback OnExport { get; set; }
+
+    [Parameter]
+    public EventCallback OnQuickStartData { get; set; }
+
+    [Parameter]
+    public EventCallback OnSynchronizeDatabase { get; set; }
+} 

@@ -132,9 +132,6 @@
   <data name="Save" xml:space="preserve">
     <value>Enregistrer</value>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>Ajouter</value>
-  </data>
   <data name="ReadNotAuthorized" xml:space="preserve">
     <value>Vous n'êtes pas autorisés à lire des documents</value>
   </data>
@@ -171,20 +168,8 @@
   <data name="ListTitle" xml:space="preserve">
     <value>Types de fichier</value>
   </data>
-  <data name="Import" xml:space="preserve">
-    <value>Importer</value>
-  </data>
-  <data name="Export" xml:space="preserve">
-    <value>Exporter</value>
-  </data>
   <data name="NameRequired" xml:space="preserve">
     <value>Le nom est obligatoire</value>
-  </data>
-  <data name="QuickStartData" xml:space="preserve">
-    <value>Insérer les données de base</value>
-  </data>
-  <data name="Synchronize" xml:space="preserve">
-    <value>Synchroniser</value>
   </data>
   <data name="ImportSuccess" xml:space="preserve">
     <value>Import effectué</value>
@@ -204,7 +189,7 @@
   <data name="EnableSuccess" xml:space="preserve">
     <value>Le type de fichier a été activé</value>
   </data>
-  <data name="SynchronizeDatabase" xml:space="preserve">
-    <value>Synchronizer la base</value>
+  <data name="Add" xml:space="preserve">
+    <value>Ajouter</value>
   </data>
 </root>
