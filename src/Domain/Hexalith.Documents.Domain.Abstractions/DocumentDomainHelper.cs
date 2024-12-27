@@ -8,7 +8,7 @@ public static class DocumentDomainHelper
     /// <summary>
     /// The name of the data export aggregate.
     /// </summary>
-    public const string DataExportAggregateName = "DataExport";
+    public const string DataManagementAggregateName = "DataManagement";
 
     /// <summary>
     /// The name of the document aggregate.

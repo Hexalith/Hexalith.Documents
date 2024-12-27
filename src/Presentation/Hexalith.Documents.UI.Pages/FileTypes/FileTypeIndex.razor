@@ -2,6 +2,7 @@
 @rendermode InteractiveAuto
 @inject NavigationManager NavigationManager
 @inject ICommandService CommandService
+@using Hexalith.Documents.Commands.DataManagements
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes;
 <HexEntityIndexPage OnLoadData="LoadSummaries"
                     OnImport="ImportAsync"
@@ -41,9 +42,9 @@
     private async Task LoadSummaries()
     {
         _summaries = [..(await RequestService
-        .SubmitAsync(User, new GetFileTypeSummaries(), CancellationToken.None))
-        .Result
-        .OrderBy(p => p.Id)];
+    .SubmitAsync(User, new GetFileTypeSummaries(), CancellationToken.None))
+    .Result
+    .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
     }
     private Task SynchronizeDatabaseAsync()
@@ -74,14 +75,21 @@
 
     private async Task ImportAsync()
     {
-        await CommandService.SubmitCommandsAsync(User, new FileTypeExport(), CancellationToken.None);
+        await Task.CompletedTask;
+        //        await CommandService.SubmitCommandsAsync(User, command, CancellationToken.None);
     }
     private async Task ExportAsync()
     {
-        await CommandService.SubmitCommandsAsync(User, new FileTypeImport(), CancellationToken.None);
+        string documentId = GetImportExportDocumentId();
+        var command = new ExportRequestDataToDocument(documentId, new GetFileTypeExports(0, 100));
+        await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
     }
     private async Task ImportQuickStartDataAsync()
     {
         await CommandService.SubmitCommandsAsync(User, FileTypeQuickStartData.Data, CancellationToken.None);
+    }
+    private string GetImportExportDocumentId()
+    {
+        return string.Format(Labels.DataFileName, UniqueIdHelper.GenerateDateTimeId());
     }
 }

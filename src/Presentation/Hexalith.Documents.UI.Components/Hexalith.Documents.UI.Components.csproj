@@ -45,10 +45,10 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Resources\DataExports.Designer.cs">
+    <Compile Update="Resources\DataManagements.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>DataExports.resx</DependentUpon>
+      <DependentUpon>DataManagements.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -64,9 +64,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Documents.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\DataExports.resx">
+    <EmbeddedResource Update="Resources\DataManagements.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DataExports.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataManagements.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

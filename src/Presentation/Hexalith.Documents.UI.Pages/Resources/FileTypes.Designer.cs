@@ -79,6 +79,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FileType_{0}.
+        /// </summary>
+        internal static string DataFileName {
+            get {
+                return ResourceManager.GetString("DataFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string Description {

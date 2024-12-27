@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.Projections.Helpers;
 
-using Hexalith.Documents.Projections.DataExports.Helpers;
+using Hexalith.Documents.Projections.DataManagements.Helpers;
 using Hexalith.Documents.Projections.DocumentContainers.Helpers;
 using Hexalith.Documents.Projections.DocumentInformationExtractions.Helpers;
 using Hexalith.Documents.Projections.DocumentPartitions.Helpers;
@@ -33,7 +33,7 @@ public static class DocumentProjectionHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentsProjectionHandlers(this IServiceCollection services)
         => services
-            .AddDataExportProjectionHandlers()
+            .AddDataManagementProjectionHandlers()
             .AddDocumentInformationExtractionProjectionHandlers()
             .AddDocumentContainerProjectionHandlers()
             .AddDocumentPartitionProjectionHandlers()
@@ -55,7 +55,7 @@ public static class DocumentProjectionHelper
     /// <param name="services">The service collection to add the handlers to.</param>
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentsRequestHandlers(this IServiceCollection services) => services
-        .AddDataExportRequestHandlers()
+        .AddDataManagementRequestHandlers()
         .AddDocumentContainerRequestHandlers()
         .AddDocumentInformationExtractionRequestHandlers()
         .AddDocumentPartitionRequestHandlers()

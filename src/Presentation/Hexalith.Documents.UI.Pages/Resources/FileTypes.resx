@@ -192,4 +192,7 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="DataFileName" xml:space="preserve">
+    <value>FileType_{0}</value>
+  </data>
 </root>
