@@ -1,4 +1,6 @@
-﻿@if (Items is not null)
+﻿@using Hexalith.Extensions.Helpers
+@inject IToastService ToastService
+@if (Items is not null)
 {
     <FluentDataGrid GenerateHeader="GenerateHeaderOption.Sticky"
                     Items="Items"
@@ -41,9 +43,17 @@
     private void DisabledChanged(string id, bool disabled)
     {
         var item = Items?.FirstOrDefault(p => p.Id == id);
-        if (item is not null && item.Disabled != disabled)
+        if (item is null || item.Disabled == disabled)
+        {
+            return;
+        }
+        try
         {
             OnDisabledChanged.InvokeAsync(item with { Disabled = disabled });
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(string.Format(Labels.UpdateError, ex.FullMessage()));
         }
     }
 

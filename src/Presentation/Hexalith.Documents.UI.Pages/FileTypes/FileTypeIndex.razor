@@ -3,33 +3,31 @@
 @inject NavigationManager NavigationManager
 @inject ICommandService CommandService
 @using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes;
-<HexEntityIndexToolbar 
-    OnAdd="Add"
-    OnRefresh="RefreshAsync"
-    OnImport="ImportAsync"
-    OnExport="ExportAsync"
-    OnQuickStartData="ImportQuickStartDataAsync"
-    OnSynchronizeDatabase="SynchronizeDatabaseAsync" />
+<HexEntityIndexPage OnLoadData="LoadSummaries"
+                    OnImport="ImportAsync"
+                    OnExport="ExportAsync"
+                    OnImportQuickStartDataAsync="ImportQuickStartDataAsync"
+                    OnDatabaseSynchronize="SynchronizeDatabaseAsync"
+                    AddPagePath="/Documents/Add/FileType"
+                    Title="@Labels.ListTitle">
 
-<FluentStack Orientation="Orientation.Vertical">
-    <FluentLabel Typo="Typography.PageTitle">@Labels.ListTitle</FluentLabel>
     @if (_summaries is not null)
     {
         <FileTypeSummaryGrid Items="_summariesQuery"
                              OnDisabledChanged="OnDisabledChangedAsync"
                              OnSummaryDoubleClick="OnSummaryDoubleClick" />
     }
-</FluentStack>
-
+</HexEntityIndexPage>
 
 @code {
+    private IEnumerable<FileTypeSummaryViewModel>? _summaries;
+    private IQueryable<FileTypeSummaryViewModel>? _summariesQuery;
+
     [CascadingParameter]
     public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
     private ClaimsPrincipal? _user;
-
-    private IEnumerable<FileTypeSummaryViewModel>? _summaries;
-    private IQueryable<FileTypeSummaryViewModel>? _summariesQuery;
+    private ClaimsPrincipal User => _user ?? throw new InvalidOperationException("User not initialized");
 
     protected override async Task OnInitializedAsync()
     {
@@ -37,109 +35,53 @@
         {
             var authState = await AuthenticationStateTask;
             _user = authState.User;
-            await LoadSummaries();
         }
     }
+
     private async Task LoadSummaries()
     {
-        if (_user is null)
-        {
-            return;
-        }
         _summaries = [..(await RequestService
-    .SubmitAsync(_user, new GetFileTypeSummaries(), CancellationToken.None))
-    .Result
-    .OrderBy(p => p.Id)];
+        .SubmitAsync(User, new GetFileTypeSummaries(), CancellationToken.None))
+        .Result
+        .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
     }
-    private async Task RefreshAsync()
+    private Task SynchronizeDatabaseAsync()
     {
-        if (_user is null)
-        {
-            return;
-        }
-        await LoadSummaries();
-        StateHasChanged();
-    }
-    private async Task SynchronizeDatabaseAsync()
-    {
-        if (_user is null)
-        {
-            return;
-        }
-        await LoadSummaries();
-        StateHasChanged();
+        return Task.CompletedTask;
     }
     private async Task OnDisabledChangedAsync(FileTypeSummaryViewModel item)
     {
-        if (_user is null)
+        if (item.Disabled)
         {
-            return;
+            await CommandService.SubmitCommandAsync(User, new DisableFileType(item.Id), CancellationToken.None);
         }
-        try
+        else
         {
-            if (item.Disabled)
-            {
-                await CommandService.SubmitCommandAsync(_user, new DisableFileType(item.Id), CancellationToken.None);
-                ToastService.ShowSuccess(Labels.DisableSuccess);
-            }
-            else
-            {
-                await CommandService.SubmitCommandAsync(_user, new EnableFileType(item.Id), CancellationToken.None);
-                ToastService.ShowSuccess(Labels.EnableSuccess);
-            }
-            if (_summaries is not null)
-            {
-                // Update the disabled value of the item in the collection
-                _summaries = [.. _summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled } : s)];
-                _summariesQuery = _summaries.AsQueryable();
-            }
+            await CommandService.SubmitCommandAsync(User, new EnableFileType(item.Id), CancellationToken.None);
         }
-        catch (Exception ex)
+        if (_summaries is not null)
         {
-            ToastService.ShowError(string.Format(Labels.UpdateError, ex.FullMessage()));
-            await LoadSummaries();
+            // Update the disabled value of the item in the collection
+            _summaries = [.. _summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled } : s)];
+            _summariesQuery = _summaries.AsQueryable();
         }
-        StateHasChanged();
     }
     private void OnSummaryDoubleClick(FileTypeSummaryViewModel item)
     {
         NavigationManager.NavigateTo($"/Documents/FileType/{item.Id}");
     }
 
-    private void Add()
-    {
-        NavigationManager.NavigateTo("/Documents/Add/FileType");
-    }
     private async Task ImportAsync()
     {
-        if (_user is null)
-        {
-            return;
-        }
-        await LoadSummaries();
-        StateHasChanged();
+        await CommandService.SubmitCommandsAsync(User, new FileTypeExport(), CancellationToken.None);
     }
-    private Task ExportAsync()
+    private async Task ExportAsync()
     {
-        return Task.CompletedTask;
+        await CommandService.SubmitCommandsAsync(User, new FileTypeImport(), CancellationToken.None);
     }
     private async Task ImportQuickStartDataAsync()
     {
-        if (_user is null)
-        {
-            return;
-        }
-        try
-        {
-            await CommandService.SubmitCommandsAsync(_user, FileTypeQuickStartData.Data, CancellationToken.None);
-            ToastService.ShowSuccess(Labels.ImportSuccess);
-        }
-        catch (Exception ex)
-        {
-            ToastService.ShowError(string.Format(Labels.ImportError, ex.FullMessage()));
-        }
-        await LoadSummaries();
-        StateHasChanged();
+        await CommandService.SubmitCommandsAsync(User, FileTypeQuickStartData.Data, CancellationToken.None);
     }
 }

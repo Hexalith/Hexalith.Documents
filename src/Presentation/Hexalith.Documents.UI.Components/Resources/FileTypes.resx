@@ -141,4 +141,7 @@
   <data name="Placeholder" xml:space="preserve">
     <value>Select a file type</value>
   </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>An error occured wihile updating the file type : {0}</value>
+  </data>
 </root>

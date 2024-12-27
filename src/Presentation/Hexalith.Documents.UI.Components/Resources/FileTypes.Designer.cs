@@ -131,5 +131,14 @@ namespace Hexalith.Documents.UI.Components.Resources {
                 return ResourceManager.GetString("Placeholder", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured wihile updating the file type : {0}.
+        /// </summary>
+        internal static string UpdateError {
+            get {
+                return ResourceManager.GetString("UpdateError", resourceCulture);
+            }
+        }
     }
 }
