@@ -32,7 +32,11 @@ public partial class DocumentContainerSnapshotOnSummaryProjectionHandler(IProjec
             .ConfigureAwait(false);
 
         DocumentContainer documentContainer = baseEvent.GetAggregate<DocumentContainer>();
-        DocumentContainerSummaryViewModel newValue = new(documentContainer.Id, documentContainer.Name, documentContainer.Disabled);
+        DocumentContainerSummaryViewModel newValue = new(
+            documentContainer.Id,
+            documentContainer.DocumentStorageId,
+            documentContainer.Name,
+            documentContainer.Disabled);
         if (currentValue is not null && currentValue == newValue)
         {
             return;

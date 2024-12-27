@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Events.DocumentPartitions;
+﻿namespace Hexalith.Documents.Events.DocumentStorages;
 
 using System.Runtime.Serialization;
 
@@ -9,7 +9,7 @@ using Hexalith.PolymorphicSerialization;
 /// Represents an event related to a document partition.
 /// </summary>
 [PolymorphicSerialization]
-public abstract partial record DocumentPartitionEvent([property: DataMember(Order = 1)] string Id)
+public abstract partial record DocumentStorageEvent([property: DataMember(Order = 1)] string Id)
 {
     /// <summary>
     /// Gets the aggregate identifier.
@@ -19,5 +19,5 @@ public abstract partial record DocumentPartitionEvent([property: DataMember(Orde
     /// <summary>
     /// Gets the name of the aggregate.
     /// </summary>
-    public static string AggregateName => DocumentDomainHelper.DocumentPartitionAggregateName;
+    public static string AggregateName => DocumentDomainHelper.DocumentStorageAggregateName;
 }

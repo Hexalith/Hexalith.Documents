@@ -1,8 +1,8 @@
-﻿namespace Hexalith.Documents.Events.DocumentPartitions;
+﻿namespace Hexalith.Documents.Events.DocumentStorages;
 
 using Hexalith.PolymorphicSerialization;
 
 [PolymorphicSerialization]
-public partial record DocumentPartitionEnabled(string Id) : DocumentPartitionEvent(Id)
+public partial record DocumentStorageEnabled(string Id) : DocumentStorageEvent(Id)
 {
 }

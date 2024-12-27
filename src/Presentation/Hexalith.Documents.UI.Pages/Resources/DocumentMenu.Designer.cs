@@ -81,9 +81,9 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Document partitions.
         /// </summary>
-        internal static string DocumentPartitionMenuItem {
+        internal static string DocumentStorageMenuItem {
             get {
-                return ResourceManager.GetString("DocumentPartitionMenuItem", resourceCulture);
+                return ResourceManager.GetString("DocumentStorageMenuItem", resourceCulture);
             }
         }
         

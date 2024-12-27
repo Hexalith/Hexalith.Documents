@@ -23,7 +23,7 @@ using Hexalith.Domain.Events;
 [DataContract]
 public record DocumentContainer(
     [property: DataMember(Order = 1)] string Id,
-    [property: DataMember(Order = 2)] string DocumentPartitionId,
+    [property: DataMember(Order = 2)] string DocumentStorageId,
     [property: DataMember(Order = 3)] string Name,
     [property: DataMember(Order = 3)] string Path,
     [property: DataMember(Order = 4)] string? Description,
@@ -59,7 +59,7 @@ public record DocumentContainer(
     public DocumentContainer(DocumentContainerCreated added)
         : this(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
-              added.DocumentPartitionId,
+              added.DocumentStorageId,
               added.Name,
               added.Path,
               added.Description,

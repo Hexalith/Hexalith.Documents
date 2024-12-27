@@ -19,6 +19,10 @@ public class DocumentContainerCreatedOnSummaryProjectionHandler(IProjectionFacto
     protected override Task<DocumentContainerSummaryViewModel?> ApplyEventAsync([NotNull] DocumentContainerCreated baseEvent, DocumentContainerSummaryViewModel? summary, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        return Task.FromResult<DocumentContainerSummaryViewModel?>(new DocumentContainerSummaryViewModel(baseEvent.Id, baseEvent.Name, false));
+        return Task.FromResult<DocumentContainerSummaryViewModel?>(new DocumentContainerSummaryViewModel(
+            baseEvent.Id,
+            baseEvent.DocumentStorageId,
+            baseEvent.Name,
+            false));
     }
 }

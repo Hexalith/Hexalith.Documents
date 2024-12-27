@@ -12,11 +12,13 @@ using Hexalith.Application.Requests;
 using Hexalith.Application.States;
 using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Commands.DataManagements;
+using Hexalith.Documents.Commands.DocumentContainers;
+using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Domain.DataManagements;
-using Hexalith.Documents.Domain.DocumentContainers;
-using Hexalith.Documents.Domain.DocumentPartitions;
+using Hexalith.Documents.Domain.DocumentStorages;
 using Hexalith.Documents.Events.DataManagements;
-using Hexalith.Documents.Requests.DocumentPartitions;
+using Hexalith.Documents.Requests.DocumentContainers;
+using Hexalith.Documents.Requests.DocumentStorages;
 using Hexalith.Domain.Aggregates;
 using Hexalith.Extensions.Helpers;
 using Hexalith.PolymorphicSerialization;
@@ -28,6 +30,7 @@ using Microsoft.Extensions.Logging;
 /// </summary>
 public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportRequestDataToDocument>
 {
+    private readonly IDomainCommandProcessor _commandProcessor;
     private readonly IRequestProcessor _requestProcessor;
     private readonly IUserDataService _userDataService;
     private readonly IWritableFileProvider _writableFileProvider;
@@ -37,12 +40,14 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
     /// </summary>
     /// <param name="userDataService">The user data service.</param>
     /// <param name="requestProcessor">The request processor.</param>
+    /// <param name="commandProcessor">The command processor.</param>
     /// <param name="writableFileProvider">The writable file provider.</param>
     /// <param name="timeProvider">The time provider.</param>
     /// <param name="logger">The logger.</param>
     public ExportRequestDataToDocumentHandler(
         IUserDataService userDataService,
         IRequestProcessor requestProcessor,
+        IDomainCommandProcessor commandProcessor,
         IWritableFileProvider writableFileProvider,
         TimeProvider timeProvider,
         ILogger<ExportRequestDataToDocumentHandler> logger)
@@ -50,8 +55,10 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
     {
         ArgumentNullException.ThrowIfNull(requestProcessor);
         ArgumentNullException.ThrowIfNull(userDataService);
+        ArgumentNullException.ThrowIfNull(commandProcessor);
         _userDataService = userDataService;
         _requestProcessor = requestProcessor;
+        _commandProcessor = commandProcessor;
         _writableFileProvider = writableFileProvider;
     }
 
@@ -60,13 +67,24 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
     {
         ArgumentNullException.ThrowIfNull(command);
         ArgumentNullException.ThrowIfNull(metadata);
-        DocumentContainer container = await _userDataService.GetUserDocumentContainerGlobalIdAsync(metadata.Context.PartitionId, metadata.Context.UserId, cancellationToken).ConfigureAwait(false);
-        GetDocumentPartition getDocumentPartition = new(container.DocumentPartitionId);
-        DocumentPartition? documentPartition = (await _requestProcessor.ProcessAsync(
-                getDocumentPartition,
-                Metadata.CreateNew(getDocumentPartition, metadata, Time.GetLocalNow()),
+
+        DocumentContainerDetailsViewModel container = await GetUserContainerAsync(metadata, cancellationToken).ConfigureAwait(false);
+        AddDocument addDocument = new(
+            command.Id,
+            container.Id,
+            command.Id,
+            null,
+            null,
+            metadata.Context.UserId,
+            Time.GetLocalNow(),
+            "Export");
+        await _commandProcessor.SubmitAsync(addDocument, Metadata.CreateNew(addDocument, metadata, Time.GetLocalNow()), cancellationToken).ConfigureAwait(false);
+        GetDocumentStorage getDocumentStorage = new(container.DocumentStorageId);
+        DocumentStorage? documentPartition = (await _requestProcessor.ProcessAsync(
+                getDocumentStorage,
+                Metadata.CreateNew(getDocumentStorage, metadata, Time.GetLocalNow()),
                 cancellationToken)
-            .ConfigureAwait(false) as GetDocumentPartition)?.Result;
+            .ConfigureAwait(false) as GetDocumentStorage)?.Result;
         DataExportStarted exportStarted = new(command.Id, Time.GetLocalNow());
         aggregate = new DataManagement(exportStarted);
         if (documentPartition is null)
@@ -221,6 +239,32 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         {
             await WriteObjectAsync(stream, result, cancellationToken).ConfigureAwait(false);
         }
+    }
+
+    private async Task<DocumentContainerDetailsViewModel> GetUserContainerAsync(Metadata metadata, CancellationToken cancellationToken)
+    {
+        GetDocumentContainerDetails? getDocumentContainer = new(metadata.Context.UserId);
+        getDocumentContainer = await _requestProcessor
+            .ProcessAsync(
+                getDocumentContainer,
+                Metadata.CreateNew(getDocumentContainer, metadata, Time.GetLocalNow()),
+                cancellationToken)
+            .ConfigureAwait(false) as GetDocumentContainerDetails;
+        if (getDocumentContainer?.Result is not DocumentContainerDetailsViewModel container)
+        {
+            // Create the user default container
+            CreateDocumentContainer createDocumentContainer = new(
+                metadata.Context.UserId,
+                "Default",
+                metadata.Context.UserId + " user data",
+                "Users",
+                "The user default document container",
+                []);
+            await _commandProcessor.SubmitAsync(createDocumentContainer, Metadata.CreateNew(createDocumentContainer, metadata, Time.GetLocalNow()), cancellationToken).ConfigureAwait(false);
+            throw new InvalidOperationException("User document container not found. Created the default container. Retry the export.");
+        }
+
+        return container;
     }
 
     /// <summary>

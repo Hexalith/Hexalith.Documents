@@ -21,7 +21,7 @@ public static class DocumentContainerCommandHandlerHelper
             .TryAddSimpleInitializationCommandHandler<CreateDocumentContainer>(
                 c => new DocumentContainerCreated(
                 c.Id,
-                c.DocumentPartitionId,
+                c.DocumentStorageId,
                 c.Name,
                 c.Path,
                 c.Description,

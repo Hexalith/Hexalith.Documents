@@ -28,7 +28,7 @@ public static class DocumentDomainHelper
     /// <summary>
     /// The name of the document partition aggregate.
     /// </summary>
-    public const string DocumentPartitionAggregateName = "DocumentPartition";
+    public const string DocumentStorageAggregateName = "DocumentStorage";
 
     /// <summary>
     /// The name of the document type aggregate.

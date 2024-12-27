@@ -123,7 +123,7 @@
   <data name="DocumentMenuItem" xml:space="preserve">
     <value>Document</value>
   </data>
-  <data name="DocumentPartitionMenuItem" xml:space="preserve">
+  <data name="DocumentStorageMenuItem" xml:space="preserve">
     <value>Document partitions</value>
   </data>
   <data name="DocumentTypeMenuItem" xml:space="preserve">

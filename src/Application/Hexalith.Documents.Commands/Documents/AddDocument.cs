@@ -19,15 +19,17 @@ using Hexalith.PolymorphicSerialization;
 public partial record AddDocument(
     string Id,
     [property: DataMember(Order = 2)]
-    string Name,
+    string DocumentContainerId,
     [property: DataMember(Order = 3)]
-    string Description,
+    string Name,
     [property: DataMember(Order = 4)]
-    FileDescription File,
-    string OwnerId,
+    string? Description,
     [property: DataMember(Order = 5)]
-    DateTimeOffset CreatedOn,
+    FileDescription? File,
+    string OwnerId,
     [property: DataMember(Order = 6)]
+    DateTimeOffset CreatedOn,
+    [property: DataMember(Order = 7)]
     string DocumentTypeId)
     : DocumentCommand(Id)
 {

@@ -4,16 +4,16 @@ using Hexalith.Application.Aggregates;
 using Hexalith.Documents.Application.DataManagements;
 using Hexalith.Documents.Application.DocumentContainers;
 using Hexalith.Documents.Application.DocumentInformationExtractions;
-using Hexalith.Documents.Application.DocumentPartitions;
 using Hexalith.Documents.Application.Documents;
+using Hexalith.Documents.Application.DocumentStorages;
 using Hexalith.Documents.Application.DocumentTypes;
 using Hexalith.Documents.Application.FileTypes;
 using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Domain.DataManagements;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Domain.DocumentInformationExtractions;
-using Hexalith.Documents.Domain.DocumentPartitions;
 using Hexalith.Documents.Domain.Documents;
+using Hexalith.Documents.Domain.DocumentStorages;
 using Hexalith.Documents.Domain.DocumentTypes;
 using Hexalith.Documents.Domain.FileTypes;
 
@@ -35,7 +35,7 @@ public static class DocumentHelper
             .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DataManagement>>()
             .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentContainer>>()
             .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentInformationExtraction>>()
-            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentPartition>>()
+            .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentStorage>>()
             .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<Document>>()
             .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<DocumentType>>()
             .AddSingleton<IDomainAggregateProvider, DomainAggregateProvider<FileType>>();
@@ -76,7 +76,7 @@ public static class DocumentHelper
             .AddDataManagementCommandHandlers()
             .AddDocumentContainerCommandHandlers()
             .AddDocumentInformationExtractionCommandHandlers()
-            .AddDocumentPartitionCommandHandlers()
+            .AddDocumentStorageCommandHandlers()
             .AddDocumentCommandHandlers()
             .AddDocumentTypeCommandHandlers()
             .AddFileTypeCommandHandlers();

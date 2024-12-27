@@ -21,7 +21,9 @@ public class DocumentContainerCreatedOnDetailsProjectionHandler(IProjectionFacto
         ArgumentNullException.ThrowIfNull(baseEvent);
         return Task.FromResult<DocumentContainerDetailsViewModel?>(new DocumentContainerDetailsViewModel(
             baseEvent.Id,
+            baseEvent.DocumentStorageId,
             baseEvent.Name,
+            baseEvent.Path,
             baseEvent.Description,
             null,
             [],

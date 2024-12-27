@@ -8,7 +8,7 @@ using Hexalith.PolymorphicSerialization;
 /// Represents an command that occurs when a new document container is created.
 /// </summary>
 /// <param name="Id">The unique identifier of the document container.</param>
-/// <param name="DocumentPartitionId">The unique identifier of the document partition.</param>
+/// <param name="DocumentStorageId">The unique identifier of the document partition.</param>
 /// <param name="Name">The name of the document container.</param>
 /// <param name="Description">The description of the document container.</param>
 /// <param name="FileTypeIds">The collection of file type identifiers supported by this container.</param>
@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record CreateDocumentContainer(
     string Id,
     [property: DataMember(Order = 2)]
-    string DocumentPartitionId,
+    string DocumentStorageId,
     [property: DataMember(Order = 3)]
     string Name,
     [property: DataMember(Order = 4)]

@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Events.DocumentPartitions;
+﻿namespace Hexalith.Documents.Events.DocumentStorages;
 
 using System.Runtime.Serialization;
 
@@ -14,7 +14,7 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="ConnectionString">The connection string name for the document partition.</param>
 /// <param name="Targets">The targets associated with the document partition.</param>
 [PolymorphicSerialization]
-public partial record DocumentPartitionAdded(
+public partial record DocumentStorageAdded(
     string Id,
     [property: DataMember(Order = 2)]
     string Name,
@@ -24,6 +24,6 @@ public partial record DocumentPartitionAdded(
     string? Description,
     [property: DataMember(Order = 5)]
     string ConnectionString)
-    : DocumentPartitionEvent(Id)
+    : DocumentStorageEvent(Id)
 {
 }

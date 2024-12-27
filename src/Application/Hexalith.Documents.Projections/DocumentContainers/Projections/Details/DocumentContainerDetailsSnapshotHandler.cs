@@ -36,7 +36,9 @@ public partial class DocumentContainerDetailsSnapshotHandler(
         DocumentContainer documentContainer = baseEvent.GetAggregate<DocumentContainer>();
         DocumentContainerDetailsViewModel newValue = new(
             documentContainer.Id,
+            documentContainer.DocumentStorageId,
             documentContainer.Name,
+            documentContainer.Path,
             documentContainer.Description,
             documentContainer.AutomaticRoutingInstructions,
             documentContainer.Actors,

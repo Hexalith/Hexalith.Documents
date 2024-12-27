@@ -24,7 +24,7 @@ public class DocumentContainerDescriptionChangedOnSummaryProjectionHandler(IProj
         ArgumentNullException.ThrowIfNull(baseEvent);
         if (summary == null)
         {
-            return Task.FromResult<DocumentContainerSummaryViewModel?>(new DocumentContainerSummaryViewModel(baseEvent.Id, baseEvent.Name, false));
+            return Task.FromResult<DocumentContainerSummaryViewModel?>(null);
         }
 
         return Task.FromResult<DocumentContainerSummaryViewModel?>(summary with { Name = baseEvent.Name });
