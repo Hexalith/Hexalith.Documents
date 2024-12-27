@@ -1,7 +1,6 @@
 ﻿namespace Hexalith.Documents.Application.Helpers;
 
 using Hexalith.Application.Aggregates;
-using Hexalith.Application.Commands;
 using Hexalith.Documents.Application.DataManagements;
 using Hexalith.Documents.Application.DocumentContainers;
 using Hexalith.Documents.Application.DocumentInformationExtractions;
@@ -10,7 +9,6 @@ using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.DocumentTypes;
 using Hexalith.Documents.Application.FileTypes;
 using Hexalith.Documents.Application.Services;
-using Hexalith.Documents.Commands.DataManagements;
 using Hexalith.Documents.Domain.DataManagements;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Domain.DocumentInformationExtractions;
@@ -20,7 +18,6 @@ using Hexalith.Documents.Domain.DocumentTypes;
 using Hexalith.Documents.Domain.FileTypes;
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 /// <summary>
 /// Class DocumentHelper.
@@ -74,17 +71,13 @@ public static class DocumentHelper
     /// <param name="services">The service collection.</param>
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentsCommandHandlers(this IServiceCollection services)
-    {
-        _ = services.AddScoped<IUserDataService, UserDataService>();
-
-        // Needs to be Transient for the file stream to be disposed
-        services.TryAddTransient<IDomainCommandHandler<ExportRequestDataToDocument>, ExportRequestDataToDocumentHandler>();
-        _ = services.AddDocumentContainerCommandHandlers();
-        _ = services.AddDocumentInformationExtractionCommandHandlers();
-        _ = services.AddDocumentPartitionCommandHandlers();
-        _ = services.AddDocumentCommandHandlers();
-        _ = services.AddDocumentTypeCommandHandlers();
-        _ = services.AddFileTypeCommandHandlers();
-        return services;
-    }
+        => services
+            .AddScoped<IUserDataService, UserDataService>()
+            .AddDataManagementCommandHandlers()
+            .AddDocumentContainerCommandHandlers()
+            .AddDocumentInformationExtractionCommandHandlers()
+            .AddDocumentPartitionCommandHandlers()
+            .AddDocumentCommandHandlers()
+            .AddDocumentTypeCommandHandlers()
+            .AddFileTypeCommandHandlers();
 }

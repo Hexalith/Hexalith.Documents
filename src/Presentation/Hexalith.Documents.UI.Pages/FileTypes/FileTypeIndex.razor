@@ -11,13 +11,9 @@
                     OnDatabaseSynchronize="SynchronizeDatabaseAsync"
                     AddPagePath="/Documents/Add/FileType"
                     Title="@Labels.ListTitle">
-
-    @if (_summaries is not null)
-    {
-        <FileTypeSummaryGrid Items="_summariesQuery"
-                             OnDisabledChanged="OnDisabledChangedAsync"
-                             OnSummaryDoubleClick="OnSummaryDoubleClick" />
-    }
+    <FileTypeSummaryGrid Items="_summariesQuery"
+                         OnDisabledChanged="OnDisabledChangedAsync"
+                         OnSummaryDoubleClick="OnSummaryDoubleClick" />
 </HexEntityIndexPage>
 
 @code {
@@ -42,9 +38,9 @@
     private async Task LoadSummaries()
     {
         _summaries = [..(await RequestService
-    .SubmitAsync(User, new GetFileTypeSummaries(), CancellationToken.None))
-    .Result
-    .OrderBy(p => p.Id)];
+            .SubmitAsync(User, new GetFileTypeSummaries(), CancellationToken.None))
+            .Result
+            .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
     }
     private Task SynchronizeDatabaseAsync()
