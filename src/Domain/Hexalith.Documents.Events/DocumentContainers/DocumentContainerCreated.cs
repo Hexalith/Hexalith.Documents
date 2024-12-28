@@ -10,21 +10,17 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="Id">The unique identifier of the document container.</param>
 /// <param name="DocumentStorageId">The unique identifier of the document partition.</param>
 /// <param name="Name">The name of the document container.</param>
-/// <param name="Description">The description of the document container.</param>
-/// <param name="FileTypeIds">The collection of file type identifiers supported by this container.</param>
+/// <param name="Path">The path of the document container.</param>
+/// <param name="Comments">The description of the document container.</param>
+/// <param name="AutomaticRoutingInstructions">The automatic routing instructions for the document container.</param>
 [PolymorphicSerialization]
 public partial record DocumentContainerCreated(
     string Id,
-    [property: DataMember(Order = 2)]
-    string DocumentStorageId,
-    [property: DataMember(Order = 3)]
-    string Name,
-    [property: DataMember(Order = 4)]
-    string Path,
-    [property: DataMember(Order = 5)]
-    string? Description,
-    [property: DataMember(Order = 6)]
-    IEnumerable<string> FileTypeIds)
+    [property: DataMember(Order = 2)] string DocumentStorageId,
+    [property: DataMember(Order = 3)] string Name,
+    [property: DataMember(Order = 3)] string Path,
+    [property: DataMember(Order = 4)] string? Comments,
+    [property: DataMember(Order = 5)] string? AutomaticRoutingInstructions)
     : DocumentContainerEvent(Id)
 {
 }

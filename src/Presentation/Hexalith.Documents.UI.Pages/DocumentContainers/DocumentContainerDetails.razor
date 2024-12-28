@@ -1,0 +1,191 @@
+﻿@page "/Documents/Add/DocumentContainer"
+@page "/Documents/DocumentContainer/{Id}"
+@rendermode InteractiveAuto
+<HexEntityDetailsToolbar OnIndex="OnIndex"
+OnRefresh="OnRefreshAsync" />
+
+<FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
+    @if (Id is null) // Add
+    {
+        <FluentLabel Typo="Typography.PageTitle">@Labels.AddTitle</FluentLabel>
+    }
+    else // Edit
+    {
+        <FluentLabel Typo="Typography.PageTitle">@string.Format(Labels.Title, Id)</FluentLabel>
+    }
+    @if (_data is not null)
+    {
+        <FluentGrid Orientation="Orientation.Vertical">
+            <FluentGridItem xs="12" md="3">
+                <FluentTextField Style="width:100%;" Disabled="@(Id is not null)" @bind-Value="_data.Id" Label="@Labels.Id"></FluentTextField>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="3">
+                <HexEntityIdField @bind-Value="_data.Name"></HexEntityIdField>
+            </FluentGridItem>
+            <FluentGridItem xs="12" xl="6">
+                <FluentTextField Style="width:100%;" @bind-Value="_data.Comments" Label="@Labels.Comments"></FluentTextField>
+            </FluentGridItem>
+            <FluentGridItem md="12">
+                <FluentLabel Typo="Typography.PaneHeader">@Labels.Tags</FluentLabel>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                <FluentTextField Style="width:25%;" @bind-Value="_newTagKey" Label="@Labels.NewTagKey"></FluentTextField>
+                <FluentTextField Style="width:50%;" @bind-Value="_newTagValue" Label="@Labels.NewTagValue"></FluentTextField>
+                <FluentCheckbox Style="width:25%;" @bind-Value="_newTagUnique" Label="@Labels.NewTagUnique"></FluentCheckbox>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="12">
+                <HexAddButton OnClick="AddTag"/>
+            </FluentGridItem>
+            @foreach (DocumentTag target in _data.Tags)
+            {
+                <FluentGridItem xs="12" xl="6">
+
+                    <FluentStack Orientation="Orientation.Horizontal" Style="margin: 4px 0;">
+                        <FluentTextField Style="width:25%;" Value="@target.Key" Readonly="true"></FluentTextField>
+                        <FluentTextField Style="width:50%;" Value="@target.Value" Readonly="true"></FluentTextField>
+                        <FluentCheckbox Style="width:25%;" Value="@target.Unique" Readonly="true"></FluentCheckbox>
+                        <HexRemoveButton OnClick="@(() =>RemoveTag(target))" />
+                    </FluentStack>
+                </FluentGridItem>
+            }
+
+            <FluentGridItem md="12">
+                <HexSaveButton Disabled="@((_saveClicked && !ValidationResult.IsValid) || !_data.HasChanges)" OnClick="OnSave" />
+            </FluentGridItem>
+            <FluentGridItem>
+                <HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
+            </FluentGridItem>
+        </FluentGrid>
+    }
+</FluentStack>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+    [Parameter]
+    public string? Id { get; set; }
+
+    private ClaimsPrincipal? _user;
+    private DocumentContainerEditViewModel _data = new();
+    private string? _newTagKey = null;
+    private string? _newTagValue = null;
+    private bool _newTagUnique = false;
+    private bool _saveClicked;
+
+    private ValidationResult ValidationResult => new DocumentContainerEditValidation().Validate(_data);
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            if (!authState.User.Identity?.IsAuthenticated == true)
+            {
+                NavigationManager.NavigateTo(Application.LoginPath);
+            }
+            _user = authState.User;
+        }
+        if (_user is null)
+        {
+            return;
+        }
+        if (Id is not null)
+        {
+            var details = await RequestService.SubmitAsync(_user, new GetDocumentContainerDetails(Id), CancellationToken.None);
+            if (details.Result is not null)
+            {
+                _data = new DocumentContainerEditViewModel(details.Result);
+            }
+        }
+    }
+
+    private async Task OnSave()
+    {
+        if (_data is null || _user is null)
+        {
+            return;
+        }
+        _saveClicked = true;
+        if (!_data.HasChanges)
+        {
+            return;
+        }
+        if (!ValidationResult.IsValid)
+            return;
+        DocumentContainerCommand fileTypeCommand;
+        if (Id is null)
+        {
+            fileTypeCommand = new CreateDocumentContainer(
+                        _data.Id!,
+                        _data.DocumentStorageId,
+                        _data.Name,
+                        _data.Path,
+                        _data.Comments,
+                        null);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+            _data = new();
+            StateHasChanged();
+            return;
+        }
+        if (_data.DescriptionChanged)
+        {
+            fileTypeCommand = new ChangeDocumentContainerDescription(
+                        _data.Id!,
+                        _data.Name!,
+                        _data.Comments);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+        }
+        if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
+        {
+            fileTypeCommand = new DisableDocumentContainer(_data.Id);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+        }
+        if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
+        {
+            fileTypeCommand = new EnableDocumentContainer(_data.Id);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+        }
+        // for each target in _data.Targets, add it if it does not exist
+        foreach (var target in _data.Tags)
+        {
+            if (!_data.Original.Tags.Contains(target))
+            {
+                fileTypeCommand = new AddDocumentContainerTag(_data.Id, target.Key, target.Value, target.Unique);
+                await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+            }
+        }
+        // for each target in _data.Original.Targets, remove it if it does not exist
+        foreach (var target in _data.Original.Tags)
+        {
+            if (!_data.Tags.Contains(target))
+            {
+                fileTypeCommand = new RemoveDocumentContainerTag(_data.Id, target.Key, target.Value);
+                await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+            }
+        }
+        NavigationManager.NavigateTo("/Documents/DocumentContainer");
+    }
+
+    private void AddTag()
+    {
+        if (!string.IsNullOrWhiteSpace(_newTagKey))
+        {
+            _data.Tags.Add(new DocumentTag(_newTagKey, _newTagValue, _newTagUnique));
+            _newTagKey = _newTagValue = string.Empty;
+            _newTagUnique = false;
+            StateHasChanged();
+        }
+    }
+    private void RemoveTag(DocumentTag target)
+    {
+        _data.Tags.Remove(target);
+        StateHasChanged();
+    }
+    private Task OnRefreshAsync()
+    {
+        return Task.CompletedTask;
+    }
+    private void OnIndex()
+    {
+    }
+}

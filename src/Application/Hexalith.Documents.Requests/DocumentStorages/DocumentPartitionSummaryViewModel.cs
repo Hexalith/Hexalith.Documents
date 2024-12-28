@@ -3,12 +3,14 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
+using Hexalith.Application.Services;
+
 [DataContract]
 [method: JsonConstructor]
-public partial record DocumentStorageSummaryViewModel(
+public sealed partial record DocumentStorageSummaryViewModel(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] bool Disabled)
+    [property: DataMember(Order = 3)] bool Disabled) : IIdDescription
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentStorageSummaryViewModel"/> class from a <see cref="DocumentStorageDetailsViewModel"/> object.
@@ -22,4 +24,7 @@ public partial record DocumentStorageSummaryViewModel(
               details.Disabled)
     {
     }
+
+    /// <inheritdoc/>
+    string IIdDescription.Description => Name;
 }

@@ -39,10 +39,10 @@ public partial class DocumentContainerDetailsSnapshotHandler(
             documentContainer.DocumentStorageId,
             documentContainer.Name,
             documentContainer.Path,
-            documentContainer.Description,
+            documentContainer.Comments,
             documentContainer.AutomaticRoutingInstructions,
             documentContainer.Actors,
-            documentContainer.FileTypeIds,
+            documentContainer.DocumentTypeIds,
             documentContainer.Tags,
             documentContainer.Disabled);
         if (currentValue is not null && currentValue == newValue)

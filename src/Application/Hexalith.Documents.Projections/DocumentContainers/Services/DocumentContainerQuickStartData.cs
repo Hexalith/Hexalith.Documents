@@ -25,5 +25,5 @@ public static class DocumentContainerQuickStartData
         "John Doe Data",
         "john.doe@test.com",
         "John Doe default container for user files.",
-        []);
+        null);
 }

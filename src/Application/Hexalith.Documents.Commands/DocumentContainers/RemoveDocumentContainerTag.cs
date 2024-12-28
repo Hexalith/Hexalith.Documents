@@ -13,7 +13,9 @@ using Hexalith.PolymorphicSerialization;
 public partial record RemoveDocumentContainerTag(
     string Id,
     [property: DataMember(Order = 2)]
-    string Key)
+    string Key,
+    [property: DataMember(Order = 3)]
+    string Value)
     : DocumentContainerCommand(Id)
 {
 }

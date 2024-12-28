@@ -2,11 +2,15 @@
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Services;
+
 [DataContract]
-public partial record DocumentContainerSummaryViewModel(
+public sealed partial record DocumentContainerSummaryViewModel(
     [property: DataMember(Order = 1)] string Id,
-    [property: DataMember(Order = 1)] string StorageId,
+    [property: DataMember(Order = 1)] string DocumentStorageId,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] bool Disabled)
+    [property: DataMember(Order = 3)] bool Disabled) : IIdDescription
 {
+    /// <inheritdoc/>
+    string IIdDescription.Description => Name;
 }

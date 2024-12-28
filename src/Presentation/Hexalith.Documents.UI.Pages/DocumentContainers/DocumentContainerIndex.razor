@@ -1,23 +1,23 @@
-﻿@page "/Documents/FileType"
+﻿@page "/Documents/DocumentContainer"
 @rendermode InteractiveAuto
-@inject NavigationManager NavigationManager
 @inject ICommandService CommandService
 @using Hexalith.Documents.Commands.DataManagements
-@using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes;
+@using Labels = Hexalith.Documents.UI.Pages.Resources.DocumentContainers;
 <HexEntityIndexPage OnLoadData="LoadSummaries"
                     OnImport="ImportAsync"
                     OnExport="ExportAsync"
+                    OnImportQuickStartDataAsync="ImportQuickStartDataAsync"
                     OnDatabaseSynchronize="SynchronizeDatabaseAsync"
-                    AddPagePath="/Documents/Add/FileType"
+                    AddPagePath="/Documents/Add/DocumentContainer"
                     Title="@Labels.ListTitle">
-    <FileTypeSummaryGrid Items="_summariesQuery"
+    <DocumentContainerSummaryGrid  Items="_summariesQuery"
                          OnDisabledChanged="OnDisabledChangedAsync"
-                         OnSummaryDoubleClick="OnSummaryDoubleClick" />
+                         EntityDetailsPath="/Documents/DocumentContainer" />
 </HexEntityIndexPage>
 
 @code {
-    private IEnumerable<FileTypeSummaryViewModel>? _summaries;
-    private IQueryable<FileTypeSummaryViewModel>? _summariesQuery;
+    private IEnumerable<DocumentContainerSummaryViewModel>? _summaries;
+    private IQueryable<DocumentContainerSummaryViewModel>? _summariesQuery;
 
     [CascadingParameter]
     public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
@@ -37,39 +37,37 @@
     private async Task LoadSummaries()
     {
         _summaries = [..(await RequestService
-            .SubmitAsync(User, new GetFileTypeSummaries(), CancellationToken.None))
+            .SubmitAsync(User, new GetDocumentContainerSummaries(), CancellationToken.None))
             .Result
             .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
-        if (!_summaries.Any())
-        {
-            await CommandService.SubmitCommandsAsync(User, FileTypeQuickStartData.Data, CancellationToken.None);
-        }
     }
     private Task SynchronizeDatabaseAsync()
     {
         return Task.CompletedTask;
     }
-    private async Task OnDisabledChangedAsync(FileTypeSummaryViewModel item)
+    private async Task OnDisabledChangedAsync(string id)
     {
+        var item = _summaries?.FirstOrDefault(s => s.Id == id);
+        if (item is null)
+        {
+            return;
+        }
+        // Toggle the disabled value of the item
         if (item.Disabled)
         {
-            await CommandService.SubmitCommandAsync(User, new DisableFileType(item.Id), CancellationToken.None);
+            await CommandService.SubmitCommandAsync(User, new EnableDocumentContainer(item.Id), CancellationToken.None);
         }
         else
         {
-            await CommandService.SubmitCommandAsync(User, new EnableFileType(item.Id), CancellationToken.None);
+            await CommandService.SubmitCommandAsync(User, new DisableDocumentContainer(item.Id), CancellationToken.None);
         }
         if (_summaries is not null)
         {
             // Update the disabled value of the item in the collection
-            _summaries = [.. _summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled } : s)];
+            _summaries = [.. _summaries.Select(s => s.Id == item.Id ? s with { Disabled = !item.Disabled } : s)];
             _summariesQuery = _summaries.AsQueryable();
         }
-    }
-    private void OnSummaryDoubleClick(FileTypeSummaryViewModel item)
-    {
-        NavigationManager.NavigateTo($"/Documents/FileType/{item.Id}");
     }
 
     private async Task ImportAsync()
@@ -80,8 +78,12 @@
     private async Task ExportAsync()
     {
         string documentId = GetImportExportDocumentId();
-        var command = new ExportRequestDataToDocument(documentId, new GetFileTypeExports(0, 100));
+        var command = new ExportRequestDataToDocument(documentId, new GetDocumentContainerExports(0, 100));
         await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
+    }
+    private async Task ImportQuickStartDataAsync()
+    {
+        await CommandService.SubmitCommandsAsync(User, DocumentContainerQuickStartData.Data, CancellationToken.None);
     }
     private string GetImportExportDocumentId()
     {

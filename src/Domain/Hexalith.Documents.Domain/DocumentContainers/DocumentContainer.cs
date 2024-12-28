@@ -14,10 +14,10 @@ using Hexalith.Domain.Events;
 /// </summary>
 /// <param name="Id">The unique identifier of the document container.</param>
 /// <param name="Name">The name of the document container.</param>
-/// <param name="Description">The description of the document container.</param>
+/// <param name="Comments">The description of the document container.</param>
 /// <param name="AutomaticRoutingInstructions">The instructions for automatic routing of documents.</param>
 /// <param name="Actors">The collection of actors associated with the document container.</param>
-/// <param name="FileTypeIds">The collection of file type identifiers supported by this container.</param>
+/// <param name="DocumentTypeIds">The collection of document types identifiers supported by this container.</param>
 /// <param name="Tags">The collection of tags associated with the document container.</param>
 /// <param name="Disabled">A value indicating whether the document container is disabled.</param>
 [DataContract]
@@ -26,10 +26,10 @@ public record DocumentContainer(
     [property: DataMember(Order = 2)] string DocumentStorageId,
     [property: DataMember(Order = 3)] string Name,
     [property: DataMember(Order = 3)] string Path,
-    [property: DataMember(Order = 4)] string? Description,
+    [property: DataMember(Order = 4)] string? Comments,
     [property: DataMember(Order = 5)] string? AutomaticRoutingInstructions,
     [property: DataMember(Order = 6)] IEnumerable<DocumentActor> Actors,
-    [property: DataMember(Order = 7)] IEnumerable<string> FileTypeIds,
+    [property: DataMember(Order = 7)] IEnumerable<string> DocumentTypeIds,
     [property: DataMember(Order = 8)] IEnumerable<DocumentTag> Tags,
     [property: DataMember(Order = 9)] bool Disabled) : IDomainAggregate
 {
@@ -62,10 +62,10 @@ public record DocumentContainer(
               added.DocumentStorageId,
               added.Name,
               added.Path,
-              added.Description,
+              added.Comments,
               null,
               [],
-              added.FileTypeIds,
+              [],
               [],
               false)
     {
@@ -172,9 +172,9 @@ public record DocumentContainer(
     /// </summary>
     /// <param name="e">The description change event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
-    private ApplyResult ApplyEvent(DocumentContainerDescriptionChanged e) => e.Name != Name || e.Description != Description
+    private ApplyResult ApplyEvent(DocumentContainerDescriptionChanged e) => e.Name != Name || e.Description != Comments
         ? new ApplyResult(
-            this with { Name = e.Name, Description = e.Description },
+            this with { Name = e.Name, Comments = e.Description },
             [e],
             false)
         : new ApplyResult(this, [], false);
@@ -186,7 +186,7 @@ public record DocumentContainer(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerFileTypeAdded e)
     {
-        List<string> fileTypes = [.. FileTypeIds];
+        List<string> fileTypes = [.. DocumentTypeIds];
         if (fileTypes.Contains(e.FileTypeId))
         {
             return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The file type {e.FileTypeId} already exists in document container {Id}/{Name}.")], true);
@@ -194,7 +194,7 @@ public record DocumentContainer(
 
         fileTypes.Add(e.FileTypeId);
         return new ApplyResult(
-            this with { FileTypeIds = fileTypes },
+            this with { DocumentTypeIds = fileTypes },
             [e],
             false);
     }
@@ -206,14 +206,14 @@ public record DocumentContainer(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerFileTypeRemoved e)
     {
-        List<string> fileTypes = [.. FileTypeIds];
+        List<string> fileTypes = [.. DocumentTypeIds];
         if (!fileTypes.Remove(e.FileTypeId))
         {
             return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The file type {e.FileTypeId} does not exist in document container {Id}/{Name}.")], true);
         }
 
         return new ApplyResult(
-            this with { FileTypeIds = fileTypes },
+            this with { DocumentTypeIds = fileTypes },
             [e],
             false);
     }

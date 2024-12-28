@@ -37,8 +37,7 @@ public class GetDocumentContainerDetailsHandler : RequestHandlerBase<GetDocument
         {
             Result = await _projectionFactory
                 .GetStateAsync(metadata.AggregateGlobalId, cancellationToken)
-                .ConfigureAwait(false)
-                    ?? throw new InvalidOperationException($"File type {metadata.AggregateGlobalId} not found."),
+                .ConfigureAwait(false),
         };
     }
 }

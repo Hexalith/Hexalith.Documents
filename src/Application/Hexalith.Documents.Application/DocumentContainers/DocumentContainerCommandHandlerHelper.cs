@@ -24,13 +24,13 @@ public static class DocumentContainerCommandHandlerHelper
                 c.DocumentStorageId,
                 c.Name,
                 c.Path,
-                c.Description,
-                c.FileTypeIds),
+                c.Comments,
+                c.AutomaticRoutingInstructions),
                 ev => new DocumentContainer((DocumentContainerCreated)ev))
             .TryAddSimpleCommandHandler<EnableDocumentContainer>(c => new DocumentContainerEnabled(c.Id))
             .TryAddSimpleCommandHandler<DisableDocumentContainer>(c => new DocumentContainerDisabled(c.Id))
             .TryAddSimpleCommandHandler<ChangeDocumentContainerDescription>(c => new DocumentContainerDescriptionChanged(
                 c.Id,
                 c.Name,
-                c.Description));
+                c.Comments));
 }

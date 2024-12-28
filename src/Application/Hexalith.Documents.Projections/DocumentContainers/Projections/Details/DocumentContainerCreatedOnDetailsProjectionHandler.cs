@@ -24,10 +24,10 @@ public class DocumentContainerCreatedOnDetailsProjectionHandler(IProjectionFacto
             baseEvent.DocumentStorageId,
             baseEvent.Name,
             baseEvent.Path,
-            baseEvent.Description,
+            baseEvent.Comments,
             null,
             [],
-            baseEvent.FileTypeIds,
+            [],
             [],
             false));
     }

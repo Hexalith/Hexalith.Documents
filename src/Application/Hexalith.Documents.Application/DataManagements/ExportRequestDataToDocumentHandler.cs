@@ -244,11 +244,9 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
     private async Task<DocumentContainerDetailsViewModel> GetUserContainerAsync(Metadata metadata, CancellationToken cancellationToken)
     {
         GetDocumentContainerDetails? getDocumentContainer = new(metadata.Context.UserId);
+        Metadata meta = Metadata.CreateNew(getDocumentContainer, metadata, Time.GetLocalNow());
         getDocumentContainer = await _requestProcessor
-            .ProcessAsync(
-                getDocumentContainer,
-                Metadata.CreateNew(getDocumentContainer, metadata, Time.GetLocalNow()),
-                cancellationToken)
+            .ProcessAsync(getDocumentContainer, meta, cancellationToken)
             .ConfigureAwait(false) as GetDocumentContainerDetails;
         if (getDocumentContainer?.Result is not DocumentContainerDetailsViewModel container)
         {
@@ -259,7 +257,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                 metadata.Context.UserId + " user data",
                 "Users",
                 "The user default document container",
-                []);
+                null);
             await _commandProcessor.SubmitAsync(createDocumentContainer, Metadata.CreateNew(createDocumentContainer, metadata, Time.GetLocalNow()), cancellationToken).ConfigureAwait(false);
             throw new InvalidOperationException("User document container not found. Created the default container. Retry the export.");
         }
