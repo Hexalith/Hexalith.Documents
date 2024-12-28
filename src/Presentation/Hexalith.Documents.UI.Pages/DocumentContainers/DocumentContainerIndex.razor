@@ -1,12 +1,9 @@
 ﻿@page "/Documents/DocumentContainer"
-@rendermode InteractiveAuto
-@inject ICommandService CommandService
 @using Hexalith.Documents.Commands.DataManagements
-@using Labels = Hexalith.Documents.UI.Pages.Resources.DocumentContainers;
+@rendermode InteractiveAuto
 <HexEntityIndexPage OnLoadData="LoadSummaries"
                     OnImport="ImportAsync"
                     OnExport="ExportAsync"
-                    OnImportQuickStartDataAsync="ImportQuickStartDataAsync"
                     OnDatabaseSynchronize="SynchronizeDatabaseAsync"
                     AddPagePath="/Documents/Add/DocumentContainer"
                     Title="@Labels.ListTitle">
@@ -41,6 +38,10 @@
             .Result
             .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
+        if (!_summaries.Any())
+        {
+            await CommandService.SubmitCommandsAsync(User, DocumentContainerQuickStartData.Data, CancellationToken.None);
+        }
     }
     private Task SynchronizeDatabaseAsync()
     {
@@ -80,10 +81,6 @@
         string documentId = GetImportExportDocumentId();
         var command = new ExportRequestDataToDocument(documentId, new GetDocumentContainerExports(0, 100));
         await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
-    }
-    private async Task ImportQuickStartDataAsync()
-    {
-        await CommandService.SubmitCommandsAsync(User, DocumentContainerQuickStartData.Data, CancellationToken.None);
     }
     private string GetImportExportDocumentId()
     {

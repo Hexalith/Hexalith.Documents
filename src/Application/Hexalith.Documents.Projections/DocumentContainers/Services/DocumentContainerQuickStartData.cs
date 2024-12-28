@@ -14,7 +14,18 @@ public static class DocumentContainerQuickStartData
     /// <value>
     /// An enumerable collection of <see cref="CreateDocumentContainer"/> containing predefined document containers.
     /// </value>
-    public static IEnumerable<CreateDocumentContainer> Data => [JohnDoe];
+    public static IEnumerable<CreateDocumentContainer> Data => [JohnDoe, JeromePiquot];
+
+    /// <summary>
+    /// Gets the details for the Jérôme Piquot document container.
+    /// </summary>
+    internal static CreateDocumentContainer JeromePiquot => new(
+        "jpiquot@itaneo.com",
+        "Default",
+        "Jérôme Piquot Data",
+        "jpiquot@itaneo.com",
+        "Jérôme Piquot default container for user files.",
+        null);
 
     /// <summary>
     /// Gets the details for the Excel document container.

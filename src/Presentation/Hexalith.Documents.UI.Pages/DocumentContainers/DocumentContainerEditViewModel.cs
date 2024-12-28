@@ -3,7 +3,6 @@
 using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
-using Hexalith.Extensions.Helpers;
 
 /// <summary>
 /// ViewModel for editing file types.
@@ -33,7 +32,7 @@ public sealed class DocumentContainerEditViewModel : IIdDescription
     /// </summary>
     public DocumentContainerEditViewModel()
         : this(new DocumentContainerDetailsViewModel(
-        UniqueIdHelper.GenerateUniqueStringId(),
+        string.Empty,
         string.Empty,
         string.Empty,
         string.Empty,
