@@ -36,6 +36,7 @@ public static class DataManagementProjectionsHelper
             .AddScoped<IProjectionUpdateHandler<SnapshotEvent>, DataManagementSnapshotOnSummaryProjectionHandler>()
 
             // Details
+            .AddScoped<IProjectionUpdateHandler<DataManagementCommentsChanged>, DataManagementCommentsChangedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<DataExportStarted>, DataManagementStartedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<DataExportCompleted>, DataManagementCompletedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<SnapshotEvent>, DataManagementDetailsSnapshotHandler>();
@@ -50,6 +51,7 @@ public static class DataManagementProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDataManagementRequestHandlers(this IServiceCollection services)
     {
+        services.TryAddScoped<IRequestHandler<GetDataManagementExports>, GetDataManagementExportsHandler>();
         services.TryAddScoped<IRequestHandler<GetDataManagementDetails>, GetDataManagementDetailsHandler>();
         services.TryAddScoped<IRequestHandler<GetDataManagementSummaries>, GetDataManagementSummariesHandler>();
         services.TryAddScoped<IRequestHandler<GetDataManagementIds>, GetDataManagementIdsHandler>();

@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record GetDataManagementExports(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DataManagementDetailsViewModel> Result) : IChunkableRequest
+    [property: DataMember(Order = 3)] IEnumerable<DataManagementExportViewModel> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDataManagementExports"/> class.
@@ -47,7 +47,7 @@ public partial record GetDataManagementExports(
     public static string AggregateName => DocumentDomainHelper.DataManagementAggregateName;
 
     /// <inheritdoc/>
-    public IEnumerable<object>? Results { get; }
+    IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetDataManagementExports(Skip + Take, Take);
