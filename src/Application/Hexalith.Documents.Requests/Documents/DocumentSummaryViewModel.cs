@@ -26,7 +26,7 @@ public partial record DocumentSummaryViewModel(
         : this(
               (details ?? throw new ArgumentNullException(nameof(details))).Id,
               details.Description.Name,
-              details.File.Size,
+              details.File?.Size ?? 0L,
               details.Disabled)
     {
     }

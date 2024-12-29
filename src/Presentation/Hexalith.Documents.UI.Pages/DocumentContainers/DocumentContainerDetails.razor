@@ -28,7 +28,7 @@
                 </FluentGridItem>
             }
             <FluentGridItem xs="12" md="12">
-                <FluentTextField Style="width:100%;" @bind-Value="_data.Comments" Label="@Labels.Comments"></FluentTextField>
+                <HexEntityCommentsField @bind-Value="_data.Comments" />
             </FluentGridItem>
             <FluentGridItem md="12">
                 <FluentLabel Typo="Typography.PaneHeader">@Labels.Tags</FluentLabel>
@@ -152,16 +152,16 @@
             fileTypeCommand = new EnableDocumentContainer(_data.Id);
             await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
         }
-        // for each target in _data.Targets, add it if it does not exist
-        foreach (var target in _data.Tags)
+        // for each tag in _data.tags, add it if it does not exist
+        foreach (var tag in _data.Tags)
         {
-            if (!_data.Original.Tags.Contains(target))
+            if (!_data.Original.Tags.Contains(tag))
             {
-                fileTypeCommand = new AddDocumentContainerTag(_data.Id, target.Key, target.Value, target.Unique);
+                fileTypeCommand = new AddDocumentContainerTag(_data.Id, tag.Key, tag.Value, tag.Unique);
                 await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
             }
         }
-        // for each target in _data.Original.Targets, remove it if it does not exist
+        // for each tag in _data.tags, remove it if it does not exist
         foreach (var target in _data.Original.Tags)
         {
             if (!_data.Tags.Contains(target))

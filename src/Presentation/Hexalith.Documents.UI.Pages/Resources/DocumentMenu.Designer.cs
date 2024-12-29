@@ -61,6 +61,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data management.
+        /// </summary>
+        internal static string DataManagementMenuItem {
+            get {
+                return ResourceManager.GetString("DataManagementMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Containers.
         /// </summary>
         internal static string DocumentContainerTypeMenuItem {

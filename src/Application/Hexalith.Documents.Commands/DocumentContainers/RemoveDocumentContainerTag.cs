@@ -15,7 +15,7 @@ public partial record RemoveDocumentContainerTag(
     [property: DataMember(Order = 2)]
     string Key,
     [property: DataMember(Order = 3)]
-    string Value)
+    string? Value)
     : DocumentContainerCommand(Id)
 {
 }
