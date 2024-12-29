@@ -2,6 +2,7 @@
 
 using Hexalith.Application.Commands;
 using Hexalith.Documents.Commands.DataManagements;
+using Hexalith.Documents.Events.DataManagements;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,5 +20,8 @@ public static class DataManagementCommandHandlerHelper
         => services
 
             // Needs to be Transient for the file stream to be disposed
-            .AddTransient<IDomainCommandHandler<ExportRequestDataToDocument>, ExportRequestDataToDocumentHandler>();
+            .AddTransient<IDomainCommandHandler<ExportRequestDataToDocument>, ExportRequestDataToDocumentHandler>()
+            .TryAddSimpleCommandHandler<ChangeDataManagementComments>(c => new DataManagementCommentsChanged(
+                c.Id,
+                c.Comments));
 }
