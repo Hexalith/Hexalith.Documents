@@ -23,7 +23,7 @@ public static class DocumentCommandHandlerHelper
                 c => new DocumentAdded(
                 c.Id,
                 c.Name,
-                c.Description,
+                c.Comments,
                 c.File,
                 c.OwnerId,
                 c.CreatedOn,

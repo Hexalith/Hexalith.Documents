@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Projections.DocumentPartitions.RequestHandlers;
+﻿namespace Hexalith.Documents.Projections.DocumentStorages.RequestHandlers;
 
 using System;
 using System.Threading;

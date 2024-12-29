@@ -30,7 +30,7 @@ public record Document(
     [property: DataMember(Order = 4)] string? ParentDocumentId,
     [property: DataMember(Order = 5)] DocumentState State,
     [property: DataMember(Order = 6)] IEnumerable<DocumentActor> Actors,
-    [property: DataMember(Order = 7)] FileDescription File,
+    [property: DataMember(Order = 7)] FileDescription? File,
     [property: DataMember(Order = 8)] IEnumerable<DocumentTag> Tags,
     [property: DataMember(Order = 9)] bool Disabled) : IDomainAggregate
 {
@@ -41,7 +41,6 @@ public record Document(
         : this(
               string.Empty,
               new DocumentDescription(
-                  string.Empty,
                   string.Empty,
                   null,
                   null,
@@ -66,8 +65,7 @@ public record Document(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               new DocumentDescription(
                   added.Name,
-                  added.Description,
-                  null,
+                  added.Comments,
                   added.DocumentTypeId,
                   null),
               null,

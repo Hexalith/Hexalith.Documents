@@ -7,8 +7,8 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Id">The document identifier.</param>
 /// <param name="Name">The document name.</param>
-/// <param name="Description">The document description.</param>
+/// <param name="Comments">The document description.</param>
 [PolymorphicSerialization]
-public partial record DocumentDescriptionChanged(string Id, string Name, string Description) : DocumentEvent(Id)
+public partial record DocumentDescriptionChanged(string Id, string Name, string? Comments) : DocumentEvent(Id)
 {
 }

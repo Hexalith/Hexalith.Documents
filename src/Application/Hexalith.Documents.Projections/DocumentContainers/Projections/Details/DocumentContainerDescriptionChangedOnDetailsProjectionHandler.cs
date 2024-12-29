@@ -27,6 +27,6 @@ public class DocumentContainerDescriptionChangedOnDetailsProjectionHandler(IProj
             return Task.FromResult<DocumentContainerDetailsViewModel?>(null);
         }
 
-        return Task.FromResult<DocumentContainerDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Description });
+        return Task.FromResult<DocumentContainerDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Comments });
     }
 }

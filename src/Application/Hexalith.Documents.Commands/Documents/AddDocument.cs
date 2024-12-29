@@ -10,7 +10,7 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Id">The unique identifier of the document.</param>
 /// <param name="Name">The name of the document.</param>
-/// <param name="Description">The description of the document.</param>
+/// <param name="Comments">The comments of the document.</param>
 /// <param name="File">The the file description.</param>
 /// <param name="OwnerId">The identifier of the document owner.</param>
 /// <param name="CreatedOn">The date and time when the document was created.</param>
@@ -23,7 +23,7 @@ public partial record AddDocument(
     [property: DataMember(Order = 3)]
     string Name,
     [property: DataMember(Order = 4)]
-    string? Description,
+    string? Comments,
     [property: DataMember(Order = 5)]
     FileDescription? File,
     string OwnerId,

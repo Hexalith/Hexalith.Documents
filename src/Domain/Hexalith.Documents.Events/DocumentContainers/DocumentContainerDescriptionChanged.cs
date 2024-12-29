@@ -9,13 +9,13 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Id">The unique identifier of the document container.</param>
 /// <param name="Name">The updated name of the document container.</param>
-/// <param name="Description">The updated description of the document container.</param>
+/// <param name="Comments">The updated comments of the document container.</param>
 [PolymorphicSerialization]
 public partial record DocumentContainerDescriptionChanged(
     string Id,
     [property: DataMember(Order = 2)]
     string Name,
     [property: DataMember(Order = 3)]
-    string Description) : DocumentContainerEvent(Id)
+    string? Comments) : DocumentContainerEvent(Id)
 {
 }

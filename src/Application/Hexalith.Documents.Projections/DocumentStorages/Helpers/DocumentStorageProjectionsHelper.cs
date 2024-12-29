@@ -3,7 +3,6 @@
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Events.DocumentStorages;
-using Hexalith.Documents.Projections.DocumentPartitions.RequestHandlers;
 using Hexalith.Documents.Projections.DocumentStorages.Projections.Details;
 using Hexalith.Documents.Projections.DocumentStorages.Projections.Summaries;
 using Hexalith.Documents.Projections.DocumentStorages.RequestHandlers;

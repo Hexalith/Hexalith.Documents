@@ -157,8 +157,8 @@ public record DocumentContainer(
     /// </summary>
     /// <param name="e">The description change event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
-    private ApplyResult ApplyEvent(DocumentContainerDescriptionChanged e) => e.Name != Name || e.Description != Comments
-        ? ApplyResult.Success(this with { Name = e.Name, Comments = e.Description }, [e])
+    private ApplyResult ApplyEvent(DocumentContainerDescriptionChanged e) => e.Name != Name || e.Comments != Comments
+        ? ApplyResult.Success(this with { Name = e.Name, Comments = e.Comments }, [e])
         : ApplyResult.Error(this, "Update failed: The provided name and description are identical to the current values. No changes needed.");
 
     /// <summary>
