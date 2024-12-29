@@ -30,6 +30,11 @@
     <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Resources\DocumentInformationExtractions.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentInformationExtractions.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Documents.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -70,6 +75,10 @@
     <EmbeddedResource Update="Resources\DocumentContainers.resx">
       <LastGenOutput>DocumentContainers.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentInformationExtractions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DocumentInformationExtractions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\DocumentStorages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
