@@ -14,14 +14,14 @@ using Hexalith.Documents.Requests.DataManagements;
 /// </summary>
 public class GetDataManagementDetailsHandler : RequestHandlerBase<GetDataManagementDetails>
 {
-    private readonly IProjectionFactory<DataManagementExportViewModel> _projectionFactory;
+    private readonly IProjectionFactory<DataManagementDetailsViewModel> _projectionFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDataManagementDetailsHandler"/> class.
     /// </summary>
     /// <param name="projectionFactory">The projection factory.</param>
     /// <exception cref="ArgumentNullException">Thrown when projectionFactory is null.</exception>
-    public GetDataManagementDetailsHandler(IProjectionFactory<DataManagementExportViewModel> projectionFactory)
+    public GetDataManagementDetailsHandler(IProjectionFactory<DataManagementDetailsViewModel> projectionFactory)
     {
         ArgumentNullException.ThrowIfNull(projectionFactory);
         _projectionFactory = projectionFactory;

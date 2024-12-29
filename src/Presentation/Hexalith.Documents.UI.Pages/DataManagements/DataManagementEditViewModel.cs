@@ -12,7 +12,7 @@ public sealed class DataManagementEditViewModel : IIdDescription
     /// Initializes a new instance of the <see cref="DataManagementEditViewModel"/> class.
     /// </summary>
     public DataManagementEditViewModel()
-        : this(new DataManagementExportViewModel(
+        : this(new DataManagementDetailsViewModel(
             string.Empty,
             0L,
             null,
@@ -25,7 +25,7 @@ public sealed class DataManagementEditViewModel : IIdDescription
     /// Initializes a new instance of the <see cref="DataManagementEditViewModel"/> class with the specified original details.
     /// </summary>
     /// <param name="original">The original details of the data management item.</param>
-    public DataManagementEditViewModel(DataManagementExportViewModel original) => Original = original;
+    public DataManagementEditViewModel(DataManagementDetailsViewModel original) => Original = original;
 
     /// <summary>
     /// Gets or sets the comments of the data management item.
@@ -55,7 +55,7 @@ public sealed class DataManagementEditViewModel : IIdDescription
     /// <summary>
     /// Gets the original details of the data management item.
     /// </summary>
-    public DataManagementExportViewModel Original { get; }
+    public DataManagementDetailsViewModel Original { get; }
 
     /// <summary>
     /// Gets the size of the data management item.

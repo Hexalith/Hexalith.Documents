@@ -79,10 +79,9 @@ public class GetDataManagementExportsHandler : RequestHandlerBase<GetDataManagem
 
         SnapshotEvent?[] results = await Task.WhenAll(summaryTasks).ConfigureAwait(false);
 
-        IEnumerable<DataManagementExportViewModel> queryResult = results
+        IEnumerable<DataManagementExportViewModel> queryResult = [.. results
             .Where(p => p is not null)
-            .Select(p => DataManagementExportViewModel.FromAggregate(p.GetAggregate<DataManagement>()))
-            .ToList();
+            .Select(p => DataManagementExportViewModel.FromAggregate(p.GetAggregate<DataManagement>()))];
 
         return request with { Results = queryResult };
     }

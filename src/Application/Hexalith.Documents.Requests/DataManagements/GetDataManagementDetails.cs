@@ -10,5 +10,5 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="Id">The ID of the data export.</param>
 /// <param name="Result">The result containing the ID and description.</param>
 [PolymorphicSerialization]
-public partial record GetDataManagementDetails(string Id, [property: DataMember(Order = 2)] DataManagementExportViewModel? Result = null)
+public partial record GetDataManagementDetails(string Id, [property: DataMember(Order = 2)] DataManagementDetailsViewModel? Result = null)
     : DataManagementRequest(Id);

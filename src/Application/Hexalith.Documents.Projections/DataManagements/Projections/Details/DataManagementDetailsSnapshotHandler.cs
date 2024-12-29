@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 /// Handles the snapshot events for data export details.
 /// </summary>
 public partial class DataManagementDetailsSnapshotHandler(
-    IProjectionFactory<DataManagementExportViewModel> factory,
+    IProjectionFactory<DataManagementDetailsViewModel> factory,
     ILogger<DataManagementDetailsSnapshotHandler> logger) : IProjectionUpdateHandler<SnapshotEvent>
 {
     /// <inheritdoc/>
@@ -29,12 +29,12 @@ public partial class DataManagementDetailsSnapshotHandler(
             return;
         }
 
-        DataManagementExportViewModel? currentValue = await factory
+        DataManagementDetailsViewModel? currentValue = await factory
             .GetStateAsync(metadata.AggregateGlobalId, cancellationToken)
             .ConfigureAwait(false);
 
         DataManagement dataExport = baseEvent.GetAggregate<DataManagement>();
-        DataManagementExportViewModel newValue = new(
+        DataManagementDetailsViewModel newValue = new(
             dataExport.Id,
             dataExport.Size,
             dataExport.Comments,

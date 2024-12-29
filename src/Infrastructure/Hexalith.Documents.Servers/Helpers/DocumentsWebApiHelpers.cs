@@ -39,7 +39,7 @@ public static class DocumentsWebApiHelpers
         _ = services.AddDocumentProjections();
         _ = services.AddActorProjectionFactory<DataManagement>();
         _ = services.AddActorProjectionFactory<DataManagementSummaryViewModel>();
-        _ = services.AddActorProjectionFactory<DataManagementExportViewModel>();
+        _ = services.AddActorProjectionFactory<DataManagementDetailsViewModel>();
         _ = services.AddActorProjectionFactory<FileType>();
         _ = services.AddActorProjectionFactory<FileTypeSummaryViewModel>();
         _ = services.AddActorProjectionFactory<FileTypeDetailsViewModel>();
