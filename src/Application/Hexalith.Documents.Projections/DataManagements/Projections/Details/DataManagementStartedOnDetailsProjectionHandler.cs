@@ -12,16 +12,17 @@ using Hexalith.Documents.Requests.DataManagements;
 /// Handles the projection update when a data export is added.
 /// </summary>
 /// <param name="factory">The factory.</param>
-public class DataManagementStartedOnDetailsProjectionHandler(IProjectionFactory<DataManagementDetailsViewModel> factory)
+public class DataManagementStartedOnDetailsProjectionHandler(IProjectionFactory<DataManagementExportViewModel> factory)
     : DataManagementDetailsProjectionHandler<DataExportStarted>(factory)
 {
     /// <inheritdoc/>
-    protected override Task<DataManagementDetailsViewModel?> ApplyEventAsync([NotNull] DataExportStarted baseEvent, DataManagementDetailsViewModel? model, CancellationToken cancellationToken)
+    protected override Task<DataManagementExportViewModel?> ApplyEventAsync([NotNull] DataExportStarted baseEvent, DataManagementExportViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        return Task.FromResult<DataManagementDetailsViewModel?>(new DataManagementDetailsViewModel(
+        return Task.FromResult<DataManagementExportViewModel?>(new DataManagementExportViewModel(
             baseEvent.Id,
             0L,
+            null,
             baseEvent.DateTime,
             null));
     }

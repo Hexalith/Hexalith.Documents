@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Servers.Helpers;
+﻿namespace Hexalith.Documents.Servers.Helpers;
 
 using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Domain.DataManagements;
@@ -39,7 +39,7 @@ public static class DocumentsWebApiHelpers
         _ = services.AddDocumentProjections();
         _ = services.AddActorProjectionFactory<DataManagement>();
         _ = services.AddActorProjectionFactory<DataManagementSummaryViewModel>();
-        _ = services.AddActorProjectionFactory<DataManagementDetailsViewModel>();
+        _ = services.AddActorProjectionFactory<DataManagementExportViewModel>();
         _ = services.AddActorProjectionFactory<FileType>();
         _ = services.AddActorProjectionFactory<FileTypeSummaryViewModel>();
         _ = services.AddActorProjectionFactory<FileTypeDetailsViewModel>();

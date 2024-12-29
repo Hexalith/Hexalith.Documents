@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\DataManagements.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DataManagements.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\DocumentContainers.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -42,6 +47,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\DataManagements.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DataManagements.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\DocumentContainers.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DocumentContainers.Designer.cs</LastGenOutput>

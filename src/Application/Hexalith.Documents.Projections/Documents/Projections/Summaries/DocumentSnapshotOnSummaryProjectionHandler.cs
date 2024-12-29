@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Projections.Documents.Projections.Summaries;
+﻿namespace Hexalith.Documents.Projections.Documents.Projections.Summaries;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,8 +34,8 @@ public partial class DocumentSnapshotOnSummaryProjectionHandler(IProjectionFacto
         Document document = baseEvent.GetAggregate<Document>();
         DocumentSummaryViewModel newValue = new(
             document.Id,
-            document.File.Name,
-            document.File.Size,
+            document.File?.Name ?? document.Id,
+            document.File?.Size ?? 0L,
             document.Disabled);
         if (currentValue is not null && currentValue == newValue)
         {

@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.ApiServer.Modules;
+﻿namespace Hexalith.Documents.ApiServer.Modules;
 
 using System.Collections.Generic;
 
@@ -128,7 +128,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         actorRegistrations.RegisterProjectionActor<DocumentType>();
         actorRegistrations.RegisterProjectionActor<FileType>();
         actorRegistrations.RegisterProjectionActor<DataManagementSummaryViewModel>();
-        actorRegistrations.RegisterProjectionActor<DataManagementDetailsViewModel>();
+        actorRegistrations.RegisterProjectionActor<DataManagementExportViewModel>();
         actorRegistrations.RegisterProjectionActor<DocumentSummaryViewModel>();
         actorRegistrations.RegisterProjectionActor<DocumentDetailsViewModel>();
         actorRegistrations.RegisterProjectionActor<DocumentContainerSummaryViewModel>();

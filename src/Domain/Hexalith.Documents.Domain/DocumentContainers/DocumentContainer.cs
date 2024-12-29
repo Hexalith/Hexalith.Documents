@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Domain.DocumentContainers;
+﻿namespace Hexalith.Documents.Domain.DocumentContainers;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
@@ -118,12 +118,6 @@ public record DocumentContainer(
             _ => ApplyResult.InvalidEvent(this, domainEvent),
         };
     }
-
-    /// <summary>
-    /// Determines whether the document container has been initialized with a valid identifier.
-    /// </summary>
-    /// <returns>true if the document container has a non-empty identifier; otherwise, false.</returns>
-    public bool IsInitialized() => !string.IsNullOrWhiteSpace(Id);
 
     /// <summary>
     /// Applies a document container creation event.

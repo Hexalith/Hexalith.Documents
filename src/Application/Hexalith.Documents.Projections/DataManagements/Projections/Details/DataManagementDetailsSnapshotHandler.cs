@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.UI.Services.DataManagements.Projections.Summaries;
+﻿namespace Hexalith.Documents.UI.Services.DataManagements.Projections.Summaries;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 /// Handles the snapshot events for data export details.
 /// </summary>
 public partial class DataManagementDetailsSnapshotHandler(
-    IProjectionFactory<DataManagementDetailsViewModel> factory,
+    IProjectionFactory<DataManagementExportViewModel> factory,
     ILogger<DataManagementDetailsSnapshotHandler> logger) : IProjectionUpdateHandler<SnapshotEvent>
 {
     /// <inheritdoc/>
@@ -29,14 +29,15 @@ public partial class DataManagementDetailsSnapshotHandler(
             return;
         }
 
-        DataManagementDetailsViewModel? currentValue = await factory
+        DataManagementExportViewModel? currentValue = await factory
             .GetStateAsync(metadata.AggregateGlobalId, cancellationToken)
             .ConfigureAwait(false);
 
         DataManagement dataExport = baseEvent.GetAggregate<DataManagement>();
-        DataManagementDetailsViewModel newValue = new(
+        DataManagementExportViewModel newValue = new(
             dataExport.Id,
             dataExport.Size,
+            dataExport.Comments,
             dataExport.StartedAt,
             dataExport.CompletedAt);
         if (currentValue is not null && currentValue == newValue)

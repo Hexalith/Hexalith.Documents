@@ -14,8 +14,8 @@ using Hexalith.Documents.Requests.DataManagements;
 /// </summary>
 /// <typeparam name="TDataManagementEvent">The type of the data export event.</typeparam>
 /// <param name="factory">The actor projection factory.</param>
-public abstract class DataManagementDetailsProjectionHandler<TDataManagementEvent>(IProjectionFactory<DataManagementDetailsViewModel> factory)
-    : KeyValueProjectionUpdateEventHandlerBase<TDataManagementEvent, DataManagementDetailsViewModel>(factory)
+public abstract class DataManagementDetailsProjectionHandler<TDataManagementEvent>(IProjectionFactory<DataManagementExportViewModel> factory)
+    : KeyValueProjectionUpdateEventHandlerBase<TDataManagementEvent, DataManagementExportViewModel>(factory)
     where TDataManagementEvent : DataManagementEvent
 {
     /// <inheritdoc/>
@@ -24,10 +24,10 @@ public abstract class DataManagementDetailsProjectionHandler<TDataManagementEven
         ArgumentNullException.ThrowIfNull(baseEvent);
         ArgumentNullException.ThrowIfNull(metadata);
 
-        DataManagementDetailsViewModel? currentValue = await GetProjectionAsync(metadata.AggregateGlobalId, cancellationToken)
+        DataManagementExportViewModel? currentValue = await GetProjectionAsync(metadata.AggregateGlobalId, cancellationToken)
             .ConfigureAwait(false);
 
-        DataManagementDetailsViewModel? newValue = await ApplyEventAsync(
+        DataManagementExportViewModel? newValue = await ApplyEventAsync(
                 baseEvent,
                 currentValue,
                 cancellationToken)
@@ -47,5 +47,5 @@ public abstract class DataManagementDetailsProjectionHandler<TDataManagementEven
     /// <param name="model">The current data export detail view model.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The updated data export summary view model.</returns>
-    protected abstract Task<DataManagementDetailsViewModel?> ApplyEventAsync(TDataManagementEvent baseEvent, DataManagementDetailsViewModel? model, CancellationToken cancellationToken);
+    protected abstract Task<DataManagementExportViewModel?> ApplyEventAsync(TDataManagementEvent baseEvent, DataManagementExportViewModel? model, CancellationToken cancellationToken);
 }

@@ -3,8 +3,8 @@
 using Hexalith.Documents.Projections.DataManagements.Helpers;
 using Hexalith.Documents.Projections.DocumentContainers.Helpers;
 using Hexalith.Documents.Projections.DocumentInformationExtractions.Helpers;
-using Hexalith.Documents.Projections.DocumentStorages.Helpers;
 using Hexalith.Documents.Projections.Documents.Helpers;
+using Hexalith.Documents.Projections.DocumentStorages.Helpers;
 using Hexalith.Documents.Projections.DocumentTypes.Helpers;
 using Hexalith.Documents.Projections.FileTypes.Helpers;
 
