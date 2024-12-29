@@ -1,9 +1,6 @@
 ﻿@page "/Documents/FileType"
 @rendermode InteractiveAuto
-@inject NavigationManager NavigationManager
-@inject ICommandService CommandService
 @using Hexalith.Documents.Commands.DataManagements
-@using Labels = Hexalith.Documents.UI.Pages.Resources.FileTypes;
 <HexEntityIndexPage OnLoadData="LoadSummaries"
                     OnImport="ImportAsync"
                     OnExport="ExportAsync"

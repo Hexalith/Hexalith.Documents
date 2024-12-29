@@ -7,13 +7,14 @@ using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Events.DocumentContainers;
 using Hexalith.Domain.Aggregates;
-using Hexalith.Domain.Events;
 
 /// <summary>
 /// Represents a container for documents with associated metadata and behaviors.
 /// </summary>
 /// <param name="Id">The unique identifier of the document container.</param>
+/// <param name="DocumentStorageId">The identifier of the document storage associated with this container.</param>
 /// <param name="Name">The name of the document container.</param>
+/// <param name="Path">The path where documents are stored in the document storage.</param>
 /// <param name="Comments">The description of the document container.</param>
 /// <param name="AutomaticRoutingInstructions">The instructions for automatic routing of documents.</param>
 /// <param name="Actors">The collection of actors associated with the document container.</param>
@@ -25,13 +26,13 @@ public record DocumentContainer(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string DocumentStorageId,
     [property: DataMember(Order = 3)] string Name,
-    [property: DataMember(Order = 3)] string Path,
-    [property: DataMember(Order = 4)] string? Comments,
-    [property: DataMember(Order = 5)] string? AutomaticRoutingInstructions,
-    [property: DataMember(Order = 6)] IEnumerable<DocumentActor> Actors,
-    [property: DataMember(Order = 7)] IEnumerable<string> DocumentTypeIds,
-    [property: DataMember(Order = 8)] IEnumerable<DocumentTag> Tags,
-    [property: DataMember(Order = 9)] bool Disabled) : IDomainAggregate
+    [property: DataMember(Order = 4)] string Path,
+    [property: DataMember(Order = 5)] string? Comments,
+    [property: DataMember(Order = 6)] string? AutomaticRoutingInstructions,
+    [property: DataMember(Order = 7)] IEnumerable<DocumentActor> Actors,
+    [property: DataMember(Order = 8)] IEnumerable<string> DocumentTypeIds,
+    [property: DataMember(Order = 9)] IEnumerable<DocumentTag> Tags,
+    [property: DataMember(Order = 10)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentContainer"/> class.
@@ -82,20 +83,22 @@ public record DocumentContainer(
     public string AggregateName => DocumentDomainHelper.DocumentContainerAggregateName;
 
     /// <summary>
-    /// Applies a domain event to the document type.
+    /// Applies a domain event to the document container aggregate.
     /// </summary>
     /// <param name="domainEvent">The domain event to apply.</param>
-    /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
+    /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events, or an error if the event cannot be applied.</returns>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="domainEvent"/> is null.</exception>
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (domainEvent is DocumentContainerEvent ev && domainEvent is not DocumentContainerEnabled && Disabled)
+        if (Disabled && domainEvent is not DocumentContainerEnabled and not DocumentContainerDisabled)
         {
-            return new ApplyResult(
-                this,
-                [new DocumentContainerEventCancelled(ev, $"Document container {Id}/{Name} is disabled.")],
-                true);
+            return ApplyResult.Error(this, "Operation not allowed: The document container is currently disabled. Enable the container before making changes.");
+        }
+
+        if (!(this as IDomainAggregate).IsInitialized() && domainEvent is not DocumentContainerCreated)
+        {
+            return ApplyResult.Error(this, "Operation not allowed: The document container has not been initialized. Create the container first before applying changes.");
         }
 
         return domainEvent switch
@@ -107,119 +110,85 @@ public record DocumentContainer(
             DocumentContainerDescriptionChanged e => ApplyEvent(e),
             DocumentContainerDisabled e => ApplyEvent(e),
             DocumentContainerEnabled e => ApplyEvent(e),
-            DocumentContainerFileTypeAdded e => ApplyEvent(e),
-            DocumentContainerFileTypeRemoved e => ApplyEvent(e),
+            DocumentContainerDocumentTypeAdded e => ApplyEvent(e),
+            DocumentContainerDocumentTypeRemoved e => ApplyEvent(e),
             DocumentContainerTagAdded e => ApplyEvent(e),
             DocumentContainerTagRemoved e => ApplyEvent(e),
-            DocumentContainerEvent e => new ApplyResult(
-                this,
-                [new DocumentContainerEventCancelled(e, "Event not implemented")],
-                true),
-            _ => new ApplyResult(
-                this,
-                [InvalidEventApplied.CreateNotSupportedAppliedEvent(
-                    AggregateName,
-                    AggregateId,
-                    domainEvent)],
-                true),
+            DocumentContainerEvent => ApplyResult.NotImplemented(this),
+            _ => ApplyResult.InvalidEvent(this, domainEvent),
         };
     }
 
     /// <summary>
-    /// Determines whether the document type has been initialized with a valid identifier.
+    /// Determines whether the document container has been initialized with a valid identifier.
     /// </summary>
-    /// <returns>true if the document type has a non-empty identifier; otherwise, false.</returns>
+    /// <returns>true if the document container has a non-empty identifier; otherwise, false.</returns>
     public bool IsInitialized() => !string.IsNullOrWhiteSpace(Id);
 
     /// <summary>
-    /// Applies a document type creation event.
+    /// Applies a document container creation event.
     /// </summary>
     /// <param name="e">The creation event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
-    private ApplyResult ApplyEvent(DocumentContainerCreated e) => !IsInitialized()
-        ? new ApplyResult(
-            new DocumentContainer(e),
-            [e],
-            false)
-        : new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The document container {Id}/{Name} already exists.")], true);
+    private ApplyResult ApplyEvent(DocumentContainerCreated e) => !(this as IDomainAggregate).IsInitialized()
+        ? ApplyResult.Success(new DocumentContainer(e), [e])
+        : ApplyResult.Error(this, "Creation failed: A document container with this ID already exists. Use a unique identifier to create a new container.");
 
     /// <summary>
-    /// Applies a document type enable event.
+    /// Applies an event to enable the document container.
     /// </summary>
     /// <param name="e">The enable event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerEnabled e) => Disabled
-            ? new ApplyResult(
-            this with { Disabled = false },
-            [e],
-            false)
-            : new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The document container {Id}/{Name} is already enabled.")], true);
+            ? ApplyResult.Success(this with { Disabled = false }, [e])
+            : ApplyResult.Error(this, "Enable operation failed: The document container is already in an enabled state.");
 
     /// <summary>
-    /// Applies a document type disable event.
+    /// Applies an event to disable the document container.
     /// </summary>
     /// <param name="e">The disable event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerDisabled e) => !Disabled
-            ? new ApplyResult(
-            this with { Disabled = true },
-            [e],
-            false)
-            : new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The document container {Id}/{Name} is already disabled.")], true);
+            ? ApplyResult.Success(this with { Disabled = true }, [e])
+            : ApplyResult.Error(this, "Disable operation failed: The document container is already in a disabled state.");
 
     /// <summary>
-    /// Applies a document type description change event.
+    /// Applies an event to change the document container's name and description.
     /// </summary>
     /// <param name="e">The description change event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerDescriptionChanged e) => e.Name != Name || e.Description != Comments
-        ? new ApplyResult(
-            this with { Name = e.Name, Comments = e.Description },
-            [e],
-            false)
-        : new ApplyResult(this, [], false);
+        ? ApplyResult.Success(this with { Name = e.Name, Comments = e.Description }, [e])
+        : ApplyResult.Error(this, "Update failed: The provided name and description are identical to the current values. No changes needed.");
 
     /// <summary>
-    /// Applies an event to add a file type.
+    /// Applies an event to add a document type to the container.
     /// </summary>
-    /// <param name="e">The file type addition event to apply.</param>
+    /// <param name="e">The document type addition event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
-    private ApplyResult ApplyEvent(DocumentContainerFileTypeAdded e)
+    private ApplyResult ApplyEvent(DocumentContainerDocumentTypeAdded e)
     {
-        List<string> fileTypes = [.. DocumentTypeIds];
-        if (fileTypes.Contains(e.FileTypeId))
-        {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The file type {e.FileTypeId} already exists in document container {Id}/{Name}.")], true);
-        }
-
-        fileTypes.Add(e.FileTypeId);
-        return new ApplyResult(
-            this with { DocumentTypeIds = fileTypes },
-            [e],
-            false);
+        List<string> currentTargets = [.. DocumentTypeIds];
+        return !currentTargets.Contains(e.DocumentTypeId)
+            ? ApplyResult.Success(this with { DocumentTypeIds = currentTargets.Concat([e.DocumentTypeId]) }, [e])
+            : ApplyResult.Error(this, $"Add document type failed: The document type '{e.DocumentTypeId}' is already associated with this container.");
     }
 
     /// <summary>
-    /// Applies an event to remove a file type.
+    /// Applies an event to remove a document type from the container.
     /// </summary>
-    /// <param name="e">The file type removal event to apply.</param>
+    /// <param name="e">The document type removal event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
-    private ApplyResult ApplyEvent(DocumentContainerFileTypeRemoved e)
+    private ApplyResult ApplyEvent(DocumentContainerDocumentTypeRemoved e)
     {
-        List<string> fileTypes = [.. DocumentTypeIds];
-        if (!fileTypes.Remove(e.FileTypeId))
-        {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The file type {e.FileTypeId} does not exist in document container {Id}/{Name}.")], true);
-        }
-
-        return new ApplyResult(
-            this with { DocumentTypeIds = fileTypes },
-            [e],
-            false);
+        List<string> currentTargets = [.. DocumentTypeIds];
+        return currentTargets.Contains(e.DocumentTypeId)
+            ? ApplyResult.Success(this with { DocumentTypeIds = currentTargets.Where(t => t != e.DocumentTypeId) }, [e])
+            : ApplyResult.Error(this, $"Remove document type failed: The document type '{e.DocumentTypeId}' is not associated with this container.");
     }
 
     /// <summary>
-    /// Applies an event to add a tag.
+    /// Applies an event to add a tag to the document container.
     /// </summary>
     /// <param name="e">The tag addition event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
@@ -227,15 +196,15 @@ public record DocumentContainer(
     {
         if (Tags.Any(p => p.Key == e.Key && p.Value == e.Value))
         {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The tag {e.Key}={e.Value} already exists in document container {Id}/{Name}.")], true);
+            return ApplyResult.Error(this, $"Add tag failed: The tag '{e.Key}={e.Value}' already exists in this container.");
         }
 
         if (Tags.Any(p => p.Key == e.Key && (e.Unique || p.Unique)))
         {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The unique tag with key={e.Key} already exists in document container {Id}/{Name}.")], true);
+            return ApplyResult.Error(this, $"Add tag failed: A unique tag with key '{e.Key}' already exists in this container. Remove the existing tag first.");
         }
 
-        return new ApplyResult(
+        return ApplyResult.Success(
             this with
             {
                 Tags = [..Tags
@@ -244,12 +213,11 @@ public record DocumentContainer(
                     .OrderBy(p => p.Key)
                     .ThenBy(p => p.Value)],
             },
-            [e],
-            false);
+            [e]);
     }
 
     /// <summary>
-    /// Applies an event to remove a tag.
+    /// Applies an event to remove a tag from the document container.
     /// </summary>
     /// <param name="e">The tag removal event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
@@ -257,17 +225,16 @@ public record DocumentContainer(
     {
         if (!Tags.Any(p => p.Key == e.Key && p.Value == e.Value))
         {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The tag {e.Key} does not exist in document container {Id}/{Name}.")], true);
+            return ApplyResult.Error(this, $"Remove tag failed: The tag '{e.Key}={e.Value}' does not exist in this container.");
         }
 
-        return new ApplyResult(
+        return ApplyResult.Success(
             this with { Tags = [.. Tags.Where(p => p.Key != e.Key || p.Value != e.Value)] },
-            [e],
-            false);
+            [e]);
     }
 
     /// <summary>
-    /// Applies an event to add an actor.
+    /// Applies an event to add an actor to the document container.
     /// </summary>
     /// <param name="e">The actor addition event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
@@ -276,18 +243,17 @@ public record DocumentContainer(
         List<DocumentActor> actors = [.. Actors];
         if (actors.Any(a => a.ContactId == e.Actor.ContactId))
         {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The actor {e.Actor.ContactId} already exists in document container {Id}/{Name}.")], true);
+            return ApplyResult.Error(this, $"Add actor failed: An actor with contact ID '{e.Actor.ContactId}' is already associated with this container.");
         }
 
         actors.Add(e.Actor);
-        return new ApplyResult(
+        return ApplyResult.Success(
             this with { Actors = actors },
-            [e],
-            false);
+            [e]);
     }
 
     /// <summary>
-    /// Applies an event to remove an actor.
+    /// Applies an event to remove an actor from the document container.
     /// </summary>
     /// <param name="e">The actor removal event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
@@ -296,30 +262,28 @@ public record DocumentContainer(
         List<DocumentActor> actors = [.. Actors];
         if (actors.RemoveAll(a => a.ContactId == e.ContactId) == 0)
         {
-            return new ApplyResult(this, [new DocumentContainerEventCancelled(e, $"The actor {e.ContactId} does not exist in document container {Id}/{Name}.")], true);
+            return ApplyResult.Error(this, $"Remove actor failed: No actor with contact ID '{e.ContactId}' exists in this container.");
         }
 
-        return new ApplyResult(
+        return ApplyResult.Success(
             this with { Actors = actors },
-            [e],
-            false);
+            [e]);
     }
 
     /// <summary>
-    /// Applies an event to change automatic routing instructions.
+    /// Applies an event to change the automatic routing instructions of the document container.
     /// </summary>
-    /// <param name="e">The automatic routing instructions change event to apply.</param>
+    /// <param name="e">The routing instructions change event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentContainerAutomaticRoutingInstructionsChanged e)
     {
         if (AutomaticRoutingInstructions == e.AutomaticRoutingInstructions)
         {
-            return new ApplyResult(this, [], false);
+            return ApplyResult.Error(this, "Update failed: The provided automatic routing instructions are identical to the current values. No changes needed.");
         }
 
-        return new ApplyResult(
+        return ApplyResult.Success(
             this with { AutomaticRoutingInstructions = e.AutomaticRoutingInstructions },
-            [e],
-            false);
+            [e]);
     }
 }
