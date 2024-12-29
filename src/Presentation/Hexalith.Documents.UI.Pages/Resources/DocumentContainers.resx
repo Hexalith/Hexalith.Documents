@@ -126,14 +126,8 @@
   <data name="DataFileName" xml:space="preserve">
     <value>DocumentContainer_{0}</value>
   </data>
-  <data name="Id" xml:space="preserve">
-    <value>Identifier</value>
-  </data>
   <data name="ListTitle" xml:space="preserve">
     <value>Document containers</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
   </data>
   <data name="NewTagKey" xml:space="preserve">
     <value>Tag key</value>

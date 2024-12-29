@@ -1,8 +1,7 @@
 ﻿@page "/Documents/Add/FileType"
 @page "/Documents/FileType/{Id}"
 @rendermode InteractiveAuto
-<HexEntityDetailsToolbar OnIndex="OnIndex"
-                         OnRefresh="OnRefreshAsync" />
+<HexEntityDetailsToolbar IndexPath="/Documents/FileType" OnRefresh="OnRefreshAsync" />
 
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
     @if (Id is null) // Add

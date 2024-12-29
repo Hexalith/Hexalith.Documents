@@ -120,32 +120,11 @@
   <data name="Title" xml:space="preserve">
     <value>Type de document {0}</value>
   </data>
-  <data name="Id" xml:space="preserve">
-    <value>Code</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Nom</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Enregistrer</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>Ajouter</value>
-  </data>
-  <data name="ReadNotAuthorized" xml:space="preserve">
-    <value>Vous n'êtes pas autorisés à lire des documents</value>
-  </data>
   <data name="FileTypes" xml:space="preserve">
     <value>Types de fichier</value>
   </data>
   <data name="NewFileType" xml:space="preserve">
     <value>Nouveau type de fichier</value>
-  </data>
-  <data name="Remove" xml:space="preserve">
-    <value>Retirer</value>
   </data>
   <data name="AddTitle" xml:space="preserve">
     <value>Ajouter un nouveau type de document</value>
@@ -153,55 +132,13 @@
   <data name="List" xml:space="preserve">
     <value>Liste</value>
   </data>
-  <data name="IdRequired" xml:space="preserve">
-    <value>Le code est requis</value>
-  </data>
-  <data name="MaxDescriptionLengthExceeded" xml:space="preserve">
-    <value>La longueur de la description ne doit pas dépasser {0} charactères</value>
-  </data>
-  <data name="MaxIdLengthExceeded" xml:space="preserve">
-    <value>La longueur du code ne doit pas dépasser {0} charactères</value>
-  </data>
-  <data name="MaxNameLengthExceeded" xml:space="preserve">
-    <value>La longueur du nom ne doit pas dépasser {0} charactères</value>
-  </data>
   <data name="ListTitle" xml:space="preserve">
     <value>Types de documents</value>
   </data>
-  <data name="Import" xml:space="preserve">
-    <value>Importer</value>
+  <data name="Comments" xml:space="preserve">
+    <value>Comments</value>
   </data>
-  <data name="Export" xml:space="preserve">
-    <value>Exporter</value>
-  </data>
-  <data name="NameRequired" xml:space="preserve">
-    <value>Le nom est obligatoire</value>
-  </data>
-  <data name="QuickStartData" xml:space="preserve">
-    <value>Insérer les données de base</value>
-  </data>
-  <data name="Synchronize" xml:space="preserve">
-    <value>Synchroniser</value>
-  </data>
-  <data name="ImportSuccess" xml:space="preserve">
-    <value>Import effectué</value>
-  </data>
-  <data name="ImportError" xml:space="preserve">
-    <value>L'import a échoué : {0}</value>
-  </data>
-  <data name="UpdateSuccess" xml:space="preserve">
-    <value>La mise à jour du type de document effectuée</value>
-  </data>
-  <data name="UpdateError" xml:space="preserve">
-    <value>La mise à jour du type de fichier à échoué : {0}</value>
-  </data>
-  <data name="DisableSuccess" xml:space="preserve">
-    <value>Le type de document a été désactivé</value>
-  </data>
-  <data name="EnableSuccess" xml:space="preserve">
-    <value>Le type de document a été activé</value>
-  </data>
-  <data name="SynchronizeDatabase" xml:space="preserve">
-    <value>Synchronizer la base</value>
+  <data name="DataFileName" xml:space="preserve">
+    <value>TypeDeDocument_{0}</value>
   </data>
 </root>

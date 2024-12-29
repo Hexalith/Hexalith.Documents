@@ -120,21 +120,14 @@
   <data name="AddTitle" xml:space="preserve">
     <value>Ajouter un conteneur de documents</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Comments" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="Comments" xml:space="preserve">
+    <value>Commentaires</value>
   </data>
   <data name="DataFileName" xml:space="preserve">
     <value>ConteneurDeDocument_{0}</value>
   </data>
-  <data name="Id" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="ListTitle" xml:space="preserve">
     <value>Conteneurs de documents</value>
-  </data>
-  <data name="Name" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
   </data>
   <data name="NewTagKey" xml:space="preserve">
     <value>Id Tag</value>
@@ -145,8 +138,8 @@
   <data name="NewTagValue" xml:space="preserve">
     <value>Valeur</value>
   </data>
-  <data name="Tags" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Conteneur de document {0}</value>

@@ -13,7 +13,7 @@ using Hexalith.Domain.Aggregates;
 /// </summary>
 /// <param name="Id">The unique identifier of the document type.</param>
 /// <param name="Name">The name of the document type.</param>
-/// <param name="Description">A detailed description of the document type.</param>
+/// <param name="Comments">A detailed description of the document type.</param>
 /// <param name="DataExtractionIds">A collection of instructions for extracting data from documents of this type.</param>
 /// <param name="FileTypeIds">A collection of supported file type identifiers.</param>
 /// <param name="Tags">A collection of tags associated with this document type.</param>
@@ -22,7 +22,7 @@ using Hexalith.Domain.Aggregates;
 public record DocumentType(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] string? Description,
+    [property: DataMember(Order = 3)] string? Comments,
     [property: DataMember(Order = 7)] IEnumerable<string> DataExtractionIds,
     [property: DataMember(Order = 8)] IEnumerable<string> FileTypeIds,
     [property: DataMember(Order = 9)] IEnumerable<DocumentTag> Tags,
@@ -134,8 +134,8 @@ public record DocumentType(
     /// </summary>
     /// <param name="e">The description change event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
-    private ApplyResult ApplyEvent(DocumentTypeDescriptionChanged e) => e.Name != Name || e.Description != Description
-        ? ApplyResult.Success(this with { Name = e.Name, Description = e.Description }, [e])
+    private ApplyResult ApplyEvent(DocumentTypeDescriptionChanged e) => e.Name != Name || e.Description != Comments
+        ? ApplyResult.Success(this with { Name = e.Name, Comments = e.Description }, [e])
         : ApplyResult.Error(this, "No changes to apply.");
 
     /// <summary>

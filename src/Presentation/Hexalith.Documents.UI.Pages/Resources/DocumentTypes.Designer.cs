@@ -61,15 +61,6 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
-        /// </summary>
-        internal static string Add {
-            get {
-                return ResourceManager.GetString("Add", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add new document type.
         /// </summary>
         internal static string AddTitle {
@@ -79,38 +70,20 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to Comments.
         /// </summary>
-        internal static string Description {
+        internal static string Comments {
             get {
-                return ResourceManager.GetString("Description", resourceCulture);
+                return ResourceManager.GetString("Comments", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The document type has been disabled.
+        ///   Looks up a localized string similar to DocumentType_[0}.
         /// </summary>
-        internal static string DisableSuccess {
+        internal static string DataFileName {
             get {
-                return ResourceManager.GetString("DisableSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The document type has been enabled.
-        /// </summary>
-        internal static string EnableSuccess {
-            get {
-                return ResourceManager.GetString("EnableSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export.
-        /// </summary>
-        internal static string Export {
-            get {
-                return ResourceManager.GetString("Export", resourceCulture);
+                return ResourceManager.GetString("DataFileName", resourceCulture);
             }
         }
         
@@ -120,51 +93,6 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         internal static string FileTypes {
             get {
                 return ResourceManager.GetString("FileTypes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Identifier.
-        /// </summary>
-        internal static string Id {
-            get {
-                return ResourceManager.GetString("Id", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The identifier is required.
-        /// </summary>
-        internal static string IdRequired {
-            get {
-                return ResourceManager.GetString("IdRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import.
-        /// </summary>
-        internal static string Import {
-            get {
-                return ResourceManager.GetString("Import", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The import failed : {0}.
-        /// </summary>
-        internal static string ImportError {
-            get {
-                return ResourceManager.GetString("ImportError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import completed.
-        /// </summary>
-        internal static string ImportSuccess {
-            get {
-                return ResourceManager.GetString("ImportSuccess", resourceCulture);
             }
         }
         
@@ -187,51 +115,6 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description must not exceed {0} characters.
-        /// </summary>
-        internal static string MaxDescriptionLengthExceeded {
-            get {
-                return ResourceManager.GetString("MaxDescriptionLengthExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Identifier must not exceed {0} characters.
-        /// </summary>
-        internal static string MaxIdLengthExceeded {
-            get {
-                return ResourceManager.GetString("MaxIdLengthExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name must not exceed {0} characters.
-        /// </summary>
-        internal static string MaxNameLengthExceeded {
-            get {
-                return ResourceManager.GetString("MaxNameLengthExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        internal static string Name {
-            get {
-                return ResourceManager.GetString("Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name is required.
-        /// </summary>
-        internal static string NameRequired {
-            get {
-                return ResourceManager.GetString("NameRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to New file type.
         /// </summary>
         internal static string NewFileType {
@@ -241,83 +124,11 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insert base data.
-        /// </summary>
-        internal static string QuickStartData {
-            get {
-                return ResourceManager.GetString("QuickStartData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You are not authorized to read documents.
-        /// </summary>
-        internal static string ReadNotAuthorized {
-            get {
-                return ResourceManager.GetString("ReadNotAuthorized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove.
-        /// </summary>
-        internal static string Remove {
-            get {
-                return ResourceManager.GetString("Remove", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        internal static string Save {
-            get {
-                return ResourceManager.GetString("Save", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Synchronize.
-        /// </summary>
-        internal static string Synchronize {
-            get {
-                return ResourceManager.GetString("Synchronize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Synchronize database.
-        /// </summary>
-        internal static string SynchronizeDatabase {
-            get {
-                return ResourceManager.GetString("SynchronizeDatabase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Document type {0}.
         /// </summary>
         internal static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The document type update failed : {0}.
-        /// </summary>
-        internal static string UpdateError {
-            get {
-                return ResourceManager.GetString("UpdateError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Document type update succeeded.
-        /// </summary>
-        internal static string UpdateSuccess {
-            get {
-                return ResourceManager.GetString("UpdateSuccess", resourceCulture);
             }
         }
     }

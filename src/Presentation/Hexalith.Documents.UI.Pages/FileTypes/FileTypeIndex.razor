@@ -7,9 +7,7 @@
                     OnDatabaseSynchronize="SynchronizeDatabaseAsync"
                     AddPagePath="/Documents/Add/FileType"
                     Title="@Labels.ListTitle">
-    <FileTypeSummaryGrid Items="_summariesQuery"
-                         OnDisabledChanged="OnDisabledChangedAsync"
-                         OnSummaryDoubleClick="OnSummaryDoubleClick" />
+    <FileTypeSummaryGrid Items="_summariesQuery" EntityDetailsPath="/Documents/FileType" OnDisabledChanged="OnDisabledChangedAsync" />
 </HexEntityIndexPage>
 
 @code {
@@ -47,8 +45,13 @@
     {
         return Task.CompletedTask;
     }
-    private async Task OnDisabledChangedAsync(FileTypeSummaryViewModel item)
+    private async Task OnDisabledChangedAsync(string id)
     {
+        var item = _summaries?.FirstOrDefault(s => s.Id == id);
+        if (item is null)
+        {
+            return;
+        }
         if (item.Disabled)
         {
             await CommandService.SubmitCommandAsync(User, new DisableFileType(item.Id), CancellationToken.None);

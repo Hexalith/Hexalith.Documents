@@ -1,13 +1,7 @@
 ﻿@page "/Documents/Add/DocumentType"
 @page "/Documents/DocumentType/{Id}"
 @rendermode InteractiveAuto
-<FluentToolbar>
-	@if (Id is not null)
-	{
-		<FluentButton Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.Add())">@Labels.Add</FluentButton>
-	}
-	<FluentAnchor Href="/Documents/DocumentType" Appearance="Appearance.Stealth" IconStart="@(new Icons.Filled.Size20.AppsList())">@Labels.List</FluentAnchor>
-</FluentToolbar>
+<HexEntityDetailsToolbar IndexPath="/Documents/DocumentType" OnRefresh="OnRefreshAsync" />
 
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
 	@if (Id is null) // Add
@@ -22,49 +16,40 @@
 	{
 		<FluentGrid Orientation="Orientation.Vertical">
 			<FluentGridItem xs="12" md="3">
-				<FluentTextField Style="width:100%;" Disabled="@(Id is not null)" @bind-Value="_data.Id" Label="@Labels.Id"></FluentTextField>
+				<HexEntityIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexEntityIdField>
 			</FluentGridItem>
-			<FluentGridItem xs="12" md="3">
-				<FluentTextField Style="width:100%;" @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
+			<FluentGridItem xs="12" md="@(Id is null ? 9 : 6)">
+				<HexEntityNameField @bind-Value="_data.Name"></HexEntityNameField>
 			</FluentGridItem>
-			<FluentGridItem xs="12" xl="6">
-				<FluentTextField Style="width:100%;" @bind-Value="_data.Description" Label="@Labels.Description"></FluentTextField>
+			@if (Id is not null)
+			{
+				<FluentGridItem xs="12" md="3" Style="display: flex; align-items: flex-end;">
+					<HexEntityDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexEntityDisabledCheckbox>
+				</FluentGridItem>
+			}
+			<FluentGridItem xs="12" md="12">
+				<HexEntityCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexEntityCommentsField>
 			</FluentGridItem>
 			<FluentGridItem md="12">
 				<FluentLabel Typo="Typography.PaneHeader">@Labels.FileTypes</FluentLabel>
 			</FluentGridItem>
-			<FluentGridItem xs="12" md="6">
+			<FluentGridItem xs="6" md="6">
 				<FluentTextField Style="width:100%;" @bind-Value="_newFileType" Label="@Labels.NewFileType"></FluentTextField>
 			</FluentGridItem>
-			<FluentGridItem xs="12" md="12">
-				<FluentButton OnClick="AddFileType"
-				IconStart="@(new Icons.Regular.Size16.Add())"
-				Style="margin-left: 8px;">
-					@Labels.Add
-				</FluentButton>
+			<FluentGridItem xs="6" md="6">
+				<HexAddButton OnClick="AddFileType"/>
 			</FluentGridItem>
 			@foreach (string fileType in _data.FileTypeIds)
 			{
 				<FluentGridItem xs="12" xl="6">
-
 					<FluentStack Orientation="Orientation.Horizontal" Style="margin: 4px 0;">
 						<FluentTextField Style="width:75%;" Value="@fileType" Readonly="true"></FluentTextField>
-						<FluentButton OnClick="@(() =>RemoveTarget(fileType))"
-						IconStart="@(new Icons.Regular.Size16.Delete())"
-						Style="margin-left: 8px;">
-							@Labels.Remove
-						</FluentButton>
+						<HexRemoveButton OnClick="@(() =>RemoveTarget(fileType))"/>
 					</FluentStack>
 				</FluentGridItem>
 			}
-
 			<FluentGridItem md="12">
-				<FluentButton Disabled="@((_saveClicked && !ValidationResult.IsValid) || !_data.HasChanges)"
-				Appearance="Appearance.Accent"
-				IconStart="@(new Icons.Regular.Size24.Add())"
-				OnClick="OnSave">
-					@Labels.Save
-				</FluentButton>
+				<HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
 			</FluentGridItem>
 			<FluentGridItem>
 				<HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
@@ -81,10 +66,9 @@
 
 	private ClaimsPrincipal? _user;
 	private DocumentTypeEditViewModel _data = new();
-	private string _newFileType = string.Empty;
-	private bool _saveClicked;
+	private string? _newFileType;
 
-	private ValidationResult ValidationResult => new DocumentTypeEditValidation().Validate(_data);
+	private ValidationResult? ValidationResult;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -117,11 +101,11 @@
 		{
 			return;
 		}
-		_saveClicked = true;
 		if (!_data.HasChanges)
 		{
 			return;
 		}
+		ValidationResult = new DocumentTypeEditValidation().Validate(_data);
 		if (!ValidationResult.IsValid)
 			return;
 		DocumentTypeCommand fileTypeCommand;
@@ -130,7 +114,7 @@
 			fileTypeCommand = new AddDocumentType(
 						_data.Id!,
 						_data.Name!,
-						_data.Description,
+						_data.Comments,
 						_data.FileTypeIds);
 			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
 			_data = new();
@@ -142,7 +126,7 @@
 			fileTypeCommand = new ChangeDocumentTypeDescription(
 						_data.Id!,
 						_data.Name!,
-						_data.Description);
+						_data.Comments);
 			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
 		}
 		if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
@@ -164,6 +148,13 @@
 				await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
 			}
 		}
+		if (Id is null)
+		{
+			_data = new();
+			_newFileType = null;
+
+			StateHasChanged();
+		}
 	}
 
 	private void AddFileType()
@@ -180,4 +171,9 @@
 		_data.FileTypeIds.Remove(fileType);
 		StateHasChanged();
 	}
+	private Task OnRefreshAsync()
+	{
+		return Task.CompletedTask;
+	}
+
 }

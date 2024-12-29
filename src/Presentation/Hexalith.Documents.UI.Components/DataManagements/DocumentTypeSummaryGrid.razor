@@ -1,8 +1,9 @@
-﻿<HexEntitySummaryGrid TGridItem="FileTypeSummaryViewModel"
+﻿<HexEntitySummaryGrid TGridItem="DataManagementSummaryViewModel"
                       Items="Items"
                       ShowDisabledColumn="ShowDisabledColumn"
                       OnDisabledChanged="OnDisabledChanged"
-                      EntityDetailsPath="/Documents/FileType">
+                      EntityDetailsPath="/Documents/DataManagement">
+
 </HexEntitySummaryGrid>
 
 
@@ -23,10 +24,10 @@
     /// Gets or sets the callback when a row is double clicked.
     /// </summary>
     [Parameter]
-    public string? EntityDetailsPath { get; set; } = "/Documents/FileType";
+    public string? EntityDetailsPath { get; set; } = "/Documents/DataManagement";
 
     [Parameter]
     [EditorRequired]
-    public required IQueryable<FileTypeSummaryViewModel> Items { get; set; }
+    public required IQueryable<DataManagementSummaryViewModel> Items { get; set; }
 
 }

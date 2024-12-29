@@ -62,6 +62,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Update="DataManagements\_Imports.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="Resources\DocumentContainers.resx">
       <LastGenOutput>DocumentContainers.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>

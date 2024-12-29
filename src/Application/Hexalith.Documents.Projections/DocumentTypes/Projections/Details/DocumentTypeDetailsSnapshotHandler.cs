@@ -37,7 +37,7 @@ public partial class DocumentTypeDetailsSnapshotHandler(
         DocumentTypeDetailsViewModel newValue = new(
             documentType.Id,
             documentType.Name,
-            documentType.Description,
+            documentType.Comments,
             documentType.DataExtractionIds,
             documentType.FileTypeIds,
             documentType.Tags,

@@ -1,5 +1,6 @@
 ﻿namespace Hexalith.Documents.UI.Pages.DocumentTypes;
 
+using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Extensions.Helpers;
@@ -7,7 +8,7 @@ using Hexalith.Extensions.Helpers;
 /// <summary>
 /// ViewModel for editing file types.
 /// </summary>
-public class DocumentTypeEditViewModel
+public sealed class DocumentTypeEditViewModel : IIdDescription
 {
     private string _id = string.Empty;
 
@@ -20,7 +21,7 @@ public class DocumentTypeEditViewModel
         ArgumentNullException.ThrowIfNull(details);
         Original = details;
         Name = details.Name;
-        Description = details.Description;
+        Comments = details.Comments;
         Disabled = details.Disabled;
         FileTypeIds = [.. details.FileTypeIds];
         DataExtractionIds = [.. details.DataExtractionIds];
@@ -42,19 +43,25 @@ public class DocumentTypeEditViewModel
     {
     }
 
-    public bool DataExtractionChanged => !DataExtractionIds.SequenceEqual(Original.DataExtractionIds);
-
-    public ICollection<string> DataExtractionIds { get; } = [];
-
     /// <summary>
     /// Gets or sets the description of the file type.
     /// </summary>
-    public string? Description { get; set; }
+    public string? Comments { get; set; }
+
+    /// <summary>
+    /// Gets a value indicating whether the data extraction has changed.
+    /// </summary>
+    public bool DataExtractionChanged => !DataExtractionIds.SequenceEqual(Original.DataExtractionIds);
+
+    /// <summary>
+    /// Gets the data extraction IDs associated with the file type.
+    /// </summary>
+    public ICollection<string> DataExtractionIds { get; } = [];
 
     /// <summary>
     /// Gets a value indicating whether the description has changed.
     /// </summary>
-    public bool DescriptionChanged => Description != Original.Description || Name != Original.Name;
+    public bool DescriptionChanged => Comments != Original.Comments || Name != Original.Name;
 
     /// <summary>
     /// Gets or sets a value indicating whether the file type is disabled.
@@ -101,7 +108,16 @@ public class DocumentTypeEditViewModel
     /// </summary>
     public DocumentTypeDetailsViewModel Original { get; }
 
+    /// <summary>
+    /// Gets the tags associated with the file type.
+    /// </summary>
     public ICollection<DocumentTag> Tags { get; } = [];
 
+    /// <summary>
+    /// Gets a value indicating whether the tags have changed.
+    /// </summary>
     public bool TagsChanged => !Tags.SequenceEqual(Original.Tags);
+
+    /// <inheritdoc/>
+    string IIdDescription.Description => Name;
 }

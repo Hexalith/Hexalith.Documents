@@ -27,6 +27,6 @@ public class DocumentTypeDescriptionChangedOnDetailsProjectionHandler(IProjectio
             return Task.FromResult<DocumentTypeDetailsViewModel?>(null);
         }
 
-        return Task.FromResult<DocumentTypeDetailsViewModel?>(model with { Name = baseEvent.Name, Description = baseEvent.Description });
+        return Task.FromResult<DocumentTypeDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Description });
     }
 }
