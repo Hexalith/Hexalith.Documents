@@ -32,16 +32,13 @@ public record DocumentState(
     [property: DataMember(Order = 10)] string? PublishedByContactId)
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="DocumentState"/> class in Draft status.
+    /// Creates a new instance of the <see cref="DocumentState"/> class with the specified creation timestamp and creator contact ID.
     /// </summary>
-    /// <param name="createdOn">The creation timestamp of the document.</param>
+    /// <param name="createdOn">The timestamp when the document was created.</param>
     /// <param name="createdByContactId">The identifier of the contact who created the document.</param>
-    /// <remarks>
-    /// This constructor creates a new document in Draft status with only the creation information set.
-    /// All other state fields (modification, validation, publication) are initialized to null.
-    /// </remarks>
-    public DocumentState(DateTimeOffset createdOn, string createdByContactId)
-        : this(
+    /// <returns>A new instance of the <see cref="DocumentState"/> class.</returns>
+    public static DocumentState Create(DateTimeOffset createdOn, string createdByContactId)
+        => new(
             0,
             DocumentStatus.Draft,
             createdOn,
@@ -51,7 +48,5 @@ public record DocumentState(
             null,
             null,
             null,
-            null)
-    {
-    }
+            null);
 }

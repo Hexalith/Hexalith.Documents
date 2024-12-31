@@ -26,7 +26,7 @@ public class DocumentAddedOnDetailsProjectionHandler(IProjectionFactory<Document
             new DocumentDescription(baseEvent.Name, baseEvent.Comments, baseEvent.DocumentTypeId, null),
             new DocumentRouting(baseEvent.OwnerId, [], []),
             baseEvent.DocumentTypeId,
-            new DocumentState(baseEvent.CreatedOn, baseEvent.OwnerId),
+            DocumentState.Create(baseEvent.CreatedOn, baseEvent.OwnerId),
             [new DocumentActor(baseEvent.OwnerId, DocumentActorRole.Owner)],
             new FileDescription(baseEvent.Id, baseEvent.Name, baseEvent.Name, 0, string.Empty),
             [],
