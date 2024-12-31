@@ -9,13 +9,13 @@ using System.Text.Json.Serialization;
 /// <remarks>
 /// <para>
 /// The document lifecycle follows a progressive flow:
-/// Draft -> Final -> Validated -> Published
+/// Draft -> Final -> Validated -> Published.
 /// </para>
 /// <para>
 /// Status transitions are typically restricted to follow this progression, with specific rules:
 /// - Only authorized actors can initiate status changes
 /// - Some transitions may require additional validation or approval
-/// - Each status change is tracked for audit purposes
+/// - Each status change is tracked for audit purposes.
 /// </para>
 /// <para>
 /// The status affects what operations are allowed on the document and who can perform them,
@@ -35,7 +35,7 @@ public enum DocumentStatus
     /// - Document is not visible to general users
     /// - Metadata can be updated
     /// - Document can be deleted
-    /// - Can be promoted to Final status when ready
+    /// - Can be promoted to Final status when ready.
     /// </remarks>
     Draft = 0,
 
@@ -49,7 +49,7 @@ public enum DocumentStatus
     /// - Only metadata updates are allowed
     /// - Document is visible to authorized reviewers
     /// - Can be returned to Draft if changes are needed
-    /// - Can be promoted to Validated status after review
+    /// - Can be promoted to Validated status after review.
     /// </remarks>
     Final = 1,
 
@@ -63,7 +63,7 @@ public enum DocumentStatus
     /// - Only specific metadata updates allowed
     /// - Document is ready for publication
     /// - Requires Owner permission for status changes
-    /// - Can be promoted to Published status
+    /// - Can be promoted to Published status.
     /// </remarks>
     Validated = 2,
 
@@ -77,7 +77,7 @@ public enum DocumentStatus
     /// - Content and core metadata are immutable
     /// - Only usage metadata can be updated
     /// - New versions must be created for changes
-    /// - Archival policies may apply
+    /// - Archival policies may apply.
     /// </remarks>
     Published = 3,
 }

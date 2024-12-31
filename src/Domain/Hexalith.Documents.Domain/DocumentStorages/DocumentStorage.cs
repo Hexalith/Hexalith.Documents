@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Domain.DocumentStorages;
+﻿namespace Hexalith.Documents.Domain.DocumentStorages;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;

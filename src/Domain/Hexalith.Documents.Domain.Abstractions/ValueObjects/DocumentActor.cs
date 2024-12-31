@@ -15,7 +15,7 @@ using System.Runtime.Serialization;
 /// - Control access to document operations
 /// - Track document modifications
 /// - Manage document ownership
-/// - Enforce role-based permissions
+/// - Enforce role-based permissions.
 /// </para>
 /// <para>
 /// The default constructor creates a read-only actor with an empty contact ID, typically used as a placeholder

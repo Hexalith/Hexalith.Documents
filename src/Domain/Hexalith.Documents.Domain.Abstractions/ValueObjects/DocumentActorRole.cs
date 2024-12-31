@@ -9,7 +9,7 @@
 /// The roles follow a hierarchical structure where each level includes specific permissions:
 /// - Owner: Has full control, including permission management
 /// - Contributor: Can modify content but cannot manage permissions
-/// - Reader: Has read-only access
+/// - Reader: Has read-only access.
 /// </para>
 /// <para>
 /// These roles are used in conjunction with <see cref="DocumentActor"/> to implement
@@ -25,7 +25,7 @@ public enum DocumentActorRole
     /// - Delete the document
     /// - Grant or revoke access rights
     /// - Manage document metadata
-    /// - Transfer ownership
+    /// - Transfer ownership.
     /// </summary>
     Owner,
 

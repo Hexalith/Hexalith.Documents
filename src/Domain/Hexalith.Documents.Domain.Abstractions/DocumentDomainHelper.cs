@@ -1,4 +1,4 @@
-namespace Hexalith.Documents.Domain;
+﻿namespace Hexalith.Documents.Domain;
 
 /// <summary>
 /// Provides constant definitions for aggregate names in the Document domain.
@@ -13,14 +13,14 @@ namespace Hexalith.Documents.Domain;
 /// - Information Extraction: Processes and extracts data from documents
 /// - Storage: Manages physical document storage
 /// - Document Type: Defines and manages document classifications
-/// - File Type: Handles file format specifications
+/// - File Type: Handles file format specifications.
 /// </para>
 /// <para>
 /// These aggregate names are used throughout the system for:
 /// - Event topic routing
 /// - Message bus configuration
 /// - Aggregate identification
-/// - Domain event correlation
+/// - Domain event correlation.
 /// </para>
 /// </remarks>
 public static class DocumentDomainHelper
