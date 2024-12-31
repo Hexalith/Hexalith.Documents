@@ -94,6 +94,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         // Add command handlers
         _ = services
             .AddDocumentManagement()
+            .AddDocumentStorage()
             .AddDocumentsProjectionActorFactories();
 
         _ = services

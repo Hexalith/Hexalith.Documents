@@ -61,15 +61,6 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export.
-        /// </summary>
-        internal static string Export {
-            get {
-                return ResourceManager.GetString("Export", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         internal static string Import {
@@ -88,7 +79,7 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a data file.
+        ///   Looks up a localized string similar to Select an operation.
         /// </summary>
         internal static string Placeholder {
             get {

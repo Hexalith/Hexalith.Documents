@@ -22,16 +22,16 @@ using Hexalith.Infrastructure.DaprRuntime.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Class PartiesWebApiHelpers.
+/// Class DocumentsWebApiHelpers.
 /// </summary>
 public static class DocumentsWebApiHelpers
 {
     /// <summary>
-    /// Adds the customer projections.
+    /// Adds the document projection actor factories.
     /// </summary>
     /// <param name="services">The services.</param>
     /// <returns>IServiceCollection.</returns>
-    /// <exception cref="ArgumentNullException">null.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when services is null.</exception>
     public static IServiceCollection AddDocumentsProjectionActorFactories(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
@@ -58,6 +58,25 @@ public static class DocumentsWebApiHelpers
         _ = services.AddActorProjectionFactory<DocumentInformationExtraction>();
         _ = services.AddActorProjectionFactory<DocumentInformationExtractionSummaryViewModel>();
         _ = services.AddActorProjectionFactory<DocumentInformationExtractionDetailsViewModel>();
+        return services;
+    }
+
+    /// <summary>
+    /// Adds the document storage services.
+    /// </summary>
+    /// <param name="services">The services.</param>
+    /// <returns>IServiceCollection.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when services is null.</exception>
+    public static IServiceCollection AddDocumentStorage(this IServiceCollection services)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        _ = services.AddTransient<AzureContainerStorage>();
+        _ = services.AddTransient<OneDriveStorage>();
+        _ = services.AddTransient<FileSystemStorage>();
+        _ = services.AddTransient<DropboxStorage>();
+        _ = services.AddTransient<GoogleDriveStorage>();
+        _ = services.AddTransient<AwsS3BucketStorage>();
+        _ = services.AddTransient<SharepointStorage>();
         return services;
     }
 }

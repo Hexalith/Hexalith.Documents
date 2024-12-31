@@ -67,7 +67,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
     {
         ArgumentNullException.ThrowIfNull(command);
         ArgumentNullException.ThrowIfNull(metadata);
-
+        DateTimeOffset now = Time.GetLocalNow();
         DocumentContainerDetailsViewModel container = await GetUserContainerAsync(metadata, cancellationToken).ConfigureAwait(false);
         AddDocument addDocument = new(
             command.Id,
@@ -76,16 +76,16 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
             null,
             null,
             metadata.Context.UserId,
-            Time.GetLocalNow(),
+            now,
             "Export");
-        await _commandProcessor.SubmitAsync(addDocument, Metadata.CreateNew(addDocument, metadata, Time.GetLocalNow()), cancellationToken).ConfigureAwait(false);
+        await _commandProcessor.SubmitAsync(addDocument, Metadata.CreateNew(addDocument, metadata, now), cancellationToken).ConfigureAwait(false);
         GetDocumentStorage getDocumentStorage = new(container.DocumentStorageId);
         DocumentStorage? documentPartition = (await _requestProcessor.ProcessAsync(
                 getDocumentStorage,
-                Metadata.CreateNew(getDocumentStorage, metadata, Time.GetLocalNow()),
+                Metadata.CreateNew(getDocumentStorage, metadata, now),
                 cancellationToken)
             .ConfigureAwait(false) as GetDocumentStorage)?.Result;
-        DataExportStarted exportStarted = new(command.Id, Time.GetLocalNow());
+        DataExportStarted exportStarted = new(command.Id, now);
         aggregate = new DataManagement(exportStarted);
         if (documentPartition is null)
         {
@@ -100,12 +100,14 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
 #pragma warning disable CA1031 // Do not catch general exception types
         try
         {
-            using IWritableFile file = await _writableFileProvider.CreateFileAsync(
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
+            await using IWritableFile file = await _writableFileProvider.CreateFileAsync(
                 documentPartition.StorageType,
                 documentPartition.ConnectionString,
                 container.Path,
                 command.Id,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken);
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
             object? request = command.RequestObject;
             if (request is IChunkableRequest chunkedRequest && chunkedRequest.Take > 0)
             {

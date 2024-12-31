@@ -135,10 +135,7 @@
   <data name="ListTitle" xml:space="preserve">
     <value>Document types</value>
   </data>
-  <data name="Comments" xml:space="preserve">
-    <value>Comments</value>
-  </data>
   <data name="DataFileName" xml:space="preserve">
-    <value>DocumentType_[0}</value>
+    <value>DocumentType_{0}</value>
   </data>
 </root>

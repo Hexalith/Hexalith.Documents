@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 /// <summary>
 /// Represents a writable file stream that supports asynchronous disposal.
 /// </summary>
-public interface IWritableFile : IDisposable
+public interface IWritableFile : IAsyncDisposable
 {
+    /// <summary>
+    /// Gets the Uri of the file.
+    /// </summary>
+    Uri FileUrl { get; }
+
+    /// <summary>
+    /// Gets the size of the file.
+    /// </summary>
+    long Size { get; }
+
     /// <summary>
     /// Gets the writable stream.
     /// </summary>

@@ -70,16 +70,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comments.
-        /// </summary>
-        internal static string Comments {
-            get {
-                return ResourceManager.GetString("Comments", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DocumentType_[0}.
+        ///   Looks up a localized string similar to DocumentType_{0}.
         /// </summary>
         internal static string DataFileName {
             get {

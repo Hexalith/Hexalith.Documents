@@ -36,7 +36,7 @@ public record DocumentStorage(
         : this(
               string.Empty,
               string.Empty,
-              DocumentStorageType.LocalFile,
+              DocumentStorageType.FileSystem,
               null,
               string.Empty,
               false)

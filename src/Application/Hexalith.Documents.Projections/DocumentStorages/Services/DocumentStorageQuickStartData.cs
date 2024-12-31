@@ -44,7 +44,7 @@ public static class DocumentStorageQuickStartData
     internal static AddDocumentStorage Default => new(
             "Default",
             "Default storage in Azure",
-            DocumentStorageType.LocalFile,
+            DocumentStorageType.FileSystem,
             "The default storage using Azure Storage Containers",
             "C:\\storage-default");
 
@@ -57,7 +57,7 @@ public static class DocumentStorageQuickStartData
     internal static AddDocumentStorage Temp => new(
         "Temp",
         "Temporary local storage",
-        DocumentStorageType.LocalFile,
+        DocumentStorageType.FileSystem,
         "Temporary storage for documents that are either waiting to be processed or are only needed for a short period.",
         "C:\\storage-temp");
 }

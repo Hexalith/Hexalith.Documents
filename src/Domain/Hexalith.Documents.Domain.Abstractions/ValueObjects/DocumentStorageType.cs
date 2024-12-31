@@ -11,7 +11,7 @@ public enum DocumentStorageType
     /// <summary>
     /// The document is stored as a local file.
     /// </summary>
-    LocalFile,
+    FileSystem,
 
     /// <summary>
     /// The document is stored in an Azure Storage Container.

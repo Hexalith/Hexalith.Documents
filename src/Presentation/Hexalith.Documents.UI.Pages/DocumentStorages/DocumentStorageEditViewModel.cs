@@ -34,7 +34,7 @@ public sealed class DocumentStorageEditViewModel : IIdDescription
         : this(new DocumentStorageDetailsViewModel(
         string.Empty,
         string.Empty,
-        DocumentStorageType.LocalFile,
+        DocumentStorageType.FileSystem,
         string.Empty,
         null,
         false))
