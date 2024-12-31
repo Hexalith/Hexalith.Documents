@@ -74,7 +74,7 @@ public class GetDataManagementExportsHandler : RequestHandlerBase<GetDataManagem
 
         foreach (string id in ids)
         {
-            summaryTasks.Add(_aggregateService.GetSnapshotAsync(aggregateName, partitionId, id));
+            summaryTasks.Add(_aggregateService.GetSnapshotAsync(aggregateName, partitionId, id, cancellationToken));
         }
 
         SnapshotEvent?[] results = await Task.WhenAll(summaryTasks).ConfigureAwait(false);

@@ -37,17 +37,27 @@ public static class FileTypeQuickStartData
     /// Gets the details for the HTML file type.
     /// </summary>
     internal static AddFileType HTML => new(
-        "HTML",
+        "Html",
         "HTML file",
         "Type for HTML files",
         null,
         ["application/html", "text/html"]);
 
     /// <summary>
+    /// Gets the details for the Json file type.
+    /// </summary>
+    internal static AddFileType Json => new(
+        "Json",
+        "Json file",
+        "Type for JSON files",
+        null,
+        ["application/json"]);
+
+    /// <summary>
     /// Gets the details for the Markdown file type.
     /// </summary>
     internal static AddFileType Markdown => new(
-        "MD",
+        "Markdown",
         "Markdown file",
         "Type for Markdown files",
         null,
@@ -57,7 +67,7 @@ public static class FileTypeQuickStartData
     /// Gets the details for the PDF file type.
     /// </summary>
     internal static AddFileType Pdf => new(
-        "PDF",
+        "Pdf",
         "Adobe PDF",
         "Type for Adobe PDF files",
         null,
@@ -83,7 +93,7 @@ public static class FileTypeQuickStartData
     /// Gets the details for the Text file type.
     /// </summary>
     internal static AddFileType Text => new(
-        "TXT",
+        "Text",
         "Text file",
         "Type for text files",
         null,
@@ -105,4 +115,14 @@ public static class FileTypeQuickStartData
             "application/msword-template",
             "application/vnd.ms-word.template",
             "application/vnd.ms-word.document.macroEnabled.12"]);
+
+    /// <summary>
+    /// Gets the details for the Json file type.
+    /// </summary>
+    internal static AddFileType Xml => new(
+        "Xml",
+        "Xml file",
+        "Type for XML files",
+        null,
+        ["application/xml"]);
 }
