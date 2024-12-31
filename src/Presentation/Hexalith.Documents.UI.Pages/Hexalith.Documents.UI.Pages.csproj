@@ -24,6 +24,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DocumentContainers.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\DocumentMenu.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentMenu.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Documents.Designer.cs">
       <DependentUpon>Documents.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -38,11 +43,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>FileTypes.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\DocumentMenu.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DocumentMenu.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
