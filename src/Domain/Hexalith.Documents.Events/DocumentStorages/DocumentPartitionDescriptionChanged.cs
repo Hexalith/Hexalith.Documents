@@ -8,7 +8,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record DocumentStorageDescriptionChanged(
     string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] string Description)
+    [property: DataMember(Order = 3)] string? Comments)
     : DocumentStorageEvent(Id)
 {
 }

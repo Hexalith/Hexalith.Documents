@@ -27,6 +27,6 @@ public class DocumentStorageDescriptionChangedOnDetailsProjectionHandler(IProjec
             return Task.FromResult<DocumentStorageDetailsViewModel?>(null);
         }
 
-        return Task.FromResult<DocumentStorageDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Description });
+        return Task.FromResult<DocumentStorageDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Comments });
     }
 }

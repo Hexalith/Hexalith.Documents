@@ -123,9 +123,9 @@ public record DocumentStorage(
             false)
             : new ApplyResult(this, [new DocumentStorageEventCancelled(e, $"The document container {Id}/{Name} is already disabled.")], true);
 
-    private ApplyResult ApplyEvent(DocumentStorageDescriptionChanged e) => e.Name != Name || e.Description != Description
+    private ApplyResult ApplyEvent(DocumentStorageDescriptionChanged e) => e.Name != Name || e.Comments != Description
         ? new ApplyResult(
-            this with { Name = e.Name, Description = e.Description },
+            this with { Name = e.Name, Description = e.Comments },
             [e],
             false)
         : new ApplyResult(this, [], false);
