@@ -81,7 +81,7 @@ public class GetDataManagementExportsHandler : RequestHandlerBase<GetDataManagem
 
         IEnumerable<DataManagementExportViewModel> queryResult = [.. results
             .Where(p => p is not null)
-            .Select(p => DataManagementExportViewModel.FromAggregate(p.GetAggregate<DataManagement>()))];
+            .Select(p => DataManagementExportViewModel.FromAggregate(p!.GetAggregate<DataManagement>()))];
 
         return request with { Results = queryResult };
     }

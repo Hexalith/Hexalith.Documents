@@ -68,9 +68,6 @@
 
     private ClaimsPrincipal? _user;
     private DocumentStorageEditViewModel _data = new();
-    private string? _newTagKey;
-    private string? _newTagValue;
-    private bool _newTagUnique = false;
 
     private ValidationResult? ValidationResult;
 
@@ -148,9 +145,6 @@
         if (Id is null)
         {
             _data = new();
-            _newTagKey = _newTagValue = null;
-            _newTagUnique = false;
-
             StateHasChanged();
         }
     }
