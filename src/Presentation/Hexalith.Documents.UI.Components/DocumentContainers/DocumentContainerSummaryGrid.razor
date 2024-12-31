@@ -2,7 +2,7 @@
                       Items="Items"
                       ShowDisabledColumn="ShowDisabledColumn"
                       OnDisabledChanged="OnDisabledChanged"
-                      EntityDetailsPath="/Documents/DocumentContainer">
+                      EntityDetailsPath="@EntityDetailsPath">
     <PropertyColumn TGridItem="DocumentContainerSummaryViewModel" TProp="string" Title="@Labels.DocumentStorageId" Property="@(p => p.DocumentStorageId)" Sortable="true" />
 
 </HexEntitySummaryGrid>
