@@ -13,9 +13,9 @@ public partial record AddDocumentStorage(
     [property: DataMember(Order = 3)]
     DocumentStorageType StorageType,
     [property: DataMember(Order = 4)]
-    string? Description,
+    string? Comments,
     [property: DataMember(Order = 5)]
-    string ConnectionString)
+    string? ConnectionString)
     : DocumentStorageCommand(Id)
 {
 }

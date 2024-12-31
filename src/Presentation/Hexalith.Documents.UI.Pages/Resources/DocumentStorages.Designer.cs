@@ -22,14 +22,14 @@ namespace Hexalith.Documents.UI.Pages.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DocumentContainers {
+    internal class DocumentStorages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DocumentContainers() {
+        internal DocumentStorages() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.DocumentContainers", typeof(DocumentContainers).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.DocumentStorages", typeof(DocumentStorages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a document container.
+        ///   Looks up a localized string similar to Add a document storage.
         /// </summary>
         internal static string AddTitle {
             get {
@@ -70,7 +70,16 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DocumentContainer_{0}.
+        ///   Looks up a localized string similar to Connection string.
+        /// </summary>
+        internal static string ConnectionString {
+            get {
+                return ResourceManager.GetString("ConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DocumentStorages_{0}.
         /// </summary>
         internal static string DataFileName {
             get {
@@ -79,7 +88,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document containers.
+        ///   Looks up a localized string similar to Document storages.
         /// </summary>
         internal static string ListTitle {
             get {
@@ -88,43 +97,16 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag key.
+        ///   Looks up a localized string similar to Storage type.
         /// </summary>
-        internal static string NewTagKey {
+        internal static string StorageType {
             get {
-                return ResourceManager.GetString("NewTagKey", resourceCulture);
+                return ResourceManager.GetString("StorageType", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is unique.
-        /// </summary>
-        internal static string NewTagUnique {
-            get {
-                return ResourceManager.GetString("NewTagUnique", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value.
-        /// </summary>
-        internal static string NewTagValue {
-            get {
-                return ResourceManager.GetString("NewTagValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tags.
-        /// </summary>
-        internal static string Tags {
-            get {
-                return ResourceManager.GetString("Tags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Document container {0}.
+        ///   Looks up a localized string similar to Document storage : {0}.
         /// </summary>
         internal static string Title {
             get {

@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record GetDocumentContainerExports(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DocumentContainerExportViewModel> Results) : IChunkableRequest
+    [property: DataMember(Order = 3)] IEnumerable<DocumentContainerImportExportViewModel> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentContainerExports"/> class.

@@ -23,7 +23,7 @@ public static class DocumentStorageCommandHandlerHelper
                 c.Id,
                 c.Name,
                 c.StorageType,
-                c.Description,
+                c.Comments,
                 c.ConnectionString),
                 ev => new DocumentStorage((DocumentStorageAdded)ev))
             .TryAddSimpleCommandHandler<EnableDocumentStorage>(c => new DocumentStorageEnabled(c.Id))
@@ -31,5 +31,5 @@ public static class DocumentStorageCommandHandlerHelper
             .TryAddSimpleCommandHandler<ChangeDocumentStorageDescription>(c => new DocumentStorageDescriptionChanged(
                 c.Id,
                 c.Name,
-                c.Description));
+                c.Comments));
 }

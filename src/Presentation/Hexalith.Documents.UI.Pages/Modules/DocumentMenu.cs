@@ -42,7 +42,7 @@ public static class DocumentMenu
                             10,
                             [
                                 new MenuItemInformation(
-                                    Labels.DocumentStorageMenuItem,
+                                    Labels.DataManagementMenuItem,
                                     "Documents/DataManagement",
                                     new IconInformation("DatabaseMultiple", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,

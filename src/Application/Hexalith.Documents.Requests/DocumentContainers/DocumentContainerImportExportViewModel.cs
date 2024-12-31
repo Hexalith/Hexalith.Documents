@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using Hexalith.Documents.Domain.ValueObjects;
 
 [DataContract]
-public partial record DocumentContainerExportViewModel(
+public partial record DocumentContainerImportExportViewModel(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string DocumentStorageId,
     [property: DataMember(Order = 3)] string Name,

@@ -19,6 +19,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DataManagements.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\DocumentStorages.Designer.cs">
+      <DependentUpon>DocumentStorages.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\DocumentContainers.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -50,6 +55,13 @@
     <EmbeddedResource Update="Resources\DataManagements.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DataManagements.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentStorages.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentStorages.resx">
+      <LastGenOutput>DocumentStorages.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\DocumentContainers.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -120,9 +120,6 @@
   <data name="AddTitle" xml:space="preserve">
     <value>Add a document container</value>
   </data>
-  <data name="Comments" xml:space="preserve">
-    <value>Comments</value>
-  </data>
   <data name="DataFileName" xml:space="preserve">
     <value>DocumentContainer_{0}</value>
   </data>

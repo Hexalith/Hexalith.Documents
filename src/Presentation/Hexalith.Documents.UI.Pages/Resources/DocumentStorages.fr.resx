@@ -118,27 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddTitle" xml:space="preserve">
-    <value>Ajouter un conteneur de documents</value>
+    <value>Ajouter un stockage de documents</value>
   </data>
   <data name="DataFileName" xml:space="preserve">
-    <value>ConteneurDeDocument_{0}</value>
+    <value>StockageDocuments_{0}</value>
   </data>
   <data name="ListTitle" xml:space="preserve">
-    <value>Conteneurs de documents</value>
+    <value>Stockages de documents</value>
   </data>
-  <data name="NewTagKey" xml:space="preserve">
-    <value>Id Tag</value>
+  <data name="StorageType" xml:space="preserve">
+    <value>Type de stockage</value>
   </data>
-  <data name="NewTagUnique" xml:space="preserve">
-    <value>Unique</value>
-  </data>
-  <data name="NewTagValue" xml:space="preserve">
-    <value>Valeur</value>
-  </data>
-  <data name="Tags" xml:space="preserve">
-    <value>Tags</value>
+  <data name="ConnectionString" xml:space="preserve">
+    <value>Chaîne de connection</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Conteneur de document {0}</value>
+    <value>Stockage de document : {0}</value>
   </data>
 </root>

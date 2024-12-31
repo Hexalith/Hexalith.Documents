@@ -2,29 +2,62 @@
 
 using Hexalith.Documents.Commands.DocumentStorages;
 using Hexalith.Documents.Domain.ValueObjects;
-using Hexalith.Documents.Requests.DocumentStorages;
 
 /// <summary>
-/// Provides demo document partition data for testing and demonstration purposes.
-/// This static class contains sample document partitions that can be used during development and testing.
+/// Provides demo document storage data for testing and demonstration purposes.
 /// </summary>
+/// <remarks>
+/// This static class contains predefined document storage configurations that can be used
+/// during development, testing, and initial system setup. It includes various storage types
+/// such as local file system and Azure cloud storage examples.
+/// </remarks>
 public static class DocumentStorageQuickStartData
 {
     /// <summary>
-    /// Gets a collection of sample document partition details.
+    /// Gets a collection of sample document storage configurations.
     /// </summary>
     /// <value>
-    /// An enumerable collection of <see cref="DocumentStorageDetailsViewModel"/> containing predefined document partitions.
+    /// An enumerable collection of <see cref="AddDocumentStorage"/> commands containing
+    /// predefined document storage configurations for local and cloud storage.
     /// </value>
-    public static IEnumerable<AddDocumentStorage> Data => [Default];
+    public static IEnumerable<AddDocumentStorage> Data => [Default, Temp, Azure];
 
     /// <summary>
-    /// Gets the details for the Excel document partition.
+    /// Gets a predefined Azure cloud storage configuration.
     /// </summary>
+    /// <value>
+    /// An <see cref="AddDocumentStorage"/> command for creating a cloud-based storage in Azure.
+    /// </value>
+    internal static AddDocumentStorage Azure => new(
+            "Cloud",
+            "Cloud storage in Azure",
+            DocumentStorageType.AzureStorageContainer,
+            "The cloud storage using Azure Storage Containers",
+            "to be defined");
+
+    /// <summary>
+    /// Gets a predefined default storage configuration.
+    /// </summary>
+    /// <value>
+    /// An <see cref="AddDocumentStorage"/> command for creating the default local file storage.
+    /// </value>
     internal static AddDocumentStorage Default => new(
-        "Default",
-        "Default storage in Azure",
-        DocumentStorageType.AzureStorageContainer,
-        "The default storage using Azure Storage Containers",
-        string.Empty);
+            "Default",
+            "Default storage in Azure",
+            DocumentStorageType.LocalFile,
+            "The default storage using Azure Storage Containers",
+            "C:\\storage-default");
+
+    /// <summary>
+    /// Gets a predefined temporary storage configuration.
+    /// </summary>
+    /// <value>
+    /// An <see cref="AddDocumentStorage"/> command for creating a temporary local file storage.
+    /// </value>
+    internal static AddDocumentStorage Temp => new(
+        "Temp",
+        "Temporary local storage",
+        DocumentStorageType.LocalFile,
+        "Temporary storage for documents that are either waiting to be processed or are only needed for a short period.",
+        "C:\\storage-temp");
 }
