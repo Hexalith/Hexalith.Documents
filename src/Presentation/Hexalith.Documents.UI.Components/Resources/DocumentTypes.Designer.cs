@@ -79,7 +79,7 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Identifier.
+        ///   Looks up a localized string similar to Document type identifier.
         /// </summary>
         internal static string Id {
             get {

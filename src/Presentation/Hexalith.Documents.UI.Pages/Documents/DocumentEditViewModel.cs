@@ -34,7 +34,6 @@ public sealed class DocumentEditViewModel : IIdDescription
         Actors = details.Actors;
         Tags = details.Tags;
         Disabled = details.Disabled;
-        SystemMessage = string.Empty;
         Original = details;
     }
 
@@ -85,9 +84,9 @@ public sealed class DocumentEditViewModel : IIdDescription
     public bool Disabled { get; set; }
 
     /// <summary>
-    /// Gets the document container ID.
+    /// Gets or sets the document container ID.
     /// </summary>
-    public string? DocumentContainerId { get; private set; }
+    public string? DocumentContainerId { get; set; }
 
     /// <summary>
     /// Gets or sets the document type ID.
@@ -150,11 +149,6 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// Gets or sets the summary.
     /// </summary>
     public string? Summary { get; set; }
-
-    /// <summary>
-    /// Gets or sets the system message.
-    /// </summary>
-    public string SystemMessage { get; set; }
 
     /// <summary>
     /// Gets or sets the document tags.

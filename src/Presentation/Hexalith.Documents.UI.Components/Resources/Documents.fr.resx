@@ -135,4 +135,10 @@
   <data name="Email" xml:space="preserve">
     <value>Courriel</value>
   </data>
+  <data name="Label" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="Placeholder" xml:space="preserve">
+    <value>Choisir un document</value>
+  </data>
 </root>

@@ -120,10 +120,13 @@
   <data name="DocumentStorageId" xml:space="preserve">
     <value>Stockage</value>
   </data>
+  <data name="Id" xml:space="preserve">
+    <value>Code du conteneur</value>
+  </data>
   <data name="Label" xml:space="preserve">
     <value>Stockage de documents</value>
   </data>
   <data name="Placeholder" xml:space="preserve">
-    <value>Choisir un stockage</value>
+    <value>Choisir un conteneur</value>
   </data>
 </root>

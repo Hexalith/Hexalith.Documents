@@ -61,6 +61,15 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data operation identifier.
+        /// </summary>
+        internal static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         internal static string Import {

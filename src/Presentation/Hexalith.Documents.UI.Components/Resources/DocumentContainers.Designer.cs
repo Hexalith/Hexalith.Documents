@@ -70,6 +70,15 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Container identifier.
+        /// </summary>
+        internal static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Document storage.
         /// </summary>
         internal static string Label {
@@ -79,7 +88,7 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a storage.
+        ///   Looks up a localized string similar to Select a container.
         /// </summary>
         internal static string Placeholder {
             get {

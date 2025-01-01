@@ -2,7 +2,7 @@
                  Label="@(Label ?? Labels.Label)"
                  Placeholder="@(Placeholder ?? Labels.Placeholder)"
                  Id="@Id"
-                 IdChanged="OnIdChanged" />
+                 IdChanged="IdChanged" />
 
 @code
 {
@@ -20,10 +20,4 @@
 
     [Parameter]
     public string? Placeholder { get; set; }
-
-    private async Task OnIdChanged(string? id)
-    {
-        await IdChanged.InvokeAsync(id);
-    }
-
 }

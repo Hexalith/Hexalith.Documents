@@ -1,5 +1,6 @@
 ﻿@page "/Documents/Add/Document"
 @page "/Documents/Document/{Id}"
+@using Hexalith.Documents.UI.Components.DocumentContainers
 @inject TimeProvider TimeService
 @rendermode InteractiveAuto
 <HexEntityDetailsToolbar IndexPath="/Documents/Document" OnRefresh="OnRefreshAsync" />
@@ -36,6 +37,19 @@
             </FluentGridItem>
             <FluentGridItem xs="12" md="6">
                 <FluentTextArea Style="width:100%;" @bind-Value="_data.Summary" Label="@Labels.Summary"></FluentTextArea>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                @if (Id is null)
+                {
+                    <DocumentContainerAutocomplete @bind-Id="_data.DocumentContainerId" />
+                }
+                else
+                {
+                    <DocumentContainerIdField Disabled="true" @bind-Value="_data.DocumentContainerId" />
+                }
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                <DocumentAutocomplete @bind-Id="_data.ParentDocumentId" />
             </FluentGridItem>
             <FluentGridItem md="12">
                 <HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
