@@ -79,6 +79,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extraction instructions.
+        /// </summary>
+        internal static string Instructions {
+            get {
+                return ResourceManager.GetString("Instructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Document information extractions.
         /// </summary>
         internal static string ListTitle {
@@ -88,11 +97,56 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extraction model.
+        /// </summary>
+        internal static string Model {
+            get {
+                return ResourceManager.GetString("Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extraction output format.
+        /// </summary>
+        internal static string OutputFormat {
+            get {
+                return ResourceManager.GetString("OutputFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extraction output sample.
+        /// </summary>
+        internal static string OutputSample {
+            get {
+                return ResourceManager.GetString("OutputSample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Document information extraction : {0}.
         /// </summary>
         internal static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation instructions.
+        /// </summary>
+        internal static string ValidationInstructions {
+            get {
+                return ResourceManager.GetString("ValidationInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation model.
+        /// </summary>
+        internal static string ValidationModel {
+            get {
+                return ResourceManager.GetString("ValidationModel", resourceCulture);
             }
         }
     }

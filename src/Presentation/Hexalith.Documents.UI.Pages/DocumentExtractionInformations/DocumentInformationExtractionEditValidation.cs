@@ -1,6 +1,5 @@
-﻿namespace Hexalith.Documents.UI.Pages.DocumentInformationExtractions;
+﻿namespace Hexalith.Documents.UI.Pages.DocumentExtractionInformations;
 
-using Hexalith.Documents.UI.Pages.DocumentExtractionInformations;
 using Hexalith.UI.Components.Validations;
 
 /// <summary>

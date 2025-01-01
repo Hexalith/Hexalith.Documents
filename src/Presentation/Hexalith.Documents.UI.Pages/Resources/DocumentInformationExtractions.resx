@@ -123,10 +123,28 @@
   <data name="DataFileName" xml:space="preserve">
     <value>DocumentInformationExtractions_{0}</value>
   </data>
+  <data name="Instructions" xml:space="preserve">
+    <value>Extraction instructions</value>
+  </data>
   <data name="ListTitle" xml:space="preserve">
     <value>Document information extractions</value>
   </data>
+  <data name="Model" xml:space="preserve">
+    <value>Extraction model</value>
+  </data>
+  <data name="OutputFormat" xml:space="preserve">
+    <value>Extraction output format</value>
+  </data>
+  <data name="OutputSample" xml:space="preserve">
+    <value>Extraction output sample</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Document information extraction : {0}</value>
+  </data>
+  <data name="ValidationInstructions" xml:space="preserve">
+    <value>Validation instructions</value>
+  </data>
+  <data name="ValidationModel" xml:space="preserve">
+    <value>Validation model</value>
   </data>
 </root>

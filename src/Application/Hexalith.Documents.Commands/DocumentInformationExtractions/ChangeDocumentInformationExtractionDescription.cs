@@ -9,13 +9,13 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Id">The unique identifier of the extraction mode.</param>
 /// <param name="Name">The name of the extraction mode.</param>
-/// <param name="Description">The new description of the extraction mode.</param>
+/// <param name="Comments">The new description of the extraction mode.</param>
 [PolymorphicSerialization]
 public partial record ChangeDocumentInformationExtractionDescription(
     string Id,
     [property: DataMember(Order = 2)]
     string Name,
     [property: DataMember(Order = 3)]
-    string Description) : DocumentInformationExtractionCommand(Id)
+    string? Comments) : DocumentInformationExtractionCommand(Id)
 {
 }

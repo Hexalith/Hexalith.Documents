@@ -18,12 +18,16 @@ public sealed class DocumentInformationExtractionEditViewModel : IIdDescription
     {
         ArgumentNullException.ThrowIfNull(details);
         Id = details.Id;
-        Original = details;
         Name = details.Name;
         Comments = details.Comments;
-        Disabled = details.Disabled;
         Model = details.Model;
         Instructions = details.Instructions;
+        ValidationModel = details.ValidationModel;
+        ValidationInstructions = details.ValidationInstructions;
+        OutputFormat = details.OutputFormat;
+        OutputSample = details.OutputSample;
+        Disabled = details.Disabled;
+        Original = details;
     }
 
     /// <summary>
@@ -32,6 +36,11 @@ public sealed class DocumentInformationExtractionEditViewModel : IIdDescription
     public DocumentInformationExtractionEditViewModel()
     : this(new DocumentInformationExtractionDetailsViewModel(
     UniqueIdHelper.GenerateUniqueStringId(),
+    string.Empty,
+    string.Empty,
+    string.Empty,
+    string.Empty,
+    string.Empty,
     string.Empty,
     string.Empty,
     string.Empty,
@@ -96,13 +105,39 @@ public sealed class DocumentInformationExtractionEditViewModel : IIdDescription
     /// </summary>
     public DocumentInformationExtractionDetailsViewModel Original { get; }
 
+    /// <summary>
+    /// Gets a value indicating whether the output has changed.
+    /// </summary>
     public bool OutpuChanged => OutputFormat != Original.OutputFormat || OutputSample != Original.OutputSample;
 
+    /// <summary>
+    /// Gets or sets the output format.
+    /// </summary>
     public string OutputFormat { get; set; }
+
+    /// <summary>
+    /// Gets or sets the output sample.
+    /// </summary>
     public string OutputSample { get; set; }
+
+    /// <summary>
+    /// Gets or sets the system message.
+    /// </summary>
     public string SystemMessage { get; set; }
+
+    /// <summary>
+    /// Gets or sets the validation instructions.
+    /// </summary>
     public string ValidationInstructions { get; set; }
+
+    /// <summary>
+    /// Gets a value indicating whether the validation instructions have changed.
+    /// </summary>
     public bool ValidationInstructionsChanged => ValidationModel != Original.ValidationModel || ValidationInstructions != Original.ValidationInstructions;
+
+    /// <summary>
+    /// Gets or sets the validation model.
+    /// </summary>
     public string ValidationModel { get; set; }
 
     /// <inheritdoc/>

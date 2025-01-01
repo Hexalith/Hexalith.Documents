@@ -19,12 +19,18 @@ public class DocumentInformationExtractionAddedOnDetailsProjectionHandler(IProje
     protected override Task<DocumentInformationExtractionDetailsViewModel?> ApplyEventAsync([NotNull] DocumentInformationExtractionAdded baseEvent, DocumentInformationExtractionDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        return Task.FromResult<DocumentInformationExtractionDetailsViewModel?>(new DocumentInformationExtractionDetailsViewModel(
-            baseEvent.Id,
-            baseEvent.Name,
-            baseEvent.Model,
-            baseEvent.Instructions,
-            baseEvent.Description,
-            false));
+        return Task.FromResult<DocumentInformationExtractionDetailsViewModel?>(
+            new DocumentInformationExtractionDetailsViewModel(
+                baseEvent.AggregateId,
+                baseEvent.Name,
+                baseEvent.Model,
+                baseEvent.SystemMessage,
+                baseEvent.OutputFormat,
+                baseEvent.OutputSample,
+                baseEvent.Instructions,
+                baseEvent.ValidationModel,
+                baseEvent.ValidationInstructions,
+                baseEvent.Comments,
+                false));
     }
 }

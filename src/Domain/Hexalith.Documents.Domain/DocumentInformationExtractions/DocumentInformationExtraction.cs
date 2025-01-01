@@ -21,14 +21,14 @@ public record DocumentInformationExtraction(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] string Model,
-    [property: DataMember(Order = 3)] string SystemMessage,
-    [property: DataMember(Order = 3)] string OutputFormat,
-    [property: DataMember(Order = 3)] string OutputSample,
-    [property: DataMember(Order = 3)] string Instructions,
-    [property: DataMember(Order = 3)] string ValidationModel,
-    [property: DataMember(Order = 3)] string ValidationInstructions,
-    [property: DataMember(Order = 4)] string? Comments,
-    [property: DataMember(Order = 5)] bool Disabled) : IDomainAggregate
+    [property: DataMember(Order = 4)] string SystemMessage,
+    [property: DataMember(Order = 5)] string OutputFormat,
+    [property: DataMember(Order = 6)] string OutputSample,
+    [property: DataMember(Order = 7)] string Instructions,
+    [property: DataMember(Order = 8)] string ValidationModel,
+    [property: DataMember(Order = 9)] string ValidationInstructions,
+    [property: DataMember(Order = 10)] string? Comments,
+    [property: DataMember(Order = 11)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentInformationExtraction"/> class with default values.
@@ -59,13 +59,13 @@ public record DocumentInformationExtraction(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               added.Name,
               added.Model,
+              added.SystemMessage,
+              added.OutputFormat,
+              added.OutputSample,
               added.Instructions,
-              string.Empty,
-              string.Empty,
-              string.Empty,
-              string.Empty,
-              string.Empty,
-              added.Description,
+              added.ValidationModel,
+              added.ValidationInstructions,
+              added.Comments,
               false)
     {
     }
@@ -165,9 +165,9 @@ public record DocumentInformationExtraction(
     /// </summary>
     /// <param name="e">The description change event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(DocumentInformationExtractionDescriptionChanged e) => e.Name != Name || e.Description != Comments
+    private ApplyResult ApplyEvent(DocumentInformationExtractionDescriptionChanged e) => e.Name != Name || e.Comments != Comments
         ? new ApplyResult(
-            this with { Name = e.Name, Comments = e.Description },
+            this with { Name = e.Name, Comments = e.Comments },
             [e],
             false)
         : new ApplyResult(this, [], false);

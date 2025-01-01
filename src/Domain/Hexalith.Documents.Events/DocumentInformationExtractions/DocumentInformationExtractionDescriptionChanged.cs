@@ -16,6 +16,6 @@ public partial record DocumentInformationExtractionDescriptionChanged(
     [property: DataMember(Order = 2)]
     string Name,
     [property: DataMember(Order = 3)]
-    string Description) : DocumentInformationExtractionEvent(Id)
+    string? Comments) : DocumentInformationExtractionEvent(Id)
 {
 }

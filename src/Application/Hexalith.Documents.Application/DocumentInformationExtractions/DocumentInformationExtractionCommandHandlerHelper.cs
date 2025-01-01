@@ -23,13 +23,18 @@ public static class DocumentInformationExtractionCommandHandlerHelper
                 c.Id,
                 c.Name,
                 c.Model,
-                c.Description,
-                c.Instructions),
+                c.SystemMessage,
+                c.OutputFormat,
+                c.OutputSample,
+                c.Instructions,
+                c.ValidationModel,
+                c.ValidationInstructions,
+                c.Comments),
                 ev => new DocumentInformationExtraction((DocumentInformationExtractionAdded)ev))
             .TryAddSimpleCommandHandler<EnableDocumentInformationExtraction>(c => new DocumentInformationExtractionEnabled(c.Id))
             .TryAddSimpleCommandHandler<DisableDocumentInformationExtraction>(c => new DocumentInformationExtractionDisabled(c.Id))
             .TryAddSimpleCommandHandler<ChangeDocumentInformationExtractionDescription>(c => new DocumentInformationExtractionDescriptionChanged(
                 c.Id,
                 c.Name,
-                c.Description));
+                c.Comments));
 }

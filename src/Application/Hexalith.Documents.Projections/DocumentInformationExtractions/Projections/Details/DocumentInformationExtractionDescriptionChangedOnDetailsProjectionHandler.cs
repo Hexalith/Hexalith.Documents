@@ -27,6 +27,6 @@ public class DocumentInformationExtractionDescriptionChangedOnDetailsProjectionH
             return Task.FromResult<DocumentInformationExtractionDetailsViewModel?>(null);
         }
 
-        return Task.FromResult<DocumentInformationExtractionDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Description });
+        return Task.FromResult<DocumentInformationExtractionDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Comments });
     }
 }

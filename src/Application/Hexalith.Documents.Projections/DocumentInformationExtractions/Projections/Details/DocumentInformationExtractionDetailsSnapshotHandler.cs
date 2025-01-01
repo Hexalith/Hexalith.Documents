@@ -35,12 +35,18 @@ public partial class DocumentInformationExtractionDetailsSnapshotHandler(
 
         DocumentInformationExtraction documentInformationExtraction = baseEvent.GetAggregate<DocumentInformationExtraction>();
         DocumentInformationExtractionDetailsViewModel newValue = new(
-            documentInformationExtraction.Id,
-            documentInformationExtraction.Name,
-            documentInformationExtraction.Model,
-            documentInformationExtraction.Instructions,
-            documentInformationExtraction.Comments,
-            documentInformationExtraction.Disabled);
+                documentInformationExtraction.Id,
+                documentInformationExtraction.Name,
+                documentInformationExtraction.Model,
+                documentInformationExtraction.SystemMessage,
+                documentInformationExtraction.OutputFormat,
+                documentInformationExtraction.OutputSample,
+                documentInformationExtraction.Instructions,
+                documentInformationExtraction.ValidationModel,
+                documentInformationExtraction.ValidationInstructions,
+                documentInformationExtraction.Comments,
+                false);
+
         if (currentValue is not null && currentValue == newValue)
         {
             return;
