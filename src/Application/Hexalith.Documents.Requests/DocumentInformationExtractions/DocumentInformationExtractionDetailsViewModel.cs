@@ -8,7 +8,7 @@ public partial record DocumentInformationExtractionDetailsViewModel(
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] string Model,
     [property: DataMember(Order = 3)] string Instructions,
-    [property: DataMember(Order = 4)] string? Description,
+    [property: DataMember(Order = 4)] string? Comments,
     [property: DataMember(Order = 5)] bool Disabled)
 {
 }

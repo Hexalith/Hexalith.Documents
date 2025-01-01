@@ -47,10 +47,10 @@ public partial record GetDocumentContainerExports(
     public static string AggregateName => DocumentDomainHelper.DocumentContainerAggregateName;
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentContainerImportExportViewModel>)results };
+    IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
-    IEnumerable<object>? ICollectionRequest.Results => Results;
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentContainerImportExportViewModel>)results };
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetDocumentContainerExports(Skip + Take, Take);

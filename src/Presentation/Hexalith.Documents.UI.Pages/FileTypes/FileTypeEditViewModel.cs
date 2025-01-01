@@ -1,15 +1,14 @@
 ﻿namespace Hexalith.Documents.UI.Pages.FileTypes;
 
+using Hexalith.Application.Services;
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Extensions.Helpers;
 
 /// <summary>
 /// ViewModel for editing file types.
 /// </summary>
-public class FileTypeEditViewModel
+public sealed class FileTypeEditViewModel : IIdDescription
 {
-    private string _id = string.Empty;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="FileTypeEditViewModel"/> class.
     /// </summary>
@@ -17,9 +16,10 @@ public class FileTypeEditViewModel
     public FileTypeEditViewModel(FileTypeDetailsViewModel details)
     {
         ArgumentNullException.ThrowIfNull(details);
+        Id = details.Id;
         Original = details;
         Name = details.Name;
-        Description = details.Description;
+        Comments = details.Comments;
         Disabled = details.Disabled;
         FileToTextConverter = details.FileToTextConverter;
         Targets = [.. details.Targets];
@@ -29,25 +29,25 @@ public class FileTypeEditViewModel
     /// Initializes a new instance of the <see cref="FileTypeEditViewModel"/> class.
     /// </summary>
     public FileTypeEditViewModel()
-        : this(new FileTypeDetailsViewModel(
-        UniqueIdHelper.GenerateUniqueStringId(),
-        string.Empty,
-        null,
-        null,
-        [],
-        false))
+    : this(new FileTypeDetailsViewModel(
+    UniqueIdHelper.GenerateUniqueStringId(),
+    string.Empty,
+    null,
+    null,
+    [],
+    false))
     {
     }
 
     /// <summary>
     /// Gets or sets the description of the file type.
     /// </summary>
-    public string? Description { get; set; }
+    public string? Comments { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether the description has changed.
     /// </summary>
-    public bool DescriptionChanged => Description != Original.Description || Name != Original.Name;
+    public bool DescriptionChanged => Comments != Original.Comments || Name != Original.Name;
 
     /// <summary>
     /// Gets or sets a value indicating whether the file type is disabled.
@@ -68,20 +68,16 @@ public class FileTypeEditViewModel
     /// Gets a value indicating whether there are changes in the file type details.
     /// </summary>
     public bool HasChanges =>
-        Id != Original.Id ||
-        DescriptionChanged ||
-        FileToTextConverterChanged ||
-        TargetsChanged ||
-        Disabled != Original.Disabled;
+    Id != Original.Id ||
+    DescriptionChanged ||
+    FileToTextConverterChanged ||
+    TargetsChanged ||
+    Disabled != Original.Disabled;
 
     /// <summary>
     /// Gets or sets the ID of the file type.
     /// </summary>
-    public string Id
-    {
-        get => string.IsNullOrWhiteSpace(Original.Id) ? _id : Original.Id;
-        set => _id = string.IsNullOrWhiteSpace(Original.Id) ? value : Original.Id;
-    }
+    public string Id { get; set; }
 
     /// <summary>
     /// Gets or sets the name of the file type.
@@ -102,4 +98,7 @@ public class FileTypeEditViewModel
     /// Gets a value indicating whether the targets have changed.
     /// </summary>
     public bool TargetsChanged => !Targets.SequenceEqual(Original.Targets);
+
+    /// <inheritdoc/>
+    string IIdDescription.Description => Name;
 }

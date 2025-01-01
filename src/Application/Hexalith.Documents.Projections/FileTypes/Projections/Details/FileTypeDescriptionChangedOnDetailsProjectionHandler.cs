@@ -33,6 +33,6 @@ public class FileTypeDescriptionChangedOnDetailsProjectionHandler(IProjectionFac
                 false));
         }
 
-        return Task.FromResult<FileTypeDetailsViewModel?>(model with { Name = baseEvent.Name, Description = baseEvent.Description });
+        return Task.FromResult<FileTypeDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Description });
     }
 }

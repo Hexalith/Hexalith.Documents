@@ -12,16 +12,16 @@ using Hexalith.Domain.Aggregates;
 /// </summary>
 /// <param name="Id">The unique identifier of the file type.</param>
 /// <param name="Name">The name of the file type.</param>
-/// <param name="Description">The description of the file type.</param>
+/// <param name="Comments">The description of the file type.</param>
 /// <param name="Targets">Collection of target identifiers associated with this file type.</param>
 /// <param name="Disabled">Indicates whether this file type is disabled.</param>
 [DataContract]
 public record FileType(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] string? Description,
-    [property: DataMember(Order = 3)] string? FileToTextConverter,
-    [property: DataMember(Order = 7)] IEnumerable<string> Targets,
+    [property: DataMember(Order = 3)] string? Comments,
+    [property: DataMember(Order = 4)] string? FileToTextConverter,
+    [property: DataMember(Order = 5)] IEnumerable<string> Targets,
     [property: DataMember(Order = 8)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
@@ -130,8 +130,8 @@ public record FileType(
     /// </summary>
     /// <param name="e">The FileTypeDescriptionChanged event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeDescriptionChanged e) => e.Name != Name || e.Description != Description
-        ? ApplyResult.Success(this with { Name = e.Name, Description = e.Description }, [e])
+    private ApplyResult ApplyEvent(FileTypeDescriptionChanged e) => e.Name != Name || e.Description != Comments
+        ? ApplyResult.Success(this with { Name = e.Name, Comments = e.Description }, [e])
         : ApplyResult.Error(this, "No changes to apply to the file type name or description.");
 
     /// <summary>

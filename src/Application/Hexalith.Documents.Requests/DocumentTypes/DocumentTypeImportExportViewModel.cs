@@ -44,11 +44,4 @@ public partial record DocumentTypeImportExportViewModel(
 
         throw new InvalidOperationException($"Invalid aggregate type: {aggregate.GetType().Name}. Expected: {nameof(DocumentType)}.");
     }
-
-    /// <summary>
-    /// Creates import commands for the specified aggregate.
-    /// </summary>
-    /// <param name="aggregate">The document type aggregate.</param>
-    /// <returns>The import commands.</returns>
-    public static IEnumerable<object> CreateImportCommands(DocumentType? aggregate) => [];
 }

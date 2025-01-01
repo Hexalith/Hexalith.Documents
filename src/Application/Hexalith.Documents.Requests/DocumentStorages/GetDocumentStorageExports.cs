@@ -47,10 +47,10 @@ public partial record GetDocumentStorageExports(
     public static string AggregateName => DocumentDomainHelper.DocumentStorageAggregateName;
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentStorageImportExportViewModel>)results };
+    IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
-    IEnumerable<object>? ICollectionRequest.Results => Results;
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentStorageImportExportViewModel>)results };
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetDocumentStorageExports(Skip + Take, Take);

@@ -61,7 +61,7 @@ public static class DocumentTypeProjectionsHelper
     {
         services.TryAddScoped<IRequestHandler<GetDocumentTypeDetails>, GetDocumentTypeDetailsHandler>();
         services.TryAddScoped<IRequestHandler<GetDocumentTypeSummaries>, GetDocumentTypeSummariesHandler>();
-        services.TryAddScoped<IRequestHandler<GetDocumentTypeIds>, GetDocumentTypeIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentTypeIds>, GetAggregateIdsRequestHandler<GetDocumentTypeIds>>();
         services.TryAddScoped<IRequestHandler<GetDocumentTypeExports>, GetExportsRequestHandler<GetDocumentTypeExports, DocumentTypeImportExportViewModel, DocumentType>>();
         return services;
     }

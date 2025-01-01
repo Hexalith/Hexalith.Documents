@@ -1,7 +1,7 @@
-﻿@page "/Documents/Add/FileType"
-@page "/Documents/FileType/{Id}"
+﻿@page "/Documents/Add/DocumentInformationExtraction"
+@page "/Documents/DocumentInformationExtraction/{Id}"
 @rendermode InteractiveAuto
-<HexEntityDetailsToolbar IndexPath="/Documents/FileType" OnRefresh="OnRefreshAsync" />
+<HexEntityDetailsToolbar IndexPath="/Documents/DocumentInformationExtraction" OnRefresh="OnRefreshAsync" />
 
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
     @if (Id is null) // Add
@@ -22,7 +22,7 @@
                 <FluentTextField Style="width:100%;" @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
             </FluentGridItem>
             <FluentGridItem xs="12" xl="6">
-                <FluentTextField Style="width:100%;" @bind-Value="_data.Comments" Label="@Labels.Description"></FluentTextField>
+                <FluentTextField Style="width:100%;" @bind-Value="_data.Description" Label="@Labels.Description"></FluentTextField>
             </FluentGridItem>
             <FluentGridItem md="12">
                 <FluentLabel Typo="Typography.PaneHeader">@Labels.Targets</FluentLabel>
@@ -74,11 +74,11 @@
     public string? Id { get; set; }
 
     private ClaimsPrincipal? _user;
-    private FileTypeEditViewModel _data = new();
+    private DocumentInformationExtractionEditViewModel _data = new();
     private string _newTarget = string.Empty;
     private bool _saveClicked;
 
-    private ValidationResult ValidationResult => new FileTypeEditValidation().Validate(_data);
+    private ValidationResult ValidationResult => new DocumentInformationExtractionEditValidation().Validate(_data);
 
     protected override async Task OnInitializedAsync()
     {
@@ -97,10 +97,10 @@
         }
         if (Id is not null)
         {
-            var details = await RequestService.SubmitAsync(_user, new GetFileTypeDetails(Id), CancellationToken.None);
+            var details = await RequestService.SubmitAsync(_user, new GetDocumentInformationExtractionDetails(Id), CancellationToken.None);
             if (details.Result is not null)
             {
-                _data = new FileTypeEditViewModel(details.Result);
+                _data = new DocumentInformationExtractionEditViewModel(details.Result);
             }
         }
     }
@@ -118,13 +118,13 @@
         }
         if (!ValidationResult.IsValid)
             return;
-        FileTypeCommand fileTypeCommand;
+        DocumentInformationExtractionCommand fileTypeCommand;
         if (Id is null)
         {
-            fileTypeCommand = new AddFileType(
+            fileTypeCommand = new AddDocumentInformationExtraction(
                         _data.Id!,
                         _data.Name!,
-                        _data.Comments,
+                        _data.Description,
                         _data.FileToTextConverter,
                         _data.Targets);
             await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
@@ -134,27 +134,27 @@
         }
         if (_data.DescriptionChanged)
         {
-            fileTypeCommand = new ChangeFileTypeDescription(
+            fileTypeCommand = new ChangeDocumentInformationExtractionDescription(
                         _data.Id!,
                         _data.Name!,
-                        _data.Comments);
+                        _data.Description);
             await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
         }
         if (_data.FileToTextConverterChanged)
         {
-            fileTypeCommand = new ChangeFileTypeFileToTextConverter(
+            fileTypeCommand = new ChangeDocumentInformationExtractionFileToTextConverter(
                         _data.Id!,
                         _data.FileToTextConverter);
             await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
         }
         if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
         {
-            fileTypeCommand = new DisableFileType(_data.Id);
+            fileTypeCommand = new DisableDocumentInformationExtraction(_data.Id);
             await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
         }
         if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
         {
-            fileTypeCommand = new EnableFileType(_data.Id);
+            fileTypeCommand = new EnableDocumentInformationExtraction(_data.Id);
             await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
         }
         // for each target in _data.Targets, add it if it does not exist
@@ -162,7 +162,7 @@
         {
             if (!_data.Original.Targets.Contains(target))
             {
-                fileTypeCommand = new AddFileTypeTarget(_data.Id, target);
+                fileTypeCommand = new AddDocumentInformationExtractionTarget(_data.Id, target);
                 await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
             }
         }
@@ -171,11 +171,11 @@
         {
             if (!_data.Targets.Contains(target))
             {
-                fileTypeCommand = new RemoveFileTypeTarget(_data.Id, target);
+                fileTypeCommand = new RemoveDocumentInformationExtractionTarget(_data.Id, target);
                 await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
             }
         }
-        NavigationManager.NavigateTo("/Documents/FileType");
+        NavigationManager.NavigateTo("/Documents/DocumentInformationExtraction");
     }
 
     private void AddTarget()

@@ -117,22 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Title" xml:space="preserve">
-    <value>Type de fichier {0}</value>
-  </data>
-  <data name="Targets" xml:space="preserve">
-    <value>Types de fichiers MIME</value>
-  </data>
-  <data name="NewTarget" xml:space="preserve">
-    <value>Nouveau format</value>
-  </data>
   <data name="AddTitle" xml:space="preserve">
-    <value>Ajouter un nouveau type de fichier</value>
-  </data>
-  <data name="ListTitle" xml:space="preserve">
-    <value>Types de fichier</value>
+    <value>Add new file type</value>
   </data>
   <data name="DataFileName" xml:space="preserve">
-    <value>TypeFichier_{0}</value>
+    <value>DocumentInformationExtractions_{0}</value>
+  </data>
+  <data name="ListTitle" xml:space="preserve">
+    <value>Document information extractions</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Document information extraction : {0}</value>
   </data>
 </root>

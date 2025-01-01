@@ -41,7 +41,7 @@ public class FileTypeTest
         ApplyResult result = fileType.Apply(descriptionChangedEvent);
         _ = result.Failed.Should().BeFalse();
         FileType updatedFileType = result.Aggregate as FileType;
-        _ = updatedFileType.Description.Should().Be("New Description");
+        _ = updatedFileType.Comments.Should().Be("New Description");
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public class FileTypeTest
         FileType fileType = new(addedEvent);
         _ = fileType.Id.Should().Be("1");
         _ = fileType.Name.Should().Be("PDF");
-        _ = fileType.Description.Should().Be("PDF File");
+        _ = fileType.Comments.Should().Be("PDF File");
         _ = fileType.FileToTextConverter.Should().Be("PDFConverter");
         _ = fileType.Targets.Should().ContainSingle().Which.Should().Be("Target1");
         _ = fileType.Disabled.Should().BeFalse();
@@ -159,7 +159,7 @@ public class FileTypeTest
         FileType fileType = new();
         _ = fileType.Id.Should().BeEmpty();
         _ = fileType.Name.Should().BeEmpty();
-        _ = fileType.Description.Should().BeNull();
+        _ = fileType.Comments.Should().BeNull();
         _ = fileType.FileToTextConverter.Should().BeNull();
         _ = fileType.Targets.Should().BeEmpty();
         _ = fileType.Disabled.Should().BeFalse();

@@ -22,14 +22,14 @@ namespace Hexalith.Documents.UI.Pages.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class FileTypes {
+    internal class DocumentInformationExtractions {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal FileTypes() {
+        internal DocumentInformationExtractions() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.FileTypes", typeof(FileTypes).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.DocumentInformationExtractions", typeof(DocumentInformationExtractions).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,7 +70,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FileType_{0}.
+        ///   Looks up a localized string similar to DocumentInformationExtractions_{0}.
         /// </summary>
         internal static string DataFileName {
             get {
@@ -79,7 +79,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File types.
+        ///   Looks up a localized string similar to Document information extractions.
         /// </summary>
         internal static string ListTitle {
             get {
@@ -88,25 +88,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New target.
-        /// </summary>
-        internal static string NewTarget {
-            get {
-                return ResourceManager.GetString("NewTarget", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File type targets.
-        /// </summary>
-        internal static string Targets {
-            get {
-                return ResourceManager.GetString("Targets", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File type {0}.
+        ///   Looks up a localized string similar to Document information extraction : {0}.
         /// </summary>
         internal static string Title {
             get {

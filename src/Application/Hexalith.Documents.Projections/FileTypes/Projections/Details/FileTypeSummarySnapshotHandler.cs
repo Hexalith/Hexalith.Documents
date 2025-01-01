@@ -37,7 +37,7 @@ public partial class FileTypeDetailsSnapshotHandler(
         FileTypeDetailsViewModel newValue = new(
             fileType.Id,
             fileType.Name,
-            fileType.Description,
+            fileType.Comments,
             fileType.FileToTextConverter,
             fileType.Targets,
             fileType.Disabled);
