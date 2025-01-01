@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 public interface IWritableFile : IAsyncDisposable
 {
     /// <summary>
-    /// Gets the Uri of the file.
+    /// Gets the path of the file.
     /// </summary>
-    Uri FileUrl { get; }
+    string FilePath { get; }
 
     /// <summary>
     /// Gets the size of the file.

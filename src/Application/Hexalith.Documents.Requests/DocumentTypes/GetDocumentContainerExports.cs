@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record GetDocumentTypeExports(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DocumentTypeExportViewModel> Results) : IChunkableRequest
+    [property: DataMember(Order = 3)] IEnumerable<DocumentTypeImportExportViewModel> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentTypeExports"/> class.
@@ -45,6 +45,9 @@ public partial record GetDocumentTypeExports(
     /// Gets the aggregate name of the document command.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.DocumentTypeAggregateName;
+
+    /// <inheritdoc/>
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentTypeImportExportViewModel>)results };
 
     /// <inheritdoc/>
     IEnumerable<object>? ICollectionRequest.Results => Results;

@@ -41,7 +41,7 @@ public class GetFileTypeIdsHandler : RequestHandlerBase<GetFileTypeIds>
             metadata.Context.PartitionId);
         return request with
         {
-            Result = await service
+            Results = await service
                 .GetAsync(request.Skip, request.Take, CancellationToken.None)
                 .ConfigureAwait(false),
         };

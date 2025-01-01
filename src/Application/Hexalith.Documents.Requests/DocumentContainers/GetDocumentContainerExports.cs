@@ -47,6 +47,9 @@ public partial record GetDocumentContainerExports(
     public static string AggregateName => DocumentDomainHelper.DocumentContainerAggregateName;
 
     /// <inheritdoc/>
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentContainerImportExportViewModel>)results };
+
+    /// <inheritdoc/>
     IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>

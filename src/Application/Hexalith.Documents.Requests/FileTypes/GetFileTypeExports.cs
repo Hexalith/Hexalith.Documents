@@ -54,4 +54,7 @@ public partial record GetFileTypeExports(
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetFileTypeExports(Skip + Take, Take);
+
+    /// <inheritdoc/>
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<FileTypeImportExportViewModel>)results };
 }

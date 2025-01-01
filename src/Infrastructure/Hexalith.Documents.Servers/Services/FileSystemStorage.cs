@@ -19,6 +19,7 @@ public class FileSystemStorage
     /// <summary>
     /// Initializes a new instance of the <see cref="FileSystemStorage"/> class.
     /// </summary>
+    /// <param name="environment">The web host environment.</param>
     /// <param name="options">The options containing the local storage settings.</param>
     public FileSystemStorage(IOptions<LocalStorageSettings> options)
     {
@@ -74,6 +75,6 @@ public class FileSystemStorage
         cancellationToken.ThrowIfCancellationRequested();
 
         // Create the file.
-        return Task.FromResult<IWritableFile>(new LocalStorageFile(File.Create(filePath), new Uri(filePath)));
+        return Task.FromResult<IWritableFile>(new StorageFile(File.Create(filePath), filePath));
     }
 }

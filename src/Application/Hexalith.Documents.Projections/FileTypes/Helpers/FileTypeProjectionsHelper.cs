@@ -2,6 +2,7 @@
 
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
+using Hexalith.Documents.Domain.FileTypes;
 using Hexalith.Documents.Events.FileTypes;
 using Hexalith.Documents.Projections.FileTypes.Projections.Details;
 using Hexalith.Documents.Projections.FileTypes.Projections.Summaries;
@@ -58,6 +59,8 @@ public static class FileTypeProjectionsHelper
         services.TryAddScoped<IRequestHandler<GetFileTypeDetails>, GetFileTypeDetailsHandler>();
         services.TryAddScoped<IRequestHandler<GetFileTypeSummaries>, GetFileTypeSummariesHandler>();
         services.TryAddScoped<IRequestHandler<GetFileTypeIds>, GetFileTypeIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetFileTypeExports>, GetExportsRequestHandler<GetFileTypeExports, FileTypeImportExportViewModel, FileType>>();
+        services.TryAddScoped<IRequestHandler<GetFileTypeIds>, GetAggregateIdsRequestHandler<GetFileTypeIds>>();
         return services;
     }
 }
