@@ -14,7 +14,7 @@ using Hexalith.Domain.Events;
 /// <param name="Id">The unique identifier for the extraction mode.</param>
 /// <param name="Name">The display name of the extraction mode.</param>
 /// <param name="Instructions">The instructions defining how text should be extracted.</param>
-/// <param name="Description">Optional description providing additional details about the extraction mode.</param>
+/// <param name="Comments">Optional description providing additional details about the extraction mode.</param>
 /// <param name="Disabled">Flag indicating whether this extraction mode is currently disabled.</param>
 [DataContract]
 public record DocumentInformationExtraction(
@@ -27,7 +27,7 @@ public record DocumentInformationExtraction(
     [property: DataMember(Order = 3)] string Instructions,
     [property: DataMember(Order = 3)] string ValidationModel,
     [property: DataMember(Order = 3)] string ValidationInstructions,
-    [property: DataMember(Order = 4)] string? Description,
+    [property: DataMember(Order = 4)] string? Comments,
     [property: DataMember(Order = 5)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
@@ -165,9 +165,9 @@ public record DocumentInformationExtraction(
     /// </summary>
     /// <param name="e">The description change event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(DocumentInformationExtractionDescriptionChanged e) => e.Name != Name || e.Description != Description
+    private ApplyResult ApplyEvent(DocumentInformationExtractionDescriptionChanged e) => e.Name != Name || e.Description != Comments
         ? new ApplyResult(
-            this with { Name = e.Name, Description = e.Description },
+            this with { Name = e.Name, Comments = e.Description },
             [e],
             false)
         : new ApplyResult(this, [], false);

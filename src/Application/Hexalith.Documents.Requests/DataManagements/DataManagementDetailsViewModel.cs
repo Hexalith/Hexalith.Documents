@@ -2,6 +2,8 @@
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Services;
+
 /// <summary>
 /// Represents the details of a data export.
 /// </summary>
@@ -15,6 +17,11 @@ public sealed record DataManagementDetailsViewModel(
     [property: DataMember(Order = 2)] long Size,
     [property: DataMember(Order = 2)] string? Comments,
     [property: DataMember(Order = 3)] DateTimeOffset StartedAt,
-    [property: DataMember(Order = 3)] DateTimeOffset? CompletedAt)
+    [property: DataMember(Order = 3)] DateTimeOffset? CompletedAt) : IIdDescription
 {
+    /// <inheritdoc/>
+    string IIdDescription.Description => Id;
+
+    /// <inheritdoc/>
+    bool IIdDescription.Disabled => CompletedAt is null;
 }

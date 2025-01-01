@@ -2,6 +2,7 @@
 
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
+using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Events.DocumentContainers;
 using Hexalith.Documents.Projections.DocumentContainers.Projections.Details;
 using Hexalith.Documents.Projections.DocumentContainers.Projections.Summaries;
@@ -59,7 +60,8 @@ public static class DocumentContainerProjectionsHelper
     {
         services.TryAddScoped<IRequestHandler<GetDocumentContainerDetails>, GetDocumentContainerDetailsHandler>();
         services.TryAddScoped<IRequestHandler<GetDocumentContainerSummaries>, GetDocumentContainerSummariesHandler>();
-        services.TryAddScoped<IRequestHandler<GetDocumentContainerIds>, GetDocumentContainerIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentContainerExports>, GetExportsRequestHandler<GetDocumentContainerExports, DocumentContainerImportExportViewModel, DocumentContainer>>();
+        services.TryAddScoped<IRequestHandler<GetDocumentContainerIds>, GetAggregateIdsRequestHandler<GetDocumentContainerIds>>();
         return services;
     }
 }

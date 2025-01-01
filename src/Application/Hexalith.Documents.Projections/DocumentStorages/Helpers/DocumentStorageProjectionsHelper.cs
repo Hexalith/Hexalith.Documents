@@ -2,6 +2,7 @@
 
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
+using Hexalith.Documents.Domain.DocumentStorages;
 using Hexalith.Documents.Events.DocumentStorages;
 using Hexalith.Documents.Projections.DocumentStorages.Projections.Details;
 using Hexalith.Documents.Projections.DocumentStorages.Projections.Summaries;
@@ -57,8 +58,8 @@ public static class DocumentStorageProjectionsHelper
     {
         services.TryAddScoped<IRequestHandler<GetDocumentStorage>, GetDocumentStorageHandler>();
         services.TryAddScoped<IRequestHandler<GetDocumentStorageDetails>, GetDocumentStorageDetailsHandler>();
-        services.TryAddScoped<IRequestHandler<GetDocumentStorageSummaries>, GetDocumentStorageSummariesHandler>();
-        services.TryAddScoped<IRequestHandler<GetDocumentStorageIds>, GetDocumentStorageIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentStorageExports>, GetExportsRequestHandler<GetDocumentStorageExports, DocumentStorageImportExportViewModel, DocumentStorage>>();
+        services.TryAddScoped<IRequestHandler<GetDocumentStorageIds>, GetAggregateIdsRequestHandler<GetDocumentStorageIds>>();
         return services;
     }
 }

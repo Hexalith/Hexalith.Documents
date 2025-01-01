@@ -2,6 +2,7 @@ namespace Hexalith.Documents.Requests.DocumentStorages;
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
 
 /// <summary>
@@ -14,12 +15,14 @@ using Hexalith.Documents.Domain.ValueObjects;
 /// <param name="ConnectionString">The connection string name associated with the document partition.</param>
 /// <param name="Disabled">Indicates whether the document partition is disabled.</param>
 [DataContract]
-public partial record DocumentStorageDetailsViewModel(
+public sealed record DocumentStorageDetailsViewModel(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] DocumentStorageType StorageType,
     [property: DataMember(Order = 4)] string? Comments,
     [property: DataMember(Order = 5)] string? ConnectionString,
-    [property: DataMember(Order = 6)] bool Disabled)
+    [property: DataMember(Order = 6)] bool Disabled) : IIdDescription
 {
+    /// <inheritdoc/>
+    string IIdDescription.Description => Name;
 }

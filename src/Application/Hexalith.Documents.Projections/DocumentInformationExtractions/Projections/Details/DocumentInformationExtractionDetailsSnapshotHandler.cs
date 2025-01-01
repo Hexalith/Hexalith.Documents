@@ -39,7 +39,7 @@ public partial class DocumentInformationExtractionDetailsSnapshotHandler(
             documentInformationExtraction.Name,
             documentInformationExtraction.Model,
             documentInformationExtraction.Instructions,
-            documentInformationExtraction.Description,
+            documentInformationExtraction.Comments,
             documentInformationExtraction.Disabled);
         if (currentValue is not null && currentValue == newValue)
         {

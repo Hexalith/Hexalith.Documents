@@ -2,6 +2,7 @@
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Requests;
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
@@ -17,7 +18,7 @@ public partial record GetDocumentIds(
     [property: DataMember(Order = 2)]
     int Take,
     [property: DataMember(Order = 3)]
-    IEnumerable<string> Result)
+    IEnumerable<string> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentIds"/> class.
@@ -38,4 +39,13 @@ public partial record GetDocumentIds(
         : this(0, 0, [])
     {
     }
+
+    /// <inheritdoc/>
+    IEnumerable<object>? ICollectionRequest.Results => Results;
+
+    /// <inheritdoc/>
+    public IChunkableRequest CreateNextChunkRequest() => new GetDocumentIds(Skip + Take, Take);
+
+    /// <inheritdoc/>
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<string>)results };
 }

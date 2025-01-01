@@ -3,6 +3,8 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Services;
+
 /// <summary>
 /// Represents the details of a file type.
 /// </summary>
@@ -13,12 +15,14 @@ using System.Runtime.Serialization;
 /// <param name="Targets">The targets associated with the file type.</param>
 /// <param name="Disabled">Indicates whether the file type is disabled.</param>
 [DataContract]
-public partial record FileTypeDetailsViewModel(
+public sealed record FileTypeDetailsViewModel(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] string? Comments,
     [property: DataMember(Order = 4)] string? FileToTextConverter,
     [property: DataMember(Order = 5)] IEnumerable<string> Targets,
-    [property: DataMember(Order = 6)] bool Disabled)
+    [property: DataMember(Order = 6)] bool Disabled) : IIdDescription
 {
+    /// <inheritdoc/>
+    string IIdDescription.Description => Name;
 }

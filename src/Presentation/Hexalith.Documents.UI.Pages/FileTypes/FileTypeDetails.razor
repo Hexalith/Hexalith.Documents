@@ -16,13 +16,19 @@
     {
         <FluentGrid Orientation="Orientation.Vertical">
             <FluentGridItem xs="12" md="3">
-                <FluentTextField Style="width:100%;" Disabled="@(Id is not null)" @bind-Value="_data.Id" Label="@Labels.Id"></FluentTextField>
+                <HexEntityIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexEntityIdField>
             </FluentGridItem>
-            <FluentGridItem xs="12" md="3">
-                <FluentTextField Style="width:100%;" @bind-Value="_data.Name" Label="@Labels.Name"></FluentTextField>
+            <FluentGridItem xs="12" md="@(Id is null ? 9 : 6)">
+                <HexEntityNameField @bind-Value="_data.Name"></HexEntityNameField>
             </FluentGridItem>
-            <FluentGridItem xs="12" xl="6">
-                <FluentTextField Style="width:100%;" @bind-Value="_data.Comments" Label="@Labels.Description"></FluentTextField>
+            @if (Id is not null)
+            {
+                <FluentGridItem xs="12" md="3" Style="display: flex; align-items: flex-end;">
+                    <HexEntityDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexEntityDisabledCheckbox>
+                </FluentGridItem>
+            }
+            <FluentGridItem xs="12" md="12">
+                <HexEntityCommentsField @bind-Value="_data.Comments" />
             </FluentGridItem>
             <FluentGridItem md="12">
                 <FluentLabel Typo="Typography.PaneHeader">@Labels.Targets</FluentLabel>
@@ -31,11 +37,7 @@
                 <FluentTextField Style="width:100%;" @bind-Value="_newTarget" Label="@Labels.NewTarget"></FluentTextField>
             </FluentGridItem>
             <FluentGridItem xs="12" md="12">
-                <FluentButton OnClick="AddTarget"
-                              IconStart="@(new Icons.Regular.Size16.Add())"
-                              Style="margin-left: 8px;">
-                    @Labels.Add
-                </FluentButton>
+                <HexAddButton OnClick="AddTarget" />
             </FluentGridItem>
             @foreach (string target in _data.Targets)
             {
@@ -43,22 +45,13 @@
 
                     <FluentStack Orientation="Orientation.Horizontal" Style="margin: 4px 0;">
                         <FluentTextField Style="width:75%;" Value="@target" Readonly="true"></FluentTextField>
-                        <FluentButton OnClick="@(() =>RemoveTarget(target))"
-                                      IconStart="@(new Icons.Regular.Size16.Delete())"
-                                      Style="margin-left: 8px;">
-                            @Labels.Remove
-                        </FluentButton>
+                        <HexRemoveButton OnClick="@(() =>RemoveTarget(target))" />
                     </FluentStack>
                 </FluentGridItem>
             }
 
             <FluentGridItem md="12">
-                <FluentButton Disabled="@((_saveClicked && !ValidationResult.IsValid) || !_data.HasChanges)"
-                              Appearance="Appearance.Accent"
-                              IconStart="@(new Icons.Regular.Size24.Add())"
-                              OnClick="OnSave">
-                    @Labels.Save
-                </FluentButton>
+                <HexSaveButton Appearance="Appearance.Accent" Onclick="OnSave" />
             </FluentGridItem>
             <FluentGridItem>
                 <HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
@@ -76,9 +69,8 @@
     private ClaimsPrincipal? _user;
     private FileTypeEditViewModel _data = new();
     private string _newTarget = string.Empty;
-    private bool _saveClicked;
 
-    private ValidationResult ValidationResult => new FileTypeEditValidation().Validate(_data);
+    private ValidationResult? ValidationResult; 
 
     protected override async Task OnInitializedAsync()
     {
@@ -103,6 +95,7 @@
                 _data = new FileTypeEditViewModel(details.Result);
             }
         }
+        await base.OnInitializedAsync();
     }
 
     private async Task OnSave()
@@ -111,11 +104,11 @@
         {
             return;
         }
-        _saveClicked = true;
         if (!_data.HasChanges)
         {
             return;
         }
+        ValidationResult = new FileTypeEditValidation().Validate(_data);
         if (!ValidationResult.IsValid)
             return;
         FileTypeCommand fileTypeCommand;
@@ -175,7 +168,11 @@
                 await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
             }
         }
-        NavigationManager.NavigateTo("/Documents/FileType");
+        if (Id is null)
+        {
+            _data = new();
+            StateHasChanged();
+        }
     }
 
     private void AddTarget()

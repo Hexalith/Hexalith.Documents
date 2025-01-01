@@ -56,7 +56,7 @@ public partial record DocumentInformationExtractionImportExportViewModel(
                 extraction.Instructions,
                 extraction.ValidationModel,
                 extraction.ValidationInstructions,
-                extraction.Description,
+                extraction.Comments,
                 extraction.Disabled);
         }
 

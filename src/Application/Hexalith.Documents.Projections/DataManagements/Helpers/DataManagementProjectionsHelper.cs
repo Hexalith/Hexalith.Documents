@@ -2,6 +2,7 @@
 
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
+using Hexalith.Documents.Domain.DataManagements;
 using Hexalith.Documents.Events.DataManagements;
 using Hexalith.Documents.Projections.DataManagements.Projections.Details;
 using Hexalith.Documents.Projections.DataManagements.Projections.Summaries;
@@ -51,10 +52,10 @@ public static class DataManagementProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDataManagementRequestHandlers(this IServiceCollection services)
     {
-        services.TryAddScoped<IRequestHandler<GetDataManagementExports>, GetDataManagementExportsHandler>();
         services.TryAddScoped<IRequestHandler<GetDataManagementDetails>, GetDataManagementDetailsHandler>();
         services.TryAddScoped<IRequestHandler<GetDataManagementSummaries>, GetDataManagementSummariesHandler>();
-        services.TryAddScoped<IRequestHandler<GetDataManagementIds>, GetDataManagementIdsHandler>();
+        services.TryAddScoped<IRequestHandler<GetDataManagementExports>, GetExportsRequestHandler<GetDataManagementExports, DataManagementImportExportViewModel, DataManagement>>();
+        services.TryAddScoped<IRequestHandler<GetDataManagementIds>, GetAggregateIdsRequestHandler<GetDataManagementIds>>();
         return services;
     }
 }

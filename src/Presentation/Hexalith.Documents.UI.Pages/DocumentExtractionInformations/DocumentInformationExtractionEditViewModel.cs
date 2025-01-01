@@ -59,10 +59,12 @@ public sealed class DocumentInformationExtractionEditViewModel : IIdDescription
     /// Gets a value indicating whether there are any changes.
     /// </summary>
     public bool HasChanges =>
-    Id != Original.Id ||
-    DescriptionChanged ||
-    InstructionsChanged ||
-    Disabled != Original.Disabled;
+        Id != Original.Id ||
+        DescriptionChanged ||
+        InstructionsChanged ||
+        ValidationInstructionsChanged ||
+        OutpuChanged ||
+        Disabled != Original.Disabled;
 
     /// <summary>
     /// Gets or sets the ID.
@@ -94,10 +96,14 @@ public sealed class DocumentInformationExtractionEditViewModel : IIdDescription
     /// </summary>
     public DocumentInformationExtractionDetailsViewModel Original { get; }
 
-    /// <summary>
-    /// Gets the targets.
-    /// </summary>
-    public ICollection<string> Targets { get; } = [];
+    public bool OutpuChanged => OutputFormat != Original.OutputFormat || OutputSample != Original.OutputSample;
+
+    public string OutputFormat { get; set; }
+    public string OutputSample { get; set; }
+    public string SystemMessage { get; set; }
+    public string ValidationInstructions { get; set; }
+    public bool ValidationInstructionsChanged => ValidationModel != Original.ValidationModel || ValidationInstructions != Original.ValidationInstructions;
+    public string ValidationModel { get; set; }
 
     /// <inheritdoc/>
     string IIdDescription.Description => Name;
