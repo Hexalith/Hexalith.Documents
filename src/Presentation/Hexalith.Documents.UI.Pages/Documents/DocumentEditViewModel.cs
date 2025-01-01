@@ -87,12 +87,12 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// <summary>
     /// Gets the document container ID.
     /// </summary>
-    public string DocumentContainerId { get; private set; }
+    public string? DocumentContainerId { get; private set; }
 
     /// <summary>
     /// Gets or sets the document type ID.
     /// </summary>
-    public string DocumentTypeId { get; set; }
+    public string? DocumentTypeId { get; set; }
 
     /// <summary>
     /// Gets the file description.
