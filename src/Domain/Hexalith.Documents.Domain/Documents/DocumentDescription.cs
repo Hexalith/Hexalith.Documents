@@ -16,6 +16,7 @@ using Hexalith.Domain.Aggregates;
 public record DocumentDescription(
     [property: DataMember(Order = 1)] string Name,
     [property: DataMember(Order = 3)] string? Comments,
+    [property: DataMember(Order = 4)] string? DocumentContainerId,
     [property: DataMember(Order = 5)] string? DocumentTypeId,
     [property: DataMember(Order = 6)] string? Summary)
 {

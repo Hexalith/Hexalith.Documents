@@ -57,6 +57,7 @@ public static class DocumentStorageProjectionsHelper
     public static IServiceCollection AddDocumentStorageRequestHandlers(this IServiceCollection services)
     {
         services.TryAddScoped<IRequestHandler<GetDocumentStorage>, GetDocumentStorageHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentStorageSummaries>, GetDocumentStorageSummariesHandler>();
         services.TryAddScoped<IRequestHandler<GetDocumentStorageDetails>, GetDocumentStorageDetailsHandler>();
         services.TryAddScoped<IRequestHandler<GetDocumentStorageExports>, GetExportsRequestHandler<GetDocumentStorageExports, DocumentStorageImportExportViewModel, DocumentStorage>>();
         services.TryAddScoped<IRequestHandler<GetDocumentStorageIds>, GetAggregateIdsRequestHandler<GetDocumentStorageIds>>();

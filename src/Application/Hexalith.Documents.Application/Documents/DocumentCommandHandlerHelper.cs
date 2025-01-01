@@ -27,6 +27,7 @@ public static class DocumentCommandHandlerHelper
                 c.File,
                 c.OwnerId,
                 c.CreatedOn,
+                c.DocumentContainerId,
                 c.DocumentTypeId),
                 ev => new Document((DocumentAdded)ev))
             .TryAddSimpleCommandHandler<EnableDocument>(c => new DocumentEnabled(c.Id))
@@ -34,5 +35,5 @@ public static class DocumentCommandHandlerHelper
             .TryAddSimpleCommandHandler<ChangeDocumentDescription>(c => new DocumentDescriptionChanged(
                 c.Id,
                 c.Name,
-                c.Description));
+                c.Comments));
 }

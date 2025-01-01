@@ -61,15 +61,6 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
-        /// </summary>
-        internal static string Add {
-            get {
-                return ResourceManager.GetString("Add", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Document [0}.
         /// </summary>
         internal static string AddTitle {
@@ -79,29 +70,20 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to Documents_{0}.
         /// </summary>
-        internal static string Description {
+        internal static string DataFileName {
             get {
-                return ResourceManager.GetString("Description", resourceCulture);
+                return ResourceManager.GetString("DataFileName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Désactivé.
+        ///   Looks up a localized string similar to Document type.
         /// </summary>
-        internal static string Disabled {
+        internal static string DocumentTypeId {
             get {
-                return ResourceManager.GetString("Disabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Identifier.
-        /// </summary>
-        internal static string Id {
-            get {
-                return ResourceManager.GetString("Id", resourceCulture);
+                return ResourceManager.GetString("DocumentTypeId", resourceCulture);
             }
         }
         
@@ -115,65 +97,11 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description must not exceed {0} characters.
+        ///   Looks up a localized string similar to Document summary.
         /// </summary>
-        internal static string MaxDescriptionLengthExceeded {
+        internal static string Summary {
             get {
-                return ResourceManager.GetString("MaxDescriptionLengthExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name must not exceed {0} characters.
-        /// </summary>
-        internal static string MaxNameLengthExceeded {
-            get {
-                return ResourceManager.GetString("MaxNameLengthExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        internal static string Name {
-            get {
-                return ResourceManager.GetString("Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name is required.
-        /// </summary>
-        internal static string NameRequired {
-            get {
-                return ResourceManager.GetString("NameRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You are not authorized to read documents.
-        /// </summary>
-        internal static string ReadNotAuthorized {
-            get {
-                return ResourceManager.GetString("ReadNotAuthorized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You are not authorized to read documents.
-        /// </summary>
-        internal static string ReadNotAuthorized1 {
-            get {
-                return ResourceManager.GetString("ReadNotAuthorized1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        internal static string Save {
-            get {
-                return ResourceManager.GetString("Save", resourceCulture);
+                return ResourceManager.GetString("Summary", resourceCulture);
             }
         }
         

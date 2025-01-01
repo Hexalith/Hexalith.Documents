@@ -44,6 +44,7 @@ public record Document(
                   string.Empty,
                   null,
                   null,
+                  null,
                   null),
               null,
               null,
@@ -66,6 +67,7 @@ public record Document(
               new DocumentDescription(
                   added.Name,
                   added.Comments,
+                  added.DocumentContainerId,
                   added.DocumentTypeId,
                   null),
               null,

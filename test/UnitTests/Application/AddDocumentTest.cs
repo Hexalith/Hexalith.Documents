@@ -24,11 +24,11 @@ public class AddDocumentTest
             "1",
             "Test AddDocumentBaseType",
             "This is a test AddDocumentBaseType",
-            "/test",
             new FileDescription("F1", "12354_File 1.pdf", "File 1.pdf", 4569L, "application/pdf"),
             "user1",
             DateTimeOffset.Now,
-            null);
+            "test",
+            "type");
         Metadata metadata = Metadata.CreateNew(message, "test", "part1", DateTime.UtcNow);
         ActorMessageEnvelope envelope = ActorMessageEnvelope.Create(message, metadata);
 

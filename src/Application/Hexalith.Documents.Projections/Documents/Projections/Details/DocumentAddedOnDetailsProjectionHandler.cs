@@ -23,7 +23,12 @@ public class DocumentAddedOnDetailsProjectionHandler(IProjectionFactory<Document
         ArgumentNullException.ThrowIfNull(baseEvent);
         return Task.FromResult<DocumentDetailsViewModel?>(new DocumentDetailsViewModel(
             baseEvent.Id,
-            new DocumentDescription(baseEvent.Name, baseEvent.Comments, baseEvent.DocumentTypeId, null),
+            new DocumentDescription(
+                baseEvent.Name,
+                baseEvent.Comments,
+                baseEvent.DocumentContainerId,
+                baseEvent.DocumentTypeId,
+                null),
             new DocumentRouting(baseEvent.OwnerId, [], []),
             baseEvent.DocumentTypeId,
             DocumentState.Create(baseEvent.CreatedOn, baseEvent.OwnerId),

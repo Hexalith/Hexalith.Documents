@@ -117,46 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MaxNameLengthExceeded" xml:space="preserve">
-    <value>Name must not exceed {0} characters</value>
-  </data>
-  <data name="MaxDescriptionLengthExceeded" xml:space="preserve">
-    <value>Description must not exceed {0} characters</value>
-  </data>
-  <data name="NameRequired" xml:space="preserve">
-    <value>Name is required</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="Disabled" xml:space="preserve">
-    <value>Désactivé</value>
-  </data>
-  <data name="Id" xml:space="preserve">
-    <value>Identifier</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="ReadNotAuthorized" xml:space="preserve">
-    <value>You are not authorized to read documents</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
   <data name="Title" xml:space="preserve">
     <value>Add a new document</value>
-  </data>
-  <data name="ReadNotAuthorized1" xml:space="preserve">
-    <value>You are not authorized to read documents</value>
   </data>
   <data name="AddTitle" xml:space="preserve">
     <value>Document [0}</value>
   </data>
   <data name="ListTitle" xml:space="preserve">
     <value>Documents</value>
+  </data>
+  <data name="DataFileName" xml:space="preserve">
+    <value>Documents_{0}</value>
+  </data>
+  <data name="DocumentTypeId" xml:space="preserve">
+    <value>Document type</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Document summary</value>
   </data>
 </root>

@@ -71,12 +71,12 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         DocumentContainerDetailsViewModel container = await GetUserContainerAsync(metadata, cancellationToken).ConfigureAwait(false);
         AddDocument addDocument = new(
             command.Id,
-            container.Id,
             command.Id,
             null,
             null,
             metadata.Context.UserId,
             now,
+            container.Id,
             "Export");
         await _commandProcessor.SubmitAsync(addDocument, Metadata.CreateNew(addDocument, metadata, now), cancellationToken).ConfigureAwait(false);
         GetDocumentStorage getDocumentStorage = new(container.DocumentStorageId);
@@ -154,6 +154,8 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         }
 #pragma warning restore CA1031 // Do not catch general exception types
     }
+
+    private static string GetDocumentContainerId(string userId) => "User-" + userId;
 
     /// <summary>
     /// Writes the object to the stream asynchronously.
@@ -245,7 +247,8 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
 
     private async Task<DocumentContainerDetailsViewModel> GetUserContainerAsync(Metadata metadata, CancellationToken cancellationToken)
     {
-        GetDocumentContainerDetails? getDocumentContainer = new(metadata.Context.UserId);
+        string containerId = GetDocumentContainerId(metadata.Context.UserId);
+        GetDocumentContainerDetails? getDocumentContainer = new(containerId);
         Metadata meta = Metadata.CreateNew(getDocumentContainer, metadata, Time.GetLocalNow());
         getDocumentContainer = await _requestProcessor
             .ProcessAsync(getDocumentContainer, meta, cancellationToken)
@@ -254,14 +257,14 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         {
             // Create the user default container
             CreateDocumentContainer createDocumentContainer = new(
-                metadata.Context.UserId,
+                containerId,
                 "Default",
                 metadata.Context.UserId + " user data",
-                "Users",
+                "Users/" + metadata.Context.UserId,
                 "The user default document container",
                 null);
             await _commandProcessor.SubmitAsync(createDocumentContainer, Metadata.CreateNew(createDocumentContainer, metadata, Time.GetLocalNow()), cancellationToken).ConfigureAwait(false);
-            throw new InvalidOperationException("User document container not found. Created the default container. Retry the export.");
+            throw new InvalidOperationException($"User document container {containerId} not found. Created the default container. Retry the export.");
         }
 
         return container;

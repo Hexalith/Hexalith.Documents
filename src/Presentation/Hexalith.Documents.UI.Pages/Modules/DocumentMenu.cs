@@ -42,6 +42,13 @@ public static class DocumentMenu
                             10,
                             [
                                 new MenuItemInformation(
+                                    Labels.DocumentMenuItem,
+                                    "Documents/Document",
+                                    new IconInformation("Document", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
+                                    false,
+                                    110,
+                                    []),
+                                new MenuItemInformation(
                                     Labels.DataManagementMenuItem,
                                     "Documents/DataManagement",
                                     new IconInformation("DatabaseMultiple", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),

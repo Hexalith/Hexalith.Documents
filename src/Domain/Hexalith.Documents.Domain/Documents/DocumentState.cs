@@ -11,25 +11,25 @@ using Hexalith.Documents.Domain.ValueObjects;
 /// <param name="Revision">The revision number of the document.</param>
 /// <param name="Status">The current status of the document.</param>
 /// <param name="CreatedOn">The timestamp when the document was created.</param>
-/// <param name="CreatedByContactId">The identifier of the contact who created the document.</param>
+/// <param name="CreatedById">The identifier of the contact who created the document.</param>
 /// <param name="ModifiedOn">The timestamp when the document was last modified.</param>
-/// <param name="ModifiedByContactId">The identifier of the contact who last modified the document.</param>
+/// <param name="ModifiedById">The identifier of the contact who last modified the document.</param>
 /// <param name="ValidatedOn">The timestamp when the document was validated.</param>
-/// <param name="ValidatedByContactId">The identifier of the contact who validated the document.</param>
+/// <param name="ValidatedById">The identifier of the contact who validated the document.</param>
 /// <param name="PublishedOn">The timestamp when the document was published.</param>
-/// <param name="PublishedByContactId">The identifier of the contact who published the document.</param>
+/// <param name="PublishedById">The identifier of the contact who published the document.</param>
 [DataContract]
 public record DocumentState(
     [property: DataMember(Order = 1)] int Revision,
     [property: DataMember(Order = 2)] DocumentStatus Status,
     [property: DataMember(Order = 3)] DateTimeOffset CreatedOn,
-    [property: DataMember(Order = 4)] string CreatedByContactId,
+    [property: DataMember(Order = 4)] string CreatedById,
     [property: DataMember(Order = 5)] DateTimeOffset? ModifiedOn,
-    [property: DataMember(Order = 6)] string? ModifiedByContactId,
+    [property: DataMember(Order = 6)] string? ModifiedById,
     [property: DataMember(Order = 7)] DateTimeOffset? ValidatedOn,
-    [property: DataMember(Order = 8)] string? ValidatedByContactId,
+    [property: DataMember(Order = 8)] string? ValidatedById,
     [property: DataMember(Order = 9)] DateTimeOffset? PublishedOn,
-    [property: DataMember(Order = 10)] string? PublishedByContactId)
+    [property: DataMember(Order = 10)] string? PublishedById)
 {
     /// <summary>
     /// Creates a new instance of the <see cref="DocumentState"/> class with the specified creation timestamp and creator contact ID.

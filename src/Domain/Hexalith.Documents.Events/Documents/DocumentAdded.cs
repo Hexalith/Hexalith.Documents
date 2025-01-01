@@ -29,6 +29,8 @@ public partial record DocumentAdded(
     [property: DataMember(Order = 6)]
     DateTimeOffset CreatedOn,
     [property: DataMember(Order = 7)]
+    string DocumentContainerId,
+    [property: DataMember(Order = 8)]
     string DocumentTypeId) : DocumentEvent(Id)
 {
 }
