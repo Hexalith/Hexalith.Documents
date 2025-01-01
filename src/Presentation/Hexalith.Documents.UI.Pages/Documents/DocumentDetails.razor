@@ -29,14 +29,14 @@
                     <HexEntityDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexEntityDisabledCheckbox>
                 </FluentGridItem>
             }
-            <FluentGridItem xs="12" md="12">
+            <FluentGridItem xs="12" md="6">
                 <HexEntityCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexEntityCommentsField>
             </FluentGridItem>
             <FluentGridItem xs="12" md="6">
-                <FluentTextField Style="width:100%;" @bind-Value="_data.DocumentTypeId" Label="@Labels.DocumentTypeId"></FluentTextField>
+                <FluentTextArea Style="width:100%;" @bind-Value="_data.Summary" Label="@Labels.Summary"></FluentTextArea>
             </FluentGridItem>
             <FluentGridItem xs="12" md="6">
-                <FluentTextArea Style="width:100%;" @bind-Value="_data.Summary" Label="@Labels.Summary"></FluentTextArea>
+                <DocumentContainerAutocomplete Disabled="true" @bind-Id="_data.DocumentTypeId" />
             </FluentGridItem>
             <FluentGridItem xs="12" md="6">
                 @if (Id is null)
@@ -49,7 +49,7 @@
                 }
             </FluentGridItem>
             <FluentGridItem xs="12" md="6">
-                <DocumentAutocomplete @bind-Id="_data.ParentDocumentId" />
+                <DocumentAutocomplete @bind-Id="_data.ParentDocumentId" Label="@Labels.ParentDocument" />
             </FluentGridItem>
             <FluentGridItem md="12">
                 <HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
@@ -115,10 +115,10 @@
         if (Id is null)
         {
             fileTypeCommand = new AddDocument(
-                _data.Id!, 
-                _data.Name!, 
-                _data.Comments, 
-                _data.File, 
+                _data.Id!,
+                _data.Name!,
+                _data.Comments,
+                _data.File,
                 _user.Identity.Name,
                 TimeService.GetLocalNow(),
                 _data.DocumentContainerId!,

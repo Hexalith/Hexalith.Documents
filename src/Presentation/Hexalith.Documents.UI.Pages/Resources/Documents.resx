@@ -129,10 +129,10 @@
   <data name="DataFileName" xml:space="preserve">
     <value>Documents_{0}</value>
   </data>
-  <data name="DocumentTypeId" xml:space="preserve">
-    <value>Document type</value>
-  </data>
   <data name="Summary" xml:space="preserve">
     <value>Document summary</value>
+  </data>
+  <data name="ParentDocument" xml:space="preserve">
+    <value>Parent document</value>
   </data>
 </root>

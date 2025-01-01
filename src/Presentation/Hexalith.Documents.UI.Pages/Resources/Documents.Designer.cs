@@ -79,20 +79,20 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document type.
-        /// </summary>
-        internal static string DocumentTypeId {
-            get {
-                return ResourceManager.GetString("DocumentTypeId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Documents.
         /// </summary>
         internal static string ListTitle {
             get {
                 return ResourceManager.GetString("ListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent document.
+        /// </summary>
+        internal static string ParentDocument {
+            get {
+                return ResourceManager.GetString("ParentDocument", resourceCulture);
             }
         }
         
