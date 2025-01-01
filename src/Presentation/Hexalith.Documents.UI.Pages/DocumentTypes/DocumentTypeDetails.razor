@@ -1,179 +1,199 @@
 ﻿@page "/Documents/Add/DocumentType"
 @page "/Documents/DocumentType/{Id}"
+@using Hexalith.Documents.Requests.FileTypes
+@using Hexalith.Documents.UI.Components.FileTypes
 @rendermode InteractiveAuto
 <HexEntityDetailsToolbar IndexPath="/Documents/DocumentType" OnRefresh="OnRefreshAsync" />
 
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
-	@if (Id is null) // Add
-	{
-		<FluentLabel Typo="Typography.PageTitle">@Labels.AddTitle</FluentLabel>
-	}
-	else // Edit
-	{
-		<FluentLabel Typo="Typography.PageTitle">@string.Format(Labels.Title, Id)</FluentLabel>
-	}
-	@if (_data is not null)
-	{
-		<FluentGrid Orientation="Orientation.Vertical">
-			<FluentGridItem xs="12" md="3">
-				<HexEntityIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexEntityIdField>
-			</FluentGridItem>
-			<FluentGridItem xs="12" md="@(Id is null ? 9 : 6)">
-				<HexEntityNameField @bind-Value="_data.Name"></HexEntityNameField>
-			</FluentGridItem>
-			@if (Id is not null)
-			{
-				<FluentGridItem xs="12" md="3" Style="display: flex; align-items: flex-end;">
-					<HexEntityDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexEntityDisabledCheckbox>
-				</FluentGridItem>
-			}
-			<FluentGridItem xs="12" md="12">
-				<HexEntityCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexEntityCommentsField>
-			</FluentGridItem>
-			<FluentGridItem md="12">
-				<FluentLabel Typo="Typography.PaneHeader">@Labels.FileTypes</FluentLabel>
-			</FluentGridItem>
-			<FluentGridItem xs="6" md="6">
-				<FluentTextField Style="width:100%;" @bind-Value="_newFileType" Label="@Labels.NewFileType"></FluentTextField>
-			</FluentGridItem>
-			<FluentGridItem xs="6" md="6">
-				<HexAddButton OnClick="AddFileType"/>
-			</FluentGridItem>
-			@foreach (string fileType in _data.FileTypeIds)
-			{
-				<FluentGridItem xs="12" xl="6">
-					<FluentStack Orientation="Orientation.Horizontal" Style="margin: 4px 0;">
-						<FluentTextField Style="width:75%;" Value="@fileType" Readonly="true"></FluentTextField>
-						<HexRemoveButton OnClick="@(() =>RemoveTarget(fileType))"/>
-					</FluentStack>
-				</FluentGridItem>
-			}
-			<FluentGridItem md="12">
-				<HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
-			</FluentGridItem>
-			<FluentGridItem>
-				<HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
-			</FluentGridItem>
-		</FluentGrid>
-	}
+    @if (Id is null) // Add
+    {
+        <FluentLabel Typo="Typography.PageTitle">@Labels.AddTitle</FluentLabel>
+    }
+    else // Edit
+    {
+        <FluentLabel Typo="Typography.PageTitle">@string.Format(Labels.Title, Id)</FluentLabel>
+    }
+    @if (_data is not null)
+    {
+        <FluentGrid Orientation="Orientation.Vertical">
+            <FluentGridItem xs="12" md="3">
+                <HexEntityIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexEntityIdField>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="@(Id is null ? 9 : 6)">
+                <HexEntityNameField @bind-Value="_data.Name"></HexEntityNameField>
+            </FluentGridItem>
+            @if (Id is not null)
+            {
+                <FluentGridItem xs="12" md="3" Style="display: flex; align-items: flex-end;">
+                    <HexEntityDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexEntityDisabledCheckbox>
+                </FluentGridItem>
+            }
+            <FluentGridItem xs="12" md="12">
+                <HexEntityCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexEntityCommentsField>
+            </FluentGridItem>
+            <FluentGridItem md="12">
+                <FluentLabel Typo="Typography.PaneHeader">@Labels.FileTypes</FluentLabel>
+            </FluentGridItem>
+            <FluentGridItem xs="6" md="6">
+                <FileTypeAutocomplete OnOptionsSearch="OnFileTypeSearch" @bind-ValueText="_newFileType" Label="@Labels.NewFileType"></FileTypeAutocomplete>
+            </FluentGridItem>
+            <FluentGridItem xs="6" md="6">
+                <HexAddButton OnClick="AddFileType"/>
+            </FluentGridItem>
+            @foreach (string fileType in _data.FileTypeIds)
+            {
+                <FluentGridItem xs="12" xl="6">
+                    <FluentStack Orientation="Orientation.Horizontal" Style="margin: 4px 0;">
+                        <FileTypeIdField Value="@fileType" Readonly="true"></FileTypeIdField>
+                        <HexRemoveButton OnClick="@(() =>RemoveTarget(fileType))"/>
+                    </FluentStack>
+                </FluentGridItem>
+            }
+            <FluentGridItem md="12">
+                <HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
+            </FluentGridItem>
+            <FluentGridItem>
+                <HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
+            </FluentGridItem>
+        </FluentGrid>
+    }
 </FluentStack>
 
 @code {
-	[CascadingParameter]
-	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-	[Parameter]
-	public string? Id { get; set; }
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+    [Parameter]
+    public string? Id { get; set; }
 
-	private ClaimsPrincipal? _user;
-	private DocumentTypeEditViewModel _data = new();
-	private string? _newFileType;
+    private ClaimsPrincipal? _user;
+    private DocumentTypeEditViewModel _data = new();
+    private string? _newFileType;
 
-	private ValidationResult? ValidationResult;
+    private ValidationResult? ValidationResult;
 
-	protected override async Task OnInitializedAsync()
-	{
-		if (AuthenticationStateTask is not null)
-		{
-			var authState = await AuthenticationStateTask;
-			if (!authState.User.Identity?.IsAuthenticated == true)
-			{
-				NavigationManager.NavigateTo(Application.LoginPath);
-			}
-			_user = authState.User;
-		}
-		if (_user is null)
-		{
-			return;
-		}
-		if (Id is not null)
-		{
-			var details = await RequestService.SubmitAsync(_user, new GetDocumentTypeDetails(Id), CancellationToken.None);
-			if (details.Result is not null)
-			{
-				_data = new DocumentTypeEditViewModel(details.Result);
-			}
-		}
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            if (!authState.User.Identity?.IsAuthenticated == true)
+            {
+                NavigationManager.NavigateTo(Application.LoginPath);
+            }
+            _user = authState.User;
+        }
+        if (_user is null)
+        {
+            return;
+        }
+        if (Id is not null)
+        {
+            var details = await RequestService.SubmitAsync(_user, new GetDocumentTypeDetails(Id), CancellationToken.None);
+            if (details.Result is not null)
+            {
+                _data = new DocumentTypeEditViewModel(details.Result);
+            }
+        }
+    }
 
-	private async Task OnSave()
-	{
-		if (_data is null || _user is null)
-		{
-			return;
-		}
-		if (!_data.HasChanges)
-		{
-			return;
-		}
-		ValidationResult = new DocumentTypeEditValidation().Validate(_data);
-		if (!ValidationResult.IsValid)
-			return;
-		DocumentTypeCommand fileTypeCommand;
-		if (Id is null)
-		{
-			fileTypeCommand = new AddDocumentType(
-						_data.Id!,
-						_data.Name!,
-						_data.Comments,
-						_data.FileTypeIds);
-			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-			_data = new();
-			StateHasChanged();
-			return;
-		}
-		if (_data.DescriptionChanged)
-		{
-			fileTypeCommand = new ChangeDocumentTypeDescription(
-						_data.Id!,
-						_data.Name!,
-						_data.Comments);
-			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-		}
-		if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
-		{
-			fileTypeCommand = new DisableDocumentType(_data.Id);
-			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-		}
-		if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
-		{
-			fileTypeCommand = new EnableDocumentType(_data.Id);
-			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-		}
-		// for each target in _data.Targets, add it if it does not exist
-		foreach (var fileType in _data.FileTypeIds)
-		{
-			if (!_data.Original.FileTypeIds.Contains(fileType))
-			{
-				fileTypeCommand = new AddDocumentTypeFileType(_data.Id, fileType);
-				await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-			}
-		}
-		if (Id is null)
-		{
-			_data = new();
-			_newFileType = null;
+    private async Task OnSave()
+    {
+        if (_data is null || _user is null)
+        {
+            return;
+        }
+        if (!_data.HasChanges)
+        {
+            return;
+        }
+        ValidationResult = new DocumentTypeEditValidation().Validate(_data);
+        if (!ValidationResult.IsValid)
+            return;
+        DocumentTypeCommand fileTypeCommand;
+        if (Id is null)
+        {
+            fileTypeCommand = new AddDocumentType(
+                        _data.Id!,
+                        _data.Name!,
+                        _data.Comments,
+                        _data.FileTypeIds);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+            _data = new();
+            StateHasChanged();
+            return;
+        }
+        if (_data.DescriptionChanged)
+        {
+            fileTypeCommand = new ChangeDocumentTypeDescription(
+                        _data.Id!,
+                        _data.Name!,
+                        _data.Comments);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+        }
+        if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
+        {
+            fileTypeCommand = new DisableDocumentType(_data.Id);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+        }
+        if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
+        {
+            fileTypeCommand = new EnableDocumentType(_data.Id);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+        }
+        // for each target in _data.Targets, add it if it does not exist
+        foreach (var fileType in _data.FileTypeIds)
+        {
+            if (!_data.Original.FileTypeIds.Contains(fileType))
+            {
+                fileTypeCommand = new AddDocumentTypeFileType(_data.Id, fileType);
+                await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+            }
+        }
+        if (Id is null)
+        {
+            _data = new();
+            _newFileType = null;
 
-			StateHasChanged();
-		}
-	}
+            StateHasChanged();
+        }
+    }
 
-	private void AddFileType()
-	{
-		if (!string.IsNullOrWhiteSpace(_newFileType))
-		{
-			_data.FileTypeIds.Add(_newFileType);
-			StateHasChanged();
-			_newFileType = string.Empty;
-		}
-	}
-	private void RemoveTarget(string fileType)
-	{
-		_data.FileTypeIds.Remove(fileType);
-		StateHasChanged();
-	}
-	private Task OnRefreshAsync()
-	{
-		return Task.CompletedTask;
-	}
-
+    private void AddFileType()
+    {
+        if (!string.IsNullOrWhiteSpace(_newFileType))
+        {
+            _data.FileTypeIds.Add(_newFileType);
+            StateHasChanged();
+            _newFileType = string.Empty;
+        }
+    }
+    private void RemoveTarget(string fileType)
+    {
+        _data.FileTypeIds.Remove(fileType);
+        StateHasChanged();
+    }
+    private Task OnRefreshAsync()
+    {
+        return Task.CompletedTask;
+    }
+    private async Task OnFileTypeSearch(OptionsSearchEventArgs<Option<string>> args)
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        var result = await RequestService.SubmitAsync(_user, new GetFileTypeSummaries(0, 100, args.Text), CancellationToken.None);
+        if (result.Results is not null)
+        {
+            args.Items = result
+                .Results
+                .Select(p => new Option<string> 
+                    {
+                        Value = p.Id, 
+                        Text = p.Name, 
+                        Disabled = p.Disabled
+                    }).ToList();
+        }
+    }
 }

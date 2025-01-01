@@ -35,7 +35,7 @@
     {
         _summaries = [..(await RequestService
             .SubmitAsync(User, new GetDocumentTypeSummaries(), CancellationToken.None))
-            .Result
+            .Results
             .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
         if (!_summaries.Any())

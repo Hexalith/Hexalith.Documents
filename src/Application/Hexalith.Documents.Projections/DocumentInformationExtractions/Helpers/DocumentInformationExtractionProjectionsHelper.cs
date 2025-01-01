@@ -56,7 +56,7 @@ public static class DocumentInformationExtractionProjectionsHelper
     public static IServiceCollection AddDocumentInformationExtractionRequestHandlers(this IServiceCollection services)
     {
         services.TryAddScoped<IRequestHandler<GetDocumentInformationExtractionDetails>, GetDocumentInformationExtractionDetailsHandler>();
-        services.TryAddScoped<IRequestHandler<GetDocumentInformationExtractionSummaries>, GetDocumentInformationExtractionSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentInformationExtractionSummaries>, GetFilteredCollectionHandler<GetDocumentInformationExtractionSummaries, DocumentInformationExtractionSummaryViewModel>>();
         services.TryAddScoped<IRequestHandler<GetDocumentInformationExtractionExports>, GetExportsRequestHandler<GetDocumentInformationExtractionExports, DocumentInformationExtractionImportExportViewModel, DocumentInformationExtraction>>();
         services.TryAddScoped<IRequestHandler<GetDocumentInformationExtractionIds>, GetAggregateIdsRequestHandler<GetDocumentInformationExtractionIds>>();
         return services;

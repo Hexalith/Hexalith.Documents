@@ -2,6 +2,7 @@
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerialization;
 
@@ -15,13 +16,14 @@ using Hexalith.PolymorphicSerialization;
 public partial record GetDocumentTypeSummaries(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DocumentTypeSummaryViewModel> Result)
+    [property: DataMember(Order = 2)] string? Filter,
+    [property: DataMember(Order = 3)] IEnumerable<DocumentTypeSummaryViewModel> Results) : IFilteredChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentTypeSummaries"/> class.
     /// </summary>
     public GetDocumentTypeSummaries()
-        : this(0, 0, [])
+        : this(0, 0, null, [])
     {
     }
 
@@ -30,8 +32,9 @@ public partial record GetDocumentTypeSummaries(
     /// </summary>
     /// <param name="skip">The number of document type summaries to skip.</param>
     /// <param name="take">The number of document type summaries to take.</param>
-    public GetDocumentTypeSummaries(int skip, int take)
-        : this(skip, take, [])
+    /// <param name="filter">The filter to apply to the document type summaries.</param>
+    public GetDocumentTypeSummaries(int skip, int take, string? filter)
+        : this(skip, take, filter, [])
     {
     }
 
@@ -44,4 +47,14 @@ public partial record GetDocumentTypeSummaries(
     /// Gets the aggregate name of the document command.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.DocumentTypeAggregateName;
+
+    /// <inheritdoc/>
+    IEnumerable<object>? ICollectionRequest.Results => Results;
+
+    /// <inheritdoc/>
+    public ICollectionRequest CreateResults(IEnumerable<object> results)
+        => this with { Results = (IEnumerable<DocumentTypeSummaryViewModel>)results };
+
+    /// <inheritdoc/>
+    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take };
 }

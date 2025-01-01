@@ -57,7 +57,7 @@ public static class FileTypeProjectionsHelper
     public static IServiceCollection AddFileTypeRequestHandlers(this IServiceCollection services)
     {
         services.TryAddScoped<IRequestHandler<GetFileTypeDetails>, GetFileTypeDetailsHandler>();
-        services.TryAddScoped<IRequestHandler<GetFileTypeSummaries>, GetFileTypeSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetFileTypeSummaries>, GetFilteredCollectionHandler<GetFileTypeSummaries, FileTypeSummaryViewModel>>();
         services.TryAddScoped<IRequestHandler<GetFileTypeExports>, GetExportsRequestHandler<GetFileTypeExports, FileTypeImportExportViewModel, FileType>>();
         services.TryAddScoped<IRequestHandler<GetFileTypeIds>, GetAggregateIdsRequestHandler<GetFileTypeIds>>();
         return services;

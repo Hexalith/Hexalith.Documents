@@ -2,6 +2,7 @@
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerialization;
 
@@ -10,28 +11,31 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Skip">The number of document information extraction summaries to skip.</param>
 /// <param name="Take">The number of document information extraction summaries to take.</param>
-/// <param name="Result">The list of document information extraction summaries.</param>
+/// <param name="Filter">The filter to apply to the document information extraction summaries.</param>
+/// <param name="Results">The list of document information extraction summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentInformationExtractionSummaries(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DocumentInformationExtractionSummaryViewModel> Result)
+    [property: DataMember(Order = 3)] string? Filter,
+    [property: DataMember(Order = 4)] IEnumerable<DocumentInformationExtractionSummaryViewModel> Results) : IFilteredChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentInformationExtractionSummaries"/> class.
     /// </summary>
     public GetDocumentInformationExtractionSummaries()
-        : this(0, 0, [])
+        : this(0, 0, null, [])
     {
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentInformationExtractionSummaries"/> class with specified skip and take values.
     /// </summary>
-    /// <param name="skip">The number of document information xtraction summaries to skip.</param>
+    /// <param name="skip">The number of document information extraction summaries to skip.</param>
     /// <param name="take">The number of document information extraction summaries to take.</param>
-    public GetDocumentInformationExtractionSummaries(int skip, int take)
-        : this(skip, take, [])
+    /// <param name="filter">The filter to apply to the document information extraction summaries.</param>
+    public GetDocumentInformationExtractionSummaries(int skip, int take, string? filter = null)
+        : this(skip, take, filter, [])
     {
     }
 
@@ -44,4 +48,14 @@ public partial record GetDocumentInformationExtractionSummaries(
     /// Gets the aggregate name of the document command.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.DocumentInformationExtractionAggregateName;
+
+    /// <inheritdoc/>
+    IEnumerable<object>? ICollectionRequest.Results => Results;
+
+    /// <inheritdoc/>
+    public ICollectionRequest CreateResults(IEnumerable<object> results)
+        => this with { Results = (IEnumerable<DocumentInformationExtractionSummaryViewModel>)results };
+
+    /// <inheritdoc/>
+    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take };
 }

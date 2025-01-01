@@ -2,6 +2,7 @@
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerialization;
 
@@ -10,18 +11,20 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Skip">The number of document container summaries to skip.</param>
 /// <param name="Take">The number of document container summaries to take.</param>
-/// <param name="Result">The list of document container summaries.</param>
+/// <param name="Filter">The filter to apply to the document container summaries.</param>
+/// <param name="Results">The list of document container summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentContainerSummaries(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DocumentContainerSummaryViewModel> Result)
+    [property: DataMember(Order = 3)] string? Filter,
+    [property: DataMember(Order = 4)] IEnumerable<DocumentContainerSummaryViewModel> Results) : IFilteredChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentContainerSummaries"/> class.
     /// </summary>
     public GetDocumentContainerSummaries()
-        : this(0, 0, [])
+        : this(0, 0, null, [])
     {
     }
 
@@ -30,8 +33,9 @@ public partial record GetDocumentContainerSummaries(
     /// </summary>
     /// <param name="skip">The number of document container summaries to skip.</param>
     /// <param name="take">The number of document container summaries to take.</param>
-    public GetDocumentContainerSummaries(int skip, int take)
-        : this(skip, take, [])
+    /// <param name="filter">The filter to apply to the document container summaries.</param>
+    public GetDocumentContainerSummaries(int skip, int take, string? filter = null)
+        : this(skip, take, filter, [])
     {
     }
 
@@ -44,4 +48,14 @@ public partial record GetDocumentContainerSummaries(
     /// Gets the aggregate name of the document command.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.DocumentContainerAggregateName;
+
+    /// <inheritdoc/>
+    IEnumerable<object>? ICollectionRequest.Results => Results;
+
+    /// <inheritdoc/>
+    public ICollectionRequest CreateResults(IEnumerable<object> results)
+        => this with { Results = (IEnumerable<DocumentContainerSummaryViewModel>)results };
+
+    /// <inheritdoc/>
+    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take };
 }

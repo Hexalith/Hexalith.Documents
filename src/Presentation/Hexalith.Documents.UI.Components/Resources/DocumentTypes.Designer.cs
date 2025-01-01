@@ -124,7 +124,7 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a document type .
+        ///   Looks up a localized string similar to Select a document type.
         /// </summary>
         internal static string Placeholder {
             get {

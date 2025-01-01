@@ -2,6 +2,7 @@ namespace Hexalith.Documents.Requests.DataManagements;
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerialization;
 
@@ -10,18 +11,20 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Skip">The number of data export summaries to skip.</param>
 /// <param name="Take">The number of data export summaries to take.</param>
-/// <param name="Result">The list of data export summaries.</param>
+/// <param name="Filter">The filter to apply to the data export summaries.</param>
+/// <param name="Results">The list of data export summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDataManagementSummaries(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DataManagementSummaryViewModel> Result)
+    [property: DataMember(Order = 3)] string? Filter,
+    [property: DataMember(Order = 4)] IEnumerable<DataManagementSummaryViewModel> Results) : IFilteredChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDataManagementSummaries"/> class.
     /// </summary>
     public GetDataManagementSummaries()
-        : this(0, 0, [])
+        : this(0, 0, null, [])
     {
     }
 
@@ -30,8 +33,9 @@ public partial record GetDataManagementSummaries(
     /// </summary>
     /// <param name="skip">The number of data export summaries to skip.</param>
     /// <param name="take">The number of data export summaries to take.</param>
-    public GetDataManagementSummaries(int skip, int take)
-        : this(skip, take, [])
+    /// <param name="filter">The filter to apply to the data export summaries.</param>
+    public GetDataManagementSummaries(int skip, int take, string? filter = null)
+        : this(skip, take, filter, [])
     {
     }
 
@@ -44,4 +48,14 @@ public partial record GetDataManagementSummaries(
     /// Gets the aggregate name of the document command.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.DataManagementAggregateName;
+
+    /// <inheritdoc/>
+    IEnumerable<object>? ICollectionRequest.Results => Results;
+
+    /// <inheritdoc/>
+    public ICollectionRequest CreateResults(IEnumerable<object> results)
+        => this with { Results = (IEnumerable<DataManagementSummaryViewModel>)results };
+
+    /// <inheritdoc/>
+    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take };
 }

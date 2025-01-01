@@ -35,7 +35,7 @@ Title="@Labels.ListTitle">
     {
         _summaries = [..(await RequestService
         .SubmitAsync(User, new GetDataManagementSummaries(), CancellationToken.None))
-        .Result
+        .Results
         .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
     }

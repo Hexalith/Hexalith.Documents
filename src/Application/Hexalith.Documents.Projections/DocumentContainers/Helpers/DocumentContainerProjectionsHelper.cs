@@ -59,7 +59,7 @@ public static class DocumentContainerProjectionsHelper
     public static IServiceCollection AddDocumentContainerRequestHandlers(this IServiceCollection services)
     {
         services.TryAddScoped<IRequestHandler<GetDocumentContainerDetails>, GetDocumentContainerDetailsHandler>();
-        services.TryAddScoped<IRequestHandler<GetDocumentContainerSummaries>, GetDocumentContainerSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetDocumentContainerSummaries>, GetFilteredCollectionHandler<GetDocumentContainerSummaries, DocumentContainerSummaryViewModel>>();
         services.TryAddScoped<IRequestHandler<GetDocumentContainerExports>, GetExportsRequestHandler<GetDocumentContainerExports, DocumentContainerImportExportViewModel, DocumentContainer>>();
         services.TryAddScoped<IRequestHandler<GetDocumentContainerIds>, GetAggregateIdsRequestHandler<GetDocumentContainerIds>>();
         return services;

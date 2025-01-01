@@ -53,7 +53,7 @@ public static class DataManagementProjectionsHelper
     public static IServiceCollection AddDataManagementRequestHandlers(this IServiceCollection services)
     {
         services.TryAddScoped<IRequestHandler<GetDataManagementDetails>, GetDataManagementDetailsHandler>();
-        services.TryAddScoped<IRequestHandler<GetDataManagementSummaries>, GetDataManagementSummariesHandler>();
+        services.TryAddScoped<IRequestHandler<GetDataManagementSummaries>, GetFilteredCollectionHandler<GetDataManagementSummaries, DataManagementSummaryViewModel>>();
         services.TryAddScoped<IRequestHandler<GetDataManagementExports>, GetExportsRequestHandler<GetDataManagementExports, DataManagementImportExportViewModel, DataManagement>>();
         services.TryAddScoped<IRequestHandler<GetDataManagementIds>, GetAggregateIdsRequestHandler<GetDataManagementIds>>();
         return services;

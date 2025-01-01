@@ -136,9 +136,9 @@
     <value>Email</value>
   </data>
   <data name="Label" xml:space="preserve">
-    <value>Document type </value>
+    <value>Document type</value>
   </data>
   <data name="Placeholder" xml:space="preserve">
-    <value>Select a document type </value>
+    <value>Select a document type</value>
   </data>
 </root>
