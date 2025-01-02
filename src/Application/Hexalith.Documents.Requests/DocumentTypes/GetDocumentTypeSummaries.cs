@@ -11,19 +11,22 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Skip">The number of document type summaries to skip.</param>
 /// <param name="Take">The number of document type summaries to take.</param>
-/// <param name="Result">The list of document type summaries.</param>
+/// <param name="Filter">The filter to apply to the document type summaries.</param>
+/// <param name="Ids">The list of document type summary IDs.</param>
+/// <param name="Results">The list of document type summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentTypeSummaries(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 2)] string? Filter,
-    [property: DataMember(Order = 3)] IEnumerable<DocumentTypeSummaryViewModel> Results) : IFilteredChunkableRequest
+    [property: DataMember(Order = 3)] string? Filter,
+    [property: DataMember(Order = 4)] IEnumerable<string> Ids,
+    [property: DataMember(Order = 5)] IEnumerable<DocumentTypeSummaryViewModel> Results) : IFilteredChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentTypeSummaries"/> class.
     /// </summary>
     public GetDocumentTypeSummaries()
-        : this(0, 0, null, [])
+        : this(0, 0, null, Array.Empty<string>(), Array.Empty<DocumentTypeSummaryViewModel>())
     {
     }
 
@@ -33,8 +36,19 @@ public partial record GetDocumentTypeSummaries(
     /// <param name="skip">The number of document type summaries to skip.</param>
     /// <param name="take">The number of document type summaries to take.</param>
     /// <param name="filter">The filter to apply to the document type summaries.</param>
-    public GetDocumentTypeSummaries(int skip, int take, string? filter)
-        : this(skip, take, filter, [])
+    public GetDocumentTypeSummaries(int skip, int take, string? filter = null)
+        : this(skip, take, filter, Array.Empty<string>(), Array.Empty<DocumentTypeSummaryViewModel>())
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetDocumentTypeSummaries"/> class with specified skip, take, and IDs values.
+    /// </summary>
+    /// <param name="skip">The number of document type summaries to skip.</param>
+    /// <param name="take">The number of document type summaries to take.</param>
+    /// <param name="ids">The list of document type summary IDs.</param>
+    public GetDocumentTypeSummaries(int skip, int take, IEnumerable<string> ids)
+        : this(skip, take, null, ids, Array.Empty<DocumentTypeSummaryViewModel>())
     {
     }
 

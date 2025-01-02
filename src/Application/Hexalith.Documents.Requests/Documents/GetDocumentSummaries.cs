@@ -11,6 +11,7 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Skip">The number of document summaries to skip.</param>
 /// <param name="Take">The number of document summaries to take.</param>
+/// <param name="Filter">The filter criteria for the document summaries.</param>
 /// <param name="Results">The list of document summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentSummaries(
@@ -23,7 +24,7 @@ public partial record GetDocumentSummaries(
     /// Initializes a new instance of the <see cref="GetDocumentSummaries"/> class.
     /// </summary>
     public GetDocumentSummaries()
-        : this(0, 0, null, [])
+        : this(0, 0, null, Array.Empty<DocumentSummaryViewModel>())
     {
     }
 
@@ -34,7 +35,7 @@ public partial record GetDocumentSummaries(
     /// <param name="take">The number of document summaries to take.</param>
     /// <param name="filter">The filter criteria for the document summaries.</param>
     public GetDocumentSummaries(int skip, int take, string? filter)
-        : this(skip, take, filter, [])
+        : this(skip, take, filter, Array.Empty<DocumentSummaryViewModel>())
     {
     }
 
@@ -56,5 +57,7 @@ public partial record GetDocumentSummaries(
         => this with { Results = (IEnumerable<DocumentSummaryViewModel>)results };
 
     /// <inheritdoc/>
-    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take, Results = [] };
+    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take, Results = Array.Empty<DocumentSummaryViewModel>() };
+
+    public IEnumerable<string> Ids { get; }
 }
