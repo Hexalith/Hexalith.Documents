@@ -56,5 +56,5 @@ public partial record GetDocumentSummaries(
         => this with { Results = (IEnumerable<DocumentSummaryViewModel>)results };
 
     /// <inheritdoc/>
-    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take };
+    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take, Results = [] };
 }

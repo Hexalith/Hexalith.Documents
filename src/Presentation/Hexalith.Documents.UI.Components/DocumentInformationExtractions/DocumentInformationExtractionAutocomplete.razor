@@ -1,29 +1,74 @@
-<HexAutocomplete Width="100%"
-                 Label="@(Label ?? Labels.Label)"
-                 Placeholder="@(Placeholder ?? Labels.Placeholder)"
+﻿@inherits HexAutocomplete
+
+<HexAutocomplete AdditionalAttributes="AdditionalAttributes"
+                 Appearance="Appearance"
+                 AriaLabel="@AriaLabel"
+                 AutoComplete="@AutoComplete"
+                 Autofocus="@Autofocus"
+                 Class="@Class"
+                 Context="Context"
+                 Data="@Data"
+                 Disabled="Disabled"
+                 DisplayName="@DisplayName"
+                 Embedded="Embedded"
+                 Field="Field"
+                 Height="@Height"
+                 IconDismiss="IconDismiss"
+                 IconSearch="IconSearch"
                  Id="@Id"
-                 IdChanged="OnIdChanged" />
+                 Immediate="Immediate"
+                 ImmediateDelay="ImmediateDelay"
+                 Items="Items"
+                 ItemSize="ItemSize"
+                 KeepOpen="KeepOpen"
+                 Label="@(Label ?? Labels.Label)"
+                 MaxAutoHeight="@MaxAutoHeight"
+                 MaximumOptionsSearch="MaximumOptionsSearch"
+                 Name="@Name"
+                 OptionClass="@OptionClass"
+                 OptionStyle="@OptionStyle"
+                 OnOptionsSearch="OnOptionsSearch"
+                 ParentReference="ParentReference"
+                 Placeholder="@(Placeholder ?? Labels.Placeholder)"
+                 ReadOnly="ReadOnly"
+                 Required="Required"
+                 SelectedOption="SelectedOption"
+                 SelectedOptionChanged="SelectedOptionChanged"
+                 SelectedOptions="SelectedOptions"
+                 SelectedOptionsChanged="SelectedOptionsChanged"
+                 SelectValueOnTab="SelectValueOnTab"
+                 ShowOverlayOnEmptyResults="ShowOverlayOnEmptyResults"
+                 Style="@Style"
+                 TitleScrollToNext="@TitleScrollToNext"
+                 TitleScrollToPrevious="@TitleScrollToPrevious"
+                 ValueExpression="ValueExpression"
+                 ValueText="ValueText"
+                 ValueTextChanged="ValueTextChanged"
+                 Virtualize="Virtualize"
+                 Width="@Width">
+    <MaximumSelectedOptionsMessage>
+        @MaximumSelectedOptionsMessage
+    </MaximumSelectedOptionsMessage>
+    <OptionTemplate>
+        @OptionTemplate
+    </OptionTemplate>
+    <SelectedOptionTemplate>
+        @SelectedOptionTemplate
+    </SelectedOptionTemplate>
+    <LabelTemplate>
+        @LabelTemplate
+    </LabelTemplate>
+    <HeaderContent>
+        @HeaderContent
+    </HeaderContent>
+    <ChildContent>
+        @ChildContent
+    </ChildContent>
+    <FooterContent>
+        @FooterContent
+    </FooterContent>
+</HexAutocomplete>
 
 @code
 {
-    [Parameter]
-    public string? Id { get; set; }
-
-    [Parameter]
-    public EventCallback<string?> IdChanged { get; set; }
-
-    [Parameter]
-    public string? Width { get; set; }
-
-    [Parameter]
-    public string? Label { get; set; }
-
-    [Parameter]
-    public string? Placeholder { get; set; }
-
-    private async Task OnIdChanged(string? id)
-    {
-        await IdChanged.InvokeAsync(id);
-    }
-
 }
