@@ -90,10 +90,19 @@
         }
         if (Id is not null)
         {
-            var details = await RequestService.SubmitAsync(_user, new GetDocumentTypeDetails(Id), CancellationToken.None);
+            var details = await RequestService.SubmitAsync(
+                _user, 
+                new GetDocumentTypeDetails(Id), 
+                CancellationToken.None);
             if (details.Result is not null)
             {
-                _data = new DocumentTypeEditViewModel(details.Result);
+                IEnumerable<FileTypeSummaryViewModel> fileTypes = details.Result.FileTypeIds.Any()
+                    ?(await RequestService.SubmitAsync(
+                        _user, 
+                        new GetFileTypeSummaries(details.Result.FileTypeIds),
+                        CancellationToken.None)).Results
+                    : [];
+                _data = new DocumentTypeEditViewModel(details.Result, fileTypes);
             }
         }
     }

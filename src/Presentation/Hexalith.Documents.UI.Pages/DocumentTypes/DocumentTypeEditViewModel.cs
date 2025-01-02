@@ -3,6 +3,7 @@
 using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentTypes;
+using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Extensions.Helpers;
 
 using Microsoft.FluentUI.AspNetCore.Components;
@@ -16,7 +17,8 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     /// Initializes a new instance of the <see cref="DocumentTypeEditViewModel"/> class.
     /// </summary>
     /// <param name="details">The details of the file type.</param>
-    public DocumentTypeEditViewModel(DocumentTypeDetailsViewModel details)
+    /// <param name="fileTypeSummaries">The summaries of the file types.</param>
+    public DocumentTypeEditViewModel(DocumentTypeDetailsViewModel details, IEnumerable<FileTypeSummaryViewModel> fileTypeSummaries)
     {
         ArgumentNullException.ThrowIfNull(details);
         Original = details;
@@ -24,7 +26,12 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
         Name = details.Name;
         Comments = details.Comments;
         Disabled = details.Disabled;
-        FileTypeIds = [.. details.FileTypeIds.Select(p => new Option<string?>() { Value = p, Text = p })];
+        FileTypeIds = [.. fileTypeSummaries.Select(p => new Option<string?>()
+        {
+            Value = p.Id,
+            Text = p.Name,
+            Disabled = p.Disabled,
+        })];
         DataExtractionIds = [.. details.DataExtractionIds];
         Tags = [.. details.Tags];
     }
@@ -33,14 +40,16 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     /// Initializes a new instance of the <see cref="DocumentTypeEditViewModel"/> class.
     /// </summary>
     public DocumentTypeEditViewModel()
-        : this(new DocumentTypeDetailsViewModel(
-        UniqueIdHelper.GenerateUniqueStringId(),
-        string.Empty,
-        null,
-        [],
-        [],
-        [],
-        false))
+        : this(
+            new DocumentTypeDetailsViewModel(
+                UniqueIdHelper.GenerateUniqueStringId(),
+                string.Empty,
+                null,
+                [],
+                [],
+                [],
+                false),
+            [])
     {
     }
 

@@ -47,8 +47,8 @@ public partial record GetFileTypeSummaries(
     /// <param name="skip">The number of file type summaries to skip.</param>
     /// <param name="take">The number of file type summaries to take.</param>
     /// <param name="ids">The list of file type summary IDs.</param>
-    public GetFileTypeSummaries(int skip, int take, IEnumerable<string> ids)
-        : this(skip, take, null, ids, Array.Empty<FileTypeSummaryViewModel>())
+    public GetFileTypeSummaries(IEnumerable<string> ids)
+        : this(0, 0, null, ids, Array.Empty<FileTypeSummaryViewModel>())
     {
     }
 
