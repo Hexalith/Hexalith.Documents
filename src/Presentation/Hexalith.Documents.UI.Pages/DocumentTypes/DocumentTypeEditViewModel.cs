@@ -5,13 +5,13 @@ using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Extensions.Helpers;
 
+using Microsoft.FluentUI.AspNetCore.Components;
+
 /// <summary>
 /// ViewModel for editing file types.
 /// </summary>
 public sealed class DocumentTypeEditViewModel : IIdDescription
 {
-    private string _id = string.Empty;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentTypeEditViewModel"/> class.
     /// </summary>
@@ -20,10 +20,11 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     {
         ArgumentNullException.ThrowIfNull(details);
         Original = details;
+        Id = details.Id;
         Name = details.Name;
         Comments = details.Comments;
         Disabled = details.Disabled;
-        FileTypeIds = [.. details.FileTypeIds];
+        FileTypeIds = [.. details.FileTypeIds.Select(p => new Option<string?>() { Value = p, Text = p })];
         DataExtractionIds = [.. details.DataExtractionIds];
         Tags = [.. details.Tags];
     }
@@ -69,14 +70,14 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     public bool Disabled { get; set; }
 
     /// <summary>
-    /// Gets the targets associated with the file type.
+    /// Gets or sets the targets associated with the file type.
     /// </summary>
-    public ICollection<string> FileTypeIds { get; } = [];
+    public IEnumerable<Option<string>> FileTypeIds { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether the targets have changed.
     /// </summary>
-    public bool FileTypesChanged => !FileTypeIds.SequenceEqual(Original.FileTypeIds);
+    public bool FileTypesChanged => !FileTypeIds.Select(p => p.Value).SequenceEqual(Original.FileTypeIds);
 
     /// <summary>
     /// Gets a value indicating whether there are changes in the file type details.
@@ -92,11 +93,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     /// <summary>
     /// Gets or sets the ID of the file type.
     /// </summary>
-    public string Id
-    {
-        get => string.IsNullOrWhiteSpace(Original.Id) ? _id : Original.Id;
-        set => _id = string.IsNullOrWhiteSpace(Original.Id) ? value : Original.Id;
-    }
+    public string Id { get; set; }
 
     /// <summary>
     /// Gets or sets the name of the file type.

@@ -27,6 +27,10 @@ public static class DocumentTypeCommandHandlerHelper
                 ev => new DocumentType((DocumentTypeAdded)ev))
             .TryAddSimpleCommandHandler<EnableDocumentType>(c => new DocumentTypeEnabled(c.Id))
             .TryAddSimpleCommandHandler<DisableDocumentType>(c => new DocumentTypeDisabled(c.Id))
+            .TryAddSimpleCommandHandler<AddDocumentTypeFileType>(c => new DocumentTypeFileTypeAdded(c.Id, c.FileTypeId))
+            .TryAddSimpleCommandHandler<RemoveDocumentTypeFileType>(c => new DocumentTypeFileTypeRemoved(c.Id, c.FileTypeId))
+            .TryAddSimpleCommandHandler<AddDocumentTypeDataExtraction>(c => new DocumentTypeDataExtractionAdded(c.Id, c.DataInformationExtractionId))
+            .TryAddSimpleCommandHandler<RemoveDocumentTypeDataExtraction>(c => new DocumentTypeDataExtractionRemoved(c.Id, c.DataInformationExtractionId))
             .TryAddSimpleCommandHandler<ChangeDocumentTypeDescription>(c => new DocumentTypeDescriptionChanged(
                 c.Id,
                 c.Name,

@@ -14,7 +14,7 @@ public static class FileTypeQuickStartData
     /// <value>
     /// An enumerable collection of <see cref="AddFileType"/> containing predefined file types.
     /// </value>
-    public static IEnumerable<AddFileType> Data => [Excel, HTML, Markdown, Pdf, PowerPoint, Text, Word];
+    public static IEnumerable<AddFileType> Data => [Excel, HTML, Markdown, Pdf, PowerPoint, Text, Word, Json, Xml];
 
     /// <summary>
     /// Gets the details for the Excel file type.
