@@ -1,72 +1,57 @@
 ﻿@inherits HexAutocomplete
 
-<HexAutocomplete AdditionalAttributes="AdditionalAttributes"
-                 Appearance="Appearance"
+<HexAutocomplete AdditionalAttributes="@AdditionalAttributes"
+                 Appearance="@Appearance"
                  AriaLabel="@AriaLabel"
                  AutoComplete="@AutoComplete"
                  Autofocus="@Autofocus"
+                 ChildContent="@(ChildContent!)"
                  Class="@Class"
-                 Context="Context"
                  Data="@Data"
-                 Disabled="Disabled"
+                 Disabled="@Disabled"
                  DisplayName="@DisplayName"
-                 Embedded="Embedded"
-                 Field="Field"
+                 Embedded="@Embedded"
+                 Field="@Field"
+                 FooterContent="@(FooterContent!)"
+                 HeaderContent="@(HeaderContent!)"
                  Height="@Height"
-                 IconDismiss="IconDismiss"
-                 IconSearch="IconSearch"
+                 IconDismiss="@IconDismiss"
+                 IconSearch="@IconSearch"
                  Id="@Id"
-                 Immediate="Immediate"
-                 ImmediateDelay="ImmediateDelay"
-                 Items="Items"
-                 ItemSize="ItemSize"
-                 KeepOpen="KeepOpen"
+                 Immediate="@Immediate"
+                 ImmediateDelay="@ImmediateDelay"
+                 Items="@Items"
+                 ItemSize="@ItemSize"
+                 KeepOpen="@KeepOpen"
                  Label="@(Label ?? Labels.Label)"
+                 LabelTemplate="@(LabelTemplate!)"
                  MaxAutoHeight="@MaxAutoHeight"
-                 MaximumOptionsSearch="MaximumOptionsSearch"
+                 MaximumOptionsSearch="@MaximumOptionsSearch"
+                 MaximumSelectedOptionsMessage="@(MaximumSelectedOptionsMessage!)"
                  Name="@Name"
+                 OnOptionsSearch="@OnOptionsSearch"
                  OptionClass="@OptionClass"
                  OptionStyle="@OptionStyle"
-                 OnOptionsSearch="OnOptionsSearch"
-                 ParentReference="ParentReference"
+                 OptionTemplate="@(OptionTemplate!)"
+                 ParentReference="@ParentReference"
                  Placeholder="@(Placeholder ?? Labels.Placeholder)"
-                 ReadOnly="ReadOnly"
-                 Required="Required"
-                 SelectedOption="SelectedOption"
-                 SelectedOptionChanged="SelectedOptionChanged"
-                 SelectedOptions="SelectedOptions"
-                 SelectedOptionsChanged="SelectedOptionsChanged"
-                 SelectValueOnTab="SelectValueOnTab"
-                 ShowOverlayOnEmptyResults="ShowOverlayOnEmptyResults"
+                 ReadOnly="@ReadOnly"
+                 Required="@Required"
+                 SelectedOption="@SelectedOption"
+                 SelectedOptionChanged="@SelectedOptionChanged"
+                 SelectedOptions="@SelectedOptions"
+                 SelectedOptionsChanged="@SelectedOptionsChanged"
+                 SelectedOptionTemplate="@(SelectedOptionTemplate!)"
+                 SelectValueOnTab="@SelectValueOnTab"
+                 ShowOverlayOnEmptyResults="@ShowOverlayOnEmptyResults"
                  Style="@Style"
                  TitleScrollToNext="@TitleScrollToNext"
                  TitleScrollToPrevious="@TitleScrollToPrevious"
-                 ValueExpression="ValueExpression"
-                 ValueText="ValueText"
-                 ValueTextChanged="ValueTextChanged"
-                 Virtualize="Virtualize"
+                 ValueExpression="@ValueExpression"
+                 ValueText="@ValueText"
+                 ValueTextChanged="@ValueTextChanged"
+                 Virtualize="@Virtualize"
                  Width="@Width">
-    <MaximumSelectedOptionsMessage>
-        @MaximumSelectedOptionsMessage
-    </MaximumSelectedOptionsMessage>
-    <OptionTemplate>
-        @OptionTemplate
-    </OptionTemplate>
-    <SelectedOptionTemplate>
-        @SelectedOptionTemplate
-    </SelectedOptionTemplate>
-    <LabelTemplate>
-        @LabelTemplate
-    </LabelTemplate>
-    <HeaderContent>
-        @HeaderContent
-    </HeaderContent>
-    <ChildContent>
-        @ChildContent
-    </ChildContent>
-    <FooterContent>
-        @FooterContent
-    </FooterContent>
 </HexAutocomplete>
 
 @code

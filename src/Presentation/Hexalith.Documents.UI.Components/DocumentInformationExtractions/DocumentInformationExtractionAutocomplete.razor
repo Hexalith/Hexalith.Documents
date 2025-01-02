@@ -1,16 +1,19 @@
 ﻿@inherits HexAutocomplete
 
-<HexAutocomplete AdditionalAttributes="AdditionalAttributes"
+<HexAutocomplete AdditionalAttributes="@AdditionalAttributes"
                  Appearance="@Appearance"
                  AriaLabel="@AriaLabel"
                  AutoComplete="@AutoComplete"
                  Autofocus="@Autofocus"
+                 ChildContent="@(ChildContent!)"
                  Class="@Class"
                  Data="@Data"
                  Disabled="@Disabled"
                  DisplayName="@DisplayName"
                  Embedded="@Embedded"
                  Field="@Field"
+                 FooterContent="@(FooterContent!)"
+                 HeaderContent="@(HeaderContent!)"
                  Height="@Height"
                  IconDismiss="@IconDismiss"
                  IconSearch="@IconSearch"
@@ -21,12 +24,15 @@
                  ItemSize="@ItemSize"
                  KeepOpen="@KeepOpen"
                  Label="@(Label ?? Labels.Label)"
+                 LabelTemplate="@(LabelTemplate!)"
                  MaxAutoHeight="@MaxAutoHeight"
                  MaximumOptionsSearch="@MaximumOptionsSearch"
+                 MaximumSelectedOptionsMessage="@(MaximumSelectedOptionsMessage!)"
                  Name="@Name"
+                 OnOptionsSearch="@OnOptionsSearch"
                  OptionClass="@OptionClass"
                  OptionStyle="@OptionStyle"
-                 OnOptionsSearch="@OnOptionsSearch"
+                 OptionTemplate="@(OptionTemplate!)"
                  ParentReference="@ParentReference"
                  Placeholder="@(Placeholder ?? Labels.Placeholder)"
                  ReadOnly="@ReadOnly"
@@ -35,6 +41,7 @@
                  SelectedOptionChanged="@SelectedOptionChanged"
                  SelectedOptions="@SelectedOptions"
                  SelectedOptionsChanged="@SelectedOptionsChanged"
+                 SelectedOptionTemplate="@(SelectedOptionTemplate!)"
                  SelectValueOnTab="@SelectValueOnTab"
                  ShowOverlayOnEmptyResults="@ShowOverlayOnEmptyResults"
                  Style="@Style"
@@ -45,27 +52,6 @@
                  ValueTextChanged="@ValueTextChanged"
                  Virtualize="@Virtualize"
                  Width="@Width">
-    <MaximumSelectedOptionsMessage>
-        @MaximumSelectedOptionsMessage
-    </MaximumSelectedOptionsMessage>
-    <OptionTemplate>
-        @OptionTemplate
-    </OptionTemplate>
-    <SelectedOptionTemplate>
-        @SelectedOptionTemplate
-    </SelectedOptionTemplate>
-    <LabelTemplate>
-        @LabelTemplate
-    </LabelTemplate>
-    <HeaderContent>
-        @HeaderContent
-    </HeaderContent>
-    <ChildContent>
-        @ChildContent
-    </ChildContent>
-    <FooterContent>
-        @FooterContent
-    </FooterContent>
 </HexAutocomplete>
 
 @code
