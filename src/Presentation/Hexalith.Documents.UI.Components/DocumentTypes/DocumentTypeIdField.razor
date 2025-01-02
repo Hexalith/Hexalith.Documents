@@ -6,6 +6,7 @@
                  AutoComplete="@AutoComplete"
                  Autofocus="@Autofocus"
                  Class="@Class"
+                 ChildContent="@(ChildContent!)"
                  Data="@Data"
                  DataList="@DataList"
                  Disabled="@Disabled"
@@ -17,6 +18,7 @@
                  ImmediateDelay="@ImmediateDelay"
                  InputMode="@InputMode"
                  Label="@(Label ?? Labels.Id)"
+                 LabelTemplate="@(LabelTemplate!)"
                  Maxlength="@Maxlength"
                  Minlength="@Minlength"
                  Name="@Name"
@@ -32,12 +34,6 @@
                  Value="@Value"
                  ValueChanged="@ValueChanged"
                  ValueExpression="@ValueExpression">
-    <LabelTemplate>
-        @LabelTemplate
-    </LabelTemplate>
-    <ChildContent>
-        @ChildContent
-    </ChildContent>
 </FluentTextField>
 @code {
 
