@@ -11,6 +11,7 @@ using Hexalith.Documents.Requests.DocumentInformationExtractions;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.UI.Components;
+using Hexalith.UI.Components.Helpers;
 
 using Microsoft.FluentUI.AspNetCore.Components;
 
@@ -160,13 +161,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewModel
                 GetFileTypeSummaries fileTypeRequest = await requestService
                         .SubmitAsync(user, new GetFileTypeSummaries(fileTypeIds), cancellationToken)
                         .ConfigureAwait(false);
-                fileSummaries = [..fileTypeRequest.Results.Select(p => new Option<string>
-                {
-                    Value = p.Id,
-                    Text = p.Name,
-                    Selected = true,
-                    Disabled = p.Disabled,
-                })];
+                fileSummaries = fileTypeRequest.Results.ToOptions(true);
             }
 
             List<string> extractionIds = [.. details.Result.DataExtractionIds];
@@ -175,13 +170,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewModel
                 GetDocumentInformationExtractionSummaries extractionRequest = await requestService
                         .SubmitAsync(user, new GetDocumentInformationExtractionSummaries(extractionIds), cancellationToken)
                         .ConfigureAwait(false);
-                extractionSummaries = [..extractionRequest.Results.Select(p => new Option<string>
-                {
-                    Value = p.Id,
-                    Text = p.Name,
-                    Selected = true,
-                    Disabled = p.Disabled,
-                })];
+                extractionSummaries = extractionRequest.Results.ToOptions(true);
             }
 
             return new DocumentTypeEditViewModel(details.Result, extractionSummaries, fileSummaries);
@@ -243,6 +232,37 @@ public sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewModel
             await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
         }
 
+        await UpdateFileTypeIdsAsync(user, commandService, cancellationToken).ConfigureAwait(false);
+        await UpdateExtractionIdsAsync(user, commandService, cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task UpdateExtractionIdsAsync(ClaimsPrincipal user, ICommandService commandService, CancellationToken cancellationToken)
+    {
+        // for each file type in ExtractionIds, ADD it if it does not exist
+        foreach (string fileType in DataExtractionIds
+            .Where(p => string.IsNullOrWhiteSpace(p.Value))
+            .Select(p => p.Value!))
+        {
+            if (!Original.DataExtractionIds.Contains(fileType))
+            {
+                RemoveDocumentTypeDataExtraction c = new(Id, fileType);
+                await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // for each file type in original, REMOVE it if it does not exist in ExtractionIds
+        foreach (string fileType in Original.DataExtractionIds)
+        {
+            if (!DataExtractionIds.Any(p => p.Value == fileType))
+            {
+                RemoveDocumentTypeDataExtraction c = new(Id, fileType);
+                await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
+            }
+        }
+    }
+
+    private async Task UpdateFileTypeIdsAsync(ClaimsPrincipal user, ICommandService commandService, CancellationToken cancellationToken)
+    {
         // for each file type in FileTypeIds, ADD it if it does not exist
         foreach (string fileType in FileTypeIds
             .Where(p => string.IsNullOrWhiteSpace(p.Value))
@@ -250,8 +270,8 @@ public sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewModel
         {
             if (!Original.FileTypeIds.Contains(fileType))
             {
-                fileTypeCommand = new AddDocumentTypeFileType(Id, fileType);
-                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+                AddDocumentTypeFileType c = new(Id, fileType);
+                await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -260,8 +280,8 @@ public sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewModel
         {
             if (!FileTypeIds.Any(p => p.Value == fileType))
             {
-                fileTypeCommand = new RemoveDocumentTypeFileType(Id, fileType);
-                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+                RemoveDocumentTypeFileType c = new(Id, fileType);
+                await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
             }
         }
     }

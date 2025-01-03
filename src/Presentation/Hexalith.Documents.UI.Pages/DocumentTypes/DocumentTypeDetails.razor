@@ -15,7 +15,7 @@
 
     @if (_data is not null)
     {
-        <FluentGrid>
+        <FluentGrid Style="width:100%;">
             <FluentGridItem md="12">
                 <FileTypeAutocomplete OnOptionsSearch="OnFileTypeSearch" @bind-SelectedOptions="_data.FileTypeIds" Label="@Labels.FileTypes"></FileTypeAutocomplete>
             </FluentGridItem>
@@ -101,14 +101,7 @@
         var result = await RequestService.SubmitAsync(_user, new GetFileTypeSummaries(0, 100, args.Text), CancellationToken.None);
         if (result.Results is not null)
         {
-            args.Items = result
-                .Results
-                .Select(p => new Option<string>
-                    {
-                        Value = p.Id,
-                        Text = p.Name,
-                        Disabled = p.Disabled
-                    }).ToList();
+            args.Items = result.Results.ToOptions(false);
         }
     }
     private async Task OnExtractionSearch(OptionsSearchEventArgs<Option<string>> args)
@@ -120,14 +113,7 @@
         var result = await RequestService.SubmitAsync(_user, new GetDocumentInformationExtractionSummaries(0, 100, args.Text), CancellationToken.None);
         if (result.Results is not null)
         {
-            args.Items = result
-                .Results
-                .Select(p => new Option<string>
-                    {
-                        Value = p.Id,
-                        Text = p.Name,
-                        Disabled = p.Disabled
-                    }).ToList();
+            args.Items = result.Results.ToOptions(false);
         }
     }
 }
