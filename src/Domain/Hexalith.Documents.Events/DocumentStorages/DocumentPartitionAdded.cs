@@ -23,7 +23,7 @@ public partial record DocumentStorageAdded(
     [property: DataMember(Order = 4)]
     string? Description,
     [property: DataMember(Order = 5)]
-    string ConnectionString)
+    string? ConnectionString)
     : DocumentStorageEvent(Id)
 {
 }

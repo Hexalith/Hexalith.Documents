@@ -28,6 +28,7 @@ public sealed class DocumentInformationExtractionEditViewModel : IIdDescription
         OutputSample = details.OutputSample;
         Disabled = details.Disabled;
         Original = details;
+        SystemMessage = details.SystemMessage;
     }
 
     /// <summary>

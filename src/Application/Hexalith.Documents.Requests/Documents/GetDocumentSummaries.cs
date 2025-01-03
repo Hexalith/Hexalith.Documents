@@ -17,14 +17,15 @@ using Hexalith.PolymorphicSerialization;
 public partial record GetDocumentSummaries(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] string? Filter,
-    [property: DataMember(Order = 4)] IEnumerable<DocumentSummaryViewModel> Results) : IFilteredChunkableRequest
+    [property: DataMember(Order = 4)] string? Filter,
+    [property: DataMember(Order = 3)] IEnumerable<string> Ids,
+    [property: DataMember(Order = 5)] IEnumerable<DocumentSummaryViewModel> Results) : IFilteredChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentSummaries"/> class.
     /// </summary>
     public GetDocumentSummaries()
-        : this(0, 0, null, Array.Empty<DocumentSummaryViewModel>())
+        : this(0, 0, null, [], [])
     {
     }
 
@@ -35,7 +36,16 @@ public partial record GetDocumentSummaries(
     /// <param name="take">The number of document summaries to take.</param>
     /// <param name="filter">The filter criteria for the document summaries.</param>
     public GetDocumentSummaries(int skip, int take, string? filter)
-        : this(skip, take, filter, Array.Empty<DocumentSummaryViewModel>())
+        : this(skip, take, filter, [], [])
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetDocumentSummaries"/> class with specified document IDs.
+    /// </summary>
+    /// <param name="ids">The list of document IDs.</param>
+    public GetDocumentSummaries(IEnumerable<string> ids)
+        : this(0, 0, null, ids, [])
     {
     }
 
@@ -57,7 +67,5 @@ public partial record GetDocumentSummaries(
         => this with { Results = (IEnumerable<DocumentSummaryViewModel>)results };
 
     /// <inheritdoc/>
-    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take, Results = Array.Empty<DocumentSummaryViewModel>() };
-
-    public IEnumerable<string> Ids { get; }
+    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take, Results = [] };
 }
