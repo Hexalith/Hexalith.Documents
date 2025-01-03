@@ -100,61 +100,12 @@
         ValidationResult = new DocumentTypeEditValidation().Validate(_data);
         if (!ValidationResult.IsValid)
             return;
-        DocumentTypeCommand fileTypeCommand;
+        
+        await _data.SaveAsync(_user, CommandService, Id is null, CancellationToken.None);
         if (Id is null)
         {
-            fileTypeCommand = new AddDocumentType(
-                        _data.Id!,
-                        _data.Name!,
-                        _data.Comments,
-                        _data
-                            .DataExtractionIds
-                            .Where(p => !string.IsNullOrWhiteSpace(p.Value))
-                            .Select(p => p.Value!),
-                        _data
-                            .FileTypeIds
-                            .Where(p => !string.IsNullOrWhiteSpace(p.Value))
-                            .Select(p => p.Value!));
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-            _data = new();
+            _data = new DocumentTypeEditViewModel();
             StateHasChanged();
-            return;
-        }
-        if (_data.DescriptionChanged)
-        {
-            fileTypeCommand = new ChangeDocumentTypeDescription(
-                        _data.Id!,
-                        _data.Name!,
-                        _data.Comments);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
-        {
-            fileTypeCommand = new DisableDocumentType(_data.Id);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
-        {
-            fileTypeCommand = new EnableDocumentType(_data.Id);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        // for each file type in _data.FileTypeIds, ADD it if it does not exist
-        foreach (var fileType in _data.FileTypeIds.Select(p=>p.Value))
-        {
-            if (!_data.Original.FileTypeIds.Contains(fileType))
-            {
-                fileTypeCommand = new AddDocumentTypeFileType(_data.Id, fileType);
-                await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-            }
-        }
-        // for each file type in original, REMOVE it if it does not exist in _data.FileTypeIds
-        foreach (var fileType in _data.Original.FileTypeIds)
-        {
-            if (!_data.FileTypeIds.Any(p=> p.Value == fileType))
-            {
-                fileTypeCommand = new RemoveDocumentTypeFileType(_data.Id, fileType);
-                await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-            }
         }
     }
 

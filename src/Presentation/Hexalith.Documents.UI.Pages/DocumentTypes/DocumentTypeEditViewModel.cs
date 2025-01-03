@@ -2,8 +2,10 @@
 
 using System.Security.Claims;
 
+using Hexalith.Application.Commands;
 using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
+using Hexalith.Documents.Commands.DocumentTypes;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentInformationExtractions;
 using Hexalith.Documents.Requests.DocumentTypes;
@@ -138,7 +140,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     /// <param name="requestService">The service to handle the request.</param>
     /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="DocumentTypeEditViewModel"/> instance.</returns>
-    public static async Task<DocumentTypeEditViewModel?> CreateAsync(string id, ClaimsPrincipal user, IRequestService requestService, CancellationToken cancellationToken)
+    internal static async Task<DocumentTypeEditViewModel?> CreateAsync(string id, ClaimsPrincipal user, IRequestService requestService, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
         ArgumentException.ThrowIfNullOrWhiteSpace(user?.Identity?.Name, nameof(user));
@@ -185,5 +187,81 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Saves the document type asynchronously.
+    /// </summary>
+    /// <param name="user">The user making the request.</param>
+    /// <param name="commandService">The service to handle the command.</param>
+    /// <param name="create">A value indicating whether to create a new document type.</param>
+    /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+    /// <returns><placeholder>A <see cref="Task"/> representing the asynchronous operation.</placeholder></returns>
+    internal async Task SaveAsync(ClaimsPrincipal user, ICommandService commandService, bool create, CancellationToken cancellationToken)
+    {
+        if (!HasChanges)
+        {
+            return;
+        }
+
+        DocumentTypeCommand fileTypeCommand;
+        if (create)
+        {
+            fileTypeCommand = new AddDocumentType(
+                       Id,
+                       Name,
+                       Comments,
+                       DataExtractionIds
+                            .Where(p => !string.IsNullOrWhiteSpace(p.Value))
+                            .Select(p => p.Value!),
+                       FileTypeIds
+                            .Where(p => !string.IsNullOrWhiteSpace(p.Value))
+                            .Select(p => p.Value!));
+            await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+            return;
+        }
+
+        if (DescriptionChanged)
+        {
+            fileTypeCommand = new ChangeDocumentTypeDescription(
+                        Id!,
+                        Name!,
+                        Comments);
+            await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        if (Disabled != Original.Disabled && Disabled)
+        {
+            fileTypeCommand = new DisableDocumentType(Id);
+            await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        if (Disabled != Original.Disabled && !Disabled)
+        {
+            fileTypeCommand = new EnableDocumentType(Id);
+            await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        // for each file type in FileTypeIds, ADD it if it does not exist
+        foreach (string fileType in FileTypeIds
+            .Where(p => string.IsNullOrWhiteSpace(p.Value))
+            .Select(p => p.Value!))
+        {
+            if (!Original.FileTypeIds.Contains(fileType))
+            {
+                fileTypeCommand = new AddDocumentTypeFileType(Id, fileType);
+                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // for each file type in original, REMOVE it if it does not exist in FileTypeIds
+        foreach (string fileType in Original.FileTypeIds)
+        {
+            if (!FileTypeIds.Any(p => p.Value == fileType))
+            {
+                fileTypeCommand = new RemoveDocumentTypeFileType(Id, fileType);
+                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+            }
+        }
     }
 }
