@@ -38,20 +38,7 @@
             <FluentGridItem xs="6" md="6">
                 <FileTypeAutocomplete OnOptionsSearch="OnFileTypeSearch" @bind-SelectedOptions="_data.FileTypeIds" Label="@Labels.NewFileType"></FileTypeAutocomplete>
             </FluentGridItem>
-            @*           
-             <FluentGridItem xs="6" md="6" Style="display: flex; align-items: flex-end;">
-                <HexAddButton Style="margin-bottom: 4px;" OnClick="AddFileType" />
-            </FluentGridItem>
-            @foreach (string fileType in _data.FileTypeIds)
-            {
-                <FluentGridItem xs="12" xl="6">
-                    <FluentStack Orientation="Orientation.Horizontal" Style="margin: 4px 0;">
-                        <FileTypeIdField Value="@fileType" Readonly="true"></FileTypeIdField>
-                        <HexRemoveButton OnClick="@(() =>RemoveTarget(fileType))"/>
-                    </FluentStack>
-                </FluentGridItem>
-            }
- *@            <FluentGridItem md="12">
+            <FluentGridItem md="12">
                 <HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
             </FluentGridItem>
             <FluentGridItem>
@@ -69,7 +56,6 @@
 
     private ClaimsPrincipal? _user;
     private DocumentTypeEditViewModel _data = new();
-    private string? _newFileType;
 
     private ValidationResult? ValidationResult;
 
@@ -90,20 +76,7 @@
         }
         if (Id is not null)
         {
-            var details = await RequestService.SubmitAsync(
-                _user, 
-                new GetDocumentTypeDetails(Id), 
-                CancellationToken.None);
-            if (details.Result is not null)
-            {
-                IEnumerable<FileTypeSummaryViewModel> fileTypes = details.Result.FileTypeIds.Any()
-                    ?(await RequestService.SubmitAsync(
-                        _user, 
-                        new GetFileTypeSummaries(details.Result.FileTypeIds),
-                        CancellationToken.None)).Results
-                    : [];
-                _data = new DocumentTypeEditViewModel(details.Result, fileTypes);
-            }
+            var _data = await DocumentTypeEditViewModel.CreateAsync(Id, _user, RequestService, CancellationToken.None);
         }
     }
 
@@ -174,25 +147,11 @@
         }
     }
 
-    // private void AddFileType()
-    // {
-    //     if (!string.IsNullOrWhiteSpace(_newFileType))
-    //     {
-    //         _data.FileTypeIds.Add(_newFileType);
-    //         StateHasChanged();
-    //         _newFileType = string.Empty;
-    //     }
-    // }
-    // private void RemoveTarget(string fileType)
-    // {
-    //     _data.FileTypeIds.Remove(fileType);
-    //     StateHasChanged();
-    // }
     private Task OnRefreshAsync()
     {
         return Task.CompletedTask;
     }
-    private async Task OnFileTypeSearch(OptionsSearchEventArgs<Option<string>> args)
+    private async Task OnFileTypeSearch(OptionsSearchEventArgs<Option<string>>? args)
     {
         if (_user is null)
         {

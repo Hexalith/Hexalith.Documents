@@ -1,5 +1,9 @@
 ﻿namespace Hexalith.Documents.UI.Pages.DocumentTypes;
 
+using System.Collections.ObjectModel;
+using System.Security.Claims;
+
+using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentTypes;
@@ -17,8 +21,8 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     /// Initializes a new instance of the <see cref="DocumentTypeEditViewModel"/> class.
     /// </summary>
     /// <param name="details">The details of the file type.</param>
-    /// <param name="fileTypeSummaries">The summaries of the file types.</param>
-    public DocumentTypeEditViewModel(DocumentTypeDetailsViewModel details, IEnumerable<FileTypeSummaryViewModel> fileTypeSummaries)
+    /// <param name="fileTypes">The summaries of the file types.</param>
+    public DocumentTypeEditViewModel(DocumentTypeDetailsViewModel details, Collection<Option<string>> fileTypes)
     {
         ArgumentNullException.ThrowIfNull(details);
         Original = details;
@@ -26,12 +30,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
         Name = details.Name;
         Comments = details.Comments;
         Disabled = details.Disabled;
-        FileTypeIds = [.. fileTypeSummaries.Select(p => new Option<string?>()
-        {
-            Value = p.Id,
-            Text = p.Name,
-            Disabled = p.Disabled,
-        })];
+        FileTypeIds = fileTypes;
         DataExtractionIds = [.. details.DataExtractionIds];
         Tags = [.. details.Tags];
     }
@@ -126,4 +125,46 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
 
     /// <inheritdoc/>
     string IIdDescription.Description => Name;
+
+    /// <summary>
+    /// Creates a new instance of <see cref="DocumentTypeEditViewModel"/> asynchronously.
+    /// </summary>
+    /// <param name="id">The ID of the document type.</param>
+    /// <param name="user">The user making the request.</param>
+    /// <param name="requestService">The service to handle the request.</param>
+    /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="DocumentTypeEditViewModel"/> instance.</returns>
+    public static async Task<DocumentTypeEditViewModel?> CreateAsync(string id, ClaimsPrincipal user, IRequestService requestService, CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        ArgumentException.ThrowIfNullOrWhiteSpace(user?.Identity?.Name, nameof(user));
+        ArgumentNullException.ThrowIfNull(requestService);
+
+        GetDocumentTypeDetails details = await requestService
+            .SubmitAsync(user, new GetDocumentTypeDetails(id), cancellationToken)
+            .ConfigureAwait(false);
+        if (details.Result is not null)
+        {
+            if (details.Result.FileTypeIds.Any())
+            {
+                GetFileTypeSummaries fileTypeRequest = await requestService
+                        .SubmitAsync(user, new GetFileTypeSummaries(details.Result.FileTypeIds), cancellationToken)
+                        .ConfigureAwait(false);
+                Collection<Option<string>> fileSummaries = [..fileTypeRequest.Results.Select(p => new Option<string>
+                {
+                    Value = p.Id,
+                    Text = p.Name,
+                    Selected = true,
+                    Disabled = p.Disabled,
+                })];
+                return new DocumentTypeEditViewModel(details.Result, fileSummaries);
+            }
+            else
+            {
+                return new DocumentTypeEditViewModel(details.Result, []);
+            }
+        }
+
+        return null;
+    }
 }
