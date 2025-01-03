@@ -5,50 +5,26 @@
 @using Hexalith.Documents.UI.Components.FileTypes
 @using Hexalith.Documents.UI.Components.DocumentInformationExtractions
 @rendermode InteractiveAuto
-<HexEntityDetailsToolbar IndexPath="/Documents/DocumentType" OnRefresh="OnRefreshAsync" />
+<HexEntityDetailsPage AddTitle="@Labels.AddTitle"
+                      EditTitle="@Labels.Title"
+                      Data="_data"
+                      IndexPath="/Documents/DocumentType"
+                      ValidationResult="_validationResult"
+                      OnSave="OnSave"
+                      OnLoadData="OnLoadData">
 
-<FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
-    @if (Id is null) // Add
-    {
-        <FluentLabel Typo="Typography.PageTitle">@Labels.AddTitle</FluentLabel>
-    }
-    else // Edit
-    {
-        <FluentLabel Typo="Typography.PageTitle">@string.Format(Labels.Title, Id)</FluentLabel>
-    }
     @if (_data is not null)
     {
-        <FluentGrid Orientation="Orientation.Vertical">
-            <FluentGridItem xs="12" md="3">
-                <HexEntityIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexEntityIdField>
-            </FluentGridItem>
-            <FluentGridItem xs="12" md="@(Id is null ? 9 : 6)">
-                <HexEntityNameField @bind-Value="_data.Name"></HexEntityNameField>
-            </FluentGridItem>
-            @if (Id is not null)
-            {
-                <FluentGridItem xs="12" md="3">
-                    <HexEntityDisabledCheckbox @bind-Value="_data.Disabled"/>
-                </FluentGridItem>
-            }
-            <FluentGridItem xs="12" md="12">
-                <HexEntityCommentsField @bind-Value="_data.Comments"></HexEntityCommentsField>
-            </FluentGridItem>
+        <FluentGrid>
             <FluentGridItem md="12">
                 <FileTypeAutocomplete OnOptionsSearch="OnFileTypeSearch" @bind-SelectedOptions="_data.FileTypeIds" Label="@Labels.FileTypes"></FileTypeAutocomplete>
             </FluentGridItem>
             <FluentGridItem md="12">
                 <FileTypeAutocomplete OnOptionsSearch="OnExtractionSearch" @bind-SelectedOptions="_data.DataExtractionIds" Label="@Labels.Extractions"></FileTypeAutocomplete>
             </FluentGridItem>
-            <FluentGridItem md="12">
-                <HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
-            </FluentGridItem>
-            <FluentGridItem>
-                <HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
-            </FluentGridItem>
         </FluentGrid>
     }
-</FluentStack>
+</HexEntityDetailsPage>
 
 @code {
     [CascadingParameter]
@@ -59,19 +35,10 @@
     private ClaimsPrincipal? _user;
     private DocumentTypeEditViewModel? _data;
 
-    private ValidationResult? ValidationResult;
+    private ValidationResult? _validationResult;
 
-    protected override async Task OnInitializedAsync()
+    private async Task OnLoadData()
     {
-        if (AuthenticationStateTask is not null)
-        {
-            var authState = await AuthenticationStateTask;
-            if (!authState.User.Identity?.IsAuthenticated == true)
-            {
-                NavigationManager.NavigateTo(Application.LoginPath);
-            }
-            _user = authState.User;
-        }
         if (_user is null)
         {
             return;
@@ -87,6 +54,16 @@
         await base.OnInitializedAsync();
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            _user = authState.User;
+        }
+        await base.OnInitializedAsync();
+    }
+
     private async Task OnSave()
     {
         if (_data is null || _user is null)
@@ -97,10 +74,12 @@
         {
             return;
         }
-        ValidationResult = new DocumentTypeEditValidation().Validate(_data);
-        if (!ValidationResult.IsValid)
+        _validationResult = new DocumentTypeEditValidation().Validate(_data);
+        if (!_validationResult.IsValid)
+        {
+            StateHasChanged();
             return;
-        
+        }
         await _data.SaveAsync(_user, CommandService, Id is null, CancellationToken.None);
         if (Id is null)
         {
@@ -124,10 +103,10 @@
         {
             args.Items = result
                 .Results
-                .Select(p => new Option<string> 
+                .Select(p => new Option<string>
                     {
-                        Value = p.Id, 
-                        Text = p.Name, 
+                        Value = p.Id,
+                        Text = p.Name,
                         Disabled = p.Disabled
                     }).ToList();
         }

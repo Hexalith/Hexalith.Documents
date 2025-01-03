@@ -10,13 +10,14 @@ using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentInformationExtractions;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.UI.Components;
 
 using Microsoft.FluentUI.AspNetCore.Components;
 
 /// <summary>
 /// ViewModel for editing file types.
 /// </summary>
-public sealed class DocumentTypeEditViewModel : IIdDescription
+public sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewModel
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentTypeEditViewModel"/> class.
@@ -196,7 +197,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     /// <param name="commandService">The service to handle the command.</param>
     /// <param name="create">A value indicating whether to create a new document type.</param>
     /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
-    /// <returns><placeholder>A <see cref="Task"/> representing the asynchronous operation.</placeholder></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     internal async Task SaveAsync(ClaimsPrincipal user, ICommandService commandService, bool create, CancellationToken cancellationToken)
     {
         if (!HasChanges)
