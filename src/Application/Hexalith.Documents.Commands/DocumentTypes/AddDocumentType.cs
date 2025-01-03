@@ -22,6 +22,7 @@ public partial record AddDocumentType(
     string Name,
     [property: DataMember(Order = 3)]
     string? Description,
+    [property: DataMember(Order = 4)] IEnumerable<string> DataExtractionIds,
     [property: DataMember(Order = 4)]
     IEnumerable<string> FileTypeIds)
     : DocumentTypeCommand(Id)

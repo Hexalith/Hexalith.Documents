@@ -1,11 +1,11 @@
 ﻿namespace Hexalith.Documents.UI.Pages.DocumentTypes;
 
-using System.Collections.ObjectModel;
 using System.Security.Claims;
 
 using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.Requests.DocumentInformationExtractions;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
 
@@ -20,8 +20,12 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     /// Initializes a new instance of the <see cref="DocumentTypeEditViewModel"/> class.
     /// </summary>
     /// <param name="details">The details of the file type.</param>
+    /// <param name="dataExtractionIds">The summaries of the data extraction IDs.</param>
     /// <param name="fileTypes">The summaries of the file types.</param>
-    public DocumentTypeEditViewModel(DocumentTypeDetailsViewModel details, IEnumerable<Option<string>> fileTypes)
+    public DocumentTypeEditViewModel(
+        DocumentTypeDetailsViewModel details,
+        IEnumerable<Option<string>> dataExtractionIds,
+        IEnumerable<Option<string>> fileTypes)
     {
         ArgumentNullException.ThrowIfNull(details);
         Original = details;
@@ -30,7 +34,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
         Comments = details.Comments;
         Disabled = details.Disabled;
         FileTypeIds = [.. fileTypes];
-        DataExtractionIds = [.. details.DataExtractionIds];
+        DataExtractionIds = [.. dataExtractionIds];
         Tags = [.. details.Tags];
     }
 
@@ -47,6 +51,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
                 [],
                 [],
                 false),
+            [],
             [])
     {
     }
@@ -59,12 +64,12 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     /// <summary>
     /// Gets a value indicating whether the data extraction has changed.
     /// </summary>
-    public bool DataExtractionChanged => !DataExtractionIds.SequenceEqual(Original.DataExtractionIds);
+    public bool DataExtractionChanged => !DataExtractionIds.Select(p => p.Value).SequenceEqual(Original.DataExtractionIds);
 
     /// <summary>
-    /// Gets the data extraction IDs associated with the file type.
+    /// Gets or sets the data extraction IDs associated with the file type.
     /// </summary>
-    public ICollection<string> DataExtractionIds { get; } = [];
+    public IEnumerable<Option<string>> DataExtractionIds { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether the description has changed.
@@ -145,31 +150,38 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
         if (details.Result is not null)
         {
             List<string> fileTypeIds = [.. details.Result.FileTypeIds];
+            IEnumerable<Option<string>> fileSummaries = [];
+            IEnumerable<Option<string>> extractionSummaries = [];
             if (fileTypeIds.Count > 0)
             {
                 GetFileTypeSummaries fileTypeRequest = await requestService
                         .SubmitAsync(user, new GetFileTypeSummaries(fileTypeIds), cancellationToken)
                         .ConfigureAwait(false);
-                Collection<Option<string>> fileSummaries = [..fileTypeRequest.Results.Select(p => new Option<string>
+                fileSummaries = [..fileTypeRequest.Results.Select(p => new Option<string>
                 {
                     Value = p.Id,
                     Text = p.Name,
                     Selected = true,
                     Disabled = p.Disabled,
                 })];
-                if (fileSummaries.Count != fileTypeIds.Count)
-                {
-                    // Some file types were not found. Throw an exception with the difference.
-                    // IEnumerable<string> missingIds = fileTypeIds.Except(fileTypeRequest.Results.Select(p => p.Id));
-                    // throw new InvalidOperationException($"Some file types were not found: {string.Join(", ", missingIds)}");
-                }
+            }
 
-                return new DocumentTypeEditViewModel(details.Result, fileSummaries);
-            }
-            else
+            List<string> extractionIds = [.. details.Result.DataExtractionIds];
+            if (extractionIds.Count > 0)
             {
-                return new DocumentTypeEditViewModel(details.Result, []);
+                GetDocumentInformationExtractionSummaries extractionRequest = await requestService
+                        .SubmitAsync(user, new GetDocumentInformationExtractionSummaries(extractionIds), cancellationToken)
+                        .ConfigureAwait(false);
+                extractionSummaries = [..extractionRequest.Results.Select(p => new Option<string>
+                {
+                    Value = p.Id,
+                    Text = p.Name,
+                    Selected = true,
+                    Disabled = p.Disabled,
+                })];
             }
+
+            return new DocumentTypeEditViewModel(details.Result, extractionSummaries, fileSummaries);
         }
 
         return null;

@@ -14,12 +14,10 @@ using Hexalith.PolymorphicSerialization;
 [PolymorphicSerialization]
 public partial record DocumentTypeAdded(
     string Id,
-    [property: DataMember(Order = 2)]
-    string Name,
-    [property: DataMember(Order = 3)]
-    string? Description,
-    [property: DataMember(Order = 4)]
-    IEnumerable<string> FileTypeIds)
+    [property: DataMember(Order = 2)] string Name,
+    [property: DataMember(Order = 3)] string? Description,
+    [property: DataMember(Order = 4)] IEnumerable<string> DataExtractionIds,
+    [property: DataMember(Order = 5)] IEnumerable<string> FileTypeIds)
     : DocumentTypeEvent(Id)
 {
 }

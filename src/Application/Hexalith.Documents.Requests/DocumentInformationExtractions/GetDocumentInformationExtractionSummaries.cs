@@ -47,8 +47,8 @@ public partial record GetDocumentInformationExtractionSummaries(
     /// <param name="skip">The number of document information extraction summaries to skip.</param>
     /// <param name="take">The number of document information extraction summaries to take.</param>
     /// <param name="ids">The list of document information extraction summary IDs.</param>
-    public GetDocumentInformationExtractionSummaries(int skip, int take, IEnumerable<string> ids)
-        : this(skip, take, null, ids, Array.Empty<DocumentInformationExtractionSummaryViewModel>())
+    public GetDocumentInformationExtractionSummaries(IEnumerable<string> ids)
+        : this(0, 0, null, ids, Array.Empty<DocumentInformationExtractionSummaryViewModel>())
     {
     }
 

@@ -123,8 +123,8 @@
   <data name="FileTypes" xml:space="preserve">
     <value>Types de fichier</value>
   </data>
-  <data name="NewFileType" xml:space="preserve">
-    <value>Nouveau type de fichier</value>
+  <data name="Extractions" xml:space="preserve">
+    <value>Extractions d'informations</value>
   </data>
   <data name="AddTitle" xml:space="preserve">
     <value>Ajouter un nouveau type de document</value>

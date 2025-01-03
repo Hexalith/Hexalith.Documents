@@ -54,7 +54,7 @@ public record DocumentType(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               added.Name,
               added.Description,
-              [],
+              added.DataExtractionIds,
               added.FileTypeIds,
               [],
               false)

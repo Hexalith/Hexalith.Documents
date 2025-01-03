@@ -16,18 +16,6 @@ public static class DocumentTypeQuickStartData
     public static IEnumerable<AddDocumentType> Data => [Undefined, Export, Import, Triage, Quote];
 
     /// <summary>
-    /// Gets the undefined document type.
-    /// </summary>
-    /// <value>
-    /// An <see cref="AddDocumentType"/> command to create an undefined document type.
-    /// </value>
-    internal static AddDocumentType Undefined => new(
-        "Undefined",
-        "Undefined document",
-        "Type for documents without any predefined type",
-        []);
-
-    /// <summary>
     /// Gets the export document type.
     /// </summary>
     /// <value>
@@ -37,6 +25,7 @@ public static class DocumentTypeQuickStartData
         "Export",
         "Export data file",
         "File containing exported data",
+        [],
         ["Json"]);
 
     /// <summary>
@@ -49,19 +38,8 @@ public static class DocumentTypeQuickStartData
         "Import",
         "Import data file",
         "File containing data to import",
+        [],
         ["Json"]);
-
-    /// <summary>
-    /// Gets the triage document type.
-    /// </summary>
-    /// <value>
-    /// An <see cref="AddDocumentType"/> command to create a triage document type.
-    /// </value>
-    internal static AddDocumentType Triage => new(
-        "Triage",
-        "Triage",
-        "Unprocessed triage documents",
-        []);
 
     /// <summary>
     /// Gets the quote document type.
@@ -73,5 +51,32 @@ public static class DocumentTypeQuickStartData
         "Quote",
         "Quote",
         "Quote documents",
+        [],
         ["Pdf"]);
+
+    /// <summary>
+    /// Gets the triage document type.
+    /// </summary>
+    /// <value>
+    /// An <see cref="AddDocumentType"/> command to create a triage document type.
+    /// </value>
+    internal static AddDocumentType Triage => new(
+        "Triage",
+        "Triage",
+        "Unprocessed triage documents",
+        [],
+        []);
+
+    /// <summary>
+    /// Gets the undefined document type.
+    /// </summary>
+    /// <value>
+    /// An <see cref="AddDocumentType"/> command to create an undefined document type.
+    /// </value>
+    internal static AddDocumentType Undefined => new(
+        "Undefined",
+        "Undefined document",
+        "Type for documents without any predefined type",
+        [],
+        []);
 }

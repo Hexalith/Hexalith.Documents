@@ -1,7 +1,9 @@
 ﻿@page "/Documents/Add/DocumentType"
 @page "/Documents/DocumentType/{Id}"
 @using Hexalith.Documents.Requests.FileTypes
+@using Hexalith.Documents.Requests.DocumentInformationExtractions
 @using Hexalith.Documents.UI.Components.FileTypes
+@using Hexalith.Documents.UI.Components.DocumentInformationExtractions
 @rendermode InteractiveAuto
 <HexEntityDetailsToolbar IndexPath="/Documents/DocumentType" OnRefresh="OnRefreshAsync" />
 
@@ -33,10 +35,10 @@
                 <HexEntityCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexEntityCommentsField>
             </FluentGridItem>
             <FluentGridItem md="12">
-                <FluentLabel Typo="Typography.PaneHeader">@Labels.FileTypes</FluentLabel>
+                <FileTypeAutocomplete OnOptionsSearch="OnFileTypeSearch" @bind-SelectedOptions="_data.FileTypeIds" Label="@Labels.FileTypes"></FileTypeAutocomplete>
             </FluentGridItem>
-            <FluentGridItem xs="6" md="6">
-                <FileTypeAutocomplete OnOptionsSearch="OnFileTypeSearch" @bind-SelectedOptions="_data.FileTypeIds" Label="@Labels.NewFileType"></FileTypeAutocomplete>
+            <FluentGridItem md="12">
+                <FileTypeAutocomplete OnOptionsSearch="OnExtractionSearch" @bind-SelectedOptions="_data.DataExtractionIds" Label="@Labels.Extractions"></FileTypeAutocomplete>
             </FluentGridItem>
             <FluentGridItem md="12">
                 <HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
@@ -106,6 +108,10 @@
                         _data.Name!,
                         _data.Comments,
                         _data
+                            .DataExtractionIds
+                            .Where(p => !string.IsNullOrWhiteSpace(p.Value))
+                            .Select(p => p.Value!),
+                        _data
                             .FileTypeIds
                             .Where(p => !string.IsNullOrWhiteSpace(p.Value))
                             .Select(p => p.Value!));
@@ -156,7 +162,7 @@
     {
         return Task.CompletedTask;
     }
-    private async Task OnFileTypeSearch(OptionsSearchEventArgs<Option<string>>? args)
+    private async Task OnFileTypeSearch(OptionsSearchEventArgs<Option<string>> args)
     {
         if (_user is null)
         {
@@ -171,6 +177,25 @@
                     {
                         Value = p.Id, 
                         Text = p.Name, 
+                        Disabled = p.Disabled
+                    }).ToList();
+        }
+    }
+    private async Task OnExtractionSearch(OptionsSearchEventArgs<Option<string>> args)
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        var result = await RequestService.SubmitAsync(_user, new GetDocumentInformationExtractionSummaries(0, 100, args.Text), CancellationToken.None);
+        if (result.Results is not null)
+        {
+            args.Items = result
+                .Results
+                .Select(p => new Option<string>
+                    {
+                        Value = p.Id,
+                        Text = p.Name,
                         Disabled = p.Disabled
                     }).ToList();
         }

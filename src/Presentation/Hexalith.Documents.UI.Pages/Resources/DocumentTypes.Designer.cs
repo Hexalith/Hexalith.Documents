@@ -79,6 +79,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data extractions.
+        /// </summary>
+        internal static string Extractions {
+            get {
+                return ResourceManager.GetString("Extractions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File types.
         /// </summary>
         internal static string FileTypes {
@@ -102,15 +111,6 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         internal static string ListTitle {
             get {
                 return ResourceManager.GetString("ListTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New file type.
-        /// </summary>
-        internal static string NewFileType {
-            get {
-                return ResourceManager.GetString("NewFileType", resourceCulture);
             }
         }
         

@@ -23,6 +23,7 @@ public static class DocumentTypeCommandHandlerHelper
                 c.Id,
                 c.Name,
                 c.Description,
+                c.DataExtractionIds,
                 c.FileTypeIds),
                 ev => new DocumentType((DocumentTypeAdded)ev))
             .TryAddSimpleCommandHandler<EnableDocumentType>(c => new DocumentTypeEnabled(c.Id))
