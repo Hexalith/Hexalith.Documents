@@ -145,10 +145,11 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
             .ConfigureAwait(false);
         if (details.Result is not null)
         {
-            if (details.Result.FileTypeIds.Any())
+            List<string> fileTypeIds = [.. details.Result.FileTypeIds];
+            if (fileTypeIds.Count > 0)
             {
                 GetFileTypeSummaries fileTypeRequest = await requestService
-                        .SubmitAsync(user, new GetFileTypeSummaries(details.Result.FileTypeIds), cancellationToken)
+                        .SubmitAsync(user, new GetFileTypeSummaries(fileTypeIds), cancellationToken)
                         .ConfigureAwait(false);
                 Collection<Option<string>> fileSummaries = [..fileTypeRequest.Results.Select(p => new Option<string>
                 {
@@ -157,6 +158,13 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
                     Selected = true,
                     Disabled = p.Disabled,
                 })];
+                if (fileSummaries.Count != fileTypeIds.Count)
+                {
+                    // Some file types were not found. Throw an exception with the difference.
+                    // IEnumerable<string> missingIds = fileTypeIds.Except(fileTypeRequest.Results.Select(p => p.Id));
+                    // throw new InvalidOperationException($"Some file types were not found: {string.Join(", ", missingIds)}");
+                }
+
                 return new DocumentTypeEditViewModel(details.Result, fileSummaries);
             }
             else
