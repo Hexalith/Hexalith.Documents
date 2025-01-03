@@ -27,12 +27,12 @@
             </FluentGridItem>
             @if (Id is not null)
             {
-                <FluentGridItem xs="12" md="3" Style="display: flex; align-items: flex-end;">
-                    <HexEntityDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexEntityDisabledCheckbox>
+                <FluentGridItem xs="12" md="3">
+                    <HexEntityDisabledCheckbox @bind-Value="_data.Disabled"/>
                 </FluentGridItem>
             }
             <FluentGridItem xs="12" md="12">
-                <HexEntityCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexEntityCommentsField>
+                <HexEntityCommentsField @bind-Value="_data.Comments"></HexEntityCommentsField>
             </FluentGridItem>
             <FluentGridItem md="12">
                 <FileTypeAutocomplete OnOptionsSearch="OnFileTypeSearch" @bind-SelectedOptions="_data.FileTypeIds" Label="@Labels.FileTypes"></FileTypeAutocomplete>
