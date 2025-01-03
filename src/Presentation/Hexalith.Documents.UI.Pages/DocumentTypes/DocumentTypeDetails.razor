@@ -55,7 +55,7 @@
     public string? Id { get; set; }
 
     private ClaimsPrincipal? _user;
-    private DocumentTypeEditViewModel _data = new();
+    private DocumentTypeEditViewModel? _data;
 
     private ValidationResult? ValidationResult;
 
@@ -76,8 +76,13 @@
         }
         if (Id is not null)
         {
-            var _data = await DocumentTypeEditViewModel.CreateAsync(Id, _user, RequestService, CancellationToken.None);
+            _data = await DocumentTypeEditViewModel.CreateAsync(Id, _user, RequestService, CancellationToken.None);
         }
+        else
+        {
+            _data = new DocumentTypeEditViewModel();
+        }
+        await base.OnInitializedAsync();
     }
 
     private async Task OnSave()

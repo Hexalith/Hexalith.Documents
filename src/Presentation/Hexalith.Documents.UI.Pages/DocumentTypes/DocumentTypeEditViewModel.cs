@@ -8,7 +8,6 @@ using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
-using Hexalith.Extensions.Helpers;
 
 using Microsoft.FluentUI.AspNetCore.Components;
 
@@ -22,7 +21,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     /// </summary>
     /// <param name="details">The details of the file type.</param>
     /// <param name="fileTypes">The summaries of the file types.</param>
-    public DocumentTypeEditViewModel(DocumentTypeDetailsViewModel details, Collection<Option<string>> fileTypes)
+    public DocumentTypeEditViewModel(DocumentTypeDetailsViewModel details, IEnumerable<Option<string>> fileTypes)
     {
         ArgumentNullException.ThrowIfNull(details);
         Original = details;
@@ -30,7 +29,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
         Name = details.Name;
         Comments = details.Comments;
         Disabled = details.Disabled;
-        FileTypeIds = fileTypes;
+        FileTypeIds = [.. fileTypes];
         DataExtractionIds = [.. details.DataExtractionIds];
         Tags = [.. details.Tags];
     }
@@ -41,7 +40,7 @@ public sealed class DocumentTypeEditViewModel : IIdDescription
     public DocumentTypeEditViewModel()
         : this(
             new DocumentTypeDetailsViewModel(
-                UniqueIdHelper.GenerateUniqueStringId(),
+                string.Empty,
                 string.Empty,
                 null,
                 [],
