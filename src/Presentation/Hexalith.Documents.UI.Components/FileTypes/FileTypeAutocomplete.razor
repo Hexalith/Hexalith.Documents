@@ -23,7 +23,7 @@
                  Items="@Items"
                  ItemSize="@ItemSize"
                  KeepOpen="@KeepOpen"
-                 Label="@(Label ?? Labels.Label)"
+                 Label="@(Label ?? ((MaximumSelectedOptions.HasValue && MaximumSelectedOptions.Value == 1) ? Labels.Label : Labels.LabelPlural))"
                  LabelTemplate="@(LabelTemplate!)"
                  MaxAutoHeight="@MaxAutoHeight"
                  MaximumOptionsSearch="@MaximumOptionsSearch"
