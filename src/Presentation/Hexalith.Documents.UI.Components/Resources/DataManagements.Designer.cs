@@ -88,6 +88,15 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data management operations.
+        /// </summary>
+        internal static string LabelPlural {
+            get {
+                return ResourceManager.GetString("LabelPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select an operation.
         /// </summary>
         internal static string Placeholder {

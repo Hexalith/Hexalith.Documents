@@ -88,11 +88,20 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document type .
+        ///   Looks up a localized string similar to Document type.
         /// </summary>
         internal static string Label {
             get {
                 return ResourceManager.GetString("Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document types.
+        /// </summary>
+        internal static string LabelPlural {
+            get {
+                return ResourceManager.GetString("LabelPlural", resourceCulture);
             }
         }
         

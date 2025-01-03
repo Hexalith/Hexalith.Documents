@@ -138,6 +138,9 @@
   <data name="Label" xml:space="preserve">
     <value>Type de document</value>
   </data>
+  <data name="LabelPlural" xml:space="preserve">
+    <value>Types de document</value>
+  </data>
   <data name="Placeholder" xml:space="preserve">
     <value>Choisir un type de document</value>
   </data>

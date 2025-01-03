@@ -97,6 +97,15 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File types.
+        /// </summary>
+        internal static string LabelPlural {
+            get {
+                return ResourceManager.GetString("LabelPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mobile.
         /// </summary>
         internal static string Mobile {

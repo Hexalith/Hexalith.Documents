@@ -88,6 +88,15 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Document storages.
+        /// </summary>
+        internal static string LabelPlural {
+            get {
+                return ResourceManager.GetString("LabelPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a container.
         /// </summary>
         internal static string Placeholder {

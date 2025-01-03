@@ -79,6 +79,15 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Information extractions.
+        /// </summary>
+        internal static string LabelPlural {
+            get {
+                return ResourceManager.GetString("LabelPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select an extraction.
         /// </summary>
         internal static string Placeholder {

@@ -126,6 +126,9 @@
   <data name="Label" xml:space="preserve">
     <value>Data management</value>
   </data>
+  <data name="LabelPlural" xml:space="preserve">
+    <value>Data management operations</value>
+  </data>
   <data name="Placeholder" xml:space="preserve">
     <value>Select an operation</value>
   </data>

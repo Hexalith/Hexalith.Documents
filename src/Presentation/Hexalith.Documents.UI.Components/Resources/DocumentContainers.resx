@@ -126,6 +126,9 @@
   <data name="Label" xml:space="preserve">
     <value>Document storage</value>
   </data>
+  <data name="LabelPlural" xml:space="preserve">
+    <value>Document storages</value>
+  </data>
   <data name="Placeholder" xml:space="preserve">
     <value>Select a container</value>
   </data>

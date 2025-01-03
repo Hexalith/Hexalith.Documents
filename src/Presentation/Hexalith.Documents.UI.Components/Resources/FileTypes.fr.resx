@@ -138,6 +138,9 @@
   <data name="Label" xml:space="preserve">
     <value>Type de fichiers</value>
   </data>
+  <data name="LabelPlural" xml:space="preserve">
+    <value>Types de fichiers</value>
+  </data>
   <data name="Placeholder" xml:space="preserve">
     <value>Choisir un type de fichier</value>
   </data>

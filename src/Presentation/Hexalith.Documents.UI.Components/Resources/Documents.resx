@@ -138,6 +138,9 @@
   <data name="Label" xml:space="preserve">
     <value>Document</value>
   </data>
+  <data name="LabelPlural" xml:space="preserve">
+    <value>Documents</value>
+  </data>
   <data name="Placeholder" xml:space="preserve">
     <value>Choose a document</value>
   </data>
