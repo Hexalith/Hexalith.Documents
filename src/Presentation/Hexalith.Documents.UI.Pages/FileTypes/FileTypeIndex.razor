@@ -27,6 +27,7 @@
             var authState = await AuthenticationStateTask;
             _user = authState.User;
         }
+        await base.OnInitializedAsync();
     }
 
     private async Task LoadSummaries()

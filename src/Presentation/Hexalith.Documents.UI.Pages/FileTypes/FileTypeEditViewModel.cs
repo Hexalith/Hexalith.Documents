@@ -2,12 +2,12 @@
 
 using Hexalith.Application.Services;
 using Hexalith.Documents.Requests.FileTypes;
-using Hexalith.Extensions.Helpers;
+using Hexalith.UI.Components;
 
 /// <summary>
 /// ViewModel for editing file types.
 /// </summary>
-public sealed class FileTypeEditViewModel : IIdDescription
+public sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="FileTypeEditViewModel"/> class.
@@ -30,7 +30,7 @@ public sealed class FileTypeEditViewModel : IIdDescription
     /// </summary>
     public FileTypeEditViewModel()
     : this(new FileTypeDetailsViewModel(
-    UniqueIdHelper.GenerateUniqueStringId(),
+    string.Empty,
     string.Empty,
     null,
     null,

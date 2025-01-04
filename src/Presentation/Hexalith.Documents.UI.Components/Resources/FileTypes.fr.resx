@@ -117,24 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Id" xml:space="preserve">
-    <value>Code du type de fichier</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Nom</value>
-  </data>
-  <data name="Disabled" xml:space="preserve">
-    <value>Desactivé</value>
-  </data>
-  <data name="Phone" xml:space="preserve">
-    <value>Telephone</value>
-  </data>
-  <data name="Mobile" xml:space="preserve">
-    <value>Mobile</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Courriel</value>
-  </data>
   <data name="Label" xml:space="preserve">
     <value>Type de fichiers</value>
   </data>
@@ -144,7 +126,10 @@
   <data name="Placeholder" xml:space="preserve">
     <value>Choisir un type de fichier</value>
   </data>
-  <data name="UpdateError" xml:space="preserve">
-    <value>Une erreur est survenue lors de la mise à jour du type de fichier : {0}</value>
+  <data name="FileToTextConverter" xml:space="preserve">
+    <value>Convertisseur du fichier en texte</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Code type de fichier</value>
   </data>
 </root>

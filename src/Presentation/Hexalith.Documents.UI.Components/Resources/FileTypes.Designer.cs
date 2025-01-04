@@ -61,25 +61,16 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disabled.
+        ///   Looks up a localized string similar to File to text converter.
         /// </summary>
-        internal static string Disabled {
+        internal static string FileToTextConverter {
             get {
-                return ResourceManager.GetString("Disabled", resourceCulture);
+                return ResourceManager.GetString("FileToTextConverter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email.
-        /// </summary>
-        internal static string Email {
-            get {
-                return ResourceManager.GetString("Email", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File type identifier.
+        ///   Looks up a localized string similar to File type id.
         /// </summary>
         internal static string Id {
             get {
@@ -106,47 +97,11 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mobile.
-        /// </summary>
-        internal static string Mobile {
-            get {
-                return ResourceManager.GetString("Mobile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        internal static string Name {
-            get {
-                return ResourceManager.GetString("Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Phone.
-        /// </summary>
-        internal static string Phone {
-            get {
-                return ResourceManager.GetString("Phone", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select a file type.
         /// </summary>
         internal static string Placeholder {
             get {
                 return ResourceManager.GetString("Placeholder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to An error occured wihile updating the file type : {0}.
-        /// </summary>
-        internal static string UpdateError {
-            get {
-                return ResourceManager.GetString("UpdateError", resourceCulture);
             }
         }
     }
