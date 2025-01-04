@@ -1,5 +1,6 @@
 ﻿@page "/Documents/Add/FileType"
 @page "/Documents/FileType/{Id}"
+@using Hexalith.UI.Components.Pages
 @rendermode InteractiveAuto
 <HexEntityDetailsPage AddTitle="@Labels.AddTitle"
                       EditTitle="@Labels.Title"
@@ -91,82 +92,29 @@
         }
     }
 
-    private async Task OnSave()
+    private async Task<SaveResult> OnSave()
     {
-        if (_data is null || _user is null)
+        var result = _data.ValidateSave(_user, (d) =>
         {
-            return;
-        }
-        if (!_data.HasChanges)
-        {
-            return;
-        }
-        _validationResult = new FileTypeEditValidation().Validate(_data);
-        if (!_validationResult.IsValid)
-            return;
-        FileTypeCommand fileTypeCommand;
-        if (Id is null)
-        {
-            fileTypeCommand = new AddFileType(
-                        _data.Id!,
-                        _data.Name!,
-                        _data.Comments,
-                        _data.FileToTextConverter,
-                        _data.Targets);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-            _data = new();
-            StateHasChanged();
-            return;
-        }
-        if (_data.DescriptionChanged)
-        {
-            fileTypeCommand = new ChangeFileTypeDescription(
-                        _data.Id!,
-                        _data.Name!,
-                        _data.Comments);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (_data.FileToTextConverterChanged)
-        {
-            fileTypeCommand = new ChangeFileTypeFileToTextConverter(
-                        _data.Id!,
-                        _data.FileToTextConverter);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
-        {
-            fileTypeCommand = new DisableFileType(_data.Id);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
-        {
-            fileTypeCommand = new EnableFileType(_data.Id);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        // for each target in _data.Targets, add it if it does not exist
-        foreach (var target in _data.Targets)
-        {
-            if (!_data.Original.Targets.Contains(target))
+            _validationResult = new FileTypeEditValidation().Validate(d);
+            if (_validationResult.IsValid)
             {
-                fileTypeCommand = new AddFileTypeTarget(_data.Id, target);
-                await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+                return true;
+            }
+            return false;
+        });
+        if (result.Result == ExecuteSaveResult.Success)
+        {
+            await _data!.SaveAsync(_user!, CommandService, Id is null, CancellationToken.None);
+            if (Id is null)
+            {
+                _data = new ();
             }
         }
-        // for each target in _data.Original.Targets, remove it if it does not exist
-        foreach (var target in _data.Original.Targets)
-        {
-            if (!_data.Targets.Contains(target))
-            {
-                fileTypeCommand = new RemoveFileTypeTarget(_data.Id, target);
-                await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-            }
-        }
-        if (Id is null)
-        {
-            _data = new();
-            StateHasChanged();
-        }
+        StateHasChanged();
+        return result;
     }
+
 
     private void AddTarget()
     {
@@ -181,12 +129,5 @@
     {
         _data.Targets.Remove(target);
         StateHasChanged();
-    }
-    private Task OnRefreshAsync()
-    {
-        return Task.CompletedTask;
-    }
-    private void OnIndex()
-    {
     }
 }

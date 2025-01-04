@@ -5,6 +5,6 @@ using Hexalith.UI.Components.Validations;
 /// <summary>
 /// Validator for adding a new document type.
 /// </summary>
-public class FileTypeEditValidation : EntityValidation<FileTypeEditViewModel>
+internal sealed class FileTypeEditValidation : EntityValidation<FileTypeEditViewModel>
 {
 }

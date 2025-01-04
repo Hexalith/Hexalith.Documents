@@ -18,7 +18,7 @@ using Microsoft.FluentUI.AspNetCore.Components;
 /// <summary>
 /// ViewModel for editing file types.
 /// </summary>
-public sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewModel
+internal sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewModel
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentTypeEditViewModel"/> class.

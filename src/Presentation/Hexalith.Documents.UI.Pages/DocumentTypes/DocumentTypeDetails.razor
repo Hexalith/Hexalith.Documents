@@ -4,9 +4,11 @@
 @using Hexalith.Documents.Requests.DocumentInformationExtractions
 @using Hexalith.Documents.UI.Components.FileTypes
 @using Hexalith.Documents.UI.Components.DocumentInformationExtractions
+@using Hexalith.UI.Components.Pages
 @rendermode InteractiveAuto
 <HexEntityDetailsPage AddTitle="@Labels.AddTitle"
                       EditTitle="@Labels.Title"
+                      EntityId="Id"
                       Data="_data"
                       IndexPath="/Documents/DocumentType"
                       ValidationResult="_validationResult"
@@ -51,7 +53,6 @@
         {
             _data = new DocumentTypeEditViewModel();
         }
-        await base.OnInitializedAsync();
     }
 
     protected override async Task OnInitializedAsync()
@@ -64,34 +65,29 @@
         await base.OnInitializedAsync();
     }
 
-    private async Task OnSave()
+    private async Task<SaveResult> OnSave()
     {
-        if (_data is null || _user is null)
+        var result = _data.ValidateSave(_user, (d) =>
         {
-            return;
-        }
-        if (!_data.HasChanges)
+            _validationResult = new DocumentTypeEditValidation().Validate(d);
+            if (_validationResult.IsValid)
+            {
+                return true;
+            }
+            return false;
+        });
+        if (result.Result == ExecuteSaveResult.Success)
         {
-            return;
+            await _data!.SaveAsync(_user!, CommandService, Id is null, CancellationToken.None);
+            if (Id is null)
+            {
+                _data = new ();
+                StateHasChanged();
+            }
         }
-        _validationResult = new DocumentTypeEditValidation().Validate(_data);
-        if (!_validationResult.IsValid)
-        {
-            StateHasChanged();
-            return;
-        }
-        await _data.SaveAsync(_user, CommandService, Id is null, CancellationToken.None);
-        if (Id is null)
-        {
-            _data = new DocumentTypeEditViewModel();
-            StateHasChanged();
-        }
+        return result;
     }
 
-    private Task OnRefreshAsync()
-    {
-        return Task.CompletedTask;
-    }
     private async Task OnFileTypeSearch(OptionsSearchEventArgs<Option<string>> args)
     {
         if (_user is null)
