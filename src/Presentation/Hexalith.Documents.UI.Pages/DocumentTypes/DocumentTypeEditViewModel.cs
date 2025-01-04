@@ -239,23 +239,23 @@ internal sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewMod
     private async Task UpdateExtractionIdsAsync(ClaimsPrincipal user, ICommandService commandService, CancellationToken cancellationToken)
     {
         // for each file type in ExtractionIds, ADD it if it does not exist
-        foreach (string fileType in DataExtractionIds
-            .Where(p => string.IsNullOrWhiteSpace(p.Value))
+        foreach (string item in DataExtractionIds
+            .Where(p => !string.IsNullOrWhiteSpace(p.Value))
             .Select(p => p.Value!))
         {
-            if (!Original.DataExtractionIds.Contains(fileType))
+            if (!Original.DataExtractionIds.Contains(item))
             {
-                RemoveDocumentTypeDataExtraction c = new(Id, fileType);
+                AddDocumentTypeDataExtraction c = new(Id, item);
                 await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
             }
         }
 
         // for each file type in original, REMOVE it if it does not exist in ExtractionIds
-        foreach (string fileType in Original.DataExtractionIds)
+        foreach (string item in Original.DataExtractionIds)
         {
-            if (!DataExtractionIds.Any(p => p.Value == fileType))
+            if (!DataExtractionIds.Any(p => p.Value == item))
             {
-                RemoveDocumentTypeDataExtraction c = new(Id, fileType);
+                RemoveDocumentTypeDataExtraction c = new(Id, item);
                 await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
             }
         }
@@ -264,23 +264,23 @@ internal sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewMod
     private async Task UpdateFileTypeIdsAsync(ClaimsPrincipal user, ICommandService commandService, CancellationToken cancellationToken)
     {
         // for each file type in FileTypeIds, ADD it if it does not exist
-        foreach (string fileType in FileTypeIds
-            .Where(p => string.IsNullOrWhiteSpace(p.Value))
+        foreach (string item in FileTypeIds
+            .Where(p => !string.IsNullOrWhiteSpace(p.Value))
             .Select(p => p.Value!))
         {
-            if (!Original.FileTypeIds.Contains(fileType))
+            if (!Original.FileTypeIds.Contains(item))
             {
-                AddDocumentTypeFileType c = new(Id, fileType);
+                AddDocumentTypeFileType c = new(Id, item);
                 await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
             }
         }
 
         // for each file type in original, REMOVE it if it does not exist in FileTypeIds
-        foreach (string fileType in Original.FileTypeIds)
+        foreach (string item in Original.FileTypeIds)
         {
-            if (!FileTypeIds.Any(p => p.Value == fileType))
+            if (!FileTypeIds.Any(p => p.Value == item))
             {
-                RemoveDocumentTypeFileType c = new(Id, fileType);
+                RemoveDocumentTypeFileType c = new(Id, item);
                 await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
             }
         }

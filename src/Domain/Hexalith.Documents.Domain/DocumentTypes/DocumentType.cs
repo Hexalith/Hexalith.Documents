@@ -59,6 +59,10 @@ public record DocumentType(
               [],
               false)
     {
+        // Ensure that collections are initialized.
+        _ = DataExtractionIds ??= [];
+        _ = FileTypeIds ??= [];
+        _ = Tags ??= [];
     }
 
     /// <summary>

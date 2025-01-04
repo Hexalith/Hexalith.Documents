@@ -42,6 +42,8 @@ public static class DocumentTypeProjectionsHelper
             .AddScoped<IProjectionUpdateHandler<DocumentTypeAdded>, DocumentTypeAddedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<DocumentTypeDataExtractionAdded>, DocumentTypeDataExtractionAddedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<DocumentTypeDataExtractionRemoved>, DocumentTypeDataExtractionRemovedOnDetailsProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<DocumentTypeFileTypeAdded>, DocumentTypeFileTypeAddedOnDetailsProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<DocumentTypeFileTypeRemoved>, DocumentTypeFileTypeRemovedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<DocumentTypeDescriptionChanged>, DocumentTypeDescriptionChangedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<SnapshotEvent>, DocumentTypeDetailsSnapshotHandler>()
             .AddScoped<IProjectionUpdateHandler<DocumentTypeDisabled>, DocumentTypeDisabledOnDetailsProjectionHandler>()
