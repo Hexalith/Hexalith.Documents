@@ -37,7 +37,7 @@ public partial record GetFileTypeSummaries(
     /// <param name="take">The number of file type summaries to take.</param>
     /// <param name="filter">The filter to apply to the file type summaries.</param>
     public GetFileTypeSummaries(int skip, int take, string? filter = null)
-        : this(skip, take, filter, Array.Empty<string>(), Array.Empty<FileTypeSummaryViewModel>())
+        : this(skip, take, filter, [], [])
     {
     }
 
@@ -48,7 +48,7 @@ public partial record GetFileTypeSummaries(
     /// <param name="take">The number of file type summaries to take.</param>
     /// <param name="ids">The list of file type summary IDs.</param>
     public GetFileTypeSummaries(IEnumerable<string> ids)
-        : this(0, 0, null, ids, Array.Empty<FileTypeSummaryViewModel>())
+        : this(0, 0, null, ids, [])
     {
     }
 
@@ -66,7 +66,7 @@ public partial record GetFileTypeSummaries(
     IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
-    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take };
+    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take, Results = [] };
 
     /// <inheritdoc/>
     public ICollectionRequest CreateResults(IEnumerable<object> results)

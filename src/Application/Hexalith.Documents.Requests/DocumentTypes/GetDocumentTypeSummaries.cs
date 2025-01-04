@@ -26,7 +26,7 @@ public partial record GetDocumentTypeSummaries(
     /// Initializes a new instance of the <see cref="GetDocumentTypeSummaries"/> class.
     /// </summary>
     public GetDocumentTypeSummaries()
-        : this(0, 0, null, Array.Empty<string>(), Array.Empty<DocumentTypeSummaryViewModel>())
+        : this(0, 0, null, [], Array.Empty<DocumentTypeSummaryViewModel>())
     {
     }
 
@@ -37,7 +37,7 @@ public partial record GetDocumentTypeSummaries(
     /// <param name="take">The number of document type summaries to take.</param>
     /// <param name="filter">The filter to apply to the document type summaries.</param>
     public GetDocumentTypeSummaries(int skip, int take, string? filter = null)
-        : this(skip, take, filter, Array.Empty<string>(), Array.Empty<DocumentTypeSummaryViewModel>())
+        : this(skip, take, filter, [], Array.Empty<DocumentTypeSummaryViewModel>())
     {
     }
 
@@ -47,8 +47,8 @@ public partial record GetDocumentTypeSummaries(
     /// <param name="skip">The number of document type summaries to skip.</param>
     /// <param name="take">The number of document type summaries to take.</param>
     /// <param name="ids">The list of document type summary IDs.</param>
-    public GetDocumentTypeSummaries(int skip, int take, IEnumerable<string> ids)
-        : this(skip, take, null, ids, Array.Empty<DocumentTypeSummaryViewModel>())
+    public GetDocumentTypeSummaries(IEnumerable<string> ids)
+        : this(0, 0, null, ids, [])
     {
     }
 
@@ -70,5 +70,5 @@ public partial record GetDocumentTypeSummaries(
         => this with { Results = (IEnumerable<DocumentTypeSummaryViewModel>)results };
 
     /// <inheritdoc/>
-    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take };
+    public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take, Results = [] };
 }
