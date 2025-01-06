@@ -12,12 +12,16 @@ using Hexalith.Documents.Events.FileTypes;
 
 public class FileTypeAddedTest
 {
+    public FileTypeAddedTest()
+    {
+        HexalithApplicationAbstractions.RegisterPolymorphicMappers();
+        HexalithDocumentsEvents.RegisterPolymorphicMappers();
+    }
+
     [Fact]
     public void SerializeAndDeserializeFileTypeAddedShouldBeEquivalentToOriginal()
     {
         // Arrange
-        HexalithApplicationAbstractions.RegisterPolymorphicMappers();
-        HexalithDocumentsEvents.RegisterPolymorphicMappers();
         FileTypeAdded added = new(
             "MD",
             "Markdown file",
