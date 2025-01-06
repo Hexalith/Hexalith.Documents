@@ -11,17 +11,19 @@ using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Commands.Extensions;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Infrastructure.DaprRuntime.Actors;
-using Hexalith.PolymorphicSerialization;
 
 public class AddDocumentTest
 {
+    public AddDocumentTest()
+    {
+        HexalithApplicationAbstractions.RegisterPolymorphicMappers();
+        HexalithDocumentsCommands.RegisterPolymorphicMappers();
+    }
+
     [Fact]
     public void AddDocumentBaseTypeInEnvelopeShouldBeSameAsOriginal()
     {
         // Arrange
-        HexalithApplicationAbstractions.RegisterPolymorphicMappers();
-        HexalithDocumentsCommands.RegisterPolymorphicMappers();
-        JsonSerializerOptions jsonOptions = PolymorphicHelper.DefaultJsonSerializerOptions;
         AddDocument message = new(
             "1",
             "Test AddDocumentBaseType",
@@ -35,8 +37,8 @@ public class AddDocumentTest
         ActorMessageEnvelope envelope = ActorMessageEnvelope.Create(message, metadata);
 
         // Act
-        string json = JsonSerializer.Serialize(envelope, jsonOptions);
-        ActorMessageEnvelope deserializedEnvelope = JsonSerializer.Deserialize<ActorMessageEnvelope>(json, jsonOptions);
+        string json = JsonSerializer.Serialize(envelope);
+        ActorMessageEnvelope deserializedEnvelope = JsonSerializer.Deserialize<ActorMessageEnvelope>(json);
         (object deserializedMessage, Metadata deserializedMetadata) = deserializedEnvelope.Deserialize();
 
         // Assert
