@@ -5,6 +5,7 @@ using System.Text.Json;
 
 using FluentAssertions;
 
+using Hexalith.Application.Abstractions.Extensions;
 using Hexalith.Application.Metadatas;
 using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Commands.Extensions;
@@ -18,6 +19,7 @@ public class AddDocumentTest
     public void AddDocumentBaseTypeInEnvelopeShouldBeSameAsOriginal()
     {
         // Arrange
+        HexalithApplicationAbstractions.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
         JsonSerializerOptions jsonOptions = PolymorphicHelper.DefaultJsonSerializerOptions;
         AddDocument message = new(
