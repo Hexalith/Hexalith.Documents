@@ -16,9 +16,12 @@ using Hexalith.Documents.Requests.Documents;
 using Hexalith.Documents.Requests.DocumentStorages;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Documents.Servers.Configurations;
 using Hexalith.Documents.Servers.Services;
+using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.DaprRuntime.Helpers;
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -67,7 +70,7 @@ public static class DocumentsWebApiHelpers
     /// <param name="services">The services.</param>
     /// <returns>IServiceCollection.</returns>
     /// <exception cref="ArgumentNullException">Thrown when services is null.</exception>
-    public static IServiceCollection AddDocumentStorage(this IServiceCollection services)
+    public static IServiceCollection AddDocumentStorage(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
         _ = services.AddTransient<AzureContainerStorage>();
@@ -77,6 +80,7 @@ public static class DocumentsWebApiHelpers
         _ = services.AddTransient<GoogleDriveStorage>();
         _ = services.AddTransient<AwsS3BucketStorage>();
         _ = services.AddTransient<SharepointStorage>();
+        _ = services.ConfigureSettings<LocalStorageSettings>(configuration);
         return services;
     }
 }

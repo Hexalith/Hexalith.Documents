@@ -76,7 +76,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
             .ConfigureSettings<AzureBlobFileServiceSettings>(configuration);
 
         _ = services
-            .AddDocumentStorage()
+            .AddDocumentStorage(configuration)
             .AddDocumentsCommandHandlers()
             .AddDocumentEventValidators()
             .AddDocumentsProjectionActorFactories()
