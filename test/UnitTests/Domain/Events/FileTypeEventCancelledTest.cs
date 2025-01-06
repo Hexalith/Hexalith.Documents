@@ -1,4 +1,4 @@
-﻿namespace UnitTests.Application.Events;
+﻿namespace UnitTests.Domain.Events;
 
 using System.Text.Json;
 

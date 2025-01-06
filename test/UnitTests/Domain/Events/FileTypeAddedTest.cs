@@ -1,9 +1,10 @@
-﻿namespace UnitTests.Application.Events;
+﻿namespace UnitTests.Domain.Events;
 
 using System.Text.Json;
 
 using FluentAssertions;
 
+using Hexalith.Application.Abstractions.Extensions;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.States;
 using Hexalith.Documents.Events.Extensions;
@@ -15,6 +16,7 @@ public class FileTypeAddedTest
     public void SerializeAndDeserializeFileTypeAddedShouldBeEquivalentToOriginal()
     {
         // Arrange
+        HexalithApplicationAbstractions.RegisterPolymorphicMappers();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         FileTypeAdded added = new(
             "MD",
