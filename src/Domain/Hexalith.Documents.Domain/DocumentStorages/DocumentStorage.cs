@@ -25,7 +25,7 @@ public record DocumentStorage(
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] DocumentStorageType StorageType,
     [property: DataMember(Order = 3)] string? Description,
-    [property: DataMember(Order = 4)] string ConnectionString,
+    [property: DataMember(Order = 4)] string? ConnectionString,
     [property: DataMember(Order = 6)] bool Disabled)
     : IDomainAggregate
 {

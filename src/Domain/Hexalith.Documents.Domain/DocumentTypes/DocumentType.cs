@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Events.DocumentTypes;
+using Hexalith.Documents.Events.FileTypes;
 using Hexalith.Domain.Aggregates;
 
 /// <summary>
@@ -84,9 +85,15 @@ public record DocumentType(
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (domainEvent is DocumentTypeEvent && domainEvent is not DocumentTypeEnabled or DocumentTypeDisabled && Disabled)
+
+        if (Disabled && domainEvent is not DocumentTypeEnabled and not DocumentTypeDisabled)
         {
-            return ApplyResult.Error(this, "Cannot change a disabled Document.");
+            return ApplyResult.Error(this, "Cannot apply changes to a disabled document type.");
+        }
+
+        if (!(this as IDomainAggregate).IsInitialized() && domainEvent is not FileTypeAdded)
+        {
+            return ApplyResult.Error(this, "Cannot apply changes to an uninitialized document type.");
         }
 
         return domainEvent switch
@@ -113,7 +120,7 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeAdded e) => !(this as IDomainAggregate).IsInitialized()
         ? ApplyResult.Success(new DocumentType(e), [e])
-        : ApplyResult.Error(this, "The document already exists.");
+        : ApplyResult.Error(this, "The document type already exists.");
 
     /// <summary>
     /// Applies a document type enable event.
@@ -122,7 +129,7 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeEnabled e) => Disabled
             ? ApplyResult.Success(this with { Disabled = false }, [e])
-            : ApplyResult.Error(this, "The document is already enabled.");
+            : ApplyResult.Error(this, "The document type is already enabled.");
 
     /// <summary>
     /// Applies a document type disable event.
@@ -131,7 +138,7 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeDisabled e) => !Disabled
             ? ApplyResult.Success(this with { Disabled = true }, [e])
-            : ApplyResult.Error(this, "The document is already disabled.");
+            : ApplyResult.Error(this, "The document type is already disabled.");
 
     /// <summary>
     /// Applies a document type description change event.
@@ -140,7 +147,7 @@ public record DocumentType(
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     private ApplyResult ApplyEvent(DocumentTypeDescriptionChanged e) => e.Name != Name || e.Description != Comments
         ? ApplyResult.Success(this with { Name = e.Name, Comments = e.Description }, [e])
-        : ApplyResult.Error(this, "No changes to apply.");
+            : ApplyResult.Error(this, "The document type name and description is already set to the specified value.");
 
     /// <summary>
     /// Applies an event to add a file type.
