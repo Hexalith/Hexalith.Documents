@@ -18,19 +18,19 @@
     {
         <FluentGrid Orientation="Orientation.Vertical">
             <FluentGridItem xs="12" md="3">
-                <HexEntityIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexEntityIdField>
+                <HexIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexIdField>
             </FluentGridItem>
             <FluentGridItem xs="12" md="@(Id is null ? 9 : 6)">
-                <HexEntityNameField @bind-Value="_data.Name"></HexEntityNameField>
+                <HexNameField @bind-Value="_data.Name"></HexNameField>
             </FluentGridItem>
             @if (Id is not null)
             {
                 <FluentGridItem xs="12" md="3" Style="display: flex; align-items: flex-end;">
-                    <HexEntityDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexEntityDisabledCheckbox>
+                    <HexDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexDisabledCheckbox>
                 </FluentGridItem>
             }
             <FluentGridItem xs="12" md="6">
-                <HexEntityCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexEntityCommentsField>
+                <HexCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexCommentsField>
             </FluentGridItem>
             <FluentGridItem xs="12" md="6">
                 <FluentTextArea Style="width:100%;" @bind-Value="_data.Summary" Label="@Labels.Summary"></FluentTextArea>

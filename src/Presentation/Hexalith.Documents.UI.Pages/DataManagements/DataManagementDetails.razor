@@ -8,18 +8,18 @@
     {
         <FluentGrid Orientation="Orientation.Vertical">
             <FluentGridItem xs="12" md="3">
-                <HexEntityIdField Disabled="true" Value="_data.Id" />
+                <HexIdField Disabled="true" Value="_data.Id" />
             </FluentGridItem>
             <FluentGridItem md="12">
-                <HexEntityStartDateField Disabled="true" Value="_data.StartedAt.LocalDateTime" />
-                <HexEntityStartTimeField Disabled="true" Value="_data.StartedAt.LocalDateTime" />
+                <HexStartDateField Disabled="true" Value="_data.StartedAt.LocalDateTime" />
+                <HexStartTimeField Disabled="true" Value="_data.StartedAt.LocalDateTime" />
             </FluentGridItem>
             <FluentGridItem md="12">
-                <HexEntityStartDateField Disabled="true" Value="_data.CompletedAt?.LocalDateTime" />
-                <HexEntityStartTimeField Disabled="true" Value="_data.CompletedAt?.LocalDateTime" />
+                <HexEndDateField Disabled="true" Value="_data.CompletedAt?.LocalDateTime" />
+                <HexEndTimeField Disabled="true" Value="_data.CompletedAt?.LocalDateTime" />
             </FluentGridItem>
             <FluentGridItem xs="12" md="12">
-                <HexEntityCommentsField @bind-Value="_data.Comments" />
+                <HexCommentsField @bind-Value="_data.Comments" />
             </FluentGridItem>
             <FluentGridItem md="12">
                 <HexSaveButton Appearance="Appearance.Accent" Onclick="OnSave" />
