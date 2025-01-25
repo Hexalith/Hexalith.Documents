@@ -16,5 +16,5 @@ public interface IWritableFileProvider
     /// <param name="fileName">The name of the file to be created.</param>
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the writable file.</returns>
-    Task<IWritableFile> CreateFileAsync(DocumentStorageType storageType, string connectionString, string path, string fileName, CancellationToken cancellationToken);
+    Task<IWritableFile> CreateFileAsync(DocumentStorageType storageType, string? connectionString, string path, string fileName, CancellationToken cancellationToken);
 }
