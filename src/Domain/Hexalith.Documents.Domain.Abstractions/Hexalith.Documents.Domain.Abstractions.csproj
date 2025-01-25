@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>$(CommonTargetFrameworks)</TargetFramework>
-		<RootNamespace>Hexalith.Documents.Domain</RootNamespace>
-		<NoWarn>$(NoWarn);S1309,</NoWarn>
-	</PropertyGroup>
-	<ItemGroup Condition="'$(UseProjectReference)' == 'true'">
-		<ProjectReference Include="$(HexalithPath)\src\Core\Domain\Hexalith.Domain.Abstractions\Hexalith.Domain.Abstractions.csproj" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(UseProjectReference)' != 'true'">
-		<PackageReference Include="Hexalith.Domain.Abstractions" Version="$(HexalithVersion)" />
-	</ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>$(CommonTargetFrameworks)</TargetFramework>
+        <RootNamespace>Hexalith.Documents.Domain</RootNamespace>
+        <NoWarn>$(NoWarn);S1309,</NoWarn>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
+        <ProjectReference Include="$(HexalithPath)\src\Core\Domain\Hexalith.Domain.Abstractions\Hexalith.Domain.Abstractions.csproj" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(UseProjectReference)' != 'true'">
+        <PackageReference Include="Hexalith.Domain.Abstractions" Version="$(HexalithVersion)" />
+    </ItemGroup>
 </Project>
