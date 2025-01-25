@@ -27,7 +27,7 @@ public class WritableFileProvider : IWritableFileProvider
     }
 
     /// <inheritdoc/>
-    public async Task<IWritableFile> CreateFileAsync(DocumentStorageType storageType, string connectionString, string path, string fileName, CancellationToken cancellationToken)
+    public async Task<IWritableFile> CreateFileAsync(DocumentStorageType storageType, string? connectionString, string path, string fileName, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(connectionString);
         ArgumentNullException.ThrowIfNull(path);
