@@ -6,7 +6,7 @@
     <FluentLabel Typo="Typography.PageTitle">@string.Format(Labels.Title, Id)</FluentLabel>
     @if (_data is not null)
     {
-        <FluentGrid Orientation="Orientation.Vertical">
+        <FluentGrid>
             <FluentGridItem xs="12" md="3">
                 <HexIdField Disabled="true" Value="_data.Id" />
             </FluentGridItem>
