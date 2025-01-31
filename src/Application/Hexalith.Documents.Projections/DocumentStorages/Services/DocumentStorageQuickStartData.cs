@@ -20,44 +20,25 @@ public static class DocumentStorageQuickStartData
     /// An enumerable collection of <see cref="AddDocumentStorage"/> commands containing
     /// predefined document storage configurations for local and cloud storage.
     /// </value>
-    public static IEnumerable<AddDocumentStorage> Data => [Default, Temp, Azure];
+    public static IEnumerable<AddDocumentStorage> Data => [Documents, UserData];
 
     /// <summary>
-    /// Gets a predefined Azure cloud storage configuration.
+    /// Gets a predefined document storage configuration for local file system storage.
     /// </summary>
-    /// <value>
-    /// An <see cref="AddDocumentStorage"/> command for creating a cloud-based storage in Azure.
-    /// </value>
-    internal static AddDocumentStorage Azure => new(
-            "Cloud",
-            "Cloud storage in Azure",
-            DocumentStorageType.AzureStorageContainer,
-            "The cloud storage using Azure Storage Containers",
-            "to be defined");
-
-    /// <summary>
-    /// Gets a predefined default storage configuration.
-    /// </summary>
-    /// <value>
-    /// An <see cref="AddDocumentStorage"/> command for creating the default local file storage.
-    /// </value>
-    internal static AddDocumentStorage Default => new(
-            "Default",
-            "Default storage in Azure",
+    internal static AddDocumentStorage Documents => new(
+            "Documents",
+            "Storage for documents",
             DocumentStorageType.FileSystem,
-            "The default storage using Azure Storage Containers",
-            "C:\\storage-default");
+            "The storage for documents using local storage",
+            "/data/documents");
 
     /// <summary>
-    /// Gets a predefined temporary storage configuration.
+    /// Gets a predefined document storage configuration for user data storage.
     /// </summary>
-    /// <value>
-    /// An <see cref="AddDocumentStorage"/> command for creating a temporary local file storage.
-    /// </value>
-    internal static AddDocumentStorage Temp => new(
-        "Temp",
-        "Temporary local storage",
-        DocumentStorageType.FileSystem,
-        "Temporary storage for documents that are either waiting to be processed or are only needed for a short period.",
-        "C:\\storage-temp");
+    internal static AddDocumentStorage UserData => new(
+            "UserData",
+            "Storage for user's data",
+            DocumentStorageType.FileSystem,
+            "The storage for user's data using local storage",
+            "/data/users");
 }

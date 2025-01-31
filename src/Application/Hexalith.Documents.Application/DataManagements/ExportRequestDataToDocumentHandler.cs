@@ -258,9 +258,9 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
             // Create the user default container
             CreateDocumentContainer createDocumentContainer = new(
                 containerId,
-                "Default",
+                "UserData",
                 metadata.Context.UserId + " user data",
-                "Users/" + metadata.Context.UserId,
+                metadata.Context.UserId,
                 "The user default document container",
                 null);
             await _commandProcessor.SubmitAsync(createDocumentContainer, Metadata.CreateNew(createDocumentContainer, metadata, Time.GetLocalNow()), cancellationToken).ConfigureAwait(false);

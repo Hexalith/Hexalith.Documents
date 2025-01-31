@@ -1,6 +1,7 @@
 namespace Hexalith.Documents.Projections.DocumentContainers.Services;
 
 using Hexalith.Documents.Commands.DocumentContainers;
+using Hexalith.Documents.Projections.DocumentStorages.Services;
 
 /// <summary>
 /// Provides demo document container data for testing and demonstration purposes.
@@ -21,7 +22,7 @@ public static class DocumentContainerQuickStartData
     /// </summary>
     internal static CreateDocumentContainer JeromePiquot => new(
         "jpiquot@itaneo.com",
-        "Default",
+        DocumentStorageQuickStartData.UserData.Id,
         "Jérôme Piquot Data",
         "jpiquot@itaneo.com",
         "Jérôme Piquot default container for user files.",
@@ -32,7 +33,7 @@ public static class DocumentContainerQuickStartData
     /// </summary>
     internal static CreateDocumentContainer JohnDoe => new(
         "john.doe@test.com",
-        "Default",
+        DocumentStorageQuickStartData.UserData.Id,
         "John Doe Data",
         "john.doe@test.com",
         "John Doe default container for user files.",
