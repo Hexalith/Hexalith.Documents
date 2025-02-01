@@ -121,6 +121,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.DocumentStorageAggregateName.ToAggregateActorName());
         actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.DocumentTypeAggregateName.ToAggregateActorName());
         actorRegistrations.RegisterActor<DomainAggregateActor>(DocumentDomainHelper.FileTypeAggregateName.ToAggregateActorName());
+        actorRegistrations.RegisterAggregateRelationActor<DocumentContainer, Document>();
         actorRegistrations.RegisterProjectionActor<DataManagement>();
         actorRegistrations.RegisterProjectionActor<Document>();
         actorRegistrations.RegisterProjectionActor<DocumentContainer>();

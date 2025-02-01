@@ -1,5 +1,6 @@
 ﻿namespace Hexalith.Documents.Servers.Helpers;
 
+using Hexalith.Application.Services;
 using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Domain.DataManagements;
 using Hexalith.Documents.Domain.DocumentContainers;
@@ -20,6 +21,7 @@ using Hexalith.Documents.Servers.Configurations;
 using Hexalith.Documents.Servers.Services;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.DaprRuntime.Helpers;
+using Hexalith.Infrastructure.DaprRuntime.Services;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +41,9 @@ public static class DocumentsWebApiHelpers
     {
         ArgumentNullException.ThrowIfNull(services);
         _ = services.AddTransient<IWritableFileProvider, WritableFileProvider>();
+        _ = services.AddScoped<IOneToManyAggregateRelationService<DocumentContainer, Document>, OneToManyAggregateRelationService<DocumentContainer, Document>>();
         _ = services.AddDocumentProjections();
+        _ = services.AddActorRelationFactory<DocumentContainer, Document>();
         _ = services.AddActorProjectionFactory<DataManagement>();
         _ = services.AddActorProjectionFactory<DataManagementSummaryViewModel>();
         _ = services.AddActorProjectionFactory<DataManagementDetailsViewModel>();
@@ -68,6 +72,7 @@ public static class DocumentsWebApiHelpers
     /// Adds the document storage services.
     /// </summary>
     /// <param name="services">The services.</param>
+    /// <param name="configuration">The configuration.</param>
     /// <returns>IServiceCollection.</returns>
     /// <exception cref="ArgumentNullException">Thrown when services is null.</exception>
     public static IServiceCollection AddDocumentStorage(this IServiceCollection services, IConfiguration configuration)

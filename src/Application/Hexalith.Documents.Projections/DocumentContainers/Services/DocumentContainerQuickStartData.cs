@@ -21,7 +21,7 @@ public static class DocumentContainerQuickStartData
     /// Gets the details for the Jérôme Piquot document container.
     /// </summary>
     internal static CreateDocumentContainer JeromePiquot => new(
-        "jpiquot@itaneo.com",
+        "User-jpiquot@itaneo.com",
         DocumentStorageQuickStartData.UserData.Id,
         "Jérôme Piquot Data",
         "jpiquot@itaneo.com",
@@ -32,7 +32,7 @@ public static class DocumentContainerQuickStartData
     /// Gets the details for the Excel document container.
     /// </summary>
     internal static CreateDocumentContainer JohnDoe => new(
-        "john.doe@test.com",
+        "User-john.doe@test.com",
         DocumentStorageQuickStartData.UserData.Id,
         "John Doe Data",
         "john.doe@test.com",

@@ -1,10 +1,13 @@
 ﻿namespace Hexalith.Documents.Projections.DocumentContainers.Helpers;
 
+using Hexalith.Application.Events;
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Events.DocumentContainers;
+using Hexalith.Documents.Events.Documents;
 using Hexalith.Documents.Projections.DocumentContainers.Projections.Details;
+using Hexalith.Documents.Projections.DocumentContainers.Projections.Documents;
 using Hexalith.Documents.Projections.DocumentContainers.Projections.Summaries;
 using Hexalith.Documents.Projections.DocumentContainers.RequestHandlers;
 using Hexalith.Documents.Requests.DocumentContainers;
@@ -30,6 +33,9 @@ public static class DocumentContainerProjectionsHelper
 
             // Collection projections
             .AddScoped<IProjectionUpdateHandler<DocumentContainerCreated>, IdsCollectionProjectionHandler<DocumentContainerCreated>>()
+
+            // Documents projections
+            .AddScoped<IIntegrationEventHandler<DocumentAdded>, DocumentContainerDocumentAddedHandler>()
 
             // Summary projections
             .AddScoped<IProjectionUpdateHandler<DocumentContainerCreated>, DocumentContainerCreatedOnSummaryProjectionHandler>()
