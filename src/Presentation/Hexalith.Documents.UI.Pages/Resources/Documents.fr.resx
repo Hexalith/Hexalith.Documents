@@ -135,4 +135,7 @@
   <data name="ParentDocument" xml:space="preserve">
     <value>Document parent</value>
   </data>
+  <data name="DocumentsInContainer" xml:space="preserve">
+    <value>Documents dans {0}</value>
+  </data>
 </root>

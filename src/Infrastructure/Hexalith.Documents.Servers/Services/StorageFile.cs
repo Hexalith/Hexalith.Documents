@@ -11,7 +11,7 @@ using Hexalith.Documents.Application.Services;
 /// </summary>
 /// <param name="fileStream">The file stream used for reading and writing.</param>
 /// <param name="filePath">The URL that identifies the location of the file.</param>
-public class StorageFile(FileStream fileStream, string filePath) : IWritableFile
+public class StorageFile(FileStream fileStream, string filePath) : IWritableFile, IReadableFile
 {
     private Stream? _stream = fileStream;
 

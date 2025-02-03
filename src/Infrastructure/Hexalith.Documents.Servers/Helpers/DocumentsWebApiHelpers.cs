@@ -41,6 +41,7 @@ public static class DocumentsWebApiHelpers
     {
         ArgumentNullException.ThrowIfNull(services);
         _ = services.AddTransient<IWritableFileProvider, WritableFileProvider>();
+        _ = services.AddTransient<IReadableFileProvider, WritableFileProvider>();
         _ = services.AddScoped<IOneToManyAggregateRelationService<DocumentContainer, Document>, OneToManyAggregateRelationService<DocumentContainer, Document>>();
         _ = services.AddDocumentProjections();
         _ = services.AddActorRelationFactory<DocumentContainer, Document>();

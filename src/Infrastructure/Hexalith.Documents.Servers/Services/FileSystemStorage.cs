@@ -77,4 +77,40 @@ public class FileSystemStorage
         // Create the file.
         return Task.FromResult<IWritableFile>(new StorageFile(File.Create(filePath), filePath));
     }
+
+    /// <summary>
+    /// Reads a file asynchronously.
+    /// </summary>
+    /// <param name="path">The path where the file is located.</param>
+    /// <param name="fileName">The name of the file to be read.</param>
+    /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the readable file.</returns>
+    public Task<IReadableFile> ReadFileAsync(string path, string fileName, CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
+
+        // Verify that the path value is relative.
+        if (Path.IsPathRooted(path))
+        {
+            throw new ArgumentException("The path must be relative.", nameof(path));
+        }
+
+        // Verify that the file name is compliant with the Linux file system.
+        if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+        {
+            throw new ArgumentException("The file name contains invalid characters.", nameof(fileName));
+        }
+
+        string filePath = Path.Combine(_localStoragePath, path, fileName);
+        if (!File.Exists(filePath))
+        {
+            throw new InvalidOperationException($"The file '{filePath}' does not exist on the file system.");
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        // Create the file.
+        return Task.FromResult<IReadableFile>(new StorageFile(File.OpenRead(filePath), filePath));
+    }
 }

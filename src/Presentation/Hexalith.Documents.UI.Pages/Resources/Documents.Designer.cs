@@ -79,6 +79,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Documents in {0}.
+        /// </summary>
+        internal static string DocumentsInContainer {
+            get {
+                return ResourceManager.GetString("DocumentsInContainer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documents.
         /// </summary>
         internal static string ListTitle {

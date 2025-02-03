@@ -1,8 +1,11 @@
 ﻿<HexEntitySummaryGrid TGridItem="DocumentSummaryViewModel"
-                      Items="Items"
-                      ShowDisabledColumn="ShowDisabledColumn"
-                      OnDisabledChanged="OnDisabledChanged"
-                      EntityDetailsPath="@EntityDetailsPath">
+Items="Items"
+ShowDisabledColumn="ShowDisabledColumn"
+OnDisabledChanged="OnDisabledChanged"
+EntityDetailsPath="@EntityDetailsPath">
+    <TemplateColumn TGridItem="DocumentSummaryViewModel">
+        <FluentButton IconStart="@(new Icons.Regular.Size20.ArrowDownload())" OnClick="@(async () => await OnDownloadClickAsync(context.Id))" />
+    </TemplateColumn>
 
 </HexEntitySummaryGrid>
 
@@ -30,4 +33,9 @@
     [EditorRequired]
     public required IQueryable<DocumentSummaryViewModel> Items { get; set; }
 
+    private Task OnDownloadClickAsync(string id)
+    {
+        // Download the document with the given id
+        return Task.CompletedTask;        
+    }
 }
