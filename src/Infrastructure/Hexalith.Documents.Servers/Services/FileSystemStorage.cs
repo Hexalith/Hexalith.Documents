@@ -32,7 +32,7 @@ public partial class FileSystemStorage
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The Stream is in the Scope of the returned IWritableFile object")]
     public Task<IWritableFile> CreateFileAsync(string storageRootPath, string path, string fileName, CancellationToken cancellationToken)
     {
-        string filePath = GetPath(storageRootPath, path, fileName, false);
+        string filePath = GetPath(storageRootPath, path, fileName, true);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -69,9 +69,9 @@ public partial class FileSystemStorage
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
 
         // Verify that the storage path value is relative.
-        if (Path.IsPathRooted(storageRootPath))
+        if (!Path.IsPathRooted(storageRootPath))
         {
-            throw new ArgumentException("The storage root path must be relative.", nameof(path));
+            throw new ArgumentException("The storage root path must be rooted.", nameof(path));
         }
 
         // Verify that the path value is relative.

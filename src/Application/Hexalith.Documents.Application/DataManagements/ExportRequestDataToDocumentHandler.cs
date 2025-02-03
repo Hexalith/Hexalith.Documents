@@ -16,6 +16,7 @@ using Hexalith.Documents.Commands.DocumentContainers;
 using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Domain.DataManagements;
 using Hexalith.Documents.Domain.DocumentStorages;
+using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Events.DataManagements;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentStorages;
@@ -68,17 +69,8 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         ArgumentNullException.ThrowIfNull(command);
         ArgumentNullException.ThrowIfNull(metadata);
         DateTimeOffset now = Time.GetLocalNow();
+        string fileName = $"{command.Id}.json";
         DocumentContainerDetailsViewModel container = await GetUserContainerAsync(metadata, cancellationToken).ConfigureAwait(false);
-        AddDocument addDocument = new(
-            command.Id,
-            command.Id,
-            null,
-            null,
-            metadata.Context.UserId,
-            now,
-            container.Id,
-            "Export");
-        await _commandProcessor.SubmitAsync(addDocument, Metadata.CreateNew(addDocument, metadata, now), cancellationToken).ConfigureAwait(false);
         GetDocumentStorage getDocumentStorage = new(container.DocumentStorageId);
         DocumentStorage? documentPartition = (await _requestProcessor.ProcessAsync(
                 getDocumentStorage,
@@ -105,7 +97,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                 documentPartition.StorageType,
                 documentPartition.ConnectionString,
                 container.Path,
-                command.Id,
+                fileName,
                 cancellationToken);
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
             object? request = command.RequestObject;
@@ -136,6 +128,16 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                     size,
                     Time.GetLocalNow());
             aggregate = aggregate.Apply(exportCompleted).Aggregate;
+            AddDocument addDocument = new(
+                command.Id,
+                command.Id,
+                null,
+                new FileDescription(command.Id, fileName, fileName, size, "application/json"),
+                metadata.Context.UserId,
+                now,
+                container.Id,
+                "Export");
+            await _commandProcessor.SubmitAsync(addDocument, Metadata.CreateNew(addDocument, metadata, now), cancellationToken).ConfigureAwait(false);
             return new ExecuteCommandResult(
                 aggregate,
                 [exportStarted, exportCompleted],

@@ -98,7 +98,7 @@ public class DocumentFilesController : ControllerBase
             return NotFound($"Document storage with ID {container.DocumentStorageId} not found. Check container {document.Description.DocumentContainerId} configuration.");
         }
 
-        await using IReadableFile file = await _readableFileProvider
+        IReadableFile file = await _readableFileProvider
             .OpenFileAsync(
                 storage.StorageType,
                 storage.ConnectionString,
