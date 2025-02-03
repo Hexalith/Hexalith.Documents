@@ -42,7 +42,7 @@ public partial record FileTypeImportExportViewModel(
                 fileType.Name,
                 fileType.Comments,
                 fileType.FileToTextConverter,
-                fileType.Targets,
+                fileType.OtherContentTypes,
                 fileType.Disabled);
         }
 

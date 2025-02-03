@@ -39,7 +39,7 @@ public partial class FileTypeDetailsSnapshotHandler(
             fileType.Name,
             fileType.Comments,
             fileType.FileToTextConverter,
-            fileType.Targets,
+            fileType.OtherContentTypes,
             fileType.Disabled);
         if (currentValue is not null && currentValue == newValue)
         {

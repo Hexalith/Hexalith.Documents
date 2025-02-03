@@ -13,16 +13,17 @@ using Hexalith.Domain.Aggregates;
 /// <param name="Id">The unique identifier of the file type.</param>
 /// <param name="Name">The name of the file type.</param>
 /// <param name="Comments">The description of the file type.</param>
-/// <param name="Targets">Collection of target identifiers associated with this file type.</param>
+/// <param name="OtherContentTypes">Collection of target identifiers associated with this file type.</param>
 /// <param name="Disabled">Indicates whether this file type is disabled.</param>
 [DataContract]
 public record FileType(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
+    [property: DataMember(Order = 5)] string ContentType,
+    [property: DataMember(Order = 6)] IEnumerable<string> OtherContentTypes,
     [property: DataMember(Order = 3)] string? Comments,
     [property: DataMember(Order = 4)] string? FileToTextConverter,
-    [property: DataMember(Order = 5)] IEnumerable<string> Targets,
-    [property: DataMember(Order = 8)] bool Disabled) : IDomainAggregate
+    [property: DataMember(Order = 7)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="FileType"/> class.
@@ -31,9 +32,10 @@ public record FileType(
         : this(
               string.Empty,
               string.Empty,
-              null,
-              null,
+              string.Empty,
               [],
+              null,
+              null,
               false)
     {
     }
@@ -47,9 +49,10 @@ public record FileType(
         : this(
               (added ?? throw new ArgumentNullException(nameof(added))).Id,
               added.Name,
+              added.ContentType,
+              added.OtherContentTypes,
               added.Description,
               added.FileToTextConverter,
-              added.Targets,
               false)
     {
     }
@@ -141,9 +144,9 @@ public record FileType(
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeTargetAdded e)
     {
-        List<string> currentTargets = [.. Targets];
+        List<string> currentTargets = [.. OtherContentTypes];
         return !currentTargets.Contains(e.Target)
-            ? ApplyResult.Success(this with { Targets = currentTargets.Concat([e.Target]) }, [e])
+            ? ApplyResult.Success(this with { OtherContentTypes = currentTargets.Concat([e.Target]) }, [e])
             : ApplyResult.Error(this, "The target is already added to the file type.");
     }
 
@@ -154,9 +157,9 @@ public record FileType(
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeTargetRemoved e)
     {
-        List<string> currentTargets = [.. Targets];
+        List<string> currentTargets = [.. OtherContentTypes];
         return currentTargets.Contains(e.Target)
-            ? ApplyResult.Success(this with { Targets = currentTargets.Where(t => t != e.Target) }, [e])
+            ? ApplyResult.Success(this with { OtherContentTypes = currentTargets.Where(t => t != e.Target) }, [e])
             : ApplyResult.Error(this, "The target is not present in the file type.");
     }
 }
