@@ -3,39 +3,33 @@ Items="Items"
 ShowDisabledColumn="ShowDisabledColumn"
 OnDisabledChanged="OnDisabledChanged"
 EntityDetailsPath="@EntityDetailsPath">
-    <TemplateColumn TGridItem="DocumentSummaryViewModel">
-        <FluentButton IconStart="@(new Icons.Regular.Size20.ArrowDownload())" OnClick="@(async () => await OnDownloadClickAsync(context.Id))" />
-    </TemplateColumn>
+	<TemplateColumn TGridItem="DocumentSummaryViewModel">
+		<FluentAnchor Icon="@(new Icons.Regular.Size20.DrawerArrowDownload())" Href="@("documents/download/" + context.Id)" />
+	</TemplateColumn>
 
 </HexEntitySummaryGrid>
 
 
 @code {
-    /// <summary>
-    /// Gets or sets a value indicating whether the column displaying disabled status of items should be shown.
-    /// </summary>
-    [Parameter]
-    public bool ShowDisabledColumn { get; set; }
+	/// <summary>
+	/// Gets or sets a value indicating whether the column displaying disabled status of items should be shown.
+	/// </summary>
+	[Parameter]
+	public bool ShowDisabledColumn { get; set; }
 
-    /// <summary>
-    /// Gets or sets the callback when the disabled state changes.
-    /// </summary>
-    [Parameter]
-    public EventCallback<string> OnDisabledChanged { get; set; }
+	/// <summary>
+	/// Gets or sets the callback when the disabled state changes.
+	/// </summary>
+	[Parameter]
+	public EventCallback<string> OnDisabledChanged { get; set; }
 
-    /// <summary>
-    /// Gets or sets the callback when a row is double clicked.
-    /// </summary>
-    [Parameter]
-    public string? EntityDetailsPath { get; set; } = "/Documents/Document";
+	/// <summary>
+	/// Gets or sets the callback when a row is double clicked.
+	/// </summary>
+	[Parameter]
+	public string? EntityDetailsPath { get; set; } = "/Documents/Document";
 
-    [Parameter]
-    [EditorRequired]
-    public required IQueryable<DocumentSummaryViewModel> Items { get; set; }
-
-    private Task OnDownloadClickAsync(string id)
-    {
-        // Download the document with the given id
-        return Task.CompletedTask;        
-    }
+	[Parameter]
+	[EditorRequired]
+	public required IQueryable<DocumentSummaryViewModel> Items { get; set; }
 }

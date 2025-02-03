@@ -32,7 +32,7 @@ public partial class FileTypeSnapshotOnSummaryProjectionHandler(IProjectionFacto
             .ConfigureAwait(false);
 
         FileType fileType = baseEvent.GetAggregate<FileType>();
-        FileTypeSummaryViewModel newValue = new(fileType.Id, fileType.Name, fileType.Disabled);
+        FileTypeSummaryViewModel newValue = new(fileType.Id, fileType.Name, fileType.ContentType, fileType.FileExtension, fileType.Disabled);
         if (currentValue is not null && currentValue == newValue)
         {
             return;

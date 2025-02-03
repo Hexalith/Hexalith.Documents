@@ -14,7 +14,20 @@ public static class FileTypeQuickStartData
     /// <value>
     /// An enumerable collection of <see cref="AddFileType"/> containing predefined file types.
     /// </value>
-    public static IEnumerable<AddFileType> Data => [Excel, HTML, Markdown, Pdf, PowerPoint, Text, Word, Json, Xml];
+    public static IEnumerable<AddFileType> Data => new[] { Excel, ExcelOld, HTML, Markdown, Pdf, PowerPoint, Text, Word, Json, Xml, Csv };
+
+    /// <summary>
+    /// Gets the details for the CSV file type.
+    /// </summary>
+    internal static AddFileType Csv => new(
+        "CSV",
+        "CSV file",
+        "text/csv",
+        [],
+        "csv",
+        [],
+        null,
+        null);
 
     /// <summary>
     /// Gets the details for the Excel file type.
@@ -22,16 +35,25 @@ public static class FileTypeQuickStartData
     internal static AddFileType Excel => new(
         "Excel",
         "Microsoft Excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        [],
+        "xlsx",
+        [],
         "Type for Microsoft Excel files",
-        null,
-        [
-            "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
-            "application/vnd.ms-excel.sheet.macroEnabled.12",
-            "application/vnd.ms-excel.template",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "application/vnd.ms-excel",
-            "application/x-excel",
-            "application/x-msexcel"]);
+        null);
+
+    /// <summary>
+    /// Gets the details for the old Excel file type.
+    /// </summary>
+    internal static AddFileType ExcelOld => new(
+        "ExcelOld",
+        "Microsoft Excel",
+        "application/vnd.ms-excel",
+        [],
+        "xls",
+        [],
+        "Type for old Microsoft Excel files",
+        null);
 
     /// <summary>
     /// Gets the details for the HTML file type.
@@ -39,9 +61,12 @@ public static class FileTypeQuickStartData
     internal static AddFileType HTML => new(
         "Html",
         "HTML file",
+        "text/html",
+        ["application/html"],
+        "html",
+        ["htm"],
         "Type for HTML files",
-        null,
-        ["application/html", "text/html"]);
+        null);
 
     /// <summary>
     /// Gets the details for the Json file type.
@@ -49,9 +74,12 @@ public static class FileTypeQuickStartData
     internal static AddFileType Json => new(
         "Json",
         "Json file",
-        "Type for JSON files",
+        "application/json",
+        [],
+        "json",
+        [],
         null,
-        ["application/json"]);
+        null);
 
     /// <summary>
     /// Gets the details for the Markdown file type.
@@ -59,9 +87,12 @@ public static class FileTypeQuickStartData
     internal static AddFileType Markdown => new(
         "Markdown",
         "Markdown file",
+        "text/markdown",
+        [],
+        "md",
+        [],
         "Type for Markdown files",
-        null,
-        ["text/markdown", "text/x-markdown"]);
+        null);
 
     /// <summary>
     /// Gets the details for the PDF file type.
@@ -69,9 +100,12 @@ public static class FileTypeQuickStartData
     internal static AddFileType Pdf => new(
         "Pdf",
         "Adobe PDF",
+        "application/pdf",
+        [],
+        "pdf",
+        [],
         "Type for Adobe PDF files",
-        null,
-        ["application/pdf"]);
+        null);
 
     /// <summary>
     /// Gets the details for the PowerPoint file type.
@@ -79,15 +113,12 @@ public static class FileTypeQuickStartData
     internal static AddFileType PowerPoint => new(
         "PowerPoint",
         "Microsoft PowerPoint",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        [],
+        "pptx",
+        [],
         "Type for Microsoft PowerPoint files",
-        null,
-        [
-            "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
-            "application/vnd.ms-powerpoint.slideshow",
-            "application/vnd.ms-powerpoint.template",
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-            "application/mspowerpoint",
-            "application/vnd.ms-powerpoint"]);
+        null);
 
     /// <summary>
     /// Gets the details for the Text file type.
@@ -95,9 +126,12 @@ public static class FileTypeQuickStartData
     internal static AddFileType Text => new(
         "Text",
         "Text file",
+        "text/plain",
+        [],
+        "txt",
+        ["text"],
         "Type for text files",
-        null,
-        ["application/txt", "text/plain", "text/txt", "text/x-log"]);
+        null);
 
     /// <summary>
     /// Gets the details for the Word file type.
@@ -105,24 +139,23 @@ public static class FileTypeQuickStartData
     internal static AddFileType Word => new(
         "Word",
         "Microsoft Word",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        [],
+        "docx",
+        [],
         "Type for Microsoft Word files",
-        null,
-        [
-            "application/msword",
-            "application/doc",
-            "application/ms-doc",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "application/msword-template",
-            "application/vnd.ms-word.template",
-            "application/vnd.ms-word.document.macroEnabled.12"]);
+        null);
 
     /// <summary>
-    /// Gets the details for the Json file type.
+    /// Gets the details for the XML file type.
     /// </summary>
     internal static AddFileType Xml => new(
         "Xml",
         "Xml file",
+        "application/xml",
+        [],
+        "xml",
+        [],
         "Type for XML files",
-        null,
-        ["application/xml"]);
+        null);
 }

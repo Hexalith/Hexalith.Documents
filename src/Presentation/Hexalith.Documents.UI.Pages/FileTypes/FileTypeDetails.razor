@@ -23,7 +23,7 @@
             <FluentGridItem xs="12" md="12">
                 <HexAddButton OnClick="AddTarget" />
             </FluentGridItem>
-            @foreach (string target in _data.Targets)
+            @foreach (string target in _data.OtherContentTypes)
             {
                 <FluentGridItem xs="12" xl="6">
 
@@ -120,14 +120,14 @@
     {
         if (!string.IsNullOrWhiteSpace(_newTarget))
         {
-            _data.Targets.Add(_newTarget);
+            _data.OtherContentTypes.Add(_newTarget);
             StateHasChanged();
             _newTarget = string.Empty;
         }
     }
     private void RemoveTarget(string target)
     {
-        _data.Targets.Remove(target);
+        _data.OtherContentTypes.Remove(target);
         StateHasChanged();
     }
 }

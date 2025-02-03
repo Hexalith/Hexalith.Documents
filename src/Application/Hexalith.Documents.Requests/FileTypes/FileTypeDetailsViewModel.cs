@@ -18,10 +18,13 @@ using Hexalith.Application.Services;
 public sealed record FileTypeDetailsViewModel(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] string? Comments,
-    [property: DataMember(Order = 4)] string? FileToTextConverter,
-    [property: DataMember(Order = 5)] IEnumerable<string> Targets,
-    [property: DataMember(Order = 6)] bool Disabled) : IIdDescription
+    [property: DataMember(Order = 3)] string ContentType,
+    [property: DataMember(Order = 4)] IEnumerable<string> OtherContentTypes,
+    [property: DataMember(Order = 5)] string FileExtension,
+    [property: DataMember(Order = 6)] IEnumerable<string> OtherFileExtensions,
+    [property: DataMember(Order = 7)] string? Comments,
+    [property: DataMember(Order = 8)] string? FileToTextConverter,
+    [property: DataMember(Order = 9)] bool Disabled) : IIdDescription
 {
     /// <inheritdoc/>
     string IIdDescription.Description => Name;

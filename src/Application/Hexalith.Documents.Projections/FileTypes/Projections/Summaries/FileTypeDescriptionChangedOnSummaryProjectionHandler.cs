@@ -24,7 +24,7 @@ public class FileTypeDescriptionChangedOnSummaryProjectionHandler(IProjectionFac
         ArgumentNullException.ThrowIfNull(baseEvent);
         if (summary == null)
         {
-            return Task.FromResult<FileTypeSummaryViewModel?>(new FileTypeSummaryViewModel(baseEvent.Id, baseEvent.Name, false));
+            return Task.FromResult<FileTypeSummaryViewModel?>(null);
         }
 
         return Task.FromResult<FileTypeSummaryViewModel?>(summary with { Name = baseEvent.Name });

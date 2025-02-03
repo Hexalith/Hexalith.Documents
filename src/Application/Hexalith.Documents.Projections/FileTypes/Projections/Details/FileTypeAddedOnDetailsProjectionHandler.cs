@@ -22,9 +22,12 @@ public class FileTypeAddedOnDetailsProjectionHandler(IProjectionFactory<FileType
         return Task.FromResult<FileTypeDetailsViewModel?>(new FileTypeDetailsViewModel(
             baseEvent.Id,
             baseEvent.Name,
+            baseEvent.ContentType,
+            baseEvent.OtherContentTypes,
+            baseEvent.FileExtension,
+            baseEvent.OtherFileExtensions,
             baseEvent.Description,
             baseEvent.FileToTextConverter,
-            baseEvent.OtherContentTypes,
             false));
     }
 }

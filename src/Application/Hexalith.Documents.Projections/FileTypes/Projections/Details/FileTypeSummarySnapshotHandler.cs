@@ -37,9 +37,12 @@ public partial class FileTypeDetailsSnapshotHandler(
         FileTypeDetailsViewModel newValue = new(
             fileType.Id,
             fileType.Name,
+            fileType.ContentType,
+            fileType.OtherContentTypes,
+            fileType.FileExtension,
+            fileType.OtherFileExtensions,
             fileType.Comments,
             fileType.FileToTextConverter,
-            fileType.OtherContentTypes,
             fileType.Disabled);
         if (currentValue is not null && currentValue == newValue)
         {

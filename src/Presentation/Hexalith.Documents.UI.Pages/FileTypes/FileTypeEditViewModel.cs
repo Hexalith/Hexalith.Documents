@@ -25,8 +25,11 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
         Name = details.Name;
         Comments = details.Comments;
         Disabled = details.Disabled;
+        ContentType = details.ContentType;
+        FileExtension = details.FileExtension;
         FileToTextConverter = details.FileToTextConverter;
-        Targets = [.. details.Targets];
+        OtherContentTypes = [.. details.OtherContentTypes];
+        OtherFileExtensions = [.. details.OtherFileExtensions];
     }
 
     /// <summary>
@@ -34,12 +37,15 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
     /// </summary>
     public FileTypeEditViewModel()
     : this(new FileTypeDetailsViewModel(
-    string.Empty,
-    string.Empty,
-    null,
-    null,
-    [],
-    false))
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            [],
+            string.Empty,
+            [],
+            null,
+            null,
+            false))
     {
     }
 
@@ -47,6 +53,11 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
     /// Gets or sets the description of the file type.
     /// </summary>
     public string? Comments { get; set; }
+
+    /// <summary>
+    /// Gets or sets the content type of the file.
+    /// </summary>
+    public string ContentType { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether the description has changed.
@@ -57,6 +68,11 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
     /// Gets or sets a value indicating whether the file type is disabled.
     /// </summary>
     public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets the file extension of the file type.
+    /// </summary>
+    public string FileExtension { get; set; }
 
     /// <summary>
     /// Gets or sets the file to text converter.
@@ -72,11 +88,12 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
     /// Gets a value indicating whether there are changes in the file type details.
     /// </summary>
     public bool HasChanges =>
-    Id != Original.Id ||
-    DescriptionChanged ||
-    FileToTextConverterChanged ||
-    TargetsChanged ||
-    Disabled != Original.Disabled;
+        Id != Original.Id ||
+        DescriptionChanged ||
+        FileToTextConverterChanged ||
+        OtherContentTypesChanged ||
+        OtherFileExtensionChanged ||
+        Disabled != Original.Disabled;
 
     /// <summary>
     /// Gets or sets the ID of the file type.
@@ -94,14 +111,24 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
     public FileTypeDetailsViewModel Original { get; }
 
     /// <summary>
-    /// Gets the targets associated with the file type.
+    /// Gets or sets the targets associated with the file type.
     /// </summary>
-    public ICollection<string> Targets { get; } = [];
+    public ICollection<string> OtherContentTypes { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether the targets have changed.
     /// </summary>
-    public bool TargetsChanged => !Targets.SequenceEqual(Original.Targets);
+    public bool OtherContentTypesChanged => !OtherContentTypes.SequenceEqual(Original.OtherContentTypes);
+
+    /// <summary>
+    /// Gets a value indicating whether the targets have changed.
+    /// </summary>
+    public bool OtherFileExtensionChanged => !OtherFileExtensions.SequenceEqual(Original.OtherFileExtensions);
+
+    /// <summary>
+    /// Gets or sets the file extensions associated with the file type.
+    /// </summary>
+    public ICollection<string> OtherFileExtensions { get; set; }
 
     /// <inheritdoc/>
     string IIdDescription.Description => Name;
@@ -122,9 +149,12 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
             fileTypeCommand = new AddFileType(
                         Id!,
                         Name!,
+                        ContentType,
+                        OtherContentTypes,
+                        FileExtension,
+                        OtherFileExtensions,
                         Comments,
-                        FileToTextConverter,
-                        Targets);
+                        FileToTextConverter);
             await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
             return;
         }
@@ -135,6 +165,18 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
             Id!,
             Name!,
             Comments);
+            await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        if (ContentType != Original.ContentType)
+        {
+            fileTypeCommand = new ChangeFileTypeContentType(Id!, ContentType);
+            await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        if (FileExtension != Original.FileExtension)
+        {
+            fileTypeCommand = new ChangeFileTypeFileExtension(Id!, FileExtension);
             await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -158,22 +200,42 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
             await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
         }
 
-        // for each target in Targets, add it if it does not exist
-        foreach (string target in Targets)
+        // for each content type in other content types, add it if it does not exist
+        foreach (string target in OtherContentTypes)
         {
-            if (!Original.Targets.Contains(target))
+            if (!Original.OtherContentTypes.Contains(target))
             {
-                fileTypeCommand = new AddFileTypeTarget(Id, target);
+                fileTypeCommand = new AddFileTypeOtherContentType(Id, target);
                 await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
             }
         }
 
-        // for each target in Original.Targets, remove it if it does not exist
-        foreach (string target in Original.Targets)
+        // for each content type in Original.OtherContentTypes, remove it if it does not exist
+        foreach (string target in Original.OtherContentTypes)
         {
-            if (!Targets.Contains(target))
+            if (!OtherContentTypes.Contains(target))
             {
-                fileTypeCommand = new RemoveFileTypeTarget(Id, target);
+                fileTypeCommand = new RemoveFileTypeOtherContentType(Id, target);
+                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // for each file extension in other file extensions, add it if it does not exist
+        foreach (string target in OtherFileExtensions)
+        {
+            if (!Original.OtherFileExtensions.Contains(target))
+            {
+                fileTypeCommand = new AddFileTypeOtherFileExtension(Id, target);
+                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // for each file extension in Original.OtherFileExtensions, remove it if it does not exist
+        foreach (string target in Original.OtherFileExtensions)
+        {
+            if (!OtherFileExtensions.Contains(target))
+            {
+                fileTypeCommand = new RemoveFileTypeOtherFileExtension(Id, target);
                 await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
             }
         }

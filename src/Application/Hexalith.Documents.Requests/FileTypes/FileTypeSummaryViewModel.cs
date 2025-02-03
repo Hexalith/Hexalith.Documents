@@ -14,7 +14,9 @@ using Hexalith.Application.Services;
 public sealed record FileTypeSummaryViewModel(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] bool Disabled) : IIdDescription
+    [property: DataMember(Order = 3)] string ContentType,
+    [property: DataMember(Order = 4)] string FileExtension,
+    [property: DataMember(Order = 5)] bool Disabled) : IIdDescription
 {
     /// <inheritdoc/>
     string IIdDescription.Description => Name;

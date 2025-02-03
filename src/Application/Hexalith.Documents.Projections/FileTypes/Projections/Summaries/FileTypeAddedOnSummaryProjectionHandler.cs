@@ -19,6 +19,11 @@ public class FileTypeAddedOnSummaryProjectionHandler(IProjectionFactory<FileType
     protected override Task<FileTypeSummaryViewModel?> ApplyEventAsync([NotNull] FileTypeAdded baseEvent, FileTypeSummaryViewModel? summary, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        return Task.FromResult<FileTypeSummaryViewModel?>(new FileTypeSummaryViewModel(baseEvent.Id, baseEvent.Name, false));
+        return Task.FromResult<FileTypeSummaryViewModel?>(new FileTypeSummaryViewModel(
+            baseEvent.Id,
+            baseEvent.Name,
+            baseEvent.ContentType,
+            baseEvent.FileExtension,
+            false));
     }
 }

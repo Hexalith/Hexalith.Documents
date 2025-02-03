@@ -33,6 +33,9 @@ public static class FileTypeProjectionsHelper
             // Summary projections
             .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, FileTypeAddedOnSummaryProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeDescriptionChanged>, FileTypeDescriptionChangedOnSummaryProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeDescriptionChanged>, FileTypeDescriptionChangedOnSummaryProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeFileExtensionChanged>, FileTypeFileExtensionChangedOnSummaryProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeContentTypeChanged>, FileTypeContentTypeChangedOnSummaryProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeDisabled>, FileTypeDisabledOnSummaryProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeEnabled>, FileTypeEnabledOnSummaryProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<SnapshotEvent>, FileTypeSnapshotOnSummaryProjectionHandler>()
@@ -40,11 +43,15 @@ public static class FileTypeProjectionsHelper
             // Details
             .AddScoped<IProjectionUpdateHandler<FileTypeAdded>, FileTypeAddedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeDescriptionChanged>, FileTypeDescriptionChangedOnDetailsProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeContentTypeChanged>, FileTypeContentTypeChangedOnDetailsProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeFileExtensionChanged>, FileTypeFileExtensionChangedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeDisabled>, FileTypeDisabledOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeEnabled>, FileTypeEnabledOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeFileToTextConverterChanged>, FileTypeFileToTextConverterChangedOnDetailsProjectionHandler>()
-            .AddScoped<IProjectionUpdateHandler<FileTypeTargetAdded>, FileTypeTargetAddedOnDetailsProjectionHandler>()
-            .AddScoped<IProjectionUpdateHandler<FileTypeTargetRemoved>, FileTypeTargetRemovedOnDetailsProjectionHandler>();
+            .AddScoped<IProjectionUpdateHandler<FileTypeOtherFileExtensionAdded>, FileTypeOtherFileExtensionAddedOnDetailsProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeOtherFileExtensionRemoved>, FileTypeOtherFileExtensionRemovedOnDetailsProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeOtherContentTypeAdded>, FileTypeOtherContentTypeAddedOnDetailsProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<FileTypeOtherContentTypeRemoved>, FileTypeOtherContentTypeRemovedOnDetailsProjectionHandler>();
 
         return services;
     }

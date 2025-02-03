@@ -10,13 +10,13 @@ using Hexalith.Documents.Requests.FileTypes;
 /// Handles the projection update when a FileTypeTargetRemoved event is received.
 /// </summary>
 /// <remarks>
-/// Initializes a new instance of the <see cref="FileTypeTargetRemovedOnDetailsProjectionHandler"/> class.
+/// Initializes a new instance of the <see cref="FileTypeOtherContentTypeRemovedOnDetailsProjectionHandler"/> class.
 /// </remarks>
 /// <param name="factory">The projection factory.</param>
-public class FileTypeTargetRemovedOnDetailsProjectionHandler(IProjectionFactory<FileTypeDetailsViewModel> factory) : FileTypeDetailsProjectionHandler<FileTypeTargetRemoved>(factory)
+public class FileTypeOtherContentTypeRemovedOnDetailsProjectionHandler(IProjectionFactory<FileTypeDetailsViewModel> factory) : FileTypeDetailsProjectionHandler<FileTypeOtherContentTypeRemoved>(factory)
 {
     /// <inheritdoc/>
-    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeTargetRemoved baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken)
+    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeOtherContentTypeRemoved baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
         if (model == null)
@@ -26,7 +26,7 @@ public class FileTypeTargetRemovedOnDetailsProjectionHandler(IProjectionFactory<
 
         return Task.FromResult<FileTypeDetailsViewModel?>(model with
         {
-            Targets = model.Targets.Where(p => p != baseEvent.Target),
+            OtherContentTypes = model.OtherContentTypes.Where(p => p != baseEvent.OtherContentType),
         });
     }
 }

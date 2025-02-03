@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 using Hexalith.PolymorphicSerialization;
 
 [PolymorphicSerialization]
-public partial record AddFileTypeTarget(
+public partial record ChangeFileTypeFileExtension(
     string Id,
-    [property: DataMember(Order = 2)] string Target)
+    [property: DataMember(Order = 3)] string FileExtension)
     : FileTypeCommand(Id)
 {
 }

@@ -10,13 +10,13 @@ using Hexalith.Documents.Requests.FileTypes;
 /// Handles the projection update when a FileTypeTargetAdded event is received.
 /// </summary>
 /// <remarks>
-/// Initializes a new instance of the <see cref="FileTypeTargetAddedOnDetailsProjectionHandler"/> class.
+/// Initializes a new instance of the <see cref="FileTypeOtherFileExtensionAddedOnDetailsProjectionHandler"/> class.
 /// </remarks>
 /// <param name="factory">The projection factory.</param>
-public class FileTypeTargetAddedOnDetailsProjectionHandler(IProjectionFactory<FileTypeDetailsViewModel> factory) : FileTypeDetailsProjectionHandler<FileTypeTargetAdded>(factory)
+public class FileTypeOtherFileExtensionAddedOnDetailsProjectionHandler(IProjectionFactory<FileTypeDetailsViewModel> factory) : FileTypeDetailsProjectionHandler<FileTypeOtherFileExtensionAdded>(factory)
 {
     /// <inheritdoc/>
-    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeTargetAdded baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken)
+    protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeOtherFileExtensionAdded baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
         if (model == null)
@@ -26,8 +26,8 @@ public class FileTypeTargetAddedOnDetailsProjectionHandler(IProjectionFactory<Fi
 
         return Task.FromResult<FileTypeDetailsViewModel?>(model with
         {
-            Targets = model.Targets
-                .Append(baseEvent.Target)
+            OtherFileExtensions = model.OtherFileExtensions
+                .Append(baseEvent.OtherFileExtension)
                 .Distinct()
                 .OrderBy(p => p),
         });

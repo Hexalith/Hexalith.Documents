@@ -12,8 +12,12 @@ using Hexalith.Domain.Aggregates;
 /// </summary>
 /// <param name="Id">The unique identifier of the file type.</param>
 /// <param name="Name">The name of the file type.</param>
+/// <param name="ContentType">The content type of the file.</param>
+/// <param name="OtherContentTypes">Collection of other content types associated with this file type.</param>
+/// <param name="FileExtension">The file extension of the file type.</param>
+/// <param name="OtherFileExtensions">Collection of other file extensions associated with this file type.</param>
 /// <param name="Comments">The description of the file type.</param>
-/// <param name="OtherContentTypes">Collection of target identifiers associated with this file type.</param>
+/// <param name="FileToTextConverter">The file to text converter associated with this file type.</param>
 /// <param name="Disabled">Indicates whether this file type is disabled.</param>
 [DataContract]
 public record FileType(
@@ -21,6 +25,8 @@ public record FileType(
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 5)] string ContentType,
     [property: DataMember(Order = 6)] IEnumerable<string> OtherContentTypes,
+    [property: DataMember(Order = 5)] string FileExtension,
+    [property: DataMember(Order = 6)] IEnumerable<string> OtherFileExtensions,
     [property: DataMember(Order = 3)] string? Comments,
     [property: DataMember(Order = 4)] string? FileToTextConverter,
     [property: DataMember(Order = 7)] bool Disabled) : IDomainAggregate
@@ -32,6 +38,8 @@ public record FileType(
         : this(
               string.Empty,
               string.Empty,
+              string.Empty,
+              [],
               string.Empty,
               [],
               null,
@@ -51,6 +59,8 @@ public record FileType(
               added.Name,
               added.ContentType,
               added.OtherContentTypes,
+              added.FileExtension,
+              added.OtherFileExtensions,
               added.Description,
               added.FileToTextConverter,
               false)
@@ -80,10 +90,14 @@ public record FileType(
 
         return domainEvent switch
         {
-            FileTypeTargetAdded e => ApplyEvent(e),
-            FileTypeTargetRemoved e => ApplyEvent(e),
+            FileTypeOtherContentTypeAdded e => ApplyEvent(e),
+            FileTypeOtherContentTypeRemoved e => ApplyEvent(e),
+            FileTypeOtherFileExtensionAdded e => ApplyEvent(e),
+            FileTypeOtherFileExtensionRemoved e => ApplyEvent(e),
             FileTypeAdded e => ApplyEvent(e),
             FileTypeDescriptionChanged e => ApplyEvent(e),
+            FileTypeContentTypeChanged e => ApplyEvent(e),
+            FileTypeFileExtensionChanged e => ApplyEvent(e),
             FileTypeDisabled e => ApplyEvent(e),
             FileTypeEnabled e => ApplyEvent(e),
             FileTypeFileToTextConverterChanged e => ApplyEvent(e),
@@ -93,73 +107,117 @@ public record FileType(
     }
 
     /// <summary>
-    /// Applies a FileTypeCreated event to the aggregate.
+    /// Applies a <see cref="FileTypeAdded"/> event to the aggregate.
     /// </summary>
-    /// <param name="e">The FileTypeCreated event to apply.</param>
+    /// <param name="e">The <see cref="FileTypeAdded"/> event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeAdded e) => !(this as IDomainAggregate).IsInitialized()
         ? ApplyResult.Success(new FileType(e), [e])
         : ApplyResult.Error(this, "The file type already exists and cannot be added again.");
 
     /// <summary>
-    /// Applies a FileTypeEnabled event to the aggregate.
+    /// Applies a <see cref="FileTypeEnabled"/> event to the aggregate.
     /// </summary>
-    /// <param name="e">The FileTypeEnabled event to apply.</param>
+    /// <param name="e">The <see cref="FileTypeEnabled"/> event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeEnabled e) => Disabled
             ? ApplyResult.Success(this with { Disabled = false }, [e])
             : ApplyResult.Error(this, "The file type is already enabled.");
 
     /// <summary>
-    /// Applies a FileTypeDisabled event to the aggregate.
+    /// Applies a <see cref="FileTypeDisabled"/> event to the aggregate.
     /// </summary>
-    /// <param name="e">The FileTypeDisabled event to apply.</param>
+    /// <param name="e">The <see cref="FileTypeDisabled"/> event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeDisabled e) => !Disabled
             ? ApplyResult.Success(this with { Disabled = true }, [e])
             : ApplyResult.Error(this, "The file type is already disabled.");
 
     /// <summary>
-    /// Applies a FileTypeTextExtractionModeChanged event to the aggregate.
+    /// Applies a <see cref="FileTypeFileToTextConverterChanged"/> event to the aggregate.
     /// </summary>
-    /// <param name="e">The FileTypeTextExtractionModeChanged event to apply.</param>
+    /// <param name="e">The <see cref="FileTypeFileToTextConverterChanged"/> event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(FileTypeFileToTextConverterChanged e) => e.FileToTextConverter != FileToTextConverter
         ? ApplyResult.Success(this with { FileToTextConverter = e.FileToTextConverter }, [e])
         : ApplyResult.Error(this, "No changes to apply to file to text converter.");
 
     /// <summary>
-    /// Applies a FileTypeDescriptionChanged event to the aggregate.
+    /// Applies a <see cref="FileTypeDescriptionChanged"/> event to the aggregate.
     /// </summary>
-    /// <param name="e">The FileTypeDescriptionChanged event to apply.</param>
+    /// <param name="e">The <see cref="FileTypeDescriptionChanged"/> event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeDescriptionChanged e) => e.Name != Name || e.Description != Comments
-        ? ApplyResult.Success(this with { Name = e.Name, Comments = e.Description }, [e])
+    private ApplyResult ApplyEvent(FileTypeDescriptionChanged e) => e.Name != Name || e.Comments != Comments
+        ? ApplyResult.Success(this with { Name = e.Name, Comments = e.Comments }, [e])
         : ApplyResult.Error(this, "No changes to apply to the file type name or description.");
 
     /// <summary>
-    /// Applies a FileTypeTargetAdded event to the aggregate.
+    /// Applies a <see cref="FileTypeContentTypeChanged"/> event to the aggregate.
     /// </summary>
-    /// <param name="e">The FileTypeTargetAdded event to apply.</param>
+    /// <param name="e">The <see cref="FileTypeContentTypeChanged"/> event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeTargetAdded e)
+    private ApplyResult ApplyEvent(FileTypeContentTypeChanged e) => e.ContentType != ContentType
+        ? ApplyResult.Success(this with { ContentType = e.ContentType }, [e])
+        : ApplyResult.Error(this, "No changes to apply to the file type content type.");
+
+    /// <summary>
+    /// Applies a <see cref="FileTypeFileExtensionChanged"/> event to the aggregate.
+    /// </summary>
+    /// <param name="e">The <see cref="FileTypeFileExtensionChanged"/> event to apply.</param>
+    /// <returns>The result of applying the event.</returns>
+    private ApplyResult ApplyEvent(FileTypeFileExtensionChanged e) => e.FileExtension != FileExtension
+        ? ApplyResult.Success(this with { FileExtension = e.FileExtension }, [e])
+        : ApplyResult.Error(this, "No changes to apply to the file type file extension.");
+
+    /// <summary>
+    /// Applies a <see cref="FileTypeOtherContentTypeAdded"/> event to the aggregate.
+    /// </summary>
+    /// <param name="e">The <see cref="FileTypeOtherContentTypeAdded"/> event to apply.</param>
+    /// <returns>The result of applying the event.</returns>
+    private ApplyResult ApplyEvent(FileTypeOtherContentTypeAdded e)
     {
         List<string> currentTargets = [.. OtherContentTypes];
-        return !currentTargets.Contains(e.Target)
-            ? ApplyResult.Success(this with { OtherContentTypes = currentTargets.Concat([e.Target]) }, [e])
-            : ApplyResult.Error(this, "The target is already added to the file type.");
+        return !currentTargets.Contains(e.OtherContentType)
+            ? ApplyResult.Success(this with { OtherContentTypes = currentTargets.Concat([e.OtherContentType]) }, [e])
+            : ApplyResult.Error(this, "The other content type is already added to the file type.");
     }
 
     /// <summary>
-    /// Applies a FileTypeTargetRemoved event to the aggregate.
+    /// Applies a <see cref="FileTypeOtherContentTypeRemoved"/> event to the aggregate.
     /// </summary>
-    /// <param name="e">The FileTypeTargetRemoved event to apply.</param>
+    /// <param name="e">The <see cref="FileTypeOtherContentTypeRemoved"/> event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeTargetRemoved e)
+    private ApplyResult ApplyEvent(FileTypeOtherContentTypeRemoved e)
     {
         List<string> currentTargets = [.. OtherContentTypes];
-        return currentTargets.Contains(e.Target)
-            ? ApplyResult.Success(this with { OtherContentTypes = currentTargets.Where(t => t != e.Target) }, [e])
-            : ApplyResult.Error(this, "The target is not present in the file type.");
+        return currentTargets.Contains(e.OtherContentType)
+            ? ApplyResult.Success(this with { OtherContentTypes = currentTargets.Where(t => t != e.OtherContentType) }, [e])
+            : ApplyResult.Error(this, "The other content type is not present in the file type.");
+    }
+
+    /// <summary>
+    /// Applies a <see cref="FileTypeOtherFileExtensionAdded"/> event to the aggregate.
+    /// </summary>
+    /// <param name="e">The <see cref="FileTypeOtherFileExtensionAdded"/> event to apply.</param>
+    /// <returns>The result of applying the event.</returns>
+    private ApplyResult ApplyEvent(FileTypeOtherFileExtensionAdded e)
+    {
+        List<string> currentTargets = [.. OtherFileExtensions];
+        return !currentTargets.Contains(e.OtherFileExtension)
+            ? ApplyResult.Success(this with { OtherFileExtensions = currentTargets.Concat([e.OtherFileExtension]) }, [e])
+            : ApplyResult.Error(this, "The other file extension is already added to the file type.");
+    }
+
+    /// <summary>
+    /// Applies a <see cref="FileTypeOtherFileExtensionRemoved"/> event to the aggregate.
+    /// </summary>
+    /// <param name="e">The <see cref="FileTypeOtherFileExtensionRemoved"/> event to apply.</param>
+    /// <returns>The result of applying the event.</returns>
+    private ApplyResult ApplyEvent(FileTypeOtherFileExtensionRemoved e)
+    {
+        List<string> currentTargets = [.. OtherFileExtensions];
+        return currentTargets.Contains(e.OtherFileExtension)
+            ? ApplyResult.Success(this with { OtherFileExtensions = currentTargets.Where(t => t != e.OtherFileExtension) }, [e])
+            : ApplyResult.Error(this, "The other file extension is not present in the file type.");
     }
 }

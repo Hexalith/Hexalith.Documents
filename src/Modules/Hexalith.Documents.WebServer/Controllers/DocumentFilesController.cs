@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 /// Controller for handling document file operations.
 /// </summary>
 [ApiController]
-[Route("documents/files")]
+[Route("documents")]
 [Authorize]
 public class DocumentFilesController : ControllerBase
 {

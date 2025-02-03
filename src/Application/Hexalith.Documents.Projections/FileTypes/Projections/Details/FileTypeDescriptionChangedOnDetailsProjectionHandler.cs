@@ -24,15 +24,9 @@ public class FileTypeDescriptionChangedOnDetailsProjectionHandler(IProjectionFac
         ArgumentNullException.ThrowIfNull(baseEvent);
         if (model == null)
         {
-            return Task.FromResult<FileTypeDetailsViewModel?>(new FileTypeDetailsViewModel(
-                baseEvent.Id,
-                baseEvent.Name,
-                baseEvent.Description,
-                null,
-                [],
-                false));
+            return Task.FromResult<FileTypeDetailsViewModel?>(null);
         }
 
-        return Task.FromResult<FileTypeDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Description });
+        return Task.FromResult<FileTypeDetailsViewModel?>(model with { Name = baseEvent.Name, Comments = baseEvent.Comments });
     }
 }

@@ -12,7 +12,7 @@ using Hexalith.Domain.Aggregates;
 /// </summary>
 /// <param name="Id">The unique identifier of the file type.</param>
 /// <param name="Name">The name of the file type.</param>
-/// <param name="Description">The description of the file type.</param>
+/// <param name="Comments">The description of the file type.</param>
 /// <param name="FileToTextConverter">The file type file to text converter.</param>
 /// <param name="Targets">The targets associated with the file type.</param>
 /// <param name="Disabled">Indicates whether the file type is disabled.</param>
@@ -20,10 +20,13 @@ using Hexalith.Domain.Aggregates;
 public partial record FileTypeImportExportViewModel(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 3)] string? Description,
-    [property: DataMember(Order = 4)] string? FileToTextConverter,
-    [property: DataMember(Order = 5)] IEnumerable<string> Targets,
-    [property: DataMember(Order = 6)] bool Disabled) : IExportModel
+    [property: DataMember(Order = 3)] string ContentType,
+    [property: DataMember(Order = 4)] IEnumerable<string> OtherContentTypes,
+    [property: DataMember(Order = 5)] string FileExtension,
+    [property: DataMember(Order = 6)] IEnumerable<string> OtherFileExtensions,
+    [property: DataMember(Order = 7)] string? Comments,
+    [property: DataMember(Order = 8)] string? FileToTextConverter,
+    [property: DataMember(Order = 9)] bool Disabled) : IExportModel
 {
     /// <summary>
     /// Creates an export model from the specified domain aggregate.
@@ -40,9 +43,12 @@ public partial record FileTypeImportExportViewModel(
             return new FileTypeImportExportViewModel(
                 fileType.Id,
                 fileType.Name,
+                fileType.ContentType,
+                fileType.OtherContentTypes,
+                fileType.FileExtension,
+                fileType.OtherFileExtensions,
                 fileType.Comments,
                 fileType.FileToTextConverter,
-                fileType.OtherContentTypes,
                 fileType.Disabled);
         }
 
