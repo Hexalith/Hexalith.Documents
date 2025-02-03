@@ -36,7 +36,7 @@ public class WritableFileProvider : IWritableFileProvider, IReadableFileProvider
         {
             DocumentStorageType.AzureStorageContainer => await _serviceProvider.GetRequiredService<AzureContainerStorage>().CreateFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
             DocumentStorageType.OneDrive => await _serviceProvider.GetRequiredService<OneDriveStorage>().CreateFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
-            DocumentStorageType.FileSystem => await _serviceProvider.GetRequiredService<FileSystemStorage>().CreateFileAsync(path, fileName, cancellationToken).ConfigureAwait(false),
+            DocumentStorageType.FileSystem => await _serviceProvider.GetRequiredService<FileSystemStorage>().CreateFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
             DocumentStorageType.Dropbox => await _serviceProvider.GetRequiredService<DropboxStorage>().CreateFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
             DocumentStorageType.GoogleDrive => await _serviceProvider.GetRequiredService<GoogleDriveStorage>().CreateFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
             DocumentStorageType.AwsS3Bucket => await _serviceProvider.GetRequiredService<AwsS3BucketStorage>().CreateFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
@@ -65,7 +65,7 @@ public class WritableFileProvider : IWritableFileProvider, IReadableFileProvider
         {
             DocumentStorageType.AzureStorageContainer => await _serviceProvider.GetRequiredService<AzureContainerStorage>().ReadFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
             DocumentStorageType.OneDrive => await _serviceProvider.GetRequiredService<OneDriveStorage>().ReadFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
-            DocumentStorageType.FileSystem => await _serviceProvider.GetRequiredService<FileSystemStorage>().ReadFileAsync(path, fileName, cancellationToken).ConfigureAwait(false),
+            DocumentStorageType.FileSystem => await _serviceProvider.GetRequiredService<FileSystemStorage>().ReadFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
             DocumentStorageType.Dropbox => await _serviceProvider.GetRequiredService<DropboxStorage>().ReadFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
             DocumentStorageType.GoogleDrive => await _serviceProvider.GetRequiredService<GoogleDriveStorage>().ReadFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),
             DocumentStorageType.AwsS3Bucket => await _serviceProvider.GetRequiredService<AwsS3BucketStorage>().ReadFileAsync(connectionString, path, fileName, cancellationToken).ConfigureAwait(false),

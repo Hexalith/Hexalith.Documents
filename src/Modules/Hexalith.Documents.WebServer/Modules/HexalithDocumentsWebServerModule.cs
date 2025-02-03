@@ -15,6 +15,7 @@ using Hexalith.Documents.Projections.Helpers;
 using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.Servers.Helpers;
 using Hexalith.Documents.UI.Pages.Modules;
+using Hexalith.Documents.WebServer.Controllers;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
 using Hexalith.Infrastructure.AzureBlobStorage.Services;
@@ -76,7 +77,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
             .ConfigureSettings<AzureBlobFileServiceSettings>(configuration);
 
         _ = services
-            .AddDocumentStorage(configuration)
+            .AddDocumentStorage()
             .AddDocumentsCommandHandlers()
             .AddDocumentEventValidators()
             .AddDocumentsProjectionActorFactories()
@@ -93,6 +94,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
 
         _ = services
             .AddTransient(p => DocumentMenu.Menu);
+        _ = services.AddControllers().AddApplicationPart(typeof(DocumentFilesController).Assembly);
     }
 
     /// <summary>
