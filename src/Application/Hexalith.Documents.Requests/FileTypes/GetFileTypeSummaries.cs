@@ -20,7 +20,7 @@ public partial record GetFileTypeSummaries(
     [property: DataMember(Order = 2)] int Take,
     [property: DataMember(Order = 3)] string? Search,
     [property: DataMember(Order = 4)] IEnumerable<string> Ids,
-    [property: DataMember(Order = 5)] IEnumerable<FileTypeSummaryViewModel> Results) : IFilteredChunkableRequest
+    [property: DataMember(Order = 5)] IEnumerable<FileTypeSummaryViewModel> Results) : ISearchChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetFileTypeSummaries"/> class.

@@ -20,7 +20,7 @@ public partial record GetDataManagementSummaries(
     [property: DataMember(Order = 2)] int Take,
     [property: DataMember(Order = 3)] string? Search,
     [property: DataMember(Order = 4)] IEnumerable<string> Ids,
-    [property: DataMember(Order = 5)] IEnumerable<DataManagementSummaryViewModel> Results) : IFilteredChunkableRequest
+    [property: DataMember(Order = 5)] IEnumerable<DataManagementSummaryViewModel> Results) : ISearchChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDataManagementSummaries"/> class.
