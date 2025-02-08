@@ -11,13 +11,13 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Skip">The number of document summaries to skip.</param>
 /// <param name="Take">The number of document summaries to take.</param>
-/// <param name="Filter">The filter criteria for the document summaries.</param>
+/// <param name="Filter">The search criteria for the document summaries.</param>
 /// <param name="Results">The list of document summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentSummaries(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 4)] string? Filter,
+    [property: DataMember(Order = 4)] string? Search,
     [property: DataMember(Order = 3)] IEnumerable<string> Ids,
     [property: DataMember(Order = 5)] IEnumerable<DocumentSummaryViewModel> Results) : IFilteredChunkableRequest
 {
@@ -34,9 +34,9 @@ public partial record GetDocumentSummaries(
     /// </summary>
     /// <param name="skip">The number of document summaries to skip.</param>
     /// <param name="take">The number of document summaries to take.</param>
-    /// <param name="filter">The filter criteria for the document summaries.</param>
-    public GetDocumentSummaries(int skip, int take, string? filter)
-        : this(skip, take, filter, [], [])
+    /// <param name="search">The search criteria for the document summaries.</param>
+    public GetDocumentSummaries(int skip, int take, string? search)
+        : this(skip, take, search, [], [])
     {
     }
 

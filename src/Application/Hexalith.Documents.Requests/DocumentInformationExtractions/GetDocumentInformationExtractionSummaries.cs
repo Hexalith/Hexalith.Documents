@@ -11,14 +11,14 @@ using Hexalith.PolymorphicSerialization;
 /// </summary>
 /// <param name="Skip">The number of document information extraction summaries to skip.</param>
 /// <param name="Take">The number of document information extraction summaries to take.</param>
-/// <param name="Filter">The filter to apply to the document information extraction summaries.</param>
+/// <param name="Filter">The search to apply to the document information extraction summaries.</param>
 /// <param name="Ids">The list of document information extraction summary IDs.</param>
 /// <param name="Results">The list of document information extraction summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentInformationExtractionSummaries(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] string? Filter,
+    [property: DataMember(Order = 3)] string? Search,
     [property: DataMember(Order = 4)] IEnumerable<string> Ids,
     [property: DataMember(Order = 5)] IEnumerable<DocumentInformationExtractionSummaryViewModel> Results) : IFilteredChunkableRequest
 {
@@ -35,9 +35,9 @@ public partial record GetDocumentInformationExtractionSummaries(
     /// </summary>
     /// <param name="skip">The number of document information extraction summaries to skip.</param>
     /// <param name="take">The number of document information extraction summaries to take.</param>
-    /// <param name="filter">The filter to apply to the document information extraction summaries.</param>
-    public GetDocumentInformationExtractionSummaries(int skip, int take, string? filter = null)
-        : this(skip, take, filter, Array.Empty<string>(), Array.Empty<DocumentInformationExtractionSummaryViewModel>())
+    /// <param name="search">The search to apply to the document information extraction summaries.</param>
+    public GetDocumentInformationExtractionSummaries(int skip, int take, string? search = null)
+        : this(skip, take, search, Array.Empty<string>(), Array.Empty<DocumentInformationExtractionSummaryViewModel>())
     {
     }
 
