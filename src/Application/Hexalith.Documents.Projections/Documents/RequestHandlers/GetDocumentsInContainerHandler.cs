@@ -49,12 +49,17 @@ public class GetDocumentsInContainerHandler : RequestHandlerBase<GetDocumentsInC
         IEnumerable<string> documentIds = await _documentsInContainerService
             .GetAsync(metadata.Context.PartitionId, request.DocumentContainerId, request.Skip, request.Take, cancellationToken)
             .ConfigureAwait(false);
-
-        GetDocumentSummaries? summariesRequest = new(documentIds);
-        summariesRequest = await _requestProcessor.ProcessAsync(
-            summariesRequest,
-            Metadata.CreateNew(summariesRequest, metadata, _timeProvider.GetLocalNow()),
-            cancellationToken).ConfigureAwait(false) as GetDocumentSummaries;
+        GetDocumentSummaries? summariesRequest = null;
+        if (documentIds.Any())
+        {
+            summariesRequest = new(documentIds);
+            summariesRequest = await _requestProcessor
+                .ProcessAsync(
+                    summariesRequest,
+                    Metadata.CreateNew(summariesRequest, metadata, _timeProvider.GetLocalNow()),
+                    cancellationToken)
+                .ConfigureAwait(false) as GetDocumentSummaries;
+        }
 
         return request with
         {

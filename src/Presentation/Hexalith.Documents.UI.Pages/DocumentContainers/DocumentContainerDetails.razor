@@ -1,20 +1,26 @@
 ﻿@page "/Documents/Add/DocumentContainer"
 @page "/Documents/DocumentContainer/{Id}"
+@using Hexalith.Documents.Requests.DocumentStorages
+@using Hexalith.Documents.UI.Components.DocumentStorages
+@using Hexalith.UI.Components.Pages
 @rendermode InteractiveAuto
 
 <HexEntityDetailsPage AddTitle="@Labels.AddTitle"
-                      EditTitle="@Labels.Title"
-                      EntityId="@Id"
-                      ViewModel="_data"
-                      IndexPath="/Documents/DocumentContainer"
-                      ValidationResult="_validationResult"
-                      OnSave="OnSave"
-                      OnLoadData="OnLoadData">
+EditTitle="@Labels.Title"
+EntityId="@Id"
+ViewModel="_data"
+IndexPath="/Documents/DocumentContainer"
+ValidationResult="_validationResult"
+OnSave="OnSave"
+OnLoadData="OnLoadData">
 
     @if (_data is not null)
     {
 
         <FluentGrid Style="width:100%">
+            <FluentGridItem md="12">
+                <DocumentStorageAutocomplete ReadOnly="@(!CreateMode)" MaximumSelectedOptions="1" @bind-SelectedOptions="_data.DocumentStorage" OnOptionsSearch="OnDocumentStorageSearch"  />
+            </FluentGridItem>
             <FluentGridItem md="12">
                 <FluentLabel Typo="Typography.PaneHeader">@Labels.Tags</FluentLabel>
             </FluentGridItem>
@@ -59,10 +65,12 @@
     public string? Id { get; set; }
 
     private ClaimsPrincipal? _user;
-    private DocumentContainerEditViewModel _data = new();
+    private DocumentContainerEditViewModel? _data;
     private string? _newTagKey;
     private string? _newTagValue;
     private bool _newTagUnique = false;
+
+    private bool CreateMode => string.IsNullOrWhiteSpace(_data?.Original.Id);
 
     private ValidationResult? _validationResult;
     private async Task OnLoadData()
@@ -89,81 +97,42 @@
         }
         await base.OnInitializedAsync();
     }
-
-    private async Task OnSave()
+    private async Task OnDocumentStorageSearch(OptionsSearchEventArgs<Option<string>> args)
     {
-        if (_data is null || _user is null)
+        if (_user is null)
         {
             return;
         }
-        if (!_data.HasChanges)
+        var result = await RequestService.SubmitAsync(_user, new GetDocumentStorageSummaries(0, 100, args.Text), CancellationToken.None);
+        if (result.Results is not null)
         {
-            return;
+            args.Items = result.Results.ToOptions(false);
         }
-        _validationResult = new DocumentContainerEditValidation().Validate(_data);
-        if (!_validationResult.IsValid)
-            return;
-        DocumentContainerCommand fileTypeCommand;
-        if (Id is null)
-        {
-            fileTypeCommand = new CreateDocumentContainer(
-                        _data.Id!,
-                        _data.DocumentStorageId,
-                        _data.Name,
-                        _data.Path,
-                        _data.Comments,
-                        null);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-            _data = new();
-            StateHasChanged();
-            return;
-        }
-        if (_data.DescriptionChanged)
-        {
-            fileTypeCommand = new ChangeDocumentContainerDescription(
-                        _data.Id!,
-                        _data.Name!,
-                        _data.Comments);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
-        {
-            fileTypeCommand = new DisableDocumentContainer(_data.Id);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
-        {
-            fileTypeCommand = new EnableDocumentContainer(_data.Id);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        // for each tag in _data.tags, add it if it does not exist
-        foreach (var tag in _data.Tags)
-        {
-            if (!_data.Original.Tags.Contains(tag))
-            {
-                fileTypeCommand = new AddDocumentContainerTag(_data.Id, tag.Key, tag.Value, tag.Unique);
-                await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-            }
-        }
-        // for each tag in _data.tags, remove it if it does not exist
-        foreach (var target in _data.Original.Tags)
-        {
-            if (!_data.Tags.Contains(target))
-            {
-                fileTypeCommand = new RemoveDocumentContainerTag(_data.Id, target.Key, target.Value);
-                await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-            }
-        }
-        if (Id is null)
-        {
-            _data = new();
-            _newTagKey = _newTagValue = null;
-            _newTagUnique = false;
-
-            StateHasChanged();
-        }
-
     }
+    private async Task<SaveResult> OnSave()
+    {
+        var result = _data.ValidateSave(_user, (d) =>
+        {
+            _validationResult = new DocumentContainerEditValidation().Validate(d);
+            if (_validationResult.IsValid)
+            {
+                return true;
+            }
+            return false;
+        });
+        if (result.Result == ExecuteSaveResult.Success)
+        {
+            await _data!.SaveAsync(_user!, CommandService, Id is null, CancellationToken.None);
+            if (Id is null)
+            {
+                _data = DocumentContainerEditViewModel.Empty;
+            }
+        }
+        StateHasChanged();
+        return result;
+    }
+
+
 
     private void AddTag()
     {

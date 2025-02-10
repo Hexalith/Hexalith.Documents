@@ -2,11 +2,14 @@
 
 using System.Security.Claims;
 
+using Hexalith.Application.Commands;
 using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
+using Hexalith.Documents.Commands.DocumentContainers;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentStorages;
+using Hexalith.UI.Components;
 using Hexalith.UI.Components.Helpers;
 
 using Microsoft.FluentUI.AspNetCore.Components;
@@ -14,7 +17,7 @@ using Microsoft.FluentUI.AspNetCore.Components;
 /// <summary>
 /// ViewModel for editing file types.
 /// </summary>
-public sealed class DocumentContainerEditViewModel : IIdDescription
+public sealed class DocumentContainerEditViewModel : IIdDescription, IEntityViewModel
 {
     private string _id = string.Empty;
 
@@ -151,5 +154,76 @@ public sealed class DocumentContainerEditViewModel : IIdDescription
             .GetDocumentStorageSummaryAsync(details.DocumentStorageId, user, cancellationToken)
             .ConfigureAwait(false);
         return new DocumentContainerEditViewModel(details, storage);
+    }
+
+    /// <summary>
+    /// Saves the document container asynchronously.
+    /// </summary>
+    /// <param name="user">The user making the request.</param>
+    /// <param name="commandService">The command service to use.</param>
+    /// <param name="create">A value indicating whether to create a new document container.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    internal async Task SaveAsync(ClaimsPrincipal user, ICommandService commandService, bool create, CancellationToken cancellationToken)
+    {
+        if (!HasChanges)
+        {
+            return;
+        }
+
+        DocumentContainerCommand command;
+        if (create)
+        {
+            command = new CreateDocumentContainer(
+                        Id!,
+                        DocumentStorageId,
+                        Name,
+                        Path,
+                        Comments,
+                        null);
+            await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
+            return;
+        }
+
+        if (DescriptionChanged)
+        {
+            command = new ChangeDocumentContainerDescription(
+                        Id!,
+                        Name!,
+                        Comments);
+            await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
+        }
+
+        if (Disabled != Original.Disabled && Disabled)
+        {
+            command = new DisableDocumentContainer(Id);
+            await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
+        }
+
+        if (Disabled != Original.Disabled && !Disabled)
+        {
+            command = new EnableDocumentContainer(Id);
+            await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
+        }
+
+        // for each tag in tags, add it if it does not exist
+        foreach (DocumentTag tag in Tags)
+        {
+            if (!Original.Tags.Contains(tag))
+            {
+                command = new AddDocumentContainerTag(Id, tag.Key, tag.Value, tag.Unique);
+                await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // for each tag in tags, remove it if it does not exist
+        foreach (DocumentTag target in Original.Tags)
+        {
+            if (!Tags.Contains(target))
+            {
+                command = new RemoveDocumentContainerTag(Id, target.Key, target.Value);
+                await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
+            }
+        }
     }
 }

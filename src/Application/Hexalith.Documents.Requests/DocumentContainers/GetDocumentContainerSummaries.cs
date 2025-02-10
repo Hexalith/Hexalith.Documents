@@ -44,11 +44,9 @@ public partial record GetDocumentContainerSummaries(
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentContainerSummaries"/> class with specified skip, take, and IDs values.
     /// </summary>
-    /// <param name="skip">The number of document container summaries to skip.</param>
-    /// <param name="take">The number of document container summaries to take.</param>
     /// <param name="ids">The list of document container summary IDs.</param>
-    public GetDocumentContainerSummaries(int skip, int take, IEnumerable<string> ids)
-        : this(skip, take, null, ids, Array.Empty<DocumentContainerSummaryViewModel>())
+    public GetDocumentContainerSummaries(IEnumerable<string> ids)
+        : this(0, 0, null, ids, Array.Empty<DocumentContainerSummaryViewModel>())
     {
     }
 
