@@ -47,8 +47,8 @@ public partial record GetDocumentStorageSummaries(
     /// <param name="skip">The number of document storage summaries to skip.</param>
     /// <param name="take">The number of document storage summaries to take.</param>
     /// <param name="ids">The list of document storage summary IDs.</param>
-    public GetDocumentStorageSummaries(int skip, int take, IEnumerable<string> ids)
-        : this(skip, take, null, ids, Array.Empty<DocumentStorageSummaryViewModel>())
+    public GetDocumentStorageSummaries(IEnumerable<string> ids)
+        : this(0, 0, null, ids, Array.Empty<DocumentStorageSummaryViewModel>())
     {
     }
 

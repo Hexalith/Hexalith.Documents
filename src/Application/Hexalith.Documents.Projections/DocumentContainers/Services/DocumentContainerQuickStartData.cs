@@ -15,7 +15,7 @@ public static class DocumentContainerQuickStartData
     /// <value>
     /// An enumerable collection of <see cref="CreateDocumentContainer"/> containing predefined document containers.
     /// </value>
-    public static IEnumerable<CreateDocumentContainer> Data => [JohnDoe, JeromePiquot];
+    public static IEnumerable<CreateDocumentContainer> Data => [Triage, JohnDoe, JeromePiquot];
 
     /// <summary>
     /// Gets the details for the Jérôme Piquot document container.
@@ -37,5 +37,16 @@ public static class DocumentContainerQuickStartData
         "John Doe Data",
         "john.doe@test.com",
         "John Doe default container for user files.",
+        null);
+
+    /// <summary>
+    /// Gets the details for the Excel document container.
+    /// </summary>
+    internal static CreateDocumentContainer Triage => new(
+        "Triage",
+        DocumentStorageQuickStartData.Documents.Id,
+        "Triage",
+        "Triage",
+        "Triage container for new documents.",
         null);
 }

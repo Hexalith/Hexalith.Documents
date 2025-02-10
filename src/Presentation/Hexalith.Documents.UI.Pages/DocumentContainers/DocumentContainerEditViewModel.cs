@@ -1,8 +1,15 @@
 ﻿namespace Hexalith.Documents.UI.Pages.DocumentContainers;
 
+using System.Security.Claims;
+
+using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
+using Hexalith.Documents.Requests.DocumentStorages;
+using Hexalith.UI.Components.Helpers;
+
+using Microsoft.FluentUI.AspNetCore.Components;
 
 /// <summary>
 /// ViewModel for editing file types.
@@ -15,7 +22,8 @@ public sealed class DocumentContainerEditViewModel : IIdDescription
     /// Initializes a new instance of the <see cref="DocumentContainerEditViewModel"/> class.
     /// </summary>
     /// <param name="details">The details of the file type.</param>
-    public DocumentContainerEditViewModel(DocumentContainerDetailsViewModel details)
+    /// <param name="storage">The document storage summary.</param>
+    public DocumentContainerEditViewModel(DocumentContainerDetailsViewModel details, DocumentStorageSummaryViewModel? storage)
     {
         ArgumentNullException.ThrowIfNull(details);
         Original = details;
@@ -23,27 +31,26 @@ public sealed class DocumentContainerEditViewModel : IIdDescription
         Path = details.Path;
         Comments = details.Comments;
         Disabled = details.Disabled;
-        DocumentStorageId = details.DocumentStorageId;
+        DocumentStorage = storage is null ? [] : [storage.ToOption(true)];
         Tags = [.. details.Tags];
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DocumentContainerEditViewModel"/> class.
+    /// Gets an empty file type.
     /// </summary>
-    public DocumentContainerEditViewModel()
-        : this(new DocumentContainerDetailsViewModel(
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        null,
-        null,
-        [],
-        [],
-        [],
-        false))
-    {
-    }
+    public static DocumentContainerEditViewModel Empty => new(
+        new DocumentContainerDetailsViewModel(
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            null,
+            null,
+            [],
+            [],
+            [],
+            false),
+        null);
 
     /// <summary>
     /// Gets or sets the description of the file type.
@@ -61,14 +68,20 @@ public sealed class DocumentContainerEditViewModel : IIdDescription
     public bool Disabled { get; set; }
 
     /// <summary>
+    /// Gets or sets the document storage options.
+    /// </summary>
+    public IEnumerable<Option<string>> DocumentStorage { get; set; }
+
+    /// <summary>
     /// Gets a value indicating whether the file to text converter has changed.
     /// </summary>
     public bool DocumentStorageChanged => DocumentStorageId != Original.DocumentStorageId;
 
     /// <summary>
-    /// Gets or sets the file to text converter.
+    /// Gets the document storage ID.
     /// </summary>
-    public string DocumentStorageId { get; set; }
+    /// <exception cref="InvalidOperationException">Thrown when the document storage ID is required but not available.</exception>
+    public string DocumentStorageId => DocumentStorage.FirstOrDefault()?.Value ?? throw new InvalidOperationException("Document storage ID is required.");
 
     /// <summary>
     /// Gets a value indicating whether there are changes in the file type details.
@@ -116,4 +129,27 @@ public sealed class DocumentContainerEditViewModel : IIdDescription
 
     /// <inheritdoc/>
     string IIdDescription.Description => Name;
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="DocumentContainerEditViewModel"/> class asynchronously.
+    /// </summary>
+    /// <param name="id">The ID of the document container.</param>
+    /// <param name="user">The user making the request.</param>
+    /// <param name="requestService">The request service to use.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the created <see cref="DocumentContainerEditViewModel"/> instance.</returns>
+    internal static async Task<DocumentContainerEditViewModel?> CreateAsync(string id, ClaimsPrincipal user, IRequestService requestService, CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        ArgumentException.ThrowIfNullOrWhiteSpace(user?.Identity?.Name, nameof(user));
+        ArgumentNullException.ThrowIfNull(requestService);
+
+        DocumentContainerDetailsViewModel details = await requestService
+            .GetDocumentContainerDetailsAsync(id, user, cancellationToken)
+            .ConfigureAwait(false);
+        DocumentStorageSummaryViewModel storage = await requestService
+            .GetDocumentStorageSummaryAsync(details.DocumentStorageId, user, cancellationToken)
+            .ConfigureAwait(false);
+        return new DocumentContainerEditViewModel(details, storage);
+    }
 }
