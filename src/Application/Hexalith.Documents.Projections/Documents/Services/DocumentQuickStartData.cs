@@ -24,7 +24,7 @@ public static class DocumentQuickStartData
         "JsonTest1",
         "test1.json",
         "Test JSON document",
-        new FileDescription("test1", "test 1", "test1.json", 556849L, "application/json"),
+        new FileDescription("test1.json", "test1.json", "Test 1.json", 556849L, "application/json"),
         "john.doe@test.com",
         DateTimeOffset.UtcNow,
         "Triage",

@@ -1,10 +1,10 @@
 ﻿<HexEntitySummaryGrid TGridItem="DocumentSummaryViewModel"
-Items="Items"
-ShowDisabledColumn="ShowDisabledColumn"
-OnDisabledChanged="OnDisabledChanged"
-EntityDetailsPath="@EntityDetailsPath">
-	<TemplateColumn TGridItem="DocumentSummaryViewModel">
-		<FluentAnchor Icon="@(new Icons.Regular.Size20.DrawerArrowDownload())" Href="@("documents/download/" + context.Id)" />
+					  Items="Items"
+					  ShowDisabledColumn="ShowDisabledColumn"
+					  OnDisabledChanged="OnDisabledChanged"
+					  EntityDetailsPath="@EntityDetailsPath">
+	<TemplateColumn Style="display: flex; align-items: center;" TGridItem="DocumentSummaryViewModel">
+		<FluentAnchor IconStart="@(new Icons.Regular.Size16.ArrowDownload())" Href="@("documents/download/" + context.Id)" />
 	</TemplateColumn>
 
 </HexEntitySummaryGrid>
