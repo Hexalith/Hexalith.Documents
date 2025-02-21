@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record GetDocumentInformationExtractionExports(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DocumentInformationExtractionImportExportViewModel> Results) : IChunkableRequest
+    [property: DataMember(Order = 3)] IEnumerable<DocumentInformationExtraction> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentInformationExtractionExports"/> class.
@@ -50,7 +50,7 @@ public partial record GetDocumentInformationExtractionExports(
     IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentInformationExtractionImportExportViewModel>)results };
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentInformationExtraction>)results };
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetDocumentInformationExtractionExports(Skip + Take, Take);

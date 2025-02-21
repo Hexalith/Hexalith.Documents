@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
+using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
@@ -16,7 +17,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record GetDocumentContainerExports(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DocumentContainerImportExportViewModel> Results) : IChunkableRequest
+    [property: DataMember(Order = 3)] IEnumerable<DocumentContainer> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentContainerExports"/> class.
@@ -50,7 +51,7 @@ public partial record GetDocumentContainerExports(
     IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentContainerImportExportViewModel>)results };
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentContainer>)results };
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetDocumentContainerExports(Skip + Take, Take);

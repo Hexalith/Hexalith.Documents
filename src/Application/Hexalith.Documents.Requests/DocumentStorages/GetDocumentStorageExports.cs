@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record GetDocumentStorageExports(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<DocumentStorageImportExportViewModel> Results) : IChunkableRequest
+    [property: DataMember(Order = 3)] IEnumerable<DocumentStorage> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentStorageExports"/> class.
@@ -50,7 +50,7 @@ public partial record GetDocumentStorageExports(
     IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentStorageImportExportViewModel>)results };
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentStorage>)results };
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetDocumentStorageExports(Skip + Take, Take);

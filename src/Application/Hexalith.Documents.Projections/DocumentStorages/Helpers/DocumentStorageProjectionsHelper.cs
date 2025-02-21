@@ -59,7 +59,7 @@ public static class DocumentStorageProjectionsHelper
         services.TryAddScoped<IRequestHandler<GetDocumentStorage>, GetDocumentStorageHandler>();
         services.TryAddScoped<IRequestHandler<GetDocumentStorageSummaries>, GetFilteredCollectionHandler<GetDocumentStorageSummaries, DocumentStorageSummaryViewModel>>();
         services.TryAddScoped<IRequestHandler<GetDocumentStorageDetails>, GetDocumentStorageDetailsHandler>();
-        services.TryAddScoped<IRequestHandler<GetDocumentStorageExports>, GetExportsRequestHandler<GetDocumentStorageExports, DocumentStorageImportExportViewModel, DocumentStorage>>();
+        services.TryAddScoped<IRequestHandler<GetDocumentStorageExports>, GetExportsRequestHandler<GetDocumentStorageExports, DocumentStorage>>();
         services.TryAddScoped<IRequestHandler<GetDocumentStorageIds>, GetAggregateIdsRequestHandler<GetDocumentStorageIds>>();
         return services;
     }

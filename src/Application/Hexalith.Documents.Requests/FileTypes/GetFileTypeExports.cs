@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerialization;
 public partial record GetFileTypeExports(
     [property: DataMember(Order = 1)] int Skip,
     [property: DataMember(Order = 2)] int Take,
-    [property: DataMember(Order = 3)] IEnumerable<FileTypeImportExportViewModel> Results) : IChunkableRequest
+    [property: DataMember(Order = 3)] IEnumerable<FileType> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetFileTypeExports"/> class with default values.
@@ -56,5 +56,5 @@ public partial record GetFileTypeExports(
     public IChunkableRequest CreateNextChunkRequest() => new GetFileTypeExports(Skip + Take, Take);
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<FileTypeImportExportViewModel>)results };
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<FileType>)results };
 }
