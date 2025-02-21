@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
+using Hexalith.Documents.Domain.DocumentInformationExtractions;
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
