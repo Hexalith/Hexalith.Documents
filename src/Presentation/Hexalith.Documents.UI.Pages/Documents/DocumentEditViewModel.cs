@@ -2,10 +2,10 @@
 
 using System.Collections.Generic;
 
-using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.Documents;
+using Hexalith.Domain.ValueObjects;
 using Hexalith.Extensions.Helpers;
 
 /// <summary>

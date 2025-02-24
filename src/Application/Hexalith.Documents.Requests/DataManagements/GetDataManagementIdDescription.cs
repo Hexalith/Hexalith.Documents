@@ -2,7 +2,7 @@ namespace Hexalith.Documents.Requests.DataManagements;
 
 using System.Runtime.Serialization;
 
-using Hexalith.Application.Services;
+using Hexalith.Domain.ValueObjects;
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>

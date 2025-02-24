@@ -4,11 +4,11 @@ using System.Security.Claims;
 
 using Hexalith.Application.Commands;
 using Hexalith.Application.Requests;
-using Hexalith.Application.Services;
 using Hexalith.Documents.Commands.DocumentContainers;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentStorages;
+using Hexalith.Domain.ValueObjects;
 using Hexalith.UI.Components;
 using Hexalith.UI.Components.Helpers;
 

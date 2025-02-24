@@ -2,7 +2,7 @@
 
 using System.Runtime.Serialization;
 
-using Hexalith.Application.Services;
+using Hexalith.Domain.ValueObjects;
 
 /// <summary>
 /// Represents the details of a document information extraction.

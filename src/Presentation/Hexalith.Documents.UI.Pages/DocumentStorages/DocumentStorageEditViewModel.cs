@@ -1,8 +1,8 @@
 ﻿namespace Hexalith.Documents.UI.Pages.DocumentStorages;
 
-using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentStorages;
+using Hexalith.Domain.ValueObjects;
 
 /// <summary>
 /// Represents a view model for editing document storage details.

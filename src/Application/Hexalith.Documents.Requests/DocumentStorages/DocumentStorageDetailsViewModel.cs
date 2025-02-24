@@ -2,8 +2,8 @@ namespace Hexalith.Documents.Requests.DocumentStorages;
 
 using System.Runtime.Serialization;
 
-using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Domain.ValueObjects;
 
 /// <summary>
 /// Represents the details of a document partition.

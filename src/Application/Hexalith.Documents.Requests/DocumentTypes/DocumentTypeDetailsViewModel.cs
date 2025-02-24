@@ -3,8 +3,8 @@ namespace Hexalith.Documents.Requests.DocumentTypes;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-using Hexalith.Application.Services;
 using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Domain.ValueObjects;
 
 /// <summary>
 /// Represents the details of a document type.

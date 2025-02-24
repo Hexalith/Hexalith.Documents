@@ -3,9 +3,9 @@
 using System.Security.Claims;
 
 using Hexalith.Application.Commands;
-using Hexalith.Application.Services;
 using Hexalith.Documents.Commands.FileTypes;
 using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Domain.ValueObjects;
 using Hexalith.UI.Components;
 
 /// <summary>
