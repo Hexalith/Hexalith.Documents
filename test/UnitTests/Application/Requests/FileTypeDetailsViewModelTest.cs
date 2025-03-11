@@ -8,6 +8,9 @@ using Hexalith.Documents.Requests.FileTypes;
 
 public class FileTypeDetailsViewModelTest
 {
+    private static readonly string[] _otherContentTypes = ["text/plain"];
+    private static readonly string[] _otherFileExtensions = [".txt"];
+
     [Fact]
     public void SerializeAndDeserializeShouldBeEquivalentToOriginal()
     {
@@ -15,9 +18,12 @@ public class FileTypeDetailsViewModelTest
         FileTypeDetailsViewModel model = new(
             "MD",
             "Markdown file",
+            "text/markdown",
+            _otherContentTypes,
+            ".md",
+            _otherFileExtensions,
             "Markdown format text file",
             "MarkdownCleaner",
-            [],
             true);
 
         // Act

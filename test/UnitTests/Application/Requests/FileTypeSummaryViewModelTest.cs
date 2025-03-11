@@ -15,6 +15,8 @@ public class FileTypeSummaryViewModelTest
         FileTypeSummaryViewModel model = new(
             "MD",
             "Markdown file",
+            "text/markdown",
+            ".md",
             true);
 
         // Act

@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using FluentAssertions;
 
 using Hexalith.Documents.Application.Services;
-using Hexalith.Documents.Servers.Configurations;
 using Hexalith.Documents.Servers.Services;
 
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 using Xunit;
 
@@ -30,8 +30,8 @@ public sealed class FileSystemStorageTests : IDisposable
     {
         _testPath = Path.Combine(Path.GetTempPath(), "FileSystemStorageTests", Guid.NewGuid().ToString());
         _ = Directory.CreateDirectory(_testPath);
-        IOptions<LocalStorageSettings> options = Options.Create(new LocalStorageSettings { Path = _testPath });
-        _storage = new FileSystemStorage(options);
+        ILogger<FileSystemStorage> logger = new NullLogger<FileSystemStorage>();
+        _storage = new FileSystemStorage(logger);
     }
 
     [Fact]
@@ -40,9 +40,10 @@ public sealed class FileSystemStorageTests : IDisposable
         // Arrange
         string path = "test/folder";
         string fileName = "testfile.txt";
+        string storageRootPath = "/test";
 
         // Act
-        await using IWritableFile file = await _storage.CreateFileAsync(path, fileName, CancellationToken.None);
+        await using IWritableFile file = await _storage.CreateFileAsync(storageRootPath, path, fileName, CancellationToken.None);
         file.Stream.Write(new ReadOnlySpan<byte>(System.Text.Encoding.UTF8.GetBytes("hello")));
 
         // Assert
@@ -62,7 +63,7 @@ public sealed class FileSystemStorageTests : IDisposable
         _ = await FluentActions
             .Awaiting(async () =>
             {
-                await using IWritableFile file = await _storage.CreateFileAsync("test", "file.txt", cts.Token);
+                await using IWritableFile file = await _storage.CreateFileAsync("/test", "test", "file.txt", cts.Token);
             })
             .Should()
             .ThrowAsync<OperationCanceledException>();
@@ -91,12 +92,13 @@ public sealed class FileSystemStorageTests : IDisposable
         // Arrange
         string path = Path.GetFullPath("C:/test");
         string fileName = "file.txt";
+        string storageRootPath = "/test";
 
         // Act & Assert
         _ = await FluentActions
             .Awaiting(async () =>
             {
-                await using IWritableFile file = await _storage.CreateFileAsync(path, fileName, CancellationToken.None);
+                await using IWritableFile file = await _storage.CreateFileAsync(storageRootPath, path, fileName, CancellationToken.None);
             })
             .Should()
             .ThrowAsync<ArgumentException>()
@@ -116,7 +118,7 @@ public sealed class FileSystemStorageTests : IDisposable
             await FluentActions
                 .Awaiting(async () =>
                 {
-                    await using IWritableFile file = await _storage.CreateFileAsync(path, fileName, CancellationToken.None);
+                    await using IWritableFile file = await _storage.CreateFileAsync("/test", path, fileName, CancellationToken.None);
                 })
                 .Should()
                 .ThrowAsync<ArgumentException>();
@@ -127,6 +129,7 @@ public sealed class FileSystemStorageTests : IDisposable
         // Arrange
         string path = "test";
         string fileName = "existing.txt";
+        string storageRootPath = "/test";
         string fullPath = Path.Combine(_testPath, path);
         _ = Directory.CreateDirectory(fullPath);
         await File.WriteAllTextAsync(Path.Combine(fullPath, fileName), string.Empty);
@@ -135,7 +138,7 @@ public sealed class FileSystemStorageTests : IDisposable
         _ = await FluentActions
             .Awaiting(async () =>
             {
-                await using IWritableFile file = await _storage.CreateFileAsync(path, fileName, CancellationToken.None);
+                await using IWritableFile file = await _storage.CreateFileAsync(storageRootPath, path, fileName, CancellationToken.None);
             })
             .Should()
             .ThrowAsync<InvalidOperationException>()
