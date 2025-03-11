@@ -133,7 +133,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
                 command.Id,
                 command.Id,
                 null,
-                [new FileDescription(command.Id, "JSON", fileName, fileName, size, "application/json")],
+                [new FileDescription(command.Id, "Json", fileName, fileName, size, "application/json")],
                 metadata.Context.UserId,
                 now,
                 container.Id,

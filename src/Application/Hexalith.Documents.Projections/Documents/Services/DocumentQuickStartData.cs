@@ -2,6 +2,7 @@ namespace Hexalith.Documents.Projections.Documents.Services;
 
 using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.Projections.FileTypes.Services;
 
 /// <summary>
 /// Provides demo document data for testing and demonstration purposes.
@@ -24,7 +25,7 @@ public static class DocumentQuickStartData
         "JsonTest1",
         "test1.json",
         "Test JSON document",
-        new FileDescription("test1.json", "test1.json", "Test 1.json", 556849L, "application/json"),
+        [new FileDescription("test1.json", FileTypeQuickStartData.Json.Id, "test1.json", "Test 1.json", 556849L, "application/json")],
         "john.doe@test.com",
         DateTimeOffset.UtcNow,
         "Triage",

@@ -96,7 +96,7 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// <summary>
     /// Gets the file description.
     /// </summary>
-    public FileDescription? File => Original.Files;
+    public IEnumerable<FileDescription> Files => Original.Files;
 
     /// <summary>
     /// Gets or sets the from contact ID.
