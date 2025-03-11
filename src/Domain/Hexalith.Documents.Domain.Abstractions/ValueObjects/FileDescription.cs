@@ -12,13 +12,8 @@ using System.Runtime.Serialization;
 /// <param name="ContentType">The content type of the file.</param>
 [DataContract]
 public record FileDescription(
-    [property:DataMember(Order = 1)]
-    string Id,
-    [property : DataMember(Order = 2)]
-    string Name,
-    [property : DataMember(Order = 3)]
-    string OriginalName,
-    [property:DataMember(Order = 4)]
-    long Size,
-    [property:DataMember(Order = 5)]
-    string ContentType);
+    [property: DataMember(Order = 1)] string Id,
+    [property: DataMember(Order = 2)] string Name,
+    [property: DataMember(Order = 3)] string OriginalName,
+    [property: DataMember(Order = 4)] long Size,
+    [property: DataMember(Order = 5)] string ContentType);
