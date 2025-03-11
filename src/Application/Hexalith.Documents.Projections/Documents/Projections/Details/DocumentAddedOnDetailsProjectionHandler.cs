@@ -33,7 +33,7 @@ public class DocumentAddedOnDetailsProjectionHandler(IProjectionFactory<Document
             baseEvent.DocumentTypeId,
             DocumentState.Create(baseEvent.CreatedOn, baseEvent.OwnerId),
             [new DocumentActor(baseEvent.OwnerId, DocumentActorRole.Owner)],
-            baseEvent.File,
+            baseEvent.Files,
             [],
             false));
     }

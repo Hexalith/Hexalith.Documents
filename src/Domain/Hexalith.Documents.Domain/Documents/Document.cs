@@ -19,7 +19,7 @@ using Hexalith.Domain.Events;
 /// <param name="ParentDocumentId">The ID of the parent document.</param>
 /// <param name="State">The state of the document.</param>
 /// <param name="Actors">The actors of the document.</param>
-/// <param name="File">The file of the document.</param>
+/// <param name="Files">The file of the document.</param>
 /// <param name="Tags">The tags of the document.</param>
 /// <param name="Disabled">Indicates whether the document is disabled.</param>
 [DataContract]
@@ -30,7 +30,7 @@ public record Document(
     [property: DataMember(Order = 4)] string? ParentDocumentId,
     [property: DataMember(Order = 5)] DocumentState State,
     [property: DataMember(Order = 6)] IEnumerable<DocumentActor> Actors,
-    [property: DataMember(Order = 7)] FileDescription? File,
+    [property: DataMember(Order = 7)] IEnumerable<FileDescription> Files,
     [property: DataMember(Order = 8)] IEnumerable<DocumentTag> Tags,
     [property: DataMember(Order = 9)] bool Disabled) : IDomainAggregate
 {
@@ -50,7 +50,7 @@ public record Document(
               null,
               DocumentState.Create(DateTimeOffset.MinValue, string.Empty),
               [],
-              new FileDescription(string.Empty, string.Empty, string.Empty, 0L, string.Empty),
+              [],
               [],
               false)
     {
@@ -74,7 +74,7 @@ public record Document(
               null,
               DocumentState.Create(DateTimeOffset.MinValue, string.Empty),
               [new DocumentActor(added.OwnerId, DocumentActorRole.Owner)],
-              added.File,
+              added.Files,
               [],
               false)
     {

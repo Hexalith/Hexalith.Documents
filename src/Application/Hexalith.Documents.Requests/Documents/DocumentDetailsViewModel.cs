@@ -18,7 +18,7 @@ public sealed record DocumentDetailsViewModel(
     [property: DataMember(Order = 4)] string? ParentDocumentId,
     [property: DataMember(Order = 5)] DocumentState State,
     [property: DataMember(Order = 6)] IEnumerable<DocumentActor> Actors,
-    [property: DataMember(Order = 7)] FileDescription? File,
+    [property: DataMember(Order = 7)] IEnumerable<FileDescription> Files,
     [property: DataMember(Order = 8)] IEnumerable<DocumentTag> Tags,
     [property: DataMember(Order = 9)] bool Disabled) : IIdDescription
 {

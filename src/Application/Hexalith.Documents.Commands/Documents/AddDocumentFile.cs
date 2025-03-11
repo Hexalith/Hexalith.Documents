@@ -14,9 +14,9 @@ using Hexalith.PolymorphicSerialization;
 [PolymorphicSerialization]
 public partial record UploadDocumentFile(
     string Id,
-    [property: DataMember(Order = 2)] string FileTypeId,
-    [property: DataMember(Order = 3)] string Name,
-    [property: DataMember(Order = 2)] string ContentType,
+    [property: DataMember(Order = 1)] string FileTypeId,
+    [property: DataMember(Order = 2)] string Name,
+    [property: DataMember(Order = 3)] string ContentType,
     [property: DataMember(Order = 4)] string Content)
     : DocumentCommand(Id)
 {

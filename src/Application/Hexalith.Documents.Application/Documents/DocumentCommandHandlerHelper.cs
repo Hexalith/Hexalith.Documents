@@ -24,7 +24,7 @@ public static class DocumentCommandHandlerHelper
                 c.Id,
                 c.Name,
                 c.Comments,
-                c.File,
+                c.Files,
                 c.OwnerId,
                 c.CreatedOn,
                 c.DocumentContainerId,

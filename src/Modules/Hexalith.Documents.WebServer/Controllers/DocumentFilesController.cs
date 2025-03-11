@@ -65,7 +65,7 @@ public class DocumentFilesController : ControllerBase
             return NotFound("Document not found.");
         }
 
-        if (document.File == null)
+        if (document.Files == null)
         {
             return NotFound("Document does not contain any files.");
         }
@@ -103,10 +103,10 @@ public class DocumentFilesController : ControllerBase
                 storage.StorageType,
                 storage.ConnectionString,
                 container.Path,
-                document.File.Name,
+                document.Files.Name,
                 CancellationToken.None)
             .ConfigureAwait(false);
 
-        return File(file.Stream, document.File.ContentType, document.File.Name);
+        return File(file.Stream, document.Files.ContentType, document.Files.Name);
     }
 }

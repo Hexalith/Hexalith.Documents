@@ -41,7 +41,7 @@ public partial class DocumentDetailsSnapshotHandler(
             document.ParentDocumentId,
             document.State,
             document.Actors,
-            document.File,
+            document.Files,
             document.Tags,
             document.Disabled);
         if (currentValue is not null && currentValue == newValue)
