@@ -1,6 +1,7 @@
 namespace Hexalith.Documents.Projections.FileTypes.Services;
 
 using Hexalith.Documents.Commands.FileTypes;
+using Hexalith.Documents.Domain.ValueObjects;
 
 /// <summary>
 /// Provides demo file type data for testing and demonstration purposes.
@@ -14,17 +15,17 @@ public static class FileTypeQuickStartData
     /// <value>
     /// An enumerable collection of <see cref="AddFileType"/> containing predefined file types.
     /// </value>
-    public static IEnumerable<AddFileType> Data => new[] { Excel, ExcelOld, HTML, Markdown, Pdf, PowerPoint, Text, Word, Json, Xml, Csv };
+    public static IEnumerable<AddFileType> Data => [Excel, Html, Markdown, Pdf, PowerPoint, Text, Word, Json, Xml, Csv];
 
     /// <summary>
     /// Gets the details for the CSV file type.
     /// </summary>
     internal static AddFileType Csv => new(
-        "CSV",
+        FileContentType.Csv.Id,
         "CSV file",
-        "text/csv",
+        FileContentType.Csv.Type,
         [],
-        "csv",
+        FileContentType.Csv.Extension,
         [],
         null,
         null);
@@ -33,38 +34,25 @@ public static class FileTypeQuickStartData
     /// Gets the details for the Excel file type.
     /// </summary>
     internal static AddFileType Excel => new(
-        "Excel",
+        FileContentType.Excel.Id,
         "Microsoft Excel",
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        FileContentType.Excel.Type,
         [],
-        "xlsx",
+        FileContentType.Excel.Extension,
         [],
         "Type for Microsoft Excel files",
         null);
 
     /// <summary>
-    /// Gets the details for the old Excel file type.
-    /// </summary>
-    internal static AddFileType ExcelOld => new(
-        "ExcelOld",
-        "Microsoft Excel",
-        "application/vnd.ms-excel",
-        [],
-        "xls",
-        [],
-        "Type for old Microsoft Excel files",
-        null);
-
-    /// <summary>
     /// Gets the details for the HTML file type.
     /// </summary>
-    internal static AddFileType HTML => new(
-        "Html",
+    internal static AddFileType Html => new(
+        FileContentType.Html.Id,
         "HTML file",
-        "text/html",
-        ["application/html"],
-        "html",
-        ["htm"],
+        FileContentType.Html.Type,
+        [],
+        FileContentType.Html.Extension,
+        [],
         "Type for HTML files",
         null);
 
@@ -72,11 +60,11 @@ public static class FileTypeQuickStartData
     /// Gets the details for the Json file type.
     /// </summary>
     internal static AddFileType Json => new(
-        "Json",
+        FileContentType.Json.Id,
         "Json file",
-        "application/json",
+        FileContentType.Json.Type,
         [],
-        "json",
+        FileContentType.Json.Extension,
         [],
         null,
         null);
@@ -85,11 +73,11 @@ public static class FileTypeQuickStartData
     /// Gets the details for the Markdown file type.
     /// </summary>
     internal static AddFileType Markdown => new(
-        "Markdown",
+        FileContentType.Markdown.Id,
         "Markdown file",
-        "text/markdown",
+        FileContentType.Markdown.Type,
         [],
-        "md",
+        FileContentType.Markdown.Extension,
         [],
         "Type for Markdown files",
         null);
@@ -98,11 +86,11 @@ public static class FileTypeQuickStartData
     /// Gets the details for the PDF file type.
     /// </summary>
     internal static AddFileType Pdf => new(
-        "Pdf",
+        FileContentType.Pdf.Id,
         "Adobe PDF",
-        "application/pdf",
+        FileContentType.Pdf.Type,
         [],
-        "pdf",
+        FileContentType.Pdf.Extension,
         [],
         "Type for Adobe PDF files",
         null);
@@ -111,11 +99,11 @@ public static class FileTypeQuickStartData
     /// Gets the details for the PowerPoint file type.
     /// </summary>
     internal static AddFileType PowerPoint => new(
-        "PowerPoint",
+        FileContentType.PowerPoint.Id,
         "Microsoft PowerPoint",
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        FileContentType.PowerPoint.Type,
         [],
-        "pptx",
+        FileContentType.PowerPoint.Extension,
         [],
         "Type for Microsoft PowerPoint files",
         null);
@@ -124,12 +112,12 @@ public static class FileTypeQuickStartData
     /// Gets the details for the Text file type.
     /// </summary>
     internal static AddFileType Text => new(
-        "Text",
+        FileContentType.Text.Id,
         "Text file",
-        "text/plain",
+        FileContentType.Text.Type,
         [],
-        "txt",
-        ["text"],
+        FileContentType.Text.Extension,
+        [],
         "Type for text files",
         null);
 
@@ -137,11 +125,11 @@ public static class FileTypeQuickStartData
     /// Gets the details for the Word file type.
     /// </summary>
     internal static AddFileType Word => new(
-        "Word",
+        FileContentType.Word.Id,
         "Microsoft Word",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        FileContentType.Word.Type,
         [],
-        "docx",
+        FileContentType.Word.Extension,
         [],
         "Type for Microsoft Word files",
         null);
@@ -150,11 +138,11 @@ public static class FileTypeQuickStartData
     /// Gets the details for the XML file type.
     /// </summary>
     internal static AddFileType Xml => new(
-        "Xml",
+        FileContentType.Xml.Id,
         "Xml file",
-        "application/xml",
+        FileContentType.Xml.Type,
         [],
-        "xml",
+        FileContentType.Xml.Extension,
         [],
         "Type for XML files",
         null);

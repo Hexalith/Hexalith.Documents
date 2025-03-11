@@ -132,7 +132,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                 command.Id,
                 command.Id,
                 null,
-                [new FileDescription(command.Id, "Json", fileName, fileName, size, "application/json")],
+                [new FileDescription(command.Id, FileContentType.Json.Id, fileName, fileName, size, "application/json")],
                 metadata.Context.UserId,
                 now,
                 container.Id,

@@ -1,6 +1,7 @@
 ﻿namespace Hexalith.Documents.Projections.DocumentTypes.Services;
 
 using Hexalith.Documents.Commands.DocumentTypes;
+using Hexalith.Documents.Domain.ValueObjects;
 
 /// <summary>
 /// Provides quick start data for document types.
@@ -26,7 +27,7 @@ public static class DocumentTypeQuickStartData
         "Export data file",
         "File containing exported data",
         [],
-        ["Json"]);
+        [FileContentType.Json.Id]);
 
     /// <summary>
     /// Gets the import document type.
@@ -39,7 +40,7 @@ public static class DocumentTypeQuickStartData
         "Import data file",
         "File containing data to import",
         [],
-        ["Json"]);
+        [FileContentType.Json.Id]);
 
     /// <summary>
     /// Gets the quote document type.
