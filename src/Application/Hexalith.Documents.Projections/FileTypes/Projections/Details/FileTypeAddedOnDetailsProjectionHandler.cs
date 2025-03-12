@@ -25,7 +25,6 @@ public class FileTypeAddedOnDetailsProjectionHandler(IProjectionFactory<FileType
             baseEvent.ContentType,
             baseEvent.OtherContentTypes,
             baseEvent.FileExtension,
-            baseEvent.OtherFileExtensions,
             baseEvent.Description,
             baseEvent.FileToTextConverter,
             false));

@@ -29,7 +29,6 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
         FileExtension = details.FileExtension;
         FileToTextConverter = details.FileToTextConverter;
         OtherContentTypes = [.. details.OtherContentTypes];
-        OtherFileExtensions = [.. details.OtherFileExtensions];
     }
 
     /// <summary>
@@ -42,7 +41,6 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
             string.Empty,
             [],
             string.Empty,
-            [],
             null,
             null,
             false))
@@ -92,7 +90,6 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
         DescriptionChanged ||
         FileToTextConverterChanged ||
         OtherContentTypesChanged ||
-        OtherFileExtensionChanged ||
         Disabled != Original.Disabled;
 
     /// <summary>
@@ -120,16 +117,6 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
     /// </summary>
     public bool OtherContentTypesChanged => !OtherContentTypes.SequenceEqual(Original.OtherContentTypes);
 
-    /// <summary>
-    /// Gets a value indicating whether the targets have changed.
-    /// </summary>
-    public bool OtherFileExtensionChanged => !OtherFileExtensions.SequenceEqual(Original.OtherFileExtensions);
-
-    /// <summary>
-    /// Gets or sets the file extensions associated with the file type.
-    /// </summary>
-    public ICollection<string> OtherFileExtensions { get; set; }
-
     /// <inheritdoc/>
     string IIdDescription.Description => Name;
 
@@ -152,7 +139,6 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
                         ContentType,
                         OtherContentTypes,
                         FileExtension,
-                        OtherFileExtensions,
                         Comments,
                         FileToTextConverter);
             await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
@@ -216,26 +202,6 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
             if (!OtherContentTypes.Contains(target))
             {
                 fileTypeCommand = new RemoveFileTypeOtherContentType(Id, target);
-                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
-            }
-        }
-
-        // for each file extension in other file extensions, add it if it does not exist
-        foreach (string target in OtherFileExtensions)
-        {
-            if (!Original.OtherFileExtensions.Contains(target))
-            {
-                fileTypeCommand = new AddFileTypeOtherFileExtension(Id, target);
-                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
-            }
-        }
-
-        // for each file extension in Original.OtherFileExtensions, remove it if it does not exist
-        foreach (string target in Original.OtherFileExtensions)
-        {
-            if (!OtherFileExtensions.Contains(target))
-            {
-                fileTypeCommand = new RemoveFileTypeOtherFileExtension(Id, target);
                 await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
             }
         }

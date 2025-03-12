@@ -131,5 +131,14 @@ namespace Hexalith.Documents.UI.Pages.Resources {
                 return ResourceManager.GetString("UploadTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag files here you wish to upload or browse for them by clicking in this zone..
+        /// </summary>
+        internal static string UploadZoneMessage {
+            get {
+                return ResourceManager.GetString("UploadZoneMessage", resourceCulture);
+            }
+        }
     }
 }

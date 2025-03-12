@@ -141,4 +141,7 @@
   <data name="UploadTitle" xml:space="preserve">
     <value>Téléverser</value>
   </data>
+  <data name="UploadZoneMessage" xml:space="preserve">
+    <value>Glissez les fichiers sur cette zone pour les téléverser ou clickez ici pour ouvrir l'explorateur de fichiers.</value>
+  </data>
 </root>

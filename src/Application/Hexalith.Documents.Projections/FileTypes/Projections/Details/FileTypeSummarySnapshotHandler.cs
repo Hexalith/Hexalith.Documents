@@ -40,7 +40,6 @@ public partial class FileTypeDetailsSnapshotHandler(
             fileType.ContentType,
             fileType.OtherContentTypes,
             fileType.FileExtension,
-            fileType.OtherFileExtensions,
             fileType.Comments,
             fileType.FileToTextConverter,
             fileType.Disabled);

@@ -48,8 +48,6 @@ public static class FileTypeProjectionsHelper
             .AddScoped<IProjectionUpdateHandler<FileTypeDisabled>, FileTypeDisabledOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeEnabled>, FileTypeEnabledOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeFileToTextConverterChanged>, FileTypeFileToTextConverterChangedOnDetailsProjectionHandler>()
-            .AddScoped<IProjectionUpdateHandler<FileTypeOtherFileExtensionAdded>, FileTypeOtherFileExtensionAddedOnDetailsProjectionHandler>()
-            .AddScoped<IProjectionUpdateHandler<FileTypeOtherFileExtensionRemoved>, FileTypeOtherFileExtensionRemovedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeOtherContentTypeAdded>, FileTypeOtherContentTypeAddedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<FileTypeOtherContentTypeRemoved>, FileTypeOtherContentTypeRemovedOnDetailsProjectionHandler>();
 

@@ -26,7 +26,6 @@ public static class FileTypeQuickStartData
         FileContentType.Csv.Type,
         [],
         FileContentType.Csv.Extension,
-        [],
         null,
         null);
 
@@ -39,7 +38,6 @@ public static class FileTypeQuickStartData
         FileContentType.Excel.Type,
         [],
         FileContentType.Excel.Extension,
-        [],
         "Type for Microsoft Excel files",
         null);
 
@@ -52,7 +50,6 @@ public static class FileTypeQuickStartData
         FileContentType.Html.Type,
         [],
         FileContentType.Html.Extension,
-        [],
         "Type for HTML files",
         null);
 
@@ -65,7 +62,6 @@ public static class FileTypeQuickStartData
         FileContentType.Json.Type,
         [],
         FileContentType.Json.Extension,
-        [],
         null,
         null);
 
@@ -78,7 +74,6 @@ public static class FileTypeQuickStartData
         FileContentType.Markdown.Type,
         [],
         FileContentType.Markdown.Extension,
-        [],
         "Type for Markdown files",
         null);
 
@@ -91,7 +86,6 @@ public static class FileTypeQuickStartData
         FileContentType.Pdf.Type,
         [],
         FileContentType.Pdf.Extension,
-        [],
         "Type for Adobe PDF files",
         null);
 
@@ -104,7 +98,6 @@ public static class FileTypeQuickStartData
         FileContentType.PowerPoint.Type,
         [],
         FileContentType.PowerPoint.Extension,
-        [],
         "Type for Microsoft PowerPoint files",
         null);
 
@@ -117,7 +110,6 @@ public static class FileTypeQuickStartData
         FileContentType.Text.Type,
         [],
         FileContentType.Text.Extension,
-        [],
         "Type for text files",
         null);
 
@@ -130,7 +122,6 @@ public static class FileTypeQuickStartData
         FileContentType.Word.Type,
         [],
         FileContentType.Word.Extension,
-        [],
         "Type for Microsoft Word files",
         null);
 
@@ -143,7 +134,6 @@ public static class FileTypeQuickStartData
         FileContentType.Xml.Type,
         [],
         FileContentType.Xml.Extension,
-        [],
         "Type for XML files",
         null);
 }

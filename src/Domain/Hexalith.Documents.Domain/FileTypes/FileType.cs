@@ -23,13 +23,12 @@ using Hexalith.Domain.Aggregates;
 public record FileType(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
-    [property: DataMember(Order = 5)] string ContentType,
-    [property: DataMember(Order = 6)] IEnumerable<string> OtherContentTypes,
+    [property: DataMember(Order = 3)] string ContentType,
+    [property: DataMember(Order = 4)] IEnumerable<string> OtherContentTypes,
     [property: DataMember(Order = 5)] string FileExtension,
-    [property: DataMember(Order = 6)] IEnumerable<string> OtherFileExtensions,
-    [property: DataMember(Order = 3)] string? Comments,
-    [property: DataMember(Order = 4)] string? FileToTextConverter,
-    [property: DataMember(Order = 7)] bool Disabled) : IDomainAggregate
+    [property: DataMember(Order = 6)] string? Comments,
+    [property: DataMember(Order = 7)] string? FileToTextConverter,
+    [property: DataMember(Order = 8)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="FileType"/> class.
@@ -41,7 +40,6 @@ public record FileType(
               string.Empty,
               [],
               string.Empty,
-              [],
               null,
               null,
               false)
@@ -60,7 +58,6 @@ public record FileType(
               added.ContentType,
               added.OtherContentTypes,
               added.FileExtension,
-              added.OtherFileExtensions,
               added.Description,
               added.FileToTextConverter,
               false)
@@ -92,8 +89,6 @@ public record FileType(
         {
             FileTypeOtherContentTypeAdded e => ApplyEvent(e),
             FileTypeOtherContentTypeRemoved e => ApplyEvent(e),
-            FileTypeOtherFileExtensionAdded e => ApplyEvent(e),
-            FileTypeOtherFileExtensionRemoved e => ApplyEvent(e),
             FileTypeAdded e => ApplyEvent(e),
             FileTypeDescriptionChanged e => ApplyEvent(e),
             FileTypeContentTypeChanged e => ApplyEvent(e),
@@ -193,31 +188,5 @@ public record FileType(
         return currentTargets.Contains(e.OtherContentType)
             ? ApplyResult.Success(this with { OtherContentTypes = currentTargets.Where(t => t != e.OtherContentType) }, [e])
             : ApplyResult.Error(this, "The other content type is not present in the file type.");
-    }
-
-    /// <summary>
-    /// Applies a <see cref="FileTypeOtherFileExtensionAdded"/> event to the aggregate.
-    /// </summary>
-    /// <param name="e">The <see cref="FileTypeOtherFileExtensionAdded"/> event to apply.</param>
-    /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeOtherFileExtensionAdded e)
-    {
-        List<string> currentTargets = [.. OtherFileExtensions];
-        return !currentTargets.Contains(e.OtherFileExtension)
-            ? ApplyResult.Success(this with { OtherFileExtensions = currentTargets.Concat([e.OtherFileExtension]) }, [e])
-            : ApplyResult.Error(this, "The other file extension is already added to the file type.");
-    }
-
-    /// <summary>
-    /// Applies a <see cref="FileTypeOtherFileExtensionRemoved"/> event to the aggregate.
-    /// </summary>
-    /// <param name="e">The <see cref="FileTypeOtherFileExtensionRemoved"/> event to apply.</param>
-    /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(FileTypeOtherFileExtensionRemoved e)
-    {
-        List<string> currentTargets = [.. OtherFileExtensions];
-        return currentTargets.Contains(e.OtherFileExtension)
-            ? ApplyResult.Success(this with { OtherFileExtensions = currentTargets.Where(t => t != e.OtherFileExtension) }, [e])
-            : ApplyResult.Error(this, "The other file extension is not present in the file type.");
     }
 }

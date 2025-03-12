@@ -20,7 +20,6 @@ public partial record AddFileType(
     [property: DataMember(Order = 3)] string ContentType,
     [property: DataMember(Order = 4)] IEnumerable<string> OtherContentTypes,
     [property: DataMember(Order = 5)] string FileExtension,
-    [property: DataMember(Order = 6)] IEnumerable<string> OtherFileExtensions,
     [property: DataMember(Order = 7)] string? Comments,
     [property: DataMember(Order = 8)] string? FileToTextConverter)
     : FileTypeCommand(Id)

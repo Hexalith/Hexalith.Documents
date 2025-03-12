@@ -25,7 +25,6 @@ public static class FileTypeCommandHandlerHelper
                 c.ContentType,
                 c.OtherContentTypes,
                 c.FileExtension,
-                c.OtherFileExtensions,
                 c.Comments,
                 c.FileToTextConverter),
                 ev => new FileType((FileTypeAdded)ev))
@@ -41,12 +40,6 @@ public static class FileTypeCommandHandlerHelper
             .TryAddSimpleCommandHandler<ChangeFileTypeFileExtension>(c => new FileTypeFileExtensionChanged(
                 c.Id,
                 c.FileExtension))
-            .TryAddSimpleCommandHandler<AddFileTypeOtherFileExtension>(c => new FileTypeOtherFileExtensionAdded(
-                c.Id,
-                c.OtherFileExtension))
-            .TryAddSimpleCommandHandler<RemoveFileTypeOtherFileExtension>(c => new FileTypeOtherContentTypeRemoved(
-                c.Id,
-                c.OtherFileExtension))
             .TryAddSimpleCommandHandler<EnableFileType>(c => new FileTypeEnabled(c.Id))
             .TryAddSimpleCommandHandler<DisableFileType>(c => new FileTypeDisabled(c.Id))
             .TryAddSimpleCommandHandler<ChangeFileTypeDescription>(c => new FileTypeDescriptionChanged(
