@@ -51,16 +51,16 @@
 
   <PropertyGroup>
     <AspireVersion>9.1.0</AspireVersion>
-    <CoverletCollectorVersion>6.0.3</CoverletCollectorVersion>
+    <CoverletCollectorVersion>6.0.4</CoverletCollectorVersion>
     <FluentAssertionsVersion>6.12.0</FluentAssertionsVersion>
     <GitHubActionsTestLoggerVersion>2.4.1</GitHubActionsTestLoggerVersion>
     <GoogleApiVersion>5.4.3</GoogleApiVersion>
-    <MicrosoftNETTestSdkVersion>17.12.0</MicrosoftNETTestSdkVersion>
+    <MicrosoftNETTestSdkVersion>17.13.0</MicrosoftNETTestSdkVersion>
     <MicrosoftVisualStudioThreadingAnalyzersVersion>17.13.2</MicrosoftVisualStudioThreadingAnalyzersVersion>
     <MoqVersion>4.20.72</MoqVersion>
     <MoqContribHttpClientVersion>1.4.0</MoqContribHttpClientVersion>
     <StyleCopAnalyzersVersion>1.2.0-beta.556</StyleCopAnalyzersVersion>
-    <XUnitRunnerVisualStudioVersion>3.0.1</XUnitRunnerVisualStudioVersion>
+    <XUnitRunnerVisualStudioVersion>3.0.2</XUnitRunnerVisualStudioVersion>
     <XUnitVersion>2.9.3</XUnitVersion>
   </PropertyGroup>
 
