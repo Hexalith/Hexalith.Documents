@@ -14,6 +14,7 @@ using Hexalith.Domain.ValueObjects;
 public sealed record DocumentSummaryViewModel(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string Name,
+    [property: DataMember(Order = 2)] string DocumentContainerId,
     [property: DataMember(Order = 3)] long Size,
     [property: DataMember(Order = 4)] bool Disabled) : IIdDescription
 {

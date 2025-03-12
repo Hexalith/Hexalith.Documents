@@ -48,7 +48,7 @@ public sealed class DocumentEditViewModel : IIdDescription
             string.Empty,
             DocumentState.Create(DateTimeOffset.MinValue, string.Empty),
             [],
-            null,
+            [],
             [],
             false))
     {

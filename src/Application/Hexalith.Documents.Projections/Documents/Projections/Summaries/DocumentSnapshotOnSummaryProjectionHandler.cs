@@ -34,7 +34,8 @@ public partial class DocumentSnapshotOnSummaryProjectionHandler(IProjectionFacto
         Document document = baseEvent.GetAggregate<Document>();
         DocumentSummaryViewModel newValue = new(
             document.Id,
-            string.Join(", ", document.Files),
+            document.Description.Name,
+            document.Description.DocumentContainerId ?? string.Empty,
             document.Files.Sum(p => p.Size),
             document.Disabled);
         if (currentValue is not null && currentValue == newValue)

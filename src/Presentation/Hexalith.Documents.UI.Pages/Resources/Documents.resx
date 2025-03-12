@@ -138,4 +138,7 @@
   <data name="DocumentsInContainer" xml:space="preserve">
     <value>Documents in {0}</value>
   </data>
+  <data name="UploadTitle" xml:space="preserve">
+    <value>Upload</value>
+  </data>
 </root>

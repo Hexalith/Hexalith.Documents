@@ -19,6 +19,11 @@ public class DocumentAddedOnSummaryProjectionHandler(IProjectionFactory<Document
     protected override Task<DocumentSummaryViewModel?> ApplyEventAsync([NotNull] DocumentAdded baseEvent, DocumentSummaryViewModel? summary, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        return Task.FromResult<DocumentSummaryViewModel?>(new DocumentSummaryViewModel(baseEvent.Id, baseEvent.Name, baseEvent.Files.Sum(p => p.Size), false));
+        return Task.FromResult<DocumentSummaryViewModel?>(new DocumentSummaryViewModel(
+            baseEvent.Id,
+            baseEvent.Name,
+            baseEvent.DocumentContainerId,
+            baseEvent.Files.Sum(p => p.Size),
+            false));
     }
 }

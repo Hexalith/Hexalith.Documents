@@ -122,5 +122,14 @@ namespace Hexalith.Documents.UI.Pages.Resources {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        internal static string UploadTitle {
+            get {
+                return ResourceManager.GetString("UploadTitle", resourceCulture);
+            }
+        }
     }
 }
