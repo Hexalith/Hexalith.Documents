@@ -1,12 +1,20 @@
 ﻿namespace Hexalith.Documents.UI.Pages.Documents;
 
 using System.Collections.Generic;
+using System.Security.Claims;
 
+using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.Documents;
+using Hexalith.Documents.Requests.DocumentTypes;
+using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Domain.ValueObjects;
 using Hexalith.Extensions.Helpers;
+using Hexalith.UI.Components.Helpers;
+
+using Microsoft.FluentUI.AspNetCore.Components;
 
 /// <summary>
 /// ViewModel for editing document information extraction details.
@@ -17,17 +25,26 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// Initializes a new instance of the <see cref="DocumentEditViewModel"/> class.
     /// </summary>
     /// <param name="details">The details of the document information extraction.</param>
+    /// <param name="container">The document container.</param>
+    /// <param name="parent">The parent document.</param>
+    /// <param name="documentType">The document type.</param>
+    /// <param name="fileTypes">The file types.</param>
     /// <exception cref="ArgumentNullException">Thrown when details is null.</exception>
-    public DocumentEditViewModel(DocumentDetailsViewModel details)
+    public DocumentEditViewModel(
+        DocumentDetailsViewModel details,
+        DocumentContainerSummaryViewModel? container,
+        DocumentSummaryViewModel? parent,
+        DocumentTypeDetailsViewModel? documentType,
+        IEnumerable<FileTypeSummaryViewModel> fileTypes)
     {
         ArgumentNullException.ThrowIfNull(details);
         Id = details.Id;
         Name = details.Description.Name;
         Comments = details.Description.Comments;
-        DocumentTypeId = details.Description.DocumentTypeId;
-        DocumentContainerId = details.Description.DocumentContainerId;
+        DocumentType = documentType is null ? [] : [documentType.ToOption(true)];
+        DocumentContainer = container is null ? [] : [container.ToOption(true)];
+        ParentDocument = parent is null ? [] : [parent.ToOption(true)];
         Summary = details.Description.Summary;
-        ParentDocumentId = details.ParentDocumentId;
         FromContactId = details.Routing?.FromContactId;
         ToContactIds = details.Routing?.ToContactIds;
         CopyToContactIds = details.Routing?.CopyToContactIds;
@@ -35,22 +52,28 @@ public sealed class DocumentEditViewModel : IIdDescription
         Tags = details.Tags;
         Disabled = details.Disabled;
         Original = details;
+        FileTypes = fileTypes.Select(x => x.ContentType);
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentEditViewModel"/> class.
     /// </summary>
     public DocumentEditViewModel()
-        : this(new DocumentDetailsViewModel(
-            UniqueIdHelper.GenerateUniqueStringId(),
-            new DocumentDescription(string.Empty, null, null, null, null),
+        : this(
+            new DocumentDetailsViewModel(
+                UniqueIdHelper.GenerateUniqueStringId(),
+                new DocumentDescription(string.Empty, null, null, null, null),
+                null,
+                string.Empty,
+                DocumentState.Create(DateTimeOffset.MinValue, string.Empty),
+                [],
+                [],
+                [],
+                false),
             null,
-            string.Empty,
-            DocumentState.Create(DateTimeOffset.MinValue, string.Empty),
-            [],
-            [],
-            [],
-            false))
+            null,
+            null,
+            [])
     {
     }
 
@@ -84,19 +107,34 @@ public sealed class DocumentEditViewModel : IIdDescription
     public bool Disabled { get; set; }
 
     /// <summary>
-    /// Gets or sets the document container ID.
+    /// Gets or sets the document container.
     /// </summary>
-    public string? DocumentContainerId { get; set; }
+    public IEnumerable<Option<string>> DocumentContainer { get; set; }
 
     /// <summary>
-    /// Gets or sets the document type ID.
+    /// Gets the document container ID.
     /// </summary>
-    public string? DocumentTypeId { get; set; }
+    public string? DocumentContainerId => DocumentContainer.FirstOrDefault()?.Value;
+
+    /// <summary>
+    /// Gets or sets the document type.
+    /// </summary>
+    public IEnumerable<Option<string>> DocumentType { get; set; }
+
+    /// <summary>
+    /// Gets the document type ID.
+    /// </summary>
+    public string? DocumentTypeId => DocumentType.FirstOrDefault()?.Value;
 
     /// <summary>
     /// Gets the file description.
     /// </summary>
     public IEnumerable<FileDescription> Files => Original.Files;
+
+    /// <summary>
+    /// Gets or sets the file types.
+    /// </summary>
+    public IEnumerable<string> FileTypes { get; set; }
 
     /// <summary>
     /// Gets or sets the from contact ID.
@@ -129,9 +167,14 @@ public sealed class DocumentEditViewModel : IIdDescription
     public DocumentDetailsViewModel Original { get; }
 
     /// <summary>
-    /// Gets or sets the parent document ID.
+    /// Gets or sets the parent document.
     /// </summary>
-    public string? ParentDocumentId { get; set; }
+    public IEnumerable<Option<string>> ParentDocument { get; set; }
+
+    /// <summary>
+    /// Gets the parent document ID.
+    /// </summary>
+    public string? ParentDocumentId => ParentDocument.FirstOrDefault()?.Value;
 
     /// <summary>
     /// Gets a value indicating whether the routing has changed.
@@ -162,4 +205,54 @@ public sealed class DocumentEditViewModel : IIdDescription
 
     /// <inheritdoc/>
     string IIdDescription.Description => Name;
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="DocumentEditViewModel"/> class asynchronously.
+    /// </summary>
+    /// <param name="id">The document ID to load, or null to create a new document.</param>
+    /// <param name="containerId">The container ID for new documents.</param>
+    /// <param name="user">The current user's claims principal.</param>
+    /// <param name="requestService">The service used to submit requests.</param>
+    /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the document edit view model.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when user or requestService is null.</exception>
+    /// <exception cref="OperationCanceledException">Thrown when the operation is canceled.</exception>
+    public static async Task<DocumentEditViewModel> CreateAsync(string? id, string? containerId, ClaimsPrincipal user, IRequestService requestService, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(requestService);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        DocumentDetailsViewModel details;
+
+        if (!string.IsNullOrWhiteSpace(id))
+        {
+            details = await requestService.GetDocumentDetailsAsync(id, user, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            details = DocumentDetailsViewModel.Create(id, containerId);
+        }
+
+        Task<DocumentContainerSummaryViewModel?> containerTask = requestService
+            .FindDocumentContainerSummaryAsync(details.Description.DocumentContainerId, user, cancellationToken);
+        DocumentTypeDetailsViewModel? documentType = await requestService
+            .FindDocumentTypeDetailsAsync(details.Description.DocumentTypeId, user, cancellationToken).ConfigureAwait(false);
+
+        Task<DocumentSummaryViewModel?> parentTask = requestService
+            .FindDocumentSummaryAsync(details.ParentDocumentId, user, cancellationToken);
+
+        Task<GetFileTypeSummaries> fileTypes = requestService
+            .SubmitAsync(
+                user,
+                new GetFileTypeSummaries(documentType?.FileTypeIds ?? []),
+                cancellationToken);
+
+        return new DocumentEditViewModel(
+            details,
+            await containerTask.ConfigureAwait(false),
+            await parentTask.ConfigureAwait(false),
+            documentType,
+            (await fileTypes.ConfigureAwait(false)).Results);
+    }
 }

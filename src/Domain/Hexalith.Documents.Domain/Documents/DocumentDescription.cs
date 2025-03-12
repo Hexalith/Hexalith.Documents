@@ -21,6 +21,11 @@ public record DocumentDescription(
     [property: DataMember(Order = 6)] string? Summary)
 {
     /// <summary>
+    /// Gets an empty document description.
+    /// </summary>
+    public static DocumentDescription Empty => new(string.Empty, null, null, null, null);
+
+    /// <summary>
     /// Applies a DocumentDescriptionChanged event to update the document's name and description.
     /// </summary>
     /// <param name="document">The document to update.</param>

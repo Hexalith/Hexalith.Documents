@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using Hexalith.Documents.Domain.Documents;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Domain.ValueObjects;
+using Hexalith.Extensions.Helpers;
 
 /// <summary>
 /// Represents the view model for document details.
@@ -24,4 +25,35 @@ public sealed record DocumentDetailsViewModel(
 {
     /// <inheritdoc/>
     string IIdDescription.Description => Description.Name;
+
+    /// <summary>
+    /// Gets an empty instance of the <see cref="DocumentDetailsViewModel"/> class.
+    /// </summary>
+    public static DocumentDetailsViewModel Empty => new(
+        string.Empty,
+        DocumentDescription.Empty,
+        null,
+        null,
+        DocumentState.Create(System.DateTimeOffset.UtcNow, string.Empty),
+        [],
+        [],
+        [],
+        false);
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="DocumentDetailsViewModel"/> class.
+    /// </summary>
+    /// <param name="id">The document ID.</param>
+    /// <param name="documentContainerId">The document container ID.</param>
+    /// <returns>A new instance of the <see cref="DocumentDetailsViewModel"/> class.</returns>
+    public static DocumentDetailsViewModel Create(string? id, string? documentContainerId) => new(
+        string.IsNullOrWhiteSpace(id) ? UniqueIdHelper.GenerateUniqueStringId() : id,
+        new DocumentDescription(string.Empty, null, documentContainerId, null, null),
+        null,
+        null,
+        DocumentState.Create(System.DateTimeOffset.UtcNow, string.Empty),
+        [],
+        [],
+        [],
+        false);
 }

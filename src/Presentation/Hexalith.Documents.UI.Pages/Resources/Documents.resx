@@ -144,4 +144,28 @@
   <data name="UploadZoneMessage" xml:space="preserve">
     <value>Drag files here you wish to upload or browse for them by clicking in this zone.</value>
   </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="FileIndex" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="FileContentType" xml:space="preserve">
+    <value>Content type</value>
+  </data>
+  <data name="FileLastModified" xml:space="preserve">
+    <value>Last modified</value>
+  </data>
+  <data name="FileCancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="FileErrorMessage" xml:space="preserve">
+    <value>Error message</value>
+  </data>
 </root>

@@ -1,53 +1,73 @@
 ﻿@page "/Documents/Upload/Document/{DocumentContainerId}"
 @page "/Documents/Upload/Document"
 @using Hexalith.Documents.Requests.DocumentContainers
+@using Hexalith.Documents.Requests.DocumentTypes
 @using Hexalith.Documents.Requests.FileTypes
 @using Hexalith.Documents.UI.Components.DocumentContainers
+@using Hexalith.Documents.UI.Components.DocumentTypes
 @inject TimeProvider TimeService
 @inject IStringLocalizer<Labels> L
-@rendermode InteractiveAuto
+@* @rendermode InteractiveServer *@
 
-<FluentLabel Typo="Typography.PageTitle">@(L[nameof(Labels.UploadTitle)])</FluentLabel>
+<HexPageTitle>@(L[nameof(Labels.UploadTitle)])</HexPageTitle>
 <br />
-<FluentGrid>
-	@if (DocumentContainerId is null) // Add
-	{
-		<FluentGridItem xs="12" md="3">
-			<DocumentContainerAutocomplete Disabled="true" @bind-Id="_data.DocumentTypeId" />
-		</FluentGridItem>
-	}
+<FluentGrid Style="width:100%">
+	<FluentGridItem xs="12" md="3">
+		<DocumentContainerAutocomplete Disabled="@(DocumentContainerId is not null)"
+									   MaximumSelectedOptions="1"
+									   @bind-SelectedOptions="_data.DocumentContainer"
+									   OnOptionsSearch="OnDocumentContainerSearchAsync" />
+	</FluentGridItem>
+	<FluentGridItem xs="12" md="3">
+		<DocumentTypeAutocomplete MaximumSelectedOptions="1"
+								  @bind-SelectedOptions="_data.DocumentType"
+								  OnOptionsSearch="OnDocumentTypeSearchAsync" />
+	</FluentGridItem>
 	<FluentGridItem xs="12" md="3">
 		<HexNameField @bind-Value="_data.Name"></HexNameField>
 	</FluentGridItem>
 	<FluentGridItem xs="12" md="3">
-		<DocumentAutocomplete @bind-Id="_data.ParentDocumentId" Label="@Labels.ParentDocument" />
-	</FluentGridItem>
-	<FluentGridItem xs="12" md="@(DocumentContainerId is null ? 3 : 6)">
-	</FluentGridItem>
-	<FluentGridItem xs="12" md="3">
-		<FluentInputFile Id="file-uploader"
-						 Mode="InputFileMode.SaveToTemporaryFolder"
-						 Multiple="true"
-						 MaximumFileCount="4"
-						 MaximumFileSize="@(10 * 1024 * 1024)"
-						 Accept="image/*"
-						 @bind-ProgressPercent="@ProgressPercent"
-						 OnCompleted="@OnCompletedAsync"
-						 Style="height: 300px;">
-			<ChildContent>
-				<label for="file-uploader">
-					<FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
-				</label>
+		<DocumentAutocomplete MaximumSelectedOptions="1"
+							  @bind-SelectedOptions="_data.ParentDocument"
+							  Label="@(L[nameof(Labels.ParentDocument)])"
+							  OnOptionsSearch="OnDocumentSearchAsync" />
 
-				<div>
-					@(L[nameof(Labels.UploadZoneMessage)])
-				</div>
-			</ChildContent>
-		</FluentInputFile>
 	</FluentGridItem>
-	<FluentGridItem md="12">
-		<HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
-	</FluentGridItem>
+	@if (_data.DocumentContainerId is not null && _data.DocumentTypeId is not null)
+	{
+		<FluentGridItem xs="12" md="12">
+			<FluentInputFile id="document-file-uploader" Mode="InputFileMode.SaveToTemporaryFolder"
+							 Multiple="true"
+							 MaximumFileCount="100"
+							 MaximumFileSize="@(10 * 1024 * 1024)"
+							 Accept=_accept
+							 @bind-ProgressPercent="@ProgressPercent"
+							 OnCompleted="@OnCompletedAsync"
+							 Style="width:100%;height:200px">
+				<ChildContent>
+					<FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+					<FluentLabel>@(L[nameof(Labels.UploadZoneMessage)])</FluentLabel>
+				</ChildContent>
+			</FluentInputFile>
+		</FluentGridItem>
+		@if (Files.Any())
+		{
+			<FluentGridItem xs="12" md="12">
+				<FluentDataGrid Items="@Files.AsQueryable()">
+					<PropertyColumn Property="@(p => p.Index)" Title="@(L[Labels.FileIndex])" Sortable="true" />
+					<PropertyColumn Property="@(p => p.Name)" Title="@(L[Labels.FileName])" Sortable="true" />
+					<PropertyColumn Property="@(p => p.Size)" Title="@(L[Labels.FileSize])" Sortable="true" />
+					<PropertyColumn Property="@(p => p.ContentType)" Title="@(L[Labels.FileContentType])" Sortable="true" />
+					<PropertyColumn Property="@(p => p.LastModified)" Title="@(L[Labels.FileLastModified])" Sortable="true" Format="yyyy-MM-dd HH:mm" />
+					<PropertyColumn Property="@(p => p.IsCancelled)" Title="@(L[Labels.FileCancelled])" Sortable="true" />
+					<PropertyColumn Property="@(p => p.ErrorMessage)" Title="@(L[Labels.FileErrorMessage])" Sortable="true" />
+				</FluentDataGrid>
+				<br />
+				<HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
+			</FluentGridItem>
+		}
+	}
+
 	<FluentGridItem>
 		<HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
 	</FluentGridItem>
@@ -161,6 +181,45 @@
 	private Task OnRefreshAsync()
 	{
 		return Task.CompletedTask;
+	}
+
+	private async Task OnDocumentContainerSearchAsync(OptionsSearchEventArgs<Option<string>> args)
+	{
+		if (_user is null)
+		{
+			return;
+		}
+		var result = await RequestService.SubmitAsync(_user, new GetDocumentContainerSummaries(0, 100, args.Text), CancellationToken.None);
+		if (result.Results is not null)
+		{
+			args.Items = result.Results.ToOptions(false);
+		}
+	}
+
+	private async Task OnDocumentTypeSearchAsync(OptionsSearchEventArgs<Option<string>> args)
+	{
+		if (_user is null)
+		{
+			return;
+		}
+		var result = await RequestService.SubmitAsync(_user, new GetDocumentTypeSummaries(0, 100, args.Text), CancellationToken.None);
+		if (result.Results is not null)
+		{
+			args.Items = result.Results.ToOptions(false);
+		}
+	}
+
+	private async Task OnDocumentSearchAsync(OptionsSearchEventArgs<Option<string>> args)
+	{
+		if (_user is null)
+		{
+			return;
+		}
+		var result = await RequestService.SubmitAsync(_user, new GetDocumentSummaries(0, 100, args.Text), CancellationToken.None);
+		if (result.Results is not null)
+		{
+			args.Items = result.Results.ToOptions(false);
+		}
 	}
 
 }

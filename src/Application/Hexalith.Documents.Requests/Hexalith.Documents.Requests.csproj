@@ -9,9 +9,11 @@
     <PackageReference Include="Hexalith.CodeGenerators.SerializationMappers" Version="$(HexalithVersion)" PrivateAssets="true" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
+    <Compile Remove="Helpers\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="Helpers\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\" />
+    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
   </ItemGroup>
 </Project>

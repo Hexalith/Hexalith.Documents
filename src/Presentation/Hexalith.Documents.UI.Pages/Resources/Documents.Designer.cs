@@ -70,6 +70,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        internal static string Browse {
+            get {
+                return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documents_{0}.
         /// </summary>
         internal static string DataFileName {
@@ -84,6 +93,69 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         internal static string DocumentsInContainer {
             get {
                 return ResourceManager.GetString("DocumentsInContainer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelled.
+        /// </summary>
+        internal static string FileCancelled {
+            get {
+                return ResourceManager.GetString("FileCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content type.
+        /// </summary>
+        internal static string FileContentType {
+            get {
+                return ResourceManager.GetString("FileContentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error message.
+        /// </summary>
+        internal static string FileErrorMessage {
+            get {
+                return ResourceManager.GetString("FileErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Index.
+        /// </summary>
+        internal static string FileIndex {
+            get {
+                return ResourceManager.GetString("FileIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last modified.
+        /// </summary>
+        internal static string FileLastModified {
+            get {
+                return ResourceManager.GetString("FileLastModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string FileName {
+            get {
+                return ResourceManager.GetString("FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        internal static string FileSize {
+            get {
+                return ResourceManager.GetString("FileSize", resourceCulture);
             }
         }
         

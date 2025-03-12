@@ -2,6 +2,7 @@
 
 using System.Runtime.Serialization;
 
+using Hexalith.Application.Requests;
 using Hexalith.PolymorphicSerialization;
 
 /// <summary>
@@ -11,4 +12,10 @@ using Hexalith.PolymorphicSerialization;
 /// <param name="Result">The result containing the ID and description.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentDetails(string Id, [property: DataMember(Order = 2)] DocumentDetailsViewModel? Result = null)
-    : DocumentRequest(Id);
+    : DocumentRequest(Id), IRequest
+{
+    /// <summary>
+    /// Gets the result of the request.
+    /// </summary>
+    object? IRequest.Result => Result;
+}
