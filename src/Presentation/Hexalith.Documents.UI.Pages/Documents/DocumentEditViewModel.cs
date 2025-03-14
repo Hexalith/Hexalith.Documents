@@ -267,7 +267,7 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// <param name="user">The current user's claims principal.</param>
     /// <param name="requestService">The service used to submit requests.</param>
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
-    /// <returns><placeholder>A <see cref="Task"/> representing the asynchronous operation.</placeholder></returns>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     public async Task SelectDocumentContainerAsync(string? containerId, ClaimsPrincipal user, IRequestService requestService, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(user);
