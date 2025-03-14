@@ -12,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Localizations\Hexalith.Documents.Localizations.csproj" />
   </ItemGroup>
 </Project>

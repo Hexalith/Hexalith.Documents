@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>$(CommonTargetFrameworks)</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Documents.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Documents.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Documents.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Documents.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+</Project>
