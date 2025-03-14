@@ -53,6 +53,7 @@ public sealed class DocumentEditViewModel : IIdDescription
         Disabled = details.Disabled;
         Original = details;
         FileTypes = fileTypes.Select(x => x.ContentType);
+        FileContentTypes = string.Join(", ", fileTypes.Select(p => p.ContentType));
     }
 
     /// <summary>
@@ -127,6 +128,11 @@ public sealed class DocumentEditViewModel : IIdDescription
     public string? DocumentTypeId => DocumentType.FirstOrDefault()?.Value;
 
     /// <summary>
+    /// Gets the file content types.
+    /// </summary>
+    public string FileContentTypes { get; private set; }
+
+    /// <summary>
     /// Gets or sets the file description.
     /// </summary>
     public IEnumerable<FileDescription> Files { get; set; } = [];
@@ -183,8 +189,14 @@ public sealed class DocumentEditViewModel : IIdDescription
         ToContactIds != Original.Routing?.ToContactIds ||
         CopyToContactIds != Original.Routing?.CopyToContactIds;
 
+    /// <summary>
+    /// Gets the selected document container.
+    /// </summary>
     public DocumentContainerDetailsViewModel? SelectedDocumentContainer { get; private set; }
 
+    /// <summary>
+    /// Gets the selected document type.
+    /// </summary>
     public DocumentTypeDetailsViewModel? SelectedDocumentType { get; private set; }
 
     /// <summary>
@@ -290,6 +302,45 @@ public sealed class DocumentEditViewModel : IIdDescription
         {
             DocumentContainer = [container.ToOption(true)];
             DocumentType = [];
+        }
+    }
+
+    /// <summary>
+    /// Selects a document type asynchronously.
+    /// </summary>
+    /// <param name="typeId">The type ID to select.</param>
+    /// <param name="user">The current user's claims principal.</param>
+    /// <param name="requestService">The service used to submit requests.</param>
+    /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    public async Task SelectDocumentTypeAsync(string? typeId, ClaimsPrincipal user, IRequestService requestService, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(requestService);
+        cancellationToken.ThrowIfCancellationRequested();
+        DocumentTypeDetailsViewModel? type = await requestService
+            .FindDocumentTypeDetailsAsync(typeId, user, cancellationToken).ConfigureAwait(false);
+        if (type is null)
+        {
+            SelectedDocumentType = null;
+            DocumentType = [];
+            return;
+        }
+
+        SelectedDocumentType = type;
+        DocumentType = [type.ToOption(true)];
+        if (type.Id != DocumentTypeId)
+        {
+            FileContentTypes = string.Join(
+                ", ",
+                (await requestService
+                .SubmitAsync(
+                    user,
+                    new GetFileTypeSummaries(type.FileTypeIds),
+                    cancellationToken)
+                .ConfigureAwait(false))
+                .Results
+                .Select(p => p.ContentType));
         }
     }
 }

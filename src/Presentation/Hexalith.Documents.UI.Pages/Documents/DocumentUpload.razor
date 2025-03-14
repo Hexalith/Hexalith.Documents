@@ -21,12 +21,14 @@
 	<FluentGridItem xs="12" md="3">
 		<DocumentContainerAutocomplete Disabled="@(DocumentContainerId is not null)"
 									   MaximumSelectedOptions="1"
-									   @bind-SelectedOptions="_data.DocumentContainer"
+									   SelectedOptions="_data.DocumentContainer"
+									   SelectedOptionsChanged="OnDocumentContainerChanged"
 									   OnOptionsSearch="OnDocumentContainerSearchAsync" />
 	</FluentGridItem>
 	<FluentGridItem xs="12" md="3">
 		<DocumentTypeAutocomplete MaximumSelectedOptions="1"
-								  @bind-SelectedOptions="_data.DocumentType"
+								  SelectedOptions="_data.DocumentType"
+								  SelectedOptionsChanged="OnDocumentTypeChanged"
 								  OnOptionsSearch="OnDocumentTypeSearchAsync" />
 	</FluentGridItem>
 	<FluentGridItem xs="12" md="3">
@@ -154,15 +156,22 @@
 
 	private async Task OnDocumentTypeSearchAsync(OptionsSearchEventArgs<Option<string>> args)
 	{
-		if (_user is null)
+		if (_user is null || _data.SelectedDocumentContainer is null)
 		{
 			return;
 		}
-		var result = await RequestService.SubmitAsync(_user, new GetDocumentTypeSummaries(0, 100, args.Text), CancellationToken.None);
-		if (result.Results is not null)
-		{
-			args.Items = result.Results.ToOptions(false);
-		}
+		IEnumerable<DocumentTypeSummaryViewModel> documentTypes = (await RequestService
+				.SubmitAsync(
+					_user, 
+					new GetDocumentTypeSummaries(
+						0, 
+						100, 
+						args.Text, 
+						_data.SelectedDocumentContainer?.DocumentTypeIds ?? [], 
+						[]),
+					CancellationToken.None))
+				.Results;
+		args.Items = documentTypes.ToOptions(false);
 	}
 
 	private async Task OnDocumentSearchAsync(OptionsSearchEventArgs<Option<string>> args)
@@ -246,5 +255,31 @@
 		// Reset the form
 		_data = await DocumentEditViewModel.CreateAsync(null, DocumentContainerId, _user, RequestService, CancellationToken.None);
 		Files = Array.Empty<FluentInputFileEventArgs>();
+	}
+
+	private async Task OnDocumentContainerChanged(IEnumerable<Option<string>>? options)
+	{
+		if (_data is null || _user is null)
+		{
+			return;
+		}
+		await _data.SelectDocumentContainerAsync(
+			options?.FirstOrDefault()?.Value, 
+			_user, 
+			RequestService, 
+			CancellationToken.None);
+	}
+
+	private async Task OnDocumentTypeChanged(IEnumerable<Option<string>>? options)
+	{
+		if (_data is null || _user is null)
+		{
+			return;
+		}
+		await _data.SelectDocumentTypeAsync(
+			options?.FirstOrDefault()?.Value,
+			_user,
+			RequestService,
+			CancellationToken.None);
 	}
 }

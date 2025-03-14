@@ -100,7 +100,7 @@
 		{
 			return;
 		}
-		ValidationResult = new DocumentEditValidation().Validate(_data);
+		ValidationResult = new DocumentEditValidation(L).Validate(_data);
 		if (!ValidationResult.IsValid)
 			return;
 		DocumentCommand fileTypeCommand;
