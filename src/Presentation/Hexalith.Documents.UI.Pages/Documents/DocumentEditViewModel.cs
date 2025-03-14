@@ -32,7 +32,7 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// <exception cref="ArgumentNullException">Thrown when details is null.</exception>
     public DocumentEditViewModel(
         DocumentDetailsViewModel details,
-        DocumentContainerSummaryViewModel? container,
+        DocumentContainerDetailsViewModel? container,
         DocumentSummaryViewModel? parent,
         DocumentTypeDetailsViewModel? documentType,
         IEnumerable<FileTypeSummaryViewModel> fileTypes)
@@ -129,7 +129,7 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// <summary>
     /// Gets or sets the file description.
     /// </summary>
-    public IEnumerable<FileDescription> Files { get; set; }
+    public IEnumerable<FileDescription> Files { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the file types.
@@ -183,6 +183,10 @@ public sealed class DocumentEditViewModel : IIdDescription
         ToContactIds != Original.Routing?.ToContactIds ||
         CopyToContactIds != Original.Routing?.CopyToContactIds;
 
+    public DocumentContainerDetailsViewModel? SelectedDocumentContainer { get; private set; }
+
+    public DocumentTypeDetailsViewModel? SelectedDocumentType { get; private set; }
+
     /// <summary>
     /// Gets the document state.
     /// </summary>
@@ -234,8 +238,8 @@ public sealed class DocumentEditViewModel : IIdDescription
             details = DocumentDetailsViewModel.Create(id, containerId);
         }
 
-        Task<DocumentContainerSummaryViewModel?> containerTask = requestService
-            .FindDocumentContainerSummaryAsync(details.Description.DocumentContainerId, user, cancellationToken);
+        Task<DocumentContainerDetailsViewModel?> containerTask = requestService
+            .FindDocumentContainerDetailsAsync(details.Description.DocumentContainerId, user, cancellationToken);
         DocumentTypeDetailsViewModel? documentType = await requestService
             .FindDocumentTypeDetailsAsync(details.Description.DocumentTypeId, user, cancellationToken).ConfigureAwait(false);
 
@@ -254,5 +258,38 @@ public sealed class DocumentEditViewModel : IIdDescription
             await parentTask.ConfigureAwait(false),
             documentType,
             (await fileTypes.ConfigureAwait(false)).Results);
+    }
+
+    /// <summary>
+    /// Selects a document container asynchronously.
+    /// </summary>
+    /// <param name="containerId">The container ID to select.</param>
+    /// <param name="user">The current user's claims principal.</param>
+    /// <param name="requestService">The service used to submit requests.</param>
+    /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+    /// <returns><placeholder>A <see cref="Task"/> representing the asynchronous operation.</placeholder></returns>
+    public async Task SelectDocumentContainerAsync(string? containerId, ClaimsPrincipal user, IRequestService requestService, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(requestService);
+        cancellationToken.ThrowIfCancellationRequested();
+        DocumentContainerDetailsViewModel? container = await requestService
+            .FindDocumentContainerDetailsAsync(containerId, user, cancellationToken).ConfigureAwait(false);
+        if (container is null)
+        {
+            SelectedDocumentContainer = null;
+            SelectedDocumentType = null;
+            DocumentContainer = [];
+            DocumentType = [];
+            return;
+        }
+
+        SelectedDocumentContainer = container;
+        DocumentContainer = [container.ToOption(true)];
+        if (container.Id != DocumentContainerId)
+        {
+            DocumentContainer = [container.ToOption(true)];
+            DocumentType = [];
+        }
     }
 }

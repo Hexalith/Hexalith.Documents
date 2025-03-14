@@ -1,5 +1,6 @@
 ﻿@page "/Documents/Add/Document"
 @page "/Documents/Document/{Id}"
+@using Hexalith.Documents.Requests.DocumentContainers
 @using Hexalith.Documents.UI.Components.DocumentContainers
 @using Hexalith.Documents.UI.Components.DocumentTypes
 @inject TimeProvider TimeService
@@ -38,7 +39,7 @@
 				<FluentTextArea Style="width:100%;" @bind-Value="_data.Summary" Label="@Labels.Summary"></FluentTextArea>
 			</FluentGridItem>
 			<FluentGridItem xs="12" md="3">
-				<DocumentContainerAutocomplete @bind-SelectedOptions="_data.DocumentContainer" />
+				<DocumentContainerAutocomplete SelectedOptions="_data.DocumentContainer" SelectedOptionsChanged="OnDocumentContainerChanged" />
 			</FluentGridItem>
 			<FluentGridItem xs="12" md="3">
 				<DocumentTypeAutocomplete @bind-SelectedOptions="_data.DocumentType" />
@@ -142,6 +143,16 @@
 	private Task OnRefreshAsync()
 	{
 		return Task.CompletedTask;
+	}
+
+	private void OnDocumentContainerChanged(IEnumerable<Option<string>>? documentContainer)
+	{
+		if (documentContainer is null)
+		{
+			_data.DocumentContainer = [];
+			return;
+		}
+
 	}
 
 }
