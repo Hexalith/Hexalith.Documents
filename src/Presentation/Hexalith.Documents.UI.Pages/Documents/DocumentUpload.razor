@@ -192,7 +192,7 @@
 			ToastService.ShowInfo(L[nameof(Labels.NoChanges)]);
 			return;
 		}
-		ValidationResult = new DocumentEditValidation().Validate(_data);
+		ValidationResult = new DocumentEditValidation(L).Validate(_data);
 		if (!ValidationResult.IsValid)
 			return;
 		var documentId = UniqueIdHelper.GenerateUniqueStringId();
@@ -203,7 +203,7 @@
 		{
 			try
 			{
-				string fileId = UniqueIdHelDocumentGenerateUniqueStringId();
+				string fileId = UniqueIdHelper.GenerateUniqueStringId();
 				await FileUploadService.UploadAsync(
 					_data.DocumentContainerId,
 					_data.DocumentTypeId,
@@ -215,11 +215,11 @@
 				// Add to our file descriptions
 				fileDescriptions.Add(new FileDescription(
 					fileId,
+					fileId,
 					file.Name,
-					file.ContentType,
+					file.Name,
 					file.Size,
-					file.LastModified
-				));
+					file.ContentType));
 			}
 			finally
 			{

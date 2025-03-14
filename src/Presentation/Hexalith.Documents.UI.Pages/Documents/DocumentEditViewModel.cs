@@ -127,9 +127,9 @@ public sealed class DocumentEditViewModel : IIdDescription
     public string? DocumentTypeId => DocumentType.FirstOrDefault()?.Value;
 
     /// <summary>
-    /// Gets the file description.
+    /// Gets or sets the file description.
     /// </summary>
-    public IEnumerable<FileDescription> Files => Original.Files;
+    public IEnumerable<FileDescription> Files { get; set; }
 
     /// <summary>
     /// Gets or sets the file types.
