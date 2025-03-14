@@ -181,6 +181,12 @@
     <value>The document name is required.</value>
   </data>
   <data name="FileUploadError" xml:space="preserve">
-    <value>File upload error on file {0}.</value>
+    <value>File upload error on file {0} : {1}</value>
+  </data>
+  <data name="IdRequired" xml:space="preserve">
+    <value>Document identifier is required.</value>
+  </data>
+  <data name="FileTypeNotSupported" xml:space="preserve">
+    <value>File '{0}' type '{1}' not supported. Expected : {2}</value>
   </data>
 </root>

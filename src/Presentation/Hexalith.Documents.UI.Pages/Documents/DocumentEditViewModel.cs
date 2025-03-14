@@ -52,8 +52,7 @@ public sealed class DocumentEditViewModel : IIdDescription
         Tags = details.Tags;
         Disabled = details.Disabled;
         Original = details;
-        FileTypes = fileTypes.Select(x => x.ContentType);
-        FileContentTypes = string.Join(", ", fileTypes.Select(p => p.ContentType));
+        SelectedFileTypes = [.. fileTypes];
     }
 
     /// <summary>
@@ -130,17 +129,12 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// <summary>
     /// Gets the file content types.
     /// </summary>
-    public string FileContentTypes { get; private set; }
+    public string FileContentTypes => string.Join(", ", SelectedFileTypes.Select(p => p.ContentType));
 
     /// <summary>
     /// Gets or sets the file description.
     /// </summary>
     public IEnumerable<FileDescription> Files { get; set; } = [];
-
-    /// <summary>
-    /// Gets or sets the file types.
-    /// </summary>
-    public IEnumerable<string> FileTypes { get; set; }
 
     /// <summary>
     /// Gets or sets the from contact ID.
@@ -198,6 +192,11 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// Gets the selected document type.
     /// </summary>
     public DocumentTypeDetailsViewModel? SelectedDocumentType { get; private set; }
+
+    /// <summary>
+    /// Gets the selected file types.
+    /// </summary>
+    public IEnumerable<FileTypeSummaryViewModel> SelectedFileTypes { get; private set; }
 
     /// <summary>
     /// Gets the document state.
@@ -327,20 +326,17 @@ public sealed class DocumentEditViewModel : IIdDescription
             return;
         }
 
-        SelectedDocumentType = type;
-        DocumentType = [type.ToOption(true)];
         if (type.Id != DocumentTypeId)
         {
-            FileContentTypes = string.Join(
-                ", ",
-                (await requestService
+            SelectedFileTypes = (await requestService
                 .SubmitAsync(
                     user,
                     new GetFileTypeSummaries(type.FileTypeIds),
                     cancellationToken)
                 .ConfigureAwait(false))
-                .Results
-                .Select(p => p.ContentType));
+                .Results;
+            SelectedDocumentType = type;
+            DocumentType = [type.ToOption(true)];
         }
     }
 }

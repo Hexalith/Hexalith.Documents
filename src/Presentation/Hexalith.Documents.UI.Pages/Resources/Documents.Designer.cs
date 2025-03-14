@@ -169,11 +169,29 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File upload error on file {0}..
+        ///   Looks up a localized string similar to File &apos;{0}&apos; type &apos;{1}&apos; not supported. Expected : {2}.
+        /// </summary>
+        public static string FileTypeNotSupported {
+            get {
+                return ResourceManager.GetString("FileTypeNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File upload error on file {0} : {1}.
         /// </summary>
         public static string FileUploadError {
             get {
                 return ResourceManager.GetString("FileUploadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document identifier is required..
+        /// </summary>
+        public static string IdRequired {
+            get {
+                return ResourceManager.GetString("IdRequired", resourceCulture);
             }
         }
         

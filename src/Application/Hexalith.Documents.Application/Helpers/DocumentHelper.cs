@@ -1,5 +1,7 @@
 ﻿namespace Hexalith.Documents.Application.Helpers;
 
+using FluentValidation;
+
 using Hexalith.Application.Aggregates;
 using Hexalith.Documents.Application.DataManagements;
 using Hexalith.Documents.Application.DocumentContainers;
@@ -9,6 +11,7 @@ using Hexalith.Documents.Application.DocumentStorages;
 using Hexalith.Documents.Application.DocumentTypes;
 using Hexalith.Documents.Application.FileTypes;
 using Hexalith.Documents.Application.Services;
+using Hexalith.Documents.Commands.Documents;
 using Hexalith.Documents.Domain.DataManagements;
 using Hexalith.Documents.Domain.DocumentContainers;
 using Hexalith.Documents.Domain.DocumentInformationExtractions;
@@ -47,10 +50,8 @@ public static class DocumentHelper
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDocumentEventValidators(this IServiceCollection services) =>
-
-        // services.TryAddSingleton<IValidator<>, >();
-        services;
+    public static IServiceCollection AddDocumentEventValidators(this IServiceCollection services)
+        => services.AddTransient<IValidator<AddDocument>, AddDocumentValidator>();
 
     /// <summary>
     /// Adds the document management services to the service collection.

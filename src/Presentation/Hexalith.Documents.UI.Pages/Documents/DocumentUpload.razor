@@ -10,51 +10,58 @@
 @inject TimeProvider TimeService
 @inject IStringLocalizer<Labels> L
 @inject IValidator<AddDocument> AddDocumentValidator
-@inject IValidator<AddDocumentFile> AddDocumentFileValidator
 @inject IFileService FileUploadService
 @inject IToastService ToastService
-@* @rendermode InteractiveServer *@
+@rendermode InteractiveServer
 
 <HexPageTitle>@(L[nameof(Labels.UploadTitle)])</HexPageTitle>
 <br />
 <FluentGrid Style="width:100%">
-	<FluentGridItem xs="12" md="3">
+	<FluentGridItem xs="12" md="4">
 		<DocumentContainerAutocomplete Disabled="@(DocumentContainerId is not null)"
 									   MaximumSelectedOptions="1"
 									   SelectedOptions="_data.DocumentContainer"
 									   SelectedOptionsChanged="OnDocumentContainerChanged"
 									   OnOptionsSearch="OnDocumentContainerSearchAsync" />
 	</FluentGridItem>
-	<FluentGridItem xs="12" md="3">
+	<FluentGridItem xs="12" md="4">
 		<DocumentTypeAutocomplete MaximumSelectedOptions="1"
 								  SelectedOptions="_data.DocumentType"
 								  SelectedOptionsChanged="OnDocumentTypeChanged"
 								  OnOptionsSearch="OnDocumentTypeSearchAsync" />
 	</FluentGridItem>
-	<FluentGridItem xs="12" md="3">
-		<HexNameField @bind-Value="_data.Name"></HexNameField>
-	</FluentGridItem>
-	<FluentGridItem xs="12" md="3">
+	<FluentGridItem xs="12" md="4">
 		<DocumentAutocomplete MaximumSelectedOptions="1"
 							  @bind-SelectedOptions="_data.ParentDocument"
 							  Label="@(L[nameof(Labels.ParentDocument)])"
 							  OnOptionsSearch="OnDocumentSearchAsync" />
 
 	</FluentGridItem>
+	<FluentGridItem xs="12" md="4">
+		<HexIdField ReadOnly="true" Value="@_data.Id"></HexIdField>
+	</FluentGridItem>
+	<FluentGridItem xs="12" md="4">
+		<HexNameField @bind-Value="@_data.Name"></HexNameField>
+	</FluentGridItem>
+	<FluentGridItem xs="12" md="4">
+	</FluentGridItem>
 	@if (_data.DocumentContainerId is not null && _data.DocumentTypeId is not null)
 	{
 		<FluentGridItem xs="12" md="12">
-			<FluentInputFile id="document-file-uploader" Mode="InputFileMode.SaveToTemporaryFolder"
+			<FluentInputFile id="document-file-uploader"
+							 Mode="InputFileMode.Stream"
 							 Multiple="true"
 							 MaximumFileCount="100"
-							 MaximumFileSize="@(10 * 1024 * 1024)"
-							 Accept=_accept
+							 MaximumFileSize="@(100 * 1024 * 1024)"
+							 OnFileUploaded="@OnFileUploadedAsync"
+							 Accept="@_data.FileContentTypes"
 							 @bind-ProgressPercent="@ProgressPercent"
-							 OnCompleted="@OnCompletedAsync"
 							 Style="width:100%;height:200px">
 				<ChildContent>
-					<FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
-					<FluentLabel>@(L[nameof(Labels.UploadZoneMessage)])</FluentLabel>
+					<FluentStack HorizontalAlignment="HorizontalAlignment.Center" VerticalAlignment="VerticalAlignment.Center" Orientation="Orientation.Vertical">
+						<FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+						<label for="document-file-uploader">@(L[nameof(Labels.UploadZoneMessage)])</label>
+					</FluentStack>
 				</ChildContent>
 			</FluentInputFile>
 		</FluentGridItem>
@@ -98,20 +105,62 @@
 
 	FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
 
-	private async Task OnCompletedAsync(IEnumerable<FluentInputFileEventArgs> files)
+	int? progressPercent;
+	string? progressTitle;
+	FluentInputFile? myFileByStream = default!;
+
+	async Task OnFileUploadedAsync(FluentInputFileEventArgs file)
 	{
-		Files = files.ToArray();
-
-		// For the demo, delete these files.
-		foreach (var file in Files)
+		progressPercent = file.ProgressPercent;
+		progressTitle = file.ProgressTitle;
+		if (string.IsNullOrWhiteSpace(_data.Name))
 		{
-			file.LocalFile?.Delete();
+			_data.Name = file.Name;
 		}
+		ValidationResult = new DocumentEditValidation(L).Validate(_data);
+		if (!ValidationResult.IsValid)
+			return;
+		if (file.Stream is null || file.IsCancelled)
+		{
+			file.IsCancelled = true;
+			ToastService.ShowError("File read stream not initialized for file " + file.Name);
+			return;
+		}
+		var fileTypeId = _data.SelectedFileTypes.FirstOrDefault(n => n.ContentType == file.ContentType)?.Id;
+		if (fileTypeId is null)
+		{
+			file.IsCancelled = true;
+			ToastService.ShowError(L[nameof(Labels.FileTypeNotSupported), file.Name, file.ContentType, _data.FileContentTypes]);
+			return;
+		}
+		FileDescription fileDescription = new FileDescription(
+			UniqueIdHelper.GenerateUniqueStringId(),
+			fileTypeId,
+			file.Name,
+			file.Name,
+			file.Size,
+			file.ContentType);
+		try
+		{
+			// Save the file to the server
+			await FileUploadService.UploadAsync(
+				_data.DocumentContainerId!,
+				_data.DocumentTypeId!,
+				_data.Id!,
+				UniqueIdHelper.GenerateUniqueStringId(),
+				file.Stream,
+				new Dictionary<string, string>(),
+				CancellationToken.None);
 
-		// Wait 3 seconds before to reset the progress bar.
-		await Task.Delay(3000);
-		ProgressPercent = 0;
+			_data.Files = _data.Files.Append(fileDescription);
+			await file.Stream.DisposeAsync();
+		}
+		catch (Exception e)
+		{
+			ToastService.ShowError(L[nameof(Labels.FileUploadError), file.Name, e.FullMessage()]);
+		}
 	}
+
 	protected override async Task OnInitializedAsync()
 	{
 		if (AuthenticationStateTask is not null)
@@ -136,11 +185,6 @@
 
 	}
 
-	private Task OnRefreshAsync()
-	{
-		return Task.CompletedTask;
-	}
-
 	private async Task OnDocumentContainerSearchAsync(OptionsSearchEventArgs<Option<string>> args)
 	{
 		if (_user is null)
@@ -162,12 +206,12 @@
 		}
 		IEnumerable<DocumentTypeSummaryViewModel> documentTypes = (await RequestService
 				.SubmitAsync(
-					_user, 
+					_user,
 					new GetDocumentTypeSummaries(
-						0, 
-						100, 
-						args.Text, 
-						_data.SelectedDocumentContainer?.DocumentTypeIds ?? [], 
+						0,
+						100,
+						args.Text,
+						_data.SelectedDocumentContainer?.DocumentTypeIds ?? [],
 						[]),
 					CancellationToken.None))
 				.Results;
@@ -201,44 +245,12 @@
 			ToastService.ShowInfo(L[nameof(Labels.NoChanges)]);
 			return;
 		}
+
 		ValidationResult = new DocumentEditValidation(L).Validate(_data);
 		if (!ValidationResult.IsValid)
 			return;
 		var documentId = UniqueIdHelper.GenerateUniqueStringId();
 
-		// First upload all files to the server
-		var fileDescriptions = new List<FileDescription>();
-		foreach (var file in Files)
-		{
-			try
-			{
-				string fileId = UniqueIdHelper.GenerateUniqueStringId();
-				await FileUploadService.UploadAsync(
-					_data.DocumentContainerId,
-					_data.DocumentTypeId,
-					documentId,
-					fileId,
-					file.LocalFile.OpenRead(),
-					new Dictionary<string, string>(),
-					CancellationToken.None);
-				// Add to our file descriptions
-				fileDescriptions.Add(new FileDescription(
-					fileId,
-					fileId,
-					file.Name,
-					file.Name,
-					file.Size,
-					file.ContentType));
-			}
-			finally
-			{
-				// Clean up the temporary file after upload
-				file.LocalFile.Delete();
-			}
-		}
-
-		// Update the document with file references
-		_data.Files = fileDescriptions;
 
 		// Submit the command to add the document with file references
 		await CommandService.SubmitCommandAsync(_user, new AddDocument(
@@ -249,7 +261,7 @@
 			_user.Identity.Name,
 			TimeService.GetLocalNow(),
 			_data.DocumentContainerId!,
-			_data.DocumentTypeId),
+			_data.DocumentTypeId!),
 			CancellationToken.None);
 
 		// Reset the form
@@ -264,9 +276,9 @@
 			return;
 		}
 		await _data.SelectDocumentContainerAsync(
-			options?.FirstOrDefault()?.Value, 
-			_user, 
-			RequestService, 
+			options?.FirstOrDefault()?.Value,
+			_user,
+			RequestService,
 			CancellationToken.None);
 	}
 

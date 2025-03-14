@@ -20,6 +20,9 @@ public class DocumentEditValidation : EntityValidation<DocumentEditViewModel>
     public DocumentEditValidation(IStringLocalizer<Labels> l)
     {
         ArgumentNullException.ThrowIfNull(l);
+        _ = RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage(l[nameof(Labels.IdRequired)]);
         _ = RuleFor(x => x.DocumentContainerId)
             .NotEmpty()
             .WithMessage(l[nameof(Labels.ContainerRequired)]);
