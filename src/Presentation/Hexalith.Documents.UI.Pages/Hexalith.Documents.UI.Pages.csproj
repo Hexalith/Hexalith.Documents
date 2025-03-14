@@ -78,7 +78,7 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Documents.resx">
       <LastGenOutput>Documents.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\DocumentTypes.resx">
       <LastGenOutput>DocumentTypes.Designer.cs</LastGenOutput>

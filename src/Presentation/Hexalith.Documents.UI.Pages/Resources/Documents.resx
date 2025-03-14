@@ -168,4 +168,19 @@
   <data name="FileErrorMessage" xml:space="preserve">
     <value>Error message</value>
   </data>
+  <data name="NoChanges" xml:space="preserve">
+    <value>No changes to apply.</value>
+  </data>
+  <data name="ContainerRequired" xml:space="preserve">
+    <value>The document container is required.</value>
+  </data>
+  <data name="TypeRequired" xml:space="preserve">
+    <value>The document type is required.</value>
+  </data>
+  <data name="NameRequired" xml:space="preserve">
+    <value>The document name is required.</value>
+  </data>
+  <data name="FileUploadError" xml:space="preserve">
+    <value>File upload error on file {0}.</value>
+  </data>
 </root>

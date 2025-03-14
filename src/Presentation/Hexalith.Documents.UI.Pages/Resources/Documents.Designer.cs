@@ -22,7 +22,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Documents {
+    public class Documents {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hexalith.Documents.UI.Pages.Resources.Documents", typeof(Documents).Assembly);
@@ -51,7 +51,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Document [0}.
         /// </summary>
-        internal static string AddTitle {
+        public static string AddTitle {
             get {
                 return ResourceManager.GetString("AddTitle", resourceCulture);
             }
@@ -72,16 +72,25 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Browse.
         /// </summary>
-        internal static string Browse {
+        public static string Browse {
             get {
                 return ResourceManager.GetString("Browse", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The document container is required..
+        /// </summary>
+        public static string ContainerRequired {
+            get {
+                return ResourceManager.GetString("ContainerRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documents_{0}.
         /// </summary>
-        internal static string DataFileName {
+        public static string DataFileName {
             get {
                 return ResourceManager.GetString("DataFileName", resourceCulture);
             }
@@ -90,7 +99,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Documents in {0}.
         /// </summary>
-        internal static string DocumentsInContainer {
+        public static string DocumentsInContainer {
             get {
                 return ResourceManager.GetString("DocumentsInContainer", resourceCulture);
             }
@@ -99,7 +108,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Cancelled.
         /// </summary>
-        internal static string FileCancelled {
+        public static string FileCancelled {
             get {
                 return ResourceManager.GetString("FileCancelled", resourceCulture);
             }
@@ -108,7 +117,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Content type.
         /// </summary>
-        internal static string FileContentType {
+        public static string FileContentType {
             get {
                 return ResourceManager.GetString("FileContentType", resourceCulture);
             }
@@ -117,7 +126,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Error message.
         /// </summary>
-        internal static string FileErrorMessage {
+        public static string FileErrorMessage {
             get {
                 return ResourceManager.GetString("FileErrorMessage", resourceCulture);
             }
@@ -126,7 +135,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Index.
         /// </summary>
-        internal static string FileIndex {
+        public static string FileIndex {
             get {
                 return ResourceManager.GetString("FileIndex", resourceCulture);
             }
@@ -135,7 +144,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Last modified.
         /// </summary>
-        internal static string FileLastModified {
+        public static string FileLastModified {
             get {
                 return ResourceManager.GetString("FileLastModified", resourceCulture);
             }
@@ -144,7 +153,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
-        internal static string FileName {
+        public static string FileName {
             get {
                 return ResourceManager.GetString("FileName", resourceCulture);
             }
@@ -153,25 +162,52 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Size.
         /// </summary>
-        internal static string FileSize {
+        public static string FileSize {
             get {
                 return ResourceManager.GetString("FileSize", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File upload error on file {0}..
+        /// </summary>
+        public static string FileUploadError {
+            get {
+                return ResourceManager.GetString("FileUploadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documents.
         /// </summary>
-        internal static string ListTitle {
+        public static string ListTitle {
             get {
                 return ResourceManager.GetString("ListTitle", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The document name is required..
+        /// </summary>
+        public static string NameRequired {
+            get {
+                return ResourceManager.GetString("NameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No changes to apply..
+        /// </summary>
+        public static string NoChanges {
+            get {
+                return ResourceManager.GetString("NoChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parent document.
         /// </summary>
-        internal static string ParentDocument {
+        public static string ParentDocument {
             get {
                 return ResourceManager.GetString("ParentDocument", resourceCulture);
             }
@@ -180,7 +216,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Document summary.
         /// </summary>
-        internal static string Summary {
+        public static string Summary {
             get {
                 return ResourceManager.GetString("Summary", resourceCulture);
             }
@@ -189,16 +225,25 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Add a new document.
         /// </summary>
-        internal static string Title {
+        public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The document type is required..
+        /// </summary>
+        public static string TypeRequired {
+            get {
+                return ResourceManager.GetString("TypeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload.
         /// </summary>
-        internal static string UploadTitle {
+        public static string UploadTitle {
             get {
                 return ResourceManager.GetString("UploadTitle", resourceCulture);
             }
@@ -207,7 +252,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Drag files here you wish to upload or browse for them by clicking in this zone..
         /// </summary>
-        internal static string UploadZoneMessage {
+        public static string UploadZoneMessage {
             get {
                 return ResourceManager.GetString("UploadZoneMessage", resourceCulture);
             }
