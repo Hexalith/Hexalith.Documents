@@ -29,8 +29,6 @@ using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.Requests.FileTypes;
 using Hexalith.Documents.Servers.Helpers;
 using Hexalith.Extensions.Configuration;
-using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
-using Hexalith.Infrastructure.AzureBlobStorage.Services;
 using Hexalith.Infrastructure.CosmosDb.Configurations;
 using Hexalith.Infrastructure.DaprRuntime.Actors;
 using Hexalith.Infrastructure.DaprRuntime.Helpers;
@@ -83,7 +81,6 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
             .ConfigureSettings<CosmosDbSettings>(configuration)
             .ConfigureSettings<AzureBlobFileServiceSettings>(configuration);
 
-        _ = services.AddScoped<IFileService, AzureBlobStorageFileService>();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
         HexalithDocumentsRequests.RegisterPolymorphicMappers();

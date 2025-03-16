@@ -83,6 +83,7 @@ public static class DocumentsWebApiHelpers
         _ = services.AddTransient<GoogleDriveStorage>();
         _ = services.AddTransient<AwsS3BucketStorage>();
         _ = services.AddTransient<SharepointStorage>();
+        _ = services.AddScoped<IFileService, DocumentFileService>();
         return services;
     }
 }

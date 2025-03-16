@@ -6,7 +6,6 @@ using System.Reflection;
 using Dapr.Actors.Runtime;
 
 using Hexalith.Application.Modules.Modules;
-using Hexalith.Application.Services;
 using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Commands.Extensions;
@@ -17,8 +16,6 @@ using Hexalith.Documents.Servers.Helpers;
 using Hexalith.Documents.UI.Pages.Modules;
 using Hexalith.Documents.WebServer.Controllers;
 using Hexalith.Extensions.Configuration;
-using Hexalith.Infrastructure.AzureBlobStorage.Configurations;
-using Hexalith.Infrastructure.AzureBlobStorage.Services;
 using Hexalith.Infrastructure.CosmosDb.Configurations;
 
 using Microsoft.AspNetCore.Authorization;
@@ -84,7 +81,6 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
             .AddDocumentsRequestHandlers()
             .AddDocumentProjections();
 
-        _ = services.AddScoped<IFileService, AzureBlobStorageFileService>();
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();
         HexalithDocumentsRequests.RegisterPolymorphicMappers();

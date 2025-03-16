@@ -11,15 +11,13 @@ using Microsoft.Extensions.Logging;
 /// <summary>
 /// Provides methods for file system storage operations.
 /// </summary>
-public partial class FileSystemStorage
+/// <remarks>
+/// Initializes a new instance of the <see cref="FileSystemStorage"/> class.
+/// </remarks>
+/// <param name="logger">The logger instance.</param>
+public partial class FileSystemStorage(ILogger<FileSystemStorage> logger)
 {
-    private readonly ILogger _logger;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="FileSystemStorage"/> class.
-    /// </summary>
-    /// <param name="logger">The logger instance.</param>
-    public FileSystemStorage(ILogger<FileSystemStorage> logger) => _logger = logger;
+    private readonly ILogger _logger = logger;
 
     /// <summary>
     /// Creates a writable file asynchronously.
