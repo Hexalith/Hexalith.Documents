@@ -1,5 +1,6 @@
 ﻿namespace Hexalith.Documents.Application.DataManagements;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -33,20 +34,17 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
 {
     private readonly IDomainCommandProcessor _commandProcessor;
     private readonly IRequestProcessor _requestProcessor;
-    private readonly IUserDataService _userDataService;
     private readonly IWritableFileProvider _writableFileProvider;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ExportRequestDataToDocumentHandler"/> class.
     /// </summary>
-    /// <param name="userDataService">The user data service.</param>
     /// <param name="requestProcessor">The request processor.</param>
     /// <param name="commandProcessor">The command processor.</param>
     /// <param name="writableFileProvider">The writable file provider.</param>
     /// <param name="timeProvider">The time provider.</param>
     /// <param name="logger">The logger.</param>
     public ExportRequestDataToDocumentHandler(
-        IUserDataService userDataService,
         IRequestProcessor requestProcessor,
         IDomainCommandProcessor commandProcessor,
         IWritableFileProvider writableFileProvider,
@@ -55,15 +53,16 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         : base(timeProvider, logger)
     {
         ArgumentNullException.ThrowIfNull(requestProcessor);
-        ArgumentNullException.ThrowIfNull(userDataService);
         ArgumentNullException.ThrowIfNull(commandProcessor);
-        _userDataService = userDataService;
         _requestProcessor = requestProcessor;
         _commandProcessor = commandProcessor;
         _writableFileProvider = writableFileProvider;
     }
 
     /// <inheritdoc/>
+    [SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "Async using not compatible")]
+    [SuppressMessage("Minor Code Smell", "S2221:\"Exception\" should not be caught", Justification = "Need to capture all errors")]
+    [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Need to capture all errors")]
     public override async Task<ExecuteCommandResult> DoAsync(ExportRequestDataToDocument command, Metadata metadata, IDomainAggregate? aggregate, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(command);
@@ -78,21 +77,20 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                 cancellationToken)
             .ConfigureAwait(false) as GetDocumentStorage)?.Result;
         DataExportStarted exportStarted = new(command.Id, now);
-        aggregate = new DataManagement(exportStarted);
+        IDomainAggregate newAggregate = new DataManagement(exportStarted);
         if (documentPartition is null)
         {
             return new ExecuteCommandResult(
-                aggregate,
+                newAggregate,
                 [],
                 [new DomainEventCancelled(
                 "Document partition not found",
                 new MessageState(exportStarted, metadata))],
                 true);
         }
-#pragma warning disable CA1031 // Do not catch general exception types
+
         try
         {
-#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
             await using IWritableFile file = await _writableFileProvider.CreateFileAsync(
                 documentPartition.StorageType,
                 documentPartition.ConnectionString,
@@ -100,7 +98,6 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                 fileName,
                 [],
                 cancellationToken);
-#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
             object? request = command.RequestObject;
             if (request is IChunkableRequest chunkedRequest && chunkedRequest.Take > 0)
             {
@@ -128,7 +125,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                     command.Id,
                     size,
                     Time.GetLocalNow());
-            aggregate = aggregate.Apply(exportCompleted).Aggregate;
+            newAggregate = newAggregate.Apply(exportCompleted).Aggregate;
             AddDocument addDocument = new(
                 command.Id,
                 command.Id,
@@ -140,7 +137,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                 "Export");
             await _commandProcessor.SubmitAsync(addDocument, Metadata.CreateNew(addDocument, metadata, now), cancellationToken).ConfigureAwait(false);
             return new ExecuteCommandResult(
-                aggregate,
+                newAggregate,
                 [exportStarted, exportCompleted],
                 [exportStarted, exportCompleted],
                 false);
@@ -148,14 +145,13 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         catch (Exception ex)
         {
             return new ExecuteCommandResult(
-                aggregate,
+                newAggregate,
                 [],
                 [new DomainEventCancelled(
                     ex.FullMessage(),
                     new MessageState(exportStarted, metadata))],
                 true);
         }
-#pragma warning restore CA1031 // Do not catch general exception types
     }
 
     private static string GetDocumentContainerId(string userId) => "User-" + userId;
@@ -170,7 +166,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
     {
         if (data is null)
         {
-            stream.Write(Encoding.UTF8.GetBytes("{}"));
+            await stream.WriteAsync(Encoding.UTF8.GetBytes("{}"), cancellationToken).ConfigureAwait(false);
             return;
         }
 
@@ -203,14 +199,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         if (firstItem is not null)
         {
             Type type;
-            if (firstItem is PolymorphicRecordBase)
-            {
-                type = typeof(IEnumerable<PolymorphicRecordBase>);
-            }
-            else
-            {
-                type = typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
-            }
+            type = firstItem is PolymorphicRecordBase ? typeof(IEnumerable<PolymorphicRecordBase>) : typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
 
             await JsonSerializer.SerializeAsync(
                     stream,
@@ -223,7 +212,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         {
             await JsonSerializer.SerializeAsync<IEnumerable<object>>(
                     stream,
-                    Array.Empty<object>(),
+                    [],
                     JsonSerializerOptions.Default,
                     cancellationToken)
                 .ConfigureAwait(false);
@@ -282,7 +271,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
     /// <param name="cancellationToken">The cancellation token.</param>
     private async Task WriteRequestChunksResultAsync(IWritableFile file, IChunkableRequest initialRequest, Metadata metadata, CancellationToken cancellationToken)
     {
-        file.Stream.Write(Encoding.UTF8.GetBytes("[\n"));
+        await file.Stream.WriteAsync(Encoding.UTF8.GetBytes("[\n"), cancellationToken).ConfigureAwait(false);
         IChunkableRequest? request = initialRequest;
         bool first = true;
         do
@@ -299,22 +288,15 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                 }
                 else
                 {
-                    file.Stream.Write(Encoding.UTF8.GetBytes(",\n"));
+                    await file.Stream.WriteAsync(Encoding.UTF8.GetBytes(",\n"), cancellationToken).ConfigureAwait(false);
                 }
 
                 await WriteRequestResultAsync(file.Stream, result, cancellationToken).ConfigureAwait(false);
             }
 
-            if (request.HasNextChunk)
-            {
-                request = request.CreateNextChunkRequest();
-            }
-            else
-            {
-                request = null;
-            }
+            request = request.HasNextChunk ? request.CreateNextChunkRequest() : null;
         }
         while (request is not null);
-        file.Stream.Write(Encoding.UTF8.GetBytes("\n]"));
+        await file.Stream.WriteAsync(Encoding.UTF8.GetBytes("\n]"), cancellationToken).ConfigureAwait(false);
     }
 }

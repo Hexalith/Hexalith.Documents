@@ -39,7 +39,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <NoWarn>MA0101;S112;CA2201;S1451;SA1609;S4055;SA1633;SA1627;S113;</NoWarn>
+    <NoWarn>MA0101;S112;CA2201;S1451;SA1609;S4055;SA1633;SA1627;S113;S1309;</NoWarn>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
@@ -59,6 +59,7 @@
     <MicrosoftVisualStudioThreadingAnalyzersVersion>17.13.2</MicrosoftVisualStudioThreadingAnalyzersVersion>
     <MoqVersion>4.20.72</MoqVersion>
     <MoqContribHttpClientVersion>1.4.0</MoqContribHttpClientVersion>
+    <SonarAnalyzerCSharpVersion>10.7.0.110445</SonarAnalyzerCSharpVersion>
     <StyleCopAnalyzersVersion>1.2.0-beta.556</StyleCopAnalyzersVersion>
     <XUnitRunnerVisualStudioVersion>3.0.2</XUnitRunnerVisualStudioVersion>
     <XUnitVersion>2.9.3</XUnitVersion>
