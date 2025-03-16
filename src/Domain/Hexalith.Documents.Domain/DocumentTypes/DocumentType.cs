@@ -3,7 +3,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Events.DocumentTypes;
 using Hexalith.Documents.Events.FileTypes;
@@ -82,6 +81,7 @@ public record DocumentType(
     /// <param name="domainEvent">The domain event to apply.</param>
     /// <returns>An <see cref="ApplyResult"/> containing the updated state and any resulting events.</returns>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="domainEvent"/> is null.</exception>
+    [SuppressMessage("Critical Code Smell", "S1541:Methods and properties should not be too complex", Justification = "This method is not complex")]
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);

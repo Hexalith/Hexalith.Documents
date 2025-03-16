@@ -3,7 +3,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-using Hexalith.Documents.Domain;
 using Hexalith.Documents.Events.FileTypes;
 using Hexalith.Domain.Aggregates;
 
@@ -75,9 +74,9 @@ public record FileType(
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (Disabled && domainEvent is not FileTypeEnabled and not FileTypeDisabled)
+        if (domainEvent is FileTypeEvent && domainEvent is not FileTypeEnabled or FileTypeDisabled && Disabled)
         {
-            return ApplyResult.Error(this, "Cannot apply changes to a disabled file type.");
+            return ApplyResult.Error(this, "Cannot change a disabled file type.");
         }
 
         if (!(this as IDomainAggregate).IsInitialized() && domainEvent is not FileTypeAdded)

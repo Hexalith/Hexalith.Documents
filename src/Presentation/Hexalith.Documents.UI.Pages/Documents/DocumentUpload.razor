@@ -1,8 +1,6 @@
 ﻿@page "/Documents/Upload/Document/{DocumentContainerId}"
 @page "/Documents/Upload/Document"
 @using FluentValidation
-@using Hexalith.Application.Services
-@using Hexalith.Documents.Application.Services
 @using Hexalith.Documents.Requests.DocumentContainers
 @using Hexalith.Documents.Requests.DocumentTypes
 @using Hexalith.Documents.Requests.FileTypes
@@ -11,7 +9,7 @@
 @inject TimeProvider TimeService
 @inject IStringLocalizer<Labels> L
 @inject IValidator<AddDocument> AddDocumentValidator
-@inject IFileService FileUploadService
+@inject IDocumentUploadService DocumentUploadService
 @inject IToastService ToastService
 @rendermode InteractiveServer
 
@@ -95,7 +93,7 @@
 	[Parameter]
 	public string? DocumentContainerId { get; set; }
 
-	int ProgressPercent = 0;
+	int ProgressPercent;
 
 	private ClaimsPrincipal? _user;
 	private DocumentEditViewModel _data = new();
@@ -112,6 +110,10 @@
 
 	async Task OnFileUploadedAsync(FluentInputFileEventArgs file)
 	{
+		if (_data is null || _user is null || string.IsNullOrWhiteSpace(_user.Identity?.Name))
+		{
+			return;
+		}
 		progressPercent = file.ProgressPercent;
 		progressTitle = file.ProgressTitle;
 		if (string.IsNullOrWhiteSpace(_data.Name))
@@ -120,7 +122,9 @@
 		}
 		ValidationResult = new DocumentEditValidation(L).Validate(_data);
 		if (!ValidationResult.IsValid)
+		{
 			return;
+		}
 		if (file.Stream is null || file.IsCancelled)
 		{
 			file.IsCancelled = true;
@@ -141,16 +145,20 @@
 			file.Name,
 			file.Size,
 			file.ContentType);
+		var correlationId = UniqueIdHelper.GenerateUniqueStringId();
 		try
 		{
 			// Save the file to the server
-			await FileUploadService.UploadAsync(
+			await DocumentUploadService.UploadDocumentAsync(
+				correlationId,
+				_user.Identity.Name,
 				_data.DocumentContainerId!,
+				_data.Id,
 				_data.DocumentTypeId!,
-				_data.Id!,
-				UniqueIdHelper.GenerateUniqueStringId(),
+				fileTypeId,
+				file.Name,
+				[],
 				file.Stream,
-				new Dictionary<string, string>(),
 				CancellationToken.None);
 
 			_data.Files = _data.Files.Append(fileDescription);
