@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Events.DocumentTypes;
-using Hexalith.Documents.Events.FileTypes;
 using Hexalith.Domain.Aggregates;
 
 /// <summary>
@@ -91,7 +90,7 @@ public record DocumentType(
             return ApplyResult.Error(this, "Cannot apply changes to a disabled document type.");
         }
 
-        if (!(this as IDomainAggregate).IsInitialized() && domainEvent is not FileTypeAdded)
+        if (!(this as IDomainAggregate).IsInitialized() && domainEvent is not DocumentTypeAdded)
         {
             return ApplyResult.Error(this, "Cannot apply changes to an uninitialized document type.");
         }
