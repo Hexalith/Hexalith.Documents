@@ -53,6 +53,7 @@ public sealed class DocumentEditViewModel : IIdDescription
         Disabled = details.Disabled;
         Original = details;
         SelectedFileTypes = [.. fileTypes];
+        Files = details.Files;
     }
 
     /// <summary>
@@ -134,7 +135,7 @@ public sealed class DocumentEditViewModel : IIdDescription
     /// <summary>
     /// Gets or sets the file description.
     /// </summary>
-    public IEnumerable<FileDescription> Files { get; set; } = [];
+    public IEnumerable<FileDescription> Files { get; set; }
 
     /// <summary>
     /// Gets or sets the from contact ID.
@@ -240,14 +241,7 @@ public sealed class DocumentEditViewModel : IIdDescription
 
         DocumentDetailsViewModel details;
 
-        if (!string.IsNullOrWhiteSpace(id))
-        {
-            details = await requestService.GetDocumentDetailsAsync(id, user, cancellationToken).ConfigureAwait(false);
-        }
-        else
-        {
-            details = DocumentDetailsViewModel.Create(id, containerId);
-        }
+        details = !string.IsNullOrWhiteSpace(id) ? await requestService.GetDocumentDetailsAsync(id, user, cancellationToken).ConfigureAwait(false) : DocumentDetailsViewModel.Create(id, containerId);
 
         Task<DocumentContainerDetailsViewModel?> containerTask = requestService
             .FindDocumentContainerDetailsAsync(details.Description.DocumentContainerId, user, cancellationToken);

@@ -61,7 +61,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document [0}.
+        ///   Looks up a localized string similar to Add a new document.
         /// </summary>
         public static string AddTitle {
             get {
@@ -214,7 +214,7 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new document.
+        ///   Looks up a localized string similar to Document {0}.
         /// </summary>
         public static string Title {
             get {

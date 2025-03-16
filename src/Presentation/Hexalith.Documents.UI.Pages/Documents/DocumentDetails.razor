@@ -1,6 +1,5 @@
 ﻿@page "/Documents/Add/Document"
 @page "/Documents/Document/{Id}"
-@using Hexalith.Documents.Requests.DocumentContainers
 @using Hexalith.Documents.UI.Components.DocumentContainers
 @using Hexalith.Documents.UI.Components.DocumentTypes
 @inject TimeProvider TimeService
@@ -11,11 +10,11 @@
 <FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
 	@if (Id is null) // Add
 	{
-		<FluentLabel Typo="Typography.PageTitle">@Labels.AddTitle</FluentLabel>
+		<FluentLabel Typo="Typography.PageTitle">@L[nameof(Labels.AddTitle)]</FluentLabel>
 	}
 	else // Edit
 	{
-		<FluentLabel Typo="Typography.PageTitle">@string.Format(Labels.Title, Id)</FluentLabel>
+		<FluentLabel Typo="Typography.PageTitle">@L[nameof(Labels.Title), Id]</FluentLabel>
 	}
 	@if (_data is not null)
 	{
@@ -33,10 +32,10 @@
 				</FluentGridItem>
 			}
 			<FluentGridItem xs="12" md="6">
-				<HexCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexCommentsField>
+				<HexCommentsField Style="width:100%;" @bind-Value="_data.Comments" Rows="5"></HexCommentsField>
 			</FluentGridItem>
 			<FluentGridItem xs="12" md="6">
-				<FluentTextArea Style="width:100%;" @bind-Value="_data.Summary" Label="@Labels.Summary"></FluentTextArea>
+				<FluentTextArea Style="width:100%;" @bind-Value="_data.Summary" Label="@Labels.Summary" Rows="5"></FluentTextArea>
 			</FluentGridItem>
 			<FluentGridItem xs="12" md="3">
 				<DocumentContainerAutocomplete SelectedOptions="_data.DocumentContainer" SelectedOptionsChanged="OnDocumentContainerChanged" />
@@ -47,6 +46,17 @@
 			<FluentGridItem xs="12" md="3">
 				<DocumentAutocomplete @bind-SelectedOptions="_data.ParentDocument" Label="@(L[nameof(Labels.ParentDocument)])" />
 			</FluentGridItem>
+			@if (_data.Files.Any())
+			{
+				<FluentGridItem xs="12" md="12">
+					<FluentDataGrid Items="@_data.Files.AsQueryable()">
+						<PropertyColumn Property="@(p => p.Id)" Title="@(L[Labels.FileId])" Sortable="true" />
+						<PropertyColumn Property="@(p => p.Name)" Title="@(L[Labels.FileName])" Sortable="true" />
+						<PropertyColumn Property="@(p => p.Size)" Title="@(L[Labels.FileSize])" Sortable="true" />
+						<PropertyColumn Property="@(p => p.FileTypeId)" Title="@(L[Labels.FileType])" Sortable="true" />
+					</FluentDataGrid>
+				</FluentGridItem>
+			}
 			<FluentGridItem md="12">
 				<HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
 			</FluentGridItem>
@@ -68,7 +78,7 @@
 	public string? Id { get; set; }
 
 	private ClaimsPrincipal? _user;
-	private DocumentEditViewModel _data;
+	private DocumentEditViewModel? _data;
 
 	private ValidationResult? ValidationResult;
 
@@ -87,7 +97,7 @@
 		{
 			return;
 		}
-		await DocumentEditViewModel.CreateAsync(Id, null, _user, RequestService, CancellationToken.None);
+		_data = await DocumentEditViewModel.CreateAsync(Id, null, _user, RequestService, CancellationToken.None);
 	}
 
 	private async Task OnSave()
