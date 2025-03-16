@@ -78,8 +78,7 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
     {
         ArgumentNullException.ThrowIfNull(services);
         _ = services
-            .ConfigureSettings<CosmosDbSettings>(configuration)
-            .ConfigureSettings<AzureBlobFileServiceSettings>(configuration);
+            .ConfigureSettings<CosmosDbSettings>(configuration);
 
         HexalithDocumentsEvents.RegisterPolymorphicMappers();
         HexalithDocumentsCommands.RegisterPolymorphicMappers();

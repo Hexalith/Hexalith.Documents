@@ -70,8 +70,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     {
         ArgumentNullException.ThrowIfNull(services);
         _ = services
-            .ConfigureSettings<CosmosDbSettings>(configuration)
-            .ConfigureSettings<AzureBlobFileServiceSettings>(configuration);
+            .ConfigureSettings<CosmosDbSettings>(configuration);
 
         _ = services
             .AddDocumentStorage()
