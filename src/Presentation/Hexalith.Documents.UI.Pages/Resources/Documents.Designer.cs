@@ -106,47 +106,11 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancelled.
+        ///   Looks up a localized string similar to Identifier.
         /// </summary>
-        public static string FileCancelled {
+        public static string FileId {
             get {
-                return ResourceManager.GetString("FileCancelled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Content type.
-        /// </summary>
-        public static string FileContentType {
-            get {
-                return ResourceManager.GetString("FileContentType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error message.
-        /// </summary>
-        public static string FileErrorMessage {
-            get {
-                return ResourceManager.GetString("FileErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Index.
-        /// </summary>
-        public static string FileIndex {
-            get {
-                return ResourceManager.GetString("FileIndex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Last modified.
-        /// </summary>
-        public static string FileLastModified {
-            get {
-                return ResourceManager.GetString("FileLastModified", resourceCulture);
+                return ResourceManager.GetString("FileId", resourceCulture);
             }
         }
         
@@ -165,6 +129,15 @@ namespace Hexalith.Documents.UI.Pages.Resources {
         public static string FileSize {
             get {
                 return ResourceManager.GetString("FileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File type.
+        /// </summary>
+        public static string FileType {
+            get {
+                return ResourceManager.GetString("FileType", resourceCulture);
             }
         }
         

@@ -147,8 +147,8 @@
   <data name="Browse" xml:space="preserve">
     <value>Explorer</value>
   </data>
-  <data name="FileIndex" xml:space="preserve">
-    <value>Index</value>
+  <data name="FileId" xml:space="preserve">
+    <value>Identifiant</value>
   </data>
   <data name="FileName" xml:space="preserve">
     <value>Nom</value>
@@ -156,17 +156,8 @@
   <data name="FileSize" xml:space="preserve">
     <value>Taille</value>
   </data>
-  <data name="FileContentType" xml:space="preserve">
+  <data name="FileType" xml:space="preserve">
     <value>Type de fichier</value>
-  </data>
-  <data name="FileLastModified" xml:space="preserve">
-    <value>Dernière modification</value>
-  </data>
-  <data name="FileCancelled" xml:space="preserve">
-    <value>Annulé</value>
-  </data>
-  <data name="FileErrorMessage" xml:space="preserve">
-    <value>Message d'erreur</value>
   </data>
   <data name="NoChanges" xml:space="preserve">
     <value>Il n'y pas de changements à enregistrer.</value>

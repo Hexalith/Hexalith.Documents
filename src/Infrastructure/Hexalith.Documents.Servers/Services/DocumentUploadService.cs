@@ -81,7 +81,7 @@ public partial class DocumentUploadService : IDocumentUploadService
         Task<FileType> fileTypeTask = GetFileTypeAsync(fileTypeId, session.PartitionId, cancellationToken);
         DocumentContainer container = await GetContainerAsync(documentContainerId, session.PartitionId, cancellationToken).ConfigureAwait(false);
         DocumentStorage storage = await GetStorageAsync(container.DocumentStorageId, session.PartitionId, cancellationToken).ConfigureAwait(false);
-        string path = Path.GetFullPath(Path.Combine(container.Path, documentId));
+        string path = Path.Combine(container.Path, documentId);
         FileType fileType = await fileTypeTask.ConfigureAwait(false);
         DocumentType documentType = await documentTypeTask.ConfigureAwait(false);
         IEnumerable<DocumentTag> fileTags = [
@@ -108,7 +108,7 @@ public partial class DocumentUploadService : IDocumentUploadService
                 fileTags.Select(t => (t.Key, t.Value)),
                 cancellationToken).ConfigureAwait(false);
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-        await file.Stream.CopyToAsync(fileContent, cancellationToken).ConfigureAwait(false);
+        await fileContent.CopyToAsync(file.Stream, cancellationToken).ConfigureAwait(false);
         _ = await file.CloseAsync(cancellationToken).ConfigureAwait(false);
         LogFileUploadedInformation(_logger, userId, documentId, fileName, path, session.PartitionId);
     }

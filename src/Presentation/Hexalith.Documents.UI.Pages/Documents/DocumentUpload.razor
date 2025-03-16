@@ -20,13 +20,13 @@
 		<DocumentContainerAutocomplete Disabled="@(DocumentContainerId is not null)"
 									   MaximumSelectedOptions="1"
 									   SelectedOptions="_data.DocumentContainer"
-									   SelectedOptionsChanged="OnDocumentContainerChanged"
+									   SelectedOptionsChanged="OnDocumentContainerChangedAsync"
 									   OnOptionsSearch="OnDocumentContainerSearchAsync" />
 	</FluentGridItem>
 	<FluentGridItem xs="12" md="4">
 		<DocumentTypeAutocomplete MaximumSelectedOptions="1"
 								  SelectedOptions="_data.DocumentType"
-								  SelectedOptionsChanged="OnDocumentTypeChanged"
+								  SelectedOptionsChanged="OnDocumentTypeChangedAsync"
 								  OnOptionsSearch="OnDocumentTypeSearchAsync" />
 	</FluentGridItem>
 	<FluentGridItem xs="12" md="4">
@@ -64,20 +64,17 @@
 				</ChildContent>
 			</FluentInputFile>
 		</FluentGridItem>
-		@if (Files.Any())
+		@if (_data.Files.Any())
 		{
 			<FluentGridItem xs="12" md="12">
-				<FluentDataGrid Items="@Files.AsQueryable()">
-					<PropertyColumn Property="@(p => p.Index)" Title="@(L[Labels.FileIndex])" Sortable="true" />
+				<FluentDataGrid Items="@_data.Files.AsQueryable()">
+					<PropertyColumn Property="@(p => p.Id)" Title="@(L[Labels.FileId])" Sortable="true" />
 					<PropertyColumn Property="@(p => p.Name)" Title="@(L[Labels.FileName])" Sortable="true" />
 					<PropertyColumn Property="@(p => p.Size)" Title="@(L[Labels.FileSize])" Sortable="true" />
-					<PropertyColumn Property="@(p => p.ContentType)" Title="@(L[Labels.FileContentType])" Sortable="true" />
-					<PropertyColumn Property="@(p => p.LastModified)" Title="@(L[Labels.FileLastModified])" Sortable="true" Format="yyyy-MM-dd HH:mm" />
-					<PropertyColumn Property="@(p => p.IsCancelled)" Title="@(L[Labels.FileCancelled])" Sortable="true" />
-					<PropertyColumn Property="@(p => p.ErrorMessage)" Title="@(L[Labels.FileErrorMessage])" Sortable="true" />
+					<PropertyColumn Property="@(p => p.FileTypeId)" Title="@(L[Labels.FileType])" Sortable="true" />
 				</FluentDataGrid>
 				<br />
-				<HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
+				<HexSaveButton Appearance="Appearance.Accent" OnClick="OnSaveAsync" />
 			</FluentGridItem>
 		}
 	}
@@ -101,8 +98,6 @@
 	private string _accept = "";
 
 	private ValidationResult? ValidationResult;
-
-	FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
 
 	int? progressPercent;
 	string? progressTitle;
@@ -138,13 +133,6 @@
 			ToastService.ShowError(L[nameof(Labels.FileTypeNotSupported), file.Name, file.ContentType, _data.FileContentTypes]);
 			return;
 		}
-		FileDescription fileDescription = new FileDescription(
-			UniqueIdHelper.GenerateUniqueStringId(),
-			fileTypeId,
-			file.Name,
-			file.Name,
-			file.Size,
-			file.ContentType);
 		var correlationId = UniqueIdHelper.GenerateUniqueStringId();
 		try
 		{
@@ -161,8 +149,15 @@
 				file.Stream,
 				CancellationToken.None);
 
-			_data.Files = _data.Files.Append(fileDescription);
-			await file.Stream.DisposeAsync();
+			FileDescription fileDescription = new FileDescription(
+			UniqueIdHelper.GenerateUniqueStringId(),
+			fileTypeId,
+			file.Name,
+			file.Name,
+			file.Size,
+			file.ContentType);
+			_data.Files = [.._data.Files, fileDescription];
+			StateHasChanged();
 		}
 		catch (Exception e)
 		{
@@ -240,7 +235,7 @@
 		}
 	}
 
-	private async Task OnSave()
+	private async Task OnSaveAsync()
 	{
 		if (
 			_data is null ||
@@ -275,10 +270,9 @@
 
 		// Reset the form
 		_data = await DocumentEditViewModel.CreateAsync(null, DocumentContainerId, _user, RequestService, CancellationToken.None);
-		Files = Array.Empty<FluentInputFileEventArgs>();
 	}
 
-	private async Task OnDocumentContainerChanged(IEnumerable<Option<string>>? options)
+	private async Task OnDocumentContainerChangedAsync(IEnumerable<Option<string>>? options)
 	{
 		if (_data is null || _user is null)
 		{
@@ -291,7 +285,7 @@
 			CancellationToken.None);
 	}
 
-	private async Task OnDocumentTypeChanged(IEnumerable<Option<string>>? options)
+	private async Task OnDocumentTypeChangedAsync(IEnumerable<Option<string>>? options)
 	{
 		if (_data is null || _user is null)
 		{
