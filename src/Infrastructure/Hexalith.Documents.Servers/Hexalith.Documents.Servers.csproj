@@ -14,6 +14,7 @@
     <PackageReference Include="Hexalith.UI.Components.Abstractions" Version="$(HexalithVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Hexalith\src\Core\Application\Hexalith.Application.Sessions.Abstractions\Hexalith.Application.Sessions.Abstractions.csproj" />
     <ProjectReference Include="..\..\Application\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
     <ProjectReference Include="..\..\Application\Hexalith.Documents.Projections\Hexalith.Documents.Projections.csproj" />
     <ProjectReference Include="..\..\Application\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />

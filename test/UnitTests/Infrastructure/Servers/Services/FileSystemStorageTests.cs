@@ -43,7 +43,7 @@ public sealed class FileSystemStorageTests : IDisposable
         string storageRootPath = "/test";
 
         // Act
-        await using IWritableFile file = await _storage.CreateFileAsync(storageRootPath, path, fileName, CancellationToken.None);
+        await using IWritableFile file = await _storage.CreateFileAsync(storageRootPath, path, fileName, [], CancellationToken.None);
         file.Stream.Write(new ReadOnlySpan<byte>(System.Text.Encoding.UTF8.GetBytes("hello")));
 
         // Assert
@@ -63,7 +63,7 @@ public sealed class FileSystemStorageTests : IDisposable
         _ = await FluentActions
             .Awaiting(async () =>
             {
-                await using IWritableFile file = await _storage.CreateFileAsync("/test", "test", "file.txt", cts.Token);
+                await using IWritableFile file = await _storage.CreateFileAsync("/test", "test", "file.txt", [], cts.Token);
             })
             .Should()
             .ThrowAsync<OperationCanceledException>();
@@ -98,7 +98,7 @@ public sealed class FileSystemStorageTests : IDisposable
         _ = await FluentActions
             .Awaiting(async () =>
             {
-                await using IWritableFile file = await _storage.CreateFileAsync(storageRootPath, path, fileName, CancellationToken.None);
+                await using IWritableFile file = await _storage.CreateFileAsync(storageRootPath, path, fileName, [], CancellationToken.None);
             })
             .Should()
             .ThrowAsync<ArgumentException>()
@@ -118,7 +118,7 @@ public sealed class FileSystemStorageTests : IDisposable
             await FluentActions
                 .Awaiting(async () =>
                 {
-                    await using IWritableFile file = await _storage.CreateFileAsync("/test", path, fileName, CancellationToken.None);
+                    await using IWritableFile file = await _storage.CreateFileAsync("/test", path, fileName, [], CancellationToken.None);
                 })
                 .Should()
                 .ThrowAsync<ArgumentException>();
@@ -138,7 +138,7 @@ public sealed class FileSystemStorageTests : IDisposable
         _ = await FluentActions
             .Awaiting(async () =>
             {
-                await using IWritableFile file = await _storage.CreateFileAsync(storageRootPath, path, fileName, CancellationToken.None);
+                await using IWritableFile file = await _storage.CreateFileAsync(storageRootPath, path, fileName, [], CancellationToken.None);
             })
             .Should()
             .ThrowAsync<InvalidOperationException>()

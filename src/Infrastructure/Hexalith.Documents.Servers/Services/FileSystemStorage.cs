@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using System.Threading;
 
 using Hexalith.Documents.Application.Services;
@@ -25,19 +26,24 @@ public partial class FileSystemStorage(ILogger<FileSystemStorage> logger)
     /// <param name="storageRootPath">The root path of the storage.</param>
     /// <param name="path">The path where the file will be created.</param>
     /// <param name="fileName">The name of the file to be created.</param>
+    /// <param name="tags">The tags associated with the file.</param>
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the writable file.</returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The Stream is in the Scope of the returned IWritableFile object")]
-    public Task<IWritableFile> CreateFileAsync(string storageRootPath, string path, string fileName, CancellationToken cancellationToken)
+    public async Task<IWritableFile> CreateFileAsync(string storageRootPath, string path, string fileName, IEnumerable<(string Key, string? Value)> tags, CancellationToken cancellationToken)
     {
         string filePath = GetPath(storageRootPath, path, fileName, true);
 
         cancellationToken.ThrowIfCancellationRequested();
 
+        using StreamWriter tagsFile = File.CreateText(filePath + ".tags.json");
+        await tagsFile.WriteAsync(JsonSerializer.Serialize(tags)).ConfigureAwait(false);
+        tagsFile.Close();
+
         LogFileCreatedInformation(_logger, filePath);
 
         // Create the file.
-        return Task.FromResult<IWritableFile>(new StorageFile(File.Create(filePath), filePath));
+        return new StorageFile(File.Create(filePath), filePath);
     }
 
     /// <summary>

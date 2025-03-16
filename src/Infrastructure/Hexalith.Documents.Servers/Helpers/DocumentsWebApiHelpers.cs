@@ -1,6 +1,7 @@
 ﻿namespace Hexalith.Documents.Servers.Helpers;
 
 using Hexalith.Application.Services;
+using Hexalith.Documents.Application;
 using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Domain.DataManagements;
 using Hexalith.Documents.Domain.DocumentContainers;
@@ -83,7 +84,7 @@ public static class DocumentsWebApiHelpers
         _ = services.AddTransient<GoogleDriveStorage>();
         _ = services.AddTransient<AwsS3BucketStorage>();
         _ = services.AddTransient<SharepointStorage>();
-        _ = services.AddScoped<IFileService, DocumentFileService>();
+        _ = services.AddScoped<IDocumentUploadService, DocumentUploadService>();
         return services;
     }
 }

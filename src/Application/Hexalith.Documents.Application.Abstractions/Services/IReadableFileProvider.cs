@@ -16,5 +16,10 @@ public interface IReadableFileProvider
     /// <param name="fileName">The name of the file.</param>
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the readable file.</returns>
-    Task<IReadableFile> OpenFileAsync(DocumentStorageType storageType, string? connectionString, string path, string fileName, CancellationToken cancellationToken);
+    Task<IReadableFile> OpenFileAsync(
+        DocumentStorageType storageType,
+        string? connectionString,
+        string path,
+        string fileName,
+        CancellationToken cancellationToken);
 }

@@ -99,6 +99,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
                 documentPartition.ConnectionString,
                 container.Path,
                 fileName,
+                [],
                 cancellationToken);
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
             object? request = command.RequestObject;
