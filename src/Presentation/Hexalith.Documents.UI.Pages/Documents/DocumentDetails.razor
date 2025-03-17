@@ -123,8 +123,10 @@
 				_data.Files,
 				_user.Identity.Name,
 				TimeService.GetLocalNow(),
+				_data.ParentDocumentId,
 				_data.DocumentContainerId!,
-				_data.DocumentTypeId!);
+				_data.DocumentTypeId!,
+			_data.Tags);
 			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
 			_data = new();
 			StateHasChanged();

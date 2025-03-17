@@ -27,7 +27,9 @@ public static class DocumentQuickStartData
         "Test JSON document",
         [new FileDescription("test1.json", FileTypeQuickStartData.Json.Id, "test1.json", "Test 1.json", 556849L, "application/json")],
         "john.doe@test.com",
-        DateTimeOffset.UtcNow,
+        TimeProvider.System.GetUtcNow(),
+        null,
         "Triage",
-        "Unknown");
+        "Unknown",
+        []);
 }

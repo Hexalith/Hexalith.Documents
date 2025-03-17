@@ -133,8 +133,10 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                 [new FileDescription(command.Id, FileContentType.Json.Id, fileName, fileName, size, "application/json")],
                 metadata.Context.UserId,
                 now,
+                null,
                 container.Id,
-                "Export");
+                "Export",
+                []);
             await _commandProcessor.SubmitAsync(addDocument, Metadata.CreateNew(addDocument, metadata, now), cancellationToken).ConfigureAwait(false);
             return new ExecuteCommandResult(
                 newAggregate,

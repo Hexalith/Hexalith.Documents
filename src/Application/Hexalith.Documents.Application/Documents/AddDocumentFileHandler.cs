@@ -10,7 +10,6 @@ using Hexalith.Application.Events;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.Requests;
 using Hexalith.Application.States;
-using Hexalith.Documents.Application;
 using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Commands.DataManagements;
 using Hexalith.Documents.Commands.DocumentContainers;
@@ -137,8 +136,10 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
                 [new FileDescription(command.Id, FileContentType.Json.Id, fileName, fileName, size, "application/json")],
                 metadata.Context.UserId,
                 now,
+                null,
                 container.Id,
-                "Export");
+                "Export",
+                []);
             await _commandProcessor.SubmitAsync(addDocument, Metadata.CreateNew(addDocument, metadata, now), cancellationToken).ConfigureAwait(false);
             return new ExecuteCommandResult(
                 aggregate,
@@ -204,14 +205,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
         if (firstItem is not null)
         {
             Type type;
-            if (firstItem is PolymorphicRecordBase)
-            {
-                type = typeof(IEnumerable<PolymorphicRecordBase>);
-            }
-            else
-            {
-                type = typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
-            }
+            type = firstItem is PolymorphicRecordBase ? typeof(IEnumerable<PolymorphicRecordBase>) : typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
 
             await JsonSerializer.SerializeAsync(
                     stream,
@@ -306,14 +300,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
                 await WriteRequestResultAsync(file.Stream, result, cancellationToken).ConfigureAwait(false);
             }
 
-            if (request.HasNextChunk)
-            {
-                request = request.CreateNextChunkRequest();
-            }
-            else
-            {
-                request = null;
-            }
+            request = request.HasNextChunk ? request.CreateNextChunkRequest() : null;
         }
         while (request is not null);
         file.Stream.Write(Encoding.UTF8.GetBytes("\n]"));

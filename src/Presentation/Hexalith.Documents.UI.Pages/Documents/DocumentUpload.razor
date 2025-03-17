@@ -156,7 +156,7 @@
 			file.Name,
 			file.Size,
 			file.ContentType);
-			_data.Files = [.._data.Files, fileDescription];
+			_data.Files = [.. _data.Files, fileDescription];
 			StateHasChanged();
 		}
 		catch (Exception e)
@@ -261,8 +261,10 @@
 			_data.Files,
 			_user.Identity.Name,
 			TimeService.GetLocalNow(),
+			_data.ParentDocumentId,
 			_data.DocumentContainerId!,
-			_data.DocumentTypeId!),
+			_data.DocumentTypeId!,
+			_data.Tags),
 			CancellationToken.None);
 
 		// Reset the form

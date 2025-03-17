@@ -18,13 +18,15 @@ using Hexalith.PolymorphicSerialization;
 [PolymorphicSerialization]
 public partial record AddDocument(
     string Id,
-    [property: DataMember(Order = 1)] string Name,
-    [property: DataMember(Order = 2)] string? Comments,
-    [property: DataMember(Order = 3)] IEnumerable<FileDescription> Files,
-    [property: DataMember(Order = 4)] string OwnerId,
-    [property: DataMember(Order = 5)] DateTimeOffset CreatedOn,
-    [property: DataMember(Order = 6)] string DocumentContainerId,
-    [property: DataMember(Order = 7)] string DocumentTypeId)
+    [property: DataMember(Order = 2)] string Name,
+    [property: DataMember(Order = 3)] string? Comments,
+    [property: DataMember(Order = 4)] IEnumerable<FileDescription> Files,
+    [property: DataMember(Order = 5)] string OwnerId,
+    [property: DataMember(Order = 6)] DateTimeOffset CreatedOn,
+    [property: DataMember(Order = 7)] string? ParentDocumentId,
+    [property: DataMember(Order = 8)] string DocumentContainerId,
+    [property: DataMember(Order = 9)] string DocumentTypeId,
+    [property: DataMember(Order = 10)] IEnumerable<DocumentTag> Tags)
     : DocumentCommand(Id)
 {
 }

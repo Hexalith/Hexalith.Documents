@@ -27,8 +27,10 @@ public static class DocumentCommandHandlerHelper
                 c.Files,
                 c.OwnerId,
                 c.CreatedOn,
+                c.ParentDocumentId,
                 c.DocumentContainerId,
-                c.DocumentTypeId),
+                c.DocumentTypeId,
+                c.Tags),
                 ev => new Document((DocumentAdded)ev))
             .TryAddSimpleCommandHandler<EnableDocument>(c => new DocumentEnabled(c.Id))
             .TryAddSimpleCommandHandler<DisableDocument>(c => new DocumentDisabled(c.Id))
