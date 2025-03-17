@@ -1,11 +1,14 @@
 ﻿@using Hexalith.Application.Commands
 @using System.Security.Claims
+@using Hexalith.Application.Sessions.Services
 @using Hexalith.Documents.Commands.Documents
 @using Hexalith.Extensions.Helpers
 @inject IStringLocalizer<Labels> L
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
 @inject ICommandService CommandService
+@inject ISessionService SessionService
+@inject IToastService ToastService
 @inject TimeProvider TimeProvider
 <HexEntitySummaryGrid Items="Items"
 					  TIdDescription="DocumentSummaryViewModel"
@@ -49,29 +52,35 @@
 	[EditorRequired]
 	public required IQueryable<DocumentSummaryViewModel> Items { get; set; }
 
-	[Parameter]
-	[EditorRequired]
-	public EventCallback<string> CreateDocumentLink { get; set; }
-
 	private async Task OnCreateDocumentLinkAsync(string id)
 	{
-		if (User is null)
+		try
 		{
-			return;
-		}
-		var key = UniqueIdHelper.GenerateUniqueStringId();
-		await CommandService.SubmitCommandAsync(
-			User,
-			new AddDocumentAccessKey(
-				id,
-				new(key, TimeProvider.GetLocalNow().AddDays(90))),
-			CancellationToken.None);
-		// Create the download URL using the NavigationManager
-		var baseUri = NavigationManager.BaseUri;
-		var downloadUrl = $"{baseUri.TrimEnd('/')}documents/download/{id}/{key}";
+			if (User is null || string.IsNullOrWhiteSpace(User.Identity?.Name))
+			{
+				return;
+			}
+			var session = await SessionService.GetAsync(User.Identity.Name, CancellationToken.None);
+			var key = UniqueIdHelper.GenerateUniqueStringId();
+			await CommandService.SubmitCommandAsync(
+				User,
+				new AddDocumentAccessKey(
+					id,
+					new(key, TimeProvider.GetLocalNow().AddDays(90))),
+				CancellationToken.None);
+			// Create the download URL using the NavigationManager
+			var baseUri = NavigationManager.BaseUri;
+			var downloadUrl = $"{baseUri}documents/download/{session.PartitionId}/{id}/{key}";
 
-		// Use JSRuntime to copy the URL to clipboard
-		await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", downloadUrl);
+			// Use JSRuntime to copy the URL to clipboard
+			await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", downloadUrl);
+
+			ToastService.ShowSuccess(L[nameof(Labels.DownloadLinkCopiedToCliboard)]);
+		}
+		catch (Exception ex)
+		{
+			ToastService.ShowError(L[nameof(Labels.DownloadLinkFailed), ex.FullMessage()]);
+		}
 	}
 
 }

@@ -150,4 +150,10 @@
   <data name="Container" xml:space="preserve">
     <value>Emplacement</value>
   </data>
+  <data name="DownloadLinkCopiedToCliboard" xml:space="preserve">
+    <value>Le lien de téléchargement a été copiè dans le presse-papiers</value>
+  </data>
+  <data name="DownloadLinkFailed" xml:space="preserve">
+    <value>La création du lien de téléchargement à échoué : {0}</value>
+  </data>
 </root>

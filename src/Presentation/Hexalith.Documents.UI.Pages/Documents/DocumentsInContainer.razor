@@ -3,7 +3,7 @@
 
 @if (Documents is not null)
 {
-	<DocumentSummaryGrid Items="Documents.AsQueryable()" />
+	<DocumentSummaryGrid User="_user" Items="Documents.AsQueryable()" />
 }
 else
 {

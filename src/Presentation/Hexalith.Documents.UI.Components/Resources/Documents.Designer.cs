@@ -79,6 +79,24 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download link copied to cliboard.
+        /// </summary>
+        internal static string DownloadLinkCopiedToCliboard {
+            get {
+                return ResourceManager.GetString("DownloadLinkCopiedToCliboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download link creation failed : {0}.
+        /// </summary>
+        internal static string DownloadLinkFailed {
+            get {
+                return ResourceManager.GetString("DownloadLinkFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         internal static string Email {

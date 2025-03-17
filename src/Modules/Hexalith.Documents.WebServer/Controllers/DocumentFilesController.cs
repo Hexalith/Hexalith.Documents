@@ -1,7 +1,12 @@
 ﻿namespace Hexalith.Documents.WebServer.Controllers;
 
 using Hexalith.Application.Requests;
+using Hexalith.Application.Services;
 using Hexalith.Documents.Application.Services;
+using Hexalith.Documents.Domain.DocumentContainers;
+using Hexalith.Documents.Domain.Documents;
+using Hexalith.Documents.Domain.DocumentStorages;
+using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.Documents;
 using Hexalith.Documents.Requests.DocumentStorages;
@@ -99,6 +104,97 @@ public class DocumentFilesController : ControllerBase
         }
 
         Domain.ValueObjects.FileDescription fileDescription = document.Files.First();
+        IReadableFile file = await _readableFileProvider
+            .OpenFileAsync(
+                storage.StorageType,
+                storage.ConnectionString,
+                Path.Combine(container.Path, document.Id),
+                fileDescription.Name,
+                CancellationToken.None)
+            .ConfigureAwait(false);
+
+        return File(file.Stream, fileDescription.ContentType, fileDescription.Name);
+    }
+
+    /// <summary>
+    /// Downloads the file using an access key.
+    /// </summary>
+    /// <param name="partitionId">The partition ID.</param>
+    /// <param name="documentId">The document ID.</param>
+    /// <param name="key">The access key.</param>
+    /// <param name="aggregateService">The aggregate service.</param>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>The file to download.</returns>
+    [AllowAnonymous]
+    [HttpGet("download/{partitionId}/{documentId}/{key}")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "Avoid on async disposable")]
+    public async Task<IActionResult> DownloadFileAsync(
+        string partitionId,
+        string documentId,
+        string key,
+        [FromServices] IAggregateService aggregateService,
+        [FromServices] TimeProvider timeProvider)
+    {
+        if (string.IsNullOrWhiteSpace(partitionId))
+        {
+            return BadRequest("Partition identifier is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(documentId))
+        {
+            return BadRequest("Document identifier is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            return BadRequest("Document access key is required.");
+        }
+
+        Document? document = await aggregateService
+            .FindAsync(new Document() with { Id = documentId }, partitionId, CancellationToken.None);
+
+        if (document is null)
+        {
+            return NotFound("Document not found.");
+        }
+
+        if (!document.AccessKeys.Any(p => p.Key == key && p.ValidUntil > timeProvider.GetUtcNow()))
+        {
+            return Unauthorized("Access key is invalid or expired.");
+        }
+
+        if (!document.Files.Any())
+        {
+            return NotFound("Document does not contain any files.");
+        }
+
+        if (string.IsNullOrWhiteSpace(document.Description.DocumentContainerId))
+        {
+            return NotFound("The document container ID is not defined for this document. A valid container ID is required to retrieve the document file.");
+        }
+
+        DocumentContainer? container = await aggregateService
+            .FindAsync(new DocumentContainer() with { Id = document.Description.DocumentContainerId }, partitionId, CancellationToken.None);
+
+        if (container is null)
+        {
+            return NotFound($"Document container {document.Description.DocumentContainerId} not found.");
+        }
+
+        if (string.IsNullOrWhiteSpace(container.DocumentStorageId))
+        {
+            return NotFound("The document storage ID is not defined for this document. A valid storage ID is required to retrieve the document file.");
+        }
+
+        DocumentStorage? storage = await aggregateService
+            .FindAsync(new DocumentStorage() with { Id = container.DocumentStorageId }, partitionId, CancellationToken.None);
+
+        if (storage is null)
+        {
+            return NotFound($"Document storage {container.DocumentStorageId} not found.");
+        }
+
+        FileDescription fileDescription = document.Files.First();
         IReadableFile file = await _readableFileProvider
             .OpenFileAsync(
                 storage.StorageType,

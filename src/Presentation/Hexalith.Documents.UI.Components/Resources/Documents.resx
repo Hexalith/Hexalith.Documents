@@ -150,4 +150,10 @@
   <data name="Container" xml:space="preserve">
     <value>Container</value>
   </data>
+  <data name="DownloadLinkCopiedToCliboard" xml:space="preserve">
+    <value>Download link copied to cliboard</value>
+  </data>
+  <data name="DownloadLinkFailed" xml:space="preserve">
+    <value>Download link creation failed : {0}</value>
+  </data>
 </root>

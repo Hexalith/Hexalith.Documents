@@ -6,7 +6,7 @@
                     OnDatabaseSynchronize="SynchronizeDatabaseAsync"
                     AddPagePath="/Documents/Add/Document"
                     Title="@Labels.ListTitle">
-    <DocumentSummaryGrid Items="_summariesQuery" EntityDetailsPath="/Documents/Document" OnDisabledChanged="OnDisabledChangedAsync" />
+    <DocumentSummaryGrid User="_user" Items="_summariesQuery" EntityDetailsPath="/Documents/Document" OnDisabledChanged="OnDisabledChangedAsync" />
 </HexEntityIndexPage>
 
 @code {
