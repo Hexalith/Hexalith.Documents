@@ -23,7 +23,7 @@ public partial record DocumentAdded(
     [property: DataMember(Order = 4)] IEnumerable<FileDescription> Files,
     [property: DataMember(Order = 5)] string OwnerId,
     [property: DataMember(Order = 6)] DateTimeOffset CreatedOn,
-    [property: DataMember(Order = 7)] string ParentDocumentId,
+    [property: DataMember(Order = 7)] string? ParentDocumentId,
     [property: DataMember(Order = 8)] string DocumentContainerId,
     [property: DataMember(Order = 9)] string DocumentTypeId,
     [property: DataMember(Order = 10)] IEnumerable<DocumentTag> Tags) : DocumentEvent(Id)

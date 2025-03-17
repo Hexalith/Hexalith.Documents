@@ -34,6 +34,7 @@ public static class DocumentCommandHandlerHelper
                 ev => new Document((DocumentAdded)ev))
             .TryAddSimpleCommandHandler<EnableDocument>(c => new DocumentEnabled(c.Id))
             .TryAddSimpleCommandHandler<DisableDocument>(c => new DocumentDisabled(c.Id))
+            .TryAddSimpleCommandHandler<AddDocumentAccessKey>(c => new DocumentAccessKeyAdded(c.Id, c.AccessKey))
             .TryAddSimpleCommandHandler<ChangeDocumentDescription>(c => new DocumentDescriptionChanged(
                 c.Id,
                 c.Name,
