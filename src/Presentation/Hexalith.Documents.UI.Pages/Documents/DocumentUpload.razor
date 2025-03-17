@@ -253,12 +253,9 @@
 		ValidationResult = new DocumentEditValidation(L).Validate(_data);
 		if (!ValidationResult.IsValid)
 			return;
-		var documentId = UniqueIdHelper.GenerateUniqueStringId();
-
-
 		// Submit the command to add the document with file references
 		await CommandService.SubmitCommandAsync(_user, new AddDocument(
-			documentId,
+			_data.Id,
 			_data.Name,
 			_data.Comments,
 			_data.Files,

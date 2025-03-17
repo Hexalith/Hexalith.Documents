@@ -29,7 +29,7 @@ public partial class FileSystemStorage(ILogger<FileSystemStorage> logger)
     /// <param name="tags">The tags associated with the file.</param>
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the writable file.</returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The Stream is in the Scope of the returned IWritableFile object")]
+    [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The Stream is in the Scope of the returned IWritableFile object")]
     public async Task<IWritableFile> CreateFileAsync(string storageRootPath, string path, string fileName, IEnumerable<(string Key, string? Value)> tags, CancellationToken cancellationToken)
     {
         string filePath = GetPath(storageRootPath, path, fileName, true);

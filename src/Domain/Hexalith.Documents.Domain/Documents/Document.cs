@@ -3,12 +3,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Events;
 using Hexalith.Documents.Events.Documents;
 using Hexalith.Domain.Aggregates;
-using Hexalith.Domain.Events;
 
 /// <summary>
 /// Represents a document in the domain.
@@ -32,6 +30,7 @@ public record Document(
     [property: DataMember(Order = 6)] IEnumerable<DocumentActor> Actors,
     [property: DataMember(Order = 7)] IEnumerable<FileDescription> Files,
     [property: DataMember(Order = 8)] IEnumerable<DocumentTag> Tags,
+    [property: DataMember(Order = 8)] IEnumerable<DocumentAccessKey> AccessKeys,
     [property: DataMember(Order = 9)] bool Disabled) : IDomainAggregate
 {
     /// <summary>
@@ -49,6 +48,7 @@ public record Document(
               null,
               null,
               DocumentState.Create(DateTimeOffset.MinValue, string.Empty),
+              [],
               [],
               [],
               [],
@@ -71,10 +71,11 @@ public record Document(
                   added.DocumentTypeId,
                   null),
               null,
-              null,
+              added.ParentDocumentId,
               DocumentState.Create(DateTimeOffset.MinValue, string.Empty),
               [new DocumentActor(added.OwnerId, DocumentActorRole.Owner)],
               added.Files,
+              added.Tags,
               [],
               false)
     {
@@ -87,15 +88,18 @@ public record Document(
     public string AggregateName => DocumentDomainHelper.DocumentAggregateName;
 
     /// <inheritdoc/>
+    [SuppressMessage("Critical Code Smell", "S1541:Methods and properties should not be too complex", Justification = "This method has no complexities")]
     public ApplyResult Apply([NotNull] object domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
-        if (domainEvent is DocumentEvent ev && domainEvent is not DocumentEnabled && Disabled)
+        if (Disabled && domainEvent is not DocumentEnabled and not DocumentDisabled)
         {
-            return new ApplyResult(
-                this,
-                [new DocumentEventCancelled(ev, "Document is disabled.")],
-                true);
+            return ApplyResult.Error(this, "Operation not allowed: The document is currently disabled. Enable the document before making changes.");
+        }
+
+        if (!(this as IDomainAggregate).IsInitialized() && domainEvent is not DocumentAdded)
+        {
+            return ApplyResult.Error(this, "Operation not allowed: The document has not been initialized. Create the document first before applying changes.");
         }
 
         return domainEvent switch
@@ -106,35 +110,39 @@ public record Document(
             DocumentDescriptionChanged e => DocumentDescription.ApplyEvent(this, e),
             DocumentDisabled e => ApplyEvent(e),
             DocumentEnabled e => ApplyEvent(e),
+            DocumentAccessKeyAdded e => ApplyEvent(e),
             DocumentSummarized e => DocumentDescription.ApplyEvent(this, e),
-            DocumentEvent e => new ApplyResult(
-                this,
-                [new DocumentEventCancelled(e, "Event not implemented")],
-                true),
-            _ => new ApplyResult(
-                this,
-                [InvalidEventApplied.CreateNotSupportedAppliedEvent(
-                    AggregateName,
-                    AggregateId,
-                    domainEvent)],
-                true),
+            DocumentEvent => ApplyResult.NotImplemented(this),
+            _ => ApplyResult.InvalidEvent(this, domainEvent),
         };
     }
 
-    /// <inheritdoc/>
-    public bool IsInitialized() => !string.IsNullOrWhiteSpace(Id);
+    private ApplyResult ApplyEvent(DocumentAccessKeyAdded e)
+    {
+        if (AccessKeys.Any(p => p.Key == e.AccessKey.Key))
+        {
+            return ApplyResult.Error(this, $"Add access key failed: The Key '{e.AccessKey.Key}' already exists for this document.");
+        }
+
+        return ApplyResult.Success(
+            this with
+            {
+                AccessKeys = [..AccessKeys
+                    .Append(e.AccessKey)
+                    .Distinct()
+                    .OrderByDescending(p => p.ValidUntil)],
+            },
+            [e]);
+    }
 
     /// <summary>
     /// Applies a DocumentCreated event to the document.
     /// </summary>
     /// <param name="e">The DocumentCreated event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(DocumentAdded e) => !IsInitialized()
-        ? new ApplyResult(
-            new Document(e),
-            [e],
-            false)
-        : new ApplyResult(this, [new DocumentEventCancelled(e, "The document already exists.")], true);
+    private ApplyResult ApplyEvent(DocumentAdded e) => !(this as IDomainAggregate).IsInitialized()
+        ? ApplyResult.Success(new Document(e), [e])
+        : ApplyResult.Error(this, "Creation failed: A document with this ID already exists. Use a unique identifier to create a new document.");
 
     /// <summary>
     /// Applies a DocumentEnabled event to the document.
@@ -142,11 +150,8 @@ public record Document(
     /// <param name="e">The DocumentEnabled event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(DocumentEnabled e) => Disabled
-            ? new ApplyResult(
-            this with { Disabled = false },
-            [e],
-            false)
-            : new ApplyResult(this, [new DocumentEventCancelled(e, "The document is already enabled.")], true);
+            ? ApplyResult.Success(this with { Disabled = false }, [e])
+            : ApplyResult.Error(this, "Enable operation failed: The document is already in an enabled state.");
 
     /// <summary>
     /// Applies a DocumentActorAdded event to the document.
@@ -168,9 +173,6 @@ public record Document(
     /// <param name="e">The DocumentDisabled event to apply.</param>
     /// <returns>The result of applying the event.</returns>
     private ApplyResult ApplyEvent(DocumentDisabled e) => !Disabled
-            ? new ApplyResult(
-            this with { Disabled = true },
-            [e],
-            false)
-            : new ApplyResult(this, [new DocumentEventCancelled(e, "The document is already disabled.")], true);
+            ? ApplyResult.Success(this with { Disabled = true }, [e])
+            : ApplyResult.Error(this, "Disable operation failed: The document is already in a disabled state.");
 }

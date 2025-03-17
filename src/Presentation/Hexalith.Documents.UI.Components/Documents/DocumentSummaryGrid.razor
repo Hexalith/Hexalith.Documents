@@ -1,4 +1,11 @@
-﻿@inject IStringLocalizer<Labels> L
+﻿@using Hexalith.Application.Commands
+@using System.Security.Claims
+@using Hexalith.Extensions.Helpers
+@inject IStringLocalizer<Labels> L
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject ICommandService CommandService 
+@inject TimeProvider TimeProvider
 <HexEntitySummaryGrid Items="Items"
 					  TIdDescription="DocumentSummaryViewModel"
 					  ShowDisabledColumn="ShowDisabledColumn"
@@ -8,6 +15,7 @@
 	<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="long" Property="@(p => p.Size)" Title="@(L[nameof(Labels.Size)])"></PropertyColumn>
 	<TemplateColumn Style="display: flex; align-items: center;" TGridItem="DocumentSummaryViewModel">
 		<FluentAnchor IconStart="@(new Icons.Regular.Size16.ArrowDownload())" Href="@("documents/download/" + context.Id)" />
+		<FluentIcon Value="@(new Icons.Regular.Size16.Link())" OnClick="@(async () => await OnCreateDocumentLinkAsync(context.Id))" />
 	</TemplateColumn>
 
 </HexEntitySummaryGrid>
@@ -19,6 +27,10 @@
 	/// </summary>
 	[Parameter]
 	public bool ShowDisabledColumn { get; set; }
+
+	[Parameter]
+	[EditorRequired]
+	public ClaimsPrincipal User { get; set; }
 
 	/// <summary>
 	/// Gets or sets the callback when the disabled state changes.
@@ -35,4 +47,21 @@
 	[Parameter]
 	[EditorRequired]
 	public required IQueryable<DocumentSummaryViewModel> Items { get; set; }
+
+	[Parameter]
+	[EditorRequired]
+	public EventCallback<string> CreateDocumentLink { get; set; }
+
+	private async Task OnCreateDocumentLinkAsync(string id)
+	{
+		var key = UniqueIdHelper.GenerateUniqueStringId();
+		await CommandService.SubmitCommandAsync(User, new CreateDocumentLink(id, key, TimeProvider.GetLocalNow().AddDays(90)), CancellationToken.None);
+		// Create the download URL using the NavigationManager
+		var baseUri = NavigationManager.BaseUri;
+		var downloadUrl = $"{baseUri.TrimEnd('/')}documents/download/{id}/{key}";
+
+		// Use JSRuntime to copy the URL to clipboard
+		await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", downloadUrl);
+	}
+
 }

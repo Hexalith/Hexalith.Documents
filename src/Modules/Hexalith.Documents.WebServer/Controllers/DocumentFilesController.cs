@@ -103,7 +103,7 @@ public class DocumentFilesController : ControllerBase
             .OpenFileAsync(
                 storage.StorageType,
                 storage.ConnectionString,
-                container.Path,
+                Path.Combine(container.Path, document.Id),
                 fileDescription.Name,
                 CancellationToken.None)
             .ConfigureAwait(false);
