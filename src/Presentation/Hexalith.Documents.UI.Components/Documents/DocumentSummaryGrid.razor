@@ -1,9 +1,11 @@
-﻿@using Hexalith.Domain.ValueObjects
-<HexEntitySummaryGrid TGridItem="DocumentSummaryViewModel"
-					  Items="Items"
+﻿@inject IStringLocalizer<Labels> L
+<HexEntitySummaryGrid Items="Items"
+					  TIdDescription="DocumentSummaryViewModel"
 					  ShowDisabledColumn="ShowDisabledColumn"
 					  OnDisabledChanged="OnDisabledChanged"
 					  EntityDetailsPath="@EntityDetailsPath">
+	<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="string" Property="@(p => p.DocumentContainerId)" Title="@(L[nameof(Labels.Container)])"></PropertyColumn>
+	<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="long" Property="@(p => p.Size)" Title="@(L[nameof(Labels.Size)])"></PropertyColumn>
 	<TemplateColumn Style="display: flex; align-items: center;" TGridItem="DocumentSummaryViewModel">
 		<FluentAnchor IconStart="@(new Icons.Regular.Size16.ArrowDownload())" Href="@("documents/download/" + context.Id)" />
 	</TemplateColumn>

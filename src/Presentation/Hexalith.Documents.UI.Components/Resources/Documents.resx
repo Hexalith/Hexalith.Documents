@@ -144,4 +144,10 @@
   <data name="Placeholder" xml:space="preserve">
     <value>Choose a document</value>
   </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Container" xml:space="preserve">
+    <value>Container</value>
+  </data>
 </root>

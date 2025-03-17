@@ -61,6 +61,15 @@ namespace Hexalith.Documents.UI.Components.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Container.
+        /// </summary>
+        internal static string Container {
+            get {
+                return ResourceManager.GetString("Container", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
         internal static string Disabled {
@@ -138,6 +147,15 @@ namespace Hexalith.Documents.UI.Components.Resources {
         internal static string Placeholder {
             get {
                 return ResourceManager.GetString("Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        internal static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
             }
         }
     }
