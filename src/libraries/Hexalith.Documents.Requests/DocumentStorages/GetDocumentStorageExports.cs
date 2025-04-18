@@ -1,10 +1,14 @@
-﻿namespace Hexalith.Documents.Requests.DocumentStorages;
+﻿// <copyright file="GetDocumentStorageExports.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Requests.DocumentStorages;
 
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.DocumentStorages;
+using Hexalith.Documents.DocumentStorages;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
@@ -12,7 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of document storage summaries to skip.</param>
 /// <param name="Take">The number of document storage summaries to take.</param>
-/// <param name="Result">The list of document storage summaries.</param>
+/// <param name="Results"></param>
 [PolymorphicSerialization]
 public partial record GetDocumentStorageExports(
     [property: DataMember(Order = 1)] int Skip,

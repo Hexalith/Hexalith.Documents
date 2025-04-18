@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 
 /// <summary>
 /// Represents the details of a file type.

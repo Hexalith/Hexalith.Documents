@@ -1,9 +1,13 @@
+// <copyright file="GetDataManagementSummaries.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.Requests.DataManagements;
 
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
@@ -11,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of data export summaries to skip.</param>
 /// <param name="Take">The number of data export summaries to take.</param>
-/// <param name="Filter">The search to apply to the data export summaries.</param>
+/// <param name="Search"></param>
 /// <param name="Ids">The list of data export summary IDs.</param>
 /// <param name="Results">The list of data export summaries.</param>
 [PolymorphicSerialization]

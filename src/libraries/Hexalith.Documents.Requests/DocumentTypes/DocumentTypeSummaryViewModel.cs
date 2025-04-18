@@ -2,7 +2,7 @@
 
 using System.Runtime.Serialization;
 
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 
 /// <summary>
 /// Represents a summary view of a document type with essential information.

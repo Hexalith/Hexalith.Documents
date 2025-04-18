@@ -3,6 +3,9 @@
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Hexalith.Domains" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Hexalith.Documents.Abstractions\Hexalith.Documents.Abstractions.csproj" />
   </ItemGroup>
 </Project>

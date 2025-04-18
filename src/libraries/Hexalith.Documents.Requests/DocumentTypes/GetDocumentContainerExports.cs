@@ -1,10 +1,14 @@
-﻿namespace Hexalith.Documents.Requests.DocumentTypes;
+﻿// <copyright file="GetDocumentContainerExports.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Requests.DocumentTypes;
 
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.DocumentTypes;
+using Hexalith.Documents.DocumentTypes;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
@@ -12,7 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of document container summaries to skip.</param>
 /// <param name="Take">The number of document container summaries to take.</param>
-/// <param name="Result">The list of document container summaries.</param>
+/// <param name="Results"></param>
 [PolymorphicSerialization]
 public partial record GetDocumentTypeExports(
     [property: DataMember(Order = 1)] int Skip,

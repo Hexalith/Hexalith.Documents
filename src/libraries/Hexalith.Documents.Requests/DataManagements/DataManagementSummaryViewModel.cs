@@ -2,7 +2,7 @@ namespace Hexalith.Documents.Requests.DataManagements;
 
 using System.Runtime.Serialization;
 
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 
 /// <summary>
 /// Represents a summary view model for data export.

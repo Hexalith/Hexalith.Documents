@@ -1,10 +1,14 @@
-﻿namespace Hexalith.Documents.Requests.DataManagements;
+﻿// <copyright file="GetDataManagementExports.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Requests.DataManagements;
 
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.DataManagements;
+using Hexalith.Documents.DataManagements;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
@@ -12,7 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of data export summaries to skip.</param>
 /// <param name="Take">The number of data export summaries to take.</param>
-/// <param name="Result">The list of data export summaries.</param>
+/// <param name="Results"></param>
 [PolymorphicSerialization]
 public partial record GetDataManagementExports(
     [property: DataMember(Order = 1)] int Skip,
@@ -48,11 +52,10 @@ public partial record GetDataManagementExports(
     public static string AggregateName => DocumentDomainHelper.DataManagementAggregateName;
 
     /// <inheritdoc/>
-    IEnumerable<object>? ICollectionRequest.Results => Results;
-
-    /// <inheritdoc/>
     public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DataManagement>)results };
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetDataManagementExports(Skip + Take, Take);
+
+    IEnumerable<object>? ICollectionRequest.Results { get; }
 }

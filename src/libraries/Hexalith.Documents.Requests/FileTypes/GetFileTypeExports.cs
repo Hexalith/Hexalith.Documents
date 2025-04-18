@@ -1,10 +1,14 @@
-﻿namespace Hexalith.Documents.Requests.FileTypes;
+﻿// <copyright file="GetFileTypeExports.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Requests.FileTypes;
 
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.FileTypes;
+using Hexalith.Documents.FileTypes;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>

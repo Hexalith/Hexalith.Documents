@@ -8,6 +8,7 @@ namespace Hexalith.Documents.Documents;
 using System.Collections.Generic;
 
 using Hexalith.Documents.ValueObjects;
+using Hexalith.Domains;
 
 /// <summary>
 /// Manages the state transitions between different document statuses.

@@ -1,9 +1,13 @@
-﻿namespace Hexalith.Documents.Requests.DocumentContainers;
+﻿// <copyright file="GetDocumentContainerSummaries.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Requests.DocumentContainers;
 
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
@@ -11,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of document container summaries to skip.</param>
 /// <param name="Take">The number of document container summaries to take.</param>
-/// <param name="Filter">The search to apply to the document container summaries.</param>
+/// <param name="Search">The search to apply to the document container summaries.</param>
 /// <param name="Ids">The list of document container summary IDs.</param>
 /// <param name="Results">The list of document container summaries.</param>
 [PolymorphicSerialization]

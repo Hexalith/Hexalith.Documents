@@ -2,7 +2,7 @@
 
 using System.Runtime.Serialization;
 
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>

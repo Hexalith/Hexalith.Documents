@@ -1,9 +1,13 @@
-﻿namespace Hexalith.Documents.Requests.FileTypes;
+﻿// <copyright file="GetFileTypeSummaries.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Requests.FileTypes;
 
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
@@ -11,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of file type summaries to skip.</param>
 /// <param name="Take">The number of file type summaries to take.</param>
-/// <param name="Filter">The search to apply to the file type summaries.</param>
+/// <param name="Search"></param>
 /// <param name="Ids">The list of file type summary IDs.</param>
 /// <param name="Results">The list of file type summaries.</param>
 [PolymorphicSerialization]
@@ -44,8 +48,6 @@ public partial record GetFileTypeSummaries(
     /// <summary>
     /// Initializes a new instance of the <see cref="GetFileTypeSummaries"/> class with specified skip, take, and IDs values.
     /// </summary>
-    /// <param name="skip">The number of file type summaries to skip.</param>
-    /// <param name="take">The number of file type summaries to take.</param>
     /// <param name="ids">The list of file type summary IDs.</param>
     public GetFileTypeSummaries(IEnumerable<string> ids)
         : this(0, 0, null, ids, [])

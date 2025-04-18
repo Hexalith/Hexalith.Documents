@@ -2,11 +2,17 @@
   <!-- Import the Directory.Package.props file in Hexalith.Builds. -->
   <Import Project="$(MSBuildThisFileDirectory)Hexalith.Builds/Props/Directory.Packages.props" />
   <ItemGroup>
-    <PackageVersion Include="Hexalith.Application" Version="1.59.0" />
-    <PackageVersion Include="Hexalith.Application.Abstractions" Version="1.59.0" />
-    <PackageVersion Include="Hexalith.Application.Modules.Abstractions" Version="1.56.0" />
+    <PackageVersion Include="Hexalith.Application" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Application.Abstractions" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Application.Modules.Abstractions" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Application.Organizations" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnServer" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Infrastructure.AzureBlobStorage" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnWasm" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.UI.Components.Abstractions" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Application.Sessions.Abstractions" Version="1.60.0" />
     <PackageVersion Include="Hexalith.NetAspire.Hosting" Version="1.1.0" />
-    <PackageVersion Include="Hexalith.Domains" Version="1.0.1" />
-    <PackageVersion Include="Hexalith.Domains.Abstractions" Version="1.0.1" />
   </ItemGroup>
 </Project>

@@ -1,9 +1,13 @@
-﻿namespace Hexalith.Documents.Requests.Documents;
+﻿// <copyright file="GetDocumentSummaries.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Requests.Documents;
 
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
@@ -11,7 +15,8 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of document summaries to skip.</param>
 /// <param name="Take">The number of document summaries to take.</param>
-/// <param name="Filter">The search criteria for the document summaries.</param>
+/// <param name="Search"></param>
+/// <param name="Ids"></param>
 /// <param name="Results">The list of document summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentSummaries(

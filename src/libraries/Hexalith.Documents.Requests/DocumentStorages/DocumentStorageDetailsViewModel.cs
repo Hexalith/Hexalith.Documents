@@ -1,9 +1,14 @@
+// <copyright file="DocumentStorageDetailsViewModel.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.Requests.DocumentStorages;
 
 using System.Runtime.Serialization;
 
-using Hexalith.Documents.Domain.ValueObjects;
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 
 /// <summary>
 /// Represents the details of a document partition.

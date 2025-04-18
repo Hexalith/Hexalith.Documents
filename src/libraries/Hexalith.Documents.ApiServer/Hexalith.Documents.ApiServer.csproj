@@ -2,12 +2,6 @@
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
-    <ItemGroup Condition="'$(UseProjectReference)' == 'true'">
-        <ProjectReference Include="$(HexalithPath)src\Core\Infrastructure\Hexalith.Infrastructure.ClientAppOnServer\Hexalith.Infrastructure.ClientAppOnServer.csproj" />
-        <ProjectReference Include="$(HexalithPath)\src\Core\Application\Hexalith.Application.Organizations\Hexalith.Application.Organizations.csproj" />
-        <ProjectReference Include="$(HexalithPath)\src\Core\Infrastructure\Hexalith.Infrastructure.DaprRuntime.CosmosDatabases\Hexalith.Infrastructure.DaprRuntime.CosmosDatabases.csproj" />
-        <ProjectReference Include="$(HexalithPath)\src\Core\Infrastructure\Hexalith.Infrastructure.DaprRuntime\Hexalith.Infrastructure.DaprRuntime.csproj" />
-    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Hexalith.Application.Organizations"  />
         <PackageReference Include="Hexalith.Infrastructure.ClientAppOnServer"  />
