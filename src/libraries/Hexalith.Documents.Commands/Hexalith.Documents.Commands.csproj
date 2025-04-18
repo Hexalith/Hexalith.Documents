@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Hexalith.Application.Abstractions"  />
+    <PackageReference Include="Hexalith.CodeGenerators.SerializationMappers"  PrivateAssets="true" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Localizations\Hexalith.Documents.Localizations.csproj" />
+  </ItemGroup>
+</Project>

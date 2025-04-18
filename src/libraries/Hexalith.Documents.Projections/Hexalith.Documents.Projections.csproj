@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Hexalith.Application"  />
+    </ItemGroup>
+    <ItemGroup>
+    <ProjectReference Include="..\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
+  </ItemGroup>
+</Project>
