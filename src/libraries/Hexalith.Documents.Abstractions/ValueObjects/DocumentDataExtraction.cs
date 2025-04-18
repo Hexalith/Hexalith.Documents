@@ -11,7 +11,8 @@ using System.Runtime.Serialization;
 /// <param name="SystemMessage">The system message associated with the data extraction field.</param>
 /// <param name="Prompt">The prompt message for the data extraction field.</param>
 [DataContract]
-public record class DocumentDataExtraction(
+public record class DocumentDataExtraction
+(
     [property: DataMember(Order = 1)]
     string Name,
     [property: DataMember(Order = 2)]

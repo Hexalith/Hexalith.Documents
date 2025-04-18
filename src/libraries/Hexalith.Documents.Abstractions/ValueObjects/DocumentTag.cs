@@ -9,7 +9,8 @@ using System.Runtime.Serialization;
 /// <param name="Value">The value of the tag.</param>
 /// <param name="Unique">Indicates whether the tag is unique.</param>
 [DataContract]
-public record DocumentTag(
+public record DocumentTag
+(
     [property: DataMember] string Key,
     [property: DataMember] string? Value,
     [property: DataMember] bool Unique)

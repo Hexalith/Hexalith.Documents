@@ -6,6 +6,9 @@ using System.Text.Json.Serialization;
 /// <summary>
 /// Represents a file content type with an ID, MIME type, and file extension.
 /// </summary>
+/// <param name="Id">The unique identifier for the content type (e.g., "Json", "Pdf").</param>
+/// <param name="Type">The MIME type string (e.g., "application/json", "text/csv").</param>
+/// <param name="Extension">The common file extension associated with the content type (e.g., "json", "csv").</param>
 [DataContract]
 public sealed record FileContentType
 (

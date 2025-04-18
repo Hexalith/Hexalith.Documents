@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Events.DocumentStorages;
+namespace Hexalith.Documents.Events.DocumentStorages;
 
 using Hexalith.PolymorphicSerializations;
 
@@ -9,4 +9,4 @@ using Hexalith.PolymorphicSerializations;
 [PolymorphicSerialization]
 public partial record DocumentStorageDisabled(string Id) : DocumentStorageEvent(Id)
 {
-}
+} 

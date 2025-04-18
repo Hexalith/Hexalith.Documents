@@ -1,4 +1,4 @@
-﻿namespace Hexalith.Documents.Events.Documents;
+namespace Hexalith.Documents.Events.Documents;
 
 using Hexalith.PolymorphicSerializations;
 
@@ -10,4 +10,4 @@ using Hexalith.PolymorphicSerializations;
 [PolymorphicSerialization]
 public partial record DocumentSummarized(string Id, string Summary) : DocumentEvent(Id)
 {
-}
+} 

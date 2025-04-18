@@ -9,6 +9,11 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Represents an event that occurs when the comments of a data management operation are changed.
+/// </summary>
+/// <param name="Id">The unique identifier of the data management operation.</param>
+/// <param name="Comments">The new comments for the data management operation.</param>
 [PolymorphicSerialization]
 public partial record DataManagementCommentsChanged(
     string Id,

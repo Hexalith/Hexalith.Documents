@@ -12,7 +12,8 @@ using System.Runtime.Serialization;
 /// <param name="Size">The size of the file.</param>
 /// <param name="ContentType">The content type of the file.</param>
 [DataContract]
-public record FileDescription(
+public record FileDescription
+(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string? FileTypeId,
     [property: DataMember(Order = 3)] string Name,

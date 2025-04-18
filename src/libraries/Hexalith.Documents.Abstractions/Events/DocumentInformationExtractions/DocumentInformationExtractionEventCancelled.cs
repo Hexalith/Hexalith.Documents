@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
-/// Represents a cancelled document event.
+/// Represents an event that occurs when a document information extraction event is cancelled.
 /// </summary>
-/// <param name="Event">The original document event that was cancelled.</param>
+/// <param name="Event">The original document information extraction event that was cancelled.</param>
 /// <param name="Reason">The reason for cancelling the event.</param>
 [PolymorphicSerialization]
 public partial record DocumentInformationExtractionEventCancelled(
