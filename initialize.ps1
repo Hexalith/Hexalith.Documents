@@ -6,8 +6,8 @@ param (
 )
 
 Write-Output "Initializing package: $PackageName"
-Write-Verbose "Replacing 'MyNewPackage' with '$PackageName' in all files..."
-Write-Verbose "Also replacing 'mynewpackage' with '$($PackageName.ToLower())' in all files..."
+Write-Verbose "Replacing 'Documents' with '$PackageName' in all files..."
+Write-Verbose "Also replacing 'Documents' with '$($PackageName.ToLower())' in all files..."
 
 # Function to process a file
 function ProcessFile {
@@ -36,13 +36,13 @@ function ProcessFile {
         
         $hasChanges = $false
         
-        if ($content -match "MyNewPackage") {
-            $content = $content -replace "MyNewPackage", $PackageName
+        if ($content -match "Documents") {
+            $content = $content -replace "Documents", $PackageName
             $hasChanges = $true
         }
         
-        if ($content -match "mynewpackage") {
-            $content = $content -replace "mynewpackage", $PackageName.ToLower()
+        if ($content -match "Documents") {
+            $content = $content -replace "Documents", $PackageName.ToLower()
             $hasChanges = $true
         }
         
@@ -112,10 +112,10 @@ foreach ($file in $files) {
 }
 
 # Rename directories and files
-Rename-ProjectItems -SearchPattern "MyNewPackage" -Replacement $PackageName -ItemType Directory
-Rename-ProjectItems -SearchPattern "MyNewPackage" -Replacement $PackageName -ItemType File
-Rename-ProjectItems -SearchPattern "mynewpackage" -Replacement $PackageName.ToLower() -ItemType Directory
-Rename-ProjectItems -SearchPattern "mynewpackage" -Replacement $PackageName.ToLower() -ItemType File
+Rename-ProjectItems -SearchPattern "Documents" -Replacement $PackageName -ItemType Directory
+Rename-ProjectItems -SearchPattern "Documents" -Replacement $PackageName -ItemType File
+Rename-ProjectItems -SearchPattern "Documents" -Replacement $PackageName.ToLower() -ItemType Directory
+Rename-ProjectItems -SearchPattern "Documents" -Replacement $PackageName.ToLower() -ItemType File
 
 # Initialize and update Git submodules
 Write-Output "`nInitializing Git submodules..."
@@ -162,5 +162,5 @@ catch {
 }
 
 Write-Output "`nInitialization complete!"
-Write-Output "Package name has been changed from 'MyNewPackage' to '$PackageName'"
-Write-Output "Lowercase 'mynewpackage' has been changed to '$($PackageName.ToLower())'" 
+Write-Output "Package name has been changed from 'Documents' to '$PackageName'"
+Write-Output "Lowercase 'Documents' has been changed to '$($PackageName.ToLower())'" 
