@@ -1,9 +1,13 @@
-﻿namespace Hexalith.Documents.Commands.DocumentInformationExtractions;
+﻿// <copyright file="DocumentInformationExtractionCommand.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Commands.DocumentInformationExtractions;
 
 using System.Runtime.Serialization;
 
-using Hexalith.Documents.Domain;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a base class for document commands.

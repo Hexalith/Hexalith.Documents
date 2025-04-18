@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.Commands.Documents;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a change of the name of a document.

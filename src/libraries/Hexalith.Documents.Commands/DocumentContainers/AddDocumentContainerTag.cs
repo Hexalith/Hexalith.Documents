@@ -2,7 +2,7 @@ namespace Hexalith.Documents.Commands.DocumentContainers;
 
 using System.Runtime.Serialization;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents an command that occurs when a tag is added to a document container.

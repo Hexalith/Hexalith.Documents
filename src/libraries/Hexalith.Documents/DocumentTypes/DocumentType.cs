@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.DocumentTypes;
+﻿// <copyright file="DocumentType.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.DocumentTypes;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
@@ -6,7 +11,8 @@ using System.Runtime.Serialization;
 using Hexalith.Documents;
 using Hexalith.Documents.Events.DocumentTypes;
 using Hexalith.Documents.ValueObjects;
-using Hexalith.Domain.Aggregates;
+using Hexalith.Domains;
+using Hexalith.Domains.Results;
 
 /// <summary>
 /// Represents a document type in the system, defining metadata and processing rules for documents.

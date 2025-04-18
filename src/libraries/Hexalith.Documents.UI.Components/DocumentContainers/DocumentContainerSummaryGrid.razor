@@ -1,0 +1,50 @@
+﻿@using Hexalith.Domain.ValueObjects
+@inject NavigationManager NavigationManager
+<HexEntitySummaryGrid TGridItem="DocumentContainerSummaryViewModel"
+					  Items="Items"
+					  ShowDisabledColumn="ShowDisabledColumn"
+					  OnDisabledChanged="OnDisabledChanged"
+					  EntityDetailsPath="@EntityDetailsPath">
+	<PropertyColumn TGridItem="DocumentContainerSummaryViewModel" TProp="string" Title="@Labels.DocumentStorageId" Property="@(p => p.DocumentStorageId)" Sortable="true" />
+	<TemplateColumn TGridItem="DocumentContainerSummaryViewModel">
+		<FluentButton IconStart="@(new Icons.Regular.Size20.DocumentFolder())" OnClick="@(() => OnDocumentsClick(context.Id))" />
+	</TemplateColumn>
+
+</HexEntitySummaryGrid>
+
+
+@code {
+	/// <summary>
+	/// Gets or sets a value indicating whether the column displaying disabled status of items should be shown.
+	/// </summary>
+	[Parameter]
+	public bool ShowDisabledColumn { get; set; }
+
+	/// <summary>
+	/// Gets or sets the callback when the disabled state changes.
+	/// </summary>
+	[Parameter]
+	public EventCallback<string> OnDisabledChanged { get; set; }
+
+	/// <summary>
+	/// Gets or sets the callback when a row is double clicked.
+	/// </summary>
+	[Parameter]
+	public string? EntityDetailsPath { get; set; } = "/Documents/DocumentContainer";
+	[Parameter]
+	public string? ContainerDocumentsPath { get; set; } = "/Documents/DocumentInContainer";
+
+
+	[Parameter]
+	[EditorRequired]
+	public required IQueryable<DocumentContainerSummaryViewModel> Items { get; set; }
+
+	private void OnDocumentsClick(string documentContainerId)
+	{
+		// Navigate to the container documents with the current container id as a query parameter
+		// Combine the path with the current container id
+		var path = $"{ContainerDocumentsPath}/{documentContainerId}";
+		NavigationManager.NavigateTo(path);
+	}
+
+}

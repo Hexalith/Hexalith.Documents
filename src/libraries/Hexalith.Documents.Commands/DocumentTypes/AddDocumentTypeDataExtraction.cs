@@ -2,7 +2,7 @@ namespace Hexalith.Documents.Commands.DocumentTypes;
 
 using System.Runtime.Serialization;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Command to associate a data extraction configuration with a document type.

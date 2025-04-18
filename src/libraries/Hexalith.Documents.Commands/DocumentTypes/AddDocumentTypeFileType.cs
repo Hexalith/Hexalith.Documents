@@ -2,7 +2,7 @@
 
 using System.Runtime.Serialization;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Command to add a supported file type to an existing document type.

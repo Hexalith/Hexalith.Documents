@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Documents;
+﻿// <copyright file="DocumentActors.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Documents;
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -6,7 +11,7 @@ using System.Linq;
 
 using Hexalith.Documents.Events.Documents;
 using Hexalith.Documents.ValueObjects;
-using Hexalith.Domain.Aggregates;
+using Hexalith.Domains.Results;
 
 /// <summary>
 /// Represents a collection of document actors and provides methods to manage them.

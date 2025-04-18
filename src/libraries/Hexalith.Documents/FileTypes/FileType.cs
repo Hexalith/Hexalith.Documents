@@ -1,11 +1,17 @@
-﻿namespace Hexalith.Documents.FileTypes;
+﻿// <copyright file="FileType.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.FileTypes;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 using Hexalith.Documents;
 using Hexalith.Documents.Events.FileTypes;
-using Hexalith.Domain.Aggregates;
+using Hexalith.Domains;
+using Hexalith.Domains.Results;
 
 /// <summary>
 /// Represents a file type in the document management system.
@@ -15,7 +21,6 @@ using Hexalith.Domain.Aggregates;
 /// <param name="ContentType">The content type of the file.</param>
 /// <param name="OtherContentTypes">Collection of other content types associated with this file type.</param>
 /// <param name="FileExtension">The file extension of the file type.</param>
-/// <param name="OtherFileExtensions">Collection of other file extensions associated with this file type.</param>
 /// <param name="Comments">The description of the file type.</param>
 /// <param name="FileToTextConverter">The file to text converter associated with this file type.</param>
 /// <param name="Disabled">Indicates whether this file type is disabled.</param>

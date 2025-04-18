@@ -1,8 +1,13 @@
-﻿namespace Hexalith.Documents.Application;
+﻿// <copyright file="IDocumentUploadService.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Application;
 
 using System.Threading.Tasks;
 
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
 
 /// <summary>
 /// Interface for document upload service.

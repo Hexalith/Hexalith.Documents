@@ -1,0 +1,66 @@
+﻿@page "/Documents/DataManagement"
+@using Hexalith.Documents.Commands.DataManagements
+@rendermode InteractiveAuto
+<HexEntityIndexPage OnLoadData="LoadSummaries"
+OnImport="ImportAsync"
+OnExport="ExportAsync"
+OnDatabaseSynchronize="SynchronizeDatabaseAsync"
+AddPagePath="/Documents/Add/DataManagement"
+Title="@Labels.ListTitle">
+    <DataManagementSummaryGrid  Items="_summariesQuery"
+    OnDisabledChanged="OnDisabledChangedAsync"
+    EntityDetailsPath="/Documents/DataManagement" />
+</HexEntityIndexPage>
+
+@code {
+    private IEnumerable<DataManagementSummaryViewModel>? _summaries;
+    private IQueryable<DataManagementSummaryViewModel>? _summariesQuery;
+
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+    private ClaimsPrincipal? _user;
+    private ClaimsPrincipal User => _user ?? throw new InvalidOperationException("User not initialized");
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            _user = authState.User;
+        }
+    }
+
+    private async Task LoadSummaries()
+    {
+        _summaries = [..(await RequestService
+        .SubmitAsync(User, new GetDataManagementSummaries(), CancellationToken.None))
+        .Results
+        .OrderBy(p => p.Id)];
+        _summariesQuery = _summaries.AsQueryable();
+    }
+    private Task SynchronizeDatabaseAsync()
+    {
+        return Task.CompletedTask;
+    }
+    private Task OnDisabledChangedAsync(string id)
+    {
+        return Task.CompletedTask;
+    }
+
+    private async Task ImportAsync()
+    {
+        await Task.CompletedTask;
+        //        await CommandService.SubmitCommandsAsync(User, command, CancellationToken.None);
+    }
+    private async Task ExportAsync()
+    {
+        string documentId = GetImportExportDocumentId();
+        var command = new ExportRequestDataToDocument(documentId, new GetDataManagementExports(0, 100));
+        await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
+    }
+    private string GetImportExportDocumentId()
+    {
+        return string.Format(Labels.DataFileName, UniqueIdHelper.GenerateDateTimeId());
+    }
+}

@@ -1,0 +1,154 @@
+﻿@page "/Documents/Add/DocumentInformationExtraction"
+@page "/Documents/DocumentInformationExtraction/{Id}"
+@rendermode InteractiveAuto
+<HexEntityDetailsToolbar IndexPath="/Documents/DocumentInformationExtraction" OnRefresh="OnRefreshAsync" />
+
+<FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
+    @if (Id is null) // Add
+    {
+        <FluentLabel Typo="Typography.PageTitle">@Labels.AddTitle</FluentLabel>
+    }
+    else // Edit
+    {
+        <FluentLabel Typo="Typography.PageTitle">@string.Format(Labels.Title, Id)</FluentLabel>
+    }
+    @if (_data is not null)
+    {
+        <FluentGrid Orientation="Orientation.Vertical">
+            <FluentGridItem xs="12" md="3">
+                <HexIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexIdField>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="@(Id is null ? 9 : 6)">
+                <HexNameField @bind-Value="_data.Name"></HexNameField>
+            </FluentGridItem>
+            @if (Id is not null)
+            {
+                <FluentGridItem xs="12" md="3" Style="display: flex; align-items: flex-end;">
+                    <HexDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexDisabledCheckbox>
+                </FluentGridItem>
+            }
+            <FluentGridItem xs="12" md="12">
+                <HexCommentsField Style="width:100%;" @bind-Value="_data.Comments"></HexCommentsField>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                <FluentTextField Style="width:100%;" @bind-Value="_data.Model" Label="@Labels.Model"></FluentTextField>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                <FluentTextField Style="width:100%;" @bind-Value="_data.ValidationModel" Label="@Labels.ValidationModel"></FluentTextField>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                <FluentTextArea Style="width:100%;" @bind-Value="_data.Instructions" Label="@Labels.Instructions"></FluentTextArea>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                <FluentTextArea Style="width:100%;" @bind-Value="_data.ValidationInstructions" Label="@Labels.ValidationInstructions"></FluentTextArea>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                <FluentTextArea Style="width:100%;" @bind-Value="_data.OutputFormat" Label="@Labels.OutputFormat"></FluentTextArea>
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                <FluentTextArea Style="width:100%;" @bind-Value="_data.OutputSample" Label="@Labels.OutputSample"></FluentTextArea>
+            </FluentGridItem>
+            <FluentGridItem md="12">
+                <HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
+            </FluentGridItem>
+            <FluentGridItem>
+                <HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
+            </FluentGridItem>
+        </FluentGrid>
+    }
+</FluentStack>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+    [Parameter]
+    public string? Id { get; set; }
+
+    private ClaimsPrincipal? _user;
+    private DocumentInformationExtractionEditViewModel _data = new();
+
+    private ValidationResult? ValidationResult;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            if (!authState.User.Identity?.IsAuthenticated == true)
+            {
+                NavigationManager.NavigateTo(Application.LoginPath);
+            }
+            _user = authState.User;
+        }
+        if (_user is null)
+        {
+            return;
+        }
+        if (Id is not null)
+        {
+            var details = await RequestService.SubmitAsync(_user, new GetDocumentInformationExtractionDetails(Id), CancellationToken.None);
+            if (details.Result is not null)
+            {
+                _data = new DocumentInformationExtractionEditViewModel(details.Result);
+            }
+        }
+    }
+
+    private async Task OnSave()
+    {
+        if (_data is null || _user is null)
+        {
+            return;
+        }
+        if (!_data.HasChanges)
+        {
+            return;
+        }
+        ValidationResult = new DocumentInformationExtractionEditValidation().Validate(_data);
+        if (!ValidationResult.IsValid)
+            return;
+        DocumentInformationExtractionCommand fileTypeCommand;
+        if (Id is null)
+        {
+            fileTypeCommand = new AddDocumentInformationExtraction(
+                        _data.Id!,
+                        _data.Name!,
+                        _data.Model,
+                        _data.SystemMessage,
+                        _data.OutputFormat, 
+                        _data.OutputSample,
+                        _data.Instructions,
+                        _data.ValidationModel,
+                        _data.ValidationInstructions,
+                        _data.Comments);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+            _data = new();
+            StateHasChanged();
+            return;
+        }
+        if (_data.DescriptionChanged)
+        {
+            fileTypeCommand = new ChangeDocumentInformationExtractionDescription(
+                        _data.Id!,
+                        _data.Name!,
+                        _data.Comments);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+        }
+        if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
+        {
+            fileTypeCommand = new DisableDocumentInformationExtraction(_data.Id);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+        }
+        if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
+        {
+            fileTypeCommand = new EnableDocumentInformationExtraction(_data.Id);
+            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+        }
+    }
+
+    private Task OnRefreshAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+}

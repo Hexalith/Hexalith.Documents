@@ -1,16 +1,21 @@
-﻿namespace Hexalith.Documents.Documents;
+﻿// <copyright file="DocumentDescription.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Documents;
 
 using System.Runtime.Serialization;
 
-using Hexalith.Documents.Events;
 using Hexalith.Documents.Events.Documents;
-using Hexalith.Domain.Aggregates;
+using Hexalith.Domains.Results;
 
 /// <summary>
 /// Represents the descriptive information of a document.
 /// </summary>
 /// <param name="Name">The name of the document.</param>
 /// <param name="Comments">The comments associated with the document.</param>
+/// <param name="DocumentContainerId"></param>
 /// <param name="DocumentTypeId">The unique identifier of the document type.</param>
 /// <param name="Summary">The summary of the document.</param>
 [DataContract]

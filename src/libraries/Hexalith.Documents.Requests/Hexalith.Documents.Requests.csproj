@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Hexalith.CodeGenerators.SerializationMappers"  PrivateAssets="true" />
+    <PackageReference Include="Hexalith.PolymorphicSerializations.CodeGenerators"  PrivateAssets="true" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Helpers\**" />
@@ -11,6 +11,6 @@
     <None Remove="Helpers\**" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents\Hexalith.Documents.csproj" />
   </ItemGroup>
 </Project>

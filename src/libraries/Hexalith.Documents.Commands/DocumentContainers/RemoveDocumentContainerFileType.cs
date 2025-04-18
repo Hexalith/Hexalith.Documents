@@ -2,7 +2,7 @@ namespace Hexalith.Documents.Commands.DocumentContainers;
 
 using System.Runtime.Serialization;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents an command that occurs when a file type is removed from a document container's supported file types.

@@ -1,0 +1,170 @@
+﻿@page "/Documents/Add/Document"
+@page "/Documents/Document/{Id}"
+@using Hexalith.Documents.UI.Components.DocumentContainers
+@using Hexalith.Documents.UI.Components.DocumentTypes
+@inject TimeProvider TimeService
+@inject IStringLocalizer<Labels> L
+@rendermode InteractiveAuto
+<HexEntityDetailsToolbar IndexPath="/Documents/Document" OnRefresh="OnRefreshAsync" />
+
+<FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
+	@if (Id is null) // Add
+	{
+		<FluentLabel Typo="Typography.PageTitle">@L[nameof(Labels.AddTitle)]</FluentLabel>
+	}
+	else // Edit
+	{
+		<FluentLabel Typo="Typography.PageTitle">@L[nameof(Labels.Title), Id]</FluentLabel>
+	}
+	@if (_data is not null)
+	{
+		<FluentGrid Orientation="Orientation.Vertical">
+			<FluentGridItem xs="12" md="3">
+				<HexIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexIdField>
+			</FluentGridItem>
+			<FluentGridItem xs="12" md="@(Id is null ? 9 : 6)">
+				<HexNameField @bind-Value="_data.Name"></HexNameField>
+			</FluentGridItem>
+			@if (Id is not null)
+			{
+				<FluentGridItem xs="12" md="3" Style="display: flex; align-items: flex-end;">
+					<HexDisabledCheckbox Style="margin-bottom: 8px;" @bind-Value="_data.Disabled"></HexDisabledCheckbox>
+				</FluentGridItem>
+			}
+			<FluentGridItem xs="12" md="6">
+				<HexCommentsField Style="width:100%;" @bind-Value="_data.Comments" Rows="5"></HexCommentsField>
+			</FluentGridItem>
+			<FluentGridItem xs="12" md="6">
+				<FluentTextArea Style="width:100%;" @bind-Value="_data.Summary" Label="@Labels.Summary" Rows="5"></FluentTextArea>
+			</FluentGridItem>
+			<FluentGridItem xs="12" md="3">
+				<DocumentContainerAutocomplete SelectedOptions="_data.DocumentContainer" SelectedOptionsChanged="OnDocumentContainerChanged" />
+			</FluentGridItem>
+			<FluentGridItem xs="12" md="3">
+				<DocumentTypeAutocomplete @bind-SelectedOptions="_data.DocumentType" />
+			</FluentGridItem>
+			<FluentGridItem xs="12" md="3">
+				<DocumentAutocomplete @bind-SelectedOptions="_data.ParentDocument" Label="@(L[nameof(Labels.ParentDocument)])" />
+			</FluentGridItem>
+			@if (_data.Files.Any())
+			{
+				<FluentGridItem xs="12" md="12">
+					<FluentDataGrid Items="@_data.Files.AsQueryable()">
+						<PropertyColumn Property="@(p => p.Id)" Title="@(L[Labels.FileId])" Sortable="true" />
+						<PropertyColumn Property="@(p => p.Name)" Title="@(L[Labels.FileName])" Sortable="true" />
+						<PropertyColumn Property="@(p => p.Size)" Title="@(L[Labels.FileSize])" Sortable="true" />
+						<PropertyColumn Property="@(p => p.FileTypeId)" Title="@(L[Labels.FileType])" Sortable="true" />
+					</FluentDataGrid>
+				</FluentGridItem>
+			}
+			<FluentGridItem md="12">
+				<HexSaveButton Appearance="Appearance.Accent" OnClick="OnSave" />
+			</FluentGridItem>
+			<FluentGridItem>
+				<HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
+			</FluentGridItem>
+		</FluentGrid>
+	}
+	else
+	{
+		<HexInProgress />
+	}
+</FluentStack>
+
+@code {
+	[CascadingParameter]
+	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+	[Parameter]
+	public string? Id { get; set; }
+
+	private ClaimsPrincipal? _user;
+	private DocumentEditViewModel? _data;
+
+	private ValidationResult? ValidationResult;
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (AuthenticationStateTask is not null)
+		{
+			var authState = await AuthenticationStateTask;
+			if (!authState.User.Identity?.IsAuthenticated == true)
+			{
+				NavigationManager.NavigateTo(Application.LoginPath);
+			}
+			_user = authState.User;
+		}
+		if (_user is null)
+		{
+			return;
+		}
+		_data = await DocumentEditViewModel.CreateAsync(Id, null, _user, RequestService, CancellationToken.None);
+	}
+
+	private async Task OnSave()
+	{
+		if (_data is null || _user is null || string.IsNullOrWhiteSpace(_user.Identity?.Name))
+		{
+			return;
+		}
+		if (!_data.HasChanges)
+		{
+			return;
+		}
+		ValidationResult = new DocumentEditValidation(L).Validate(_data);
+		if (!ValidationResult.IsValid)
+			return;
+		DocumentCommand fileTypeCommand;
+		if (Id is null)
+		{
+			fileTypeCommand = new AddDocument(
+				_data.Id!,
+				_data.Name!,
+				_data.Comments,
+				_data.Files,
+				_user.Identity.Name,
+				TimeService.GetLocalNow(),
+				_data.ParentDocumentId,
+				_data.DocumentContainerId!,
+				_data.DocumentTypeId!,
+			_data.Tags);
+			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+			_data = new();
+			StateHasChanged();
+			return;
+		}
+		if (_data.DescriptionChanged)
+		{
+			fileTypeCommand = new ChangeDocumentDescription(
+						_data.Id!,
+						_data.Name!,
+						_data.Comments);
+			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+		}
+		if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
+		{
+			fileTypeCommand = new DisableDocument(_data.Id);
+			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+		}
+		if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
+		{
+			fileTypeCommand = new EnableDocument(_data.Id);
+			await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
+		}
+	}
+
+	private Task OnRefreshAsync()
+	{
+		return Task.CompletedTask;
+	}
+
+	private void OnDocumentContainerChanged(IEnumerable<Option<string>>? documentContainer)
+	{
+		if (documentContainer is null)
+		{
+			_data.DocumentContainer = [];
+			return;
+		}
+
+	}
+
+}

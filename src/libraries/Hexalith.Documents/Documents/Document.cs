@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Documents;
+﻿// <copyright file="Document.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Documents;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
@@ -6,7 +11,8 @@ using System.Runtime.Serialization;
 using Hexalith.Documents;
 using Hexalith.Documents.Events.Documents;
 using Hexalith.Documents.ValueObjects;
-using Hexalith.Domain.Aggregates;
+using Hexalith.Domains;
+using Hexalith.Domains.Results;
 
 /// <summary>
 /// Represents a document in the domain.
@@ -19,6 +25,7 @@ using Hexalith.Domain.Aggregates;
 /// <param name="Actors">The actors of the document.</param>
 /// <param name="Files">The file of the document.</param>
 /// <param name="Tags">The tags of the document.</param>
+/// <param name="AccessKeys"></param>
 /// <param name="Disabled">Indicates whether the document is disabled.</param>
 [DataContract]
 public record Document(

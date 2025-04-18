@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a request to get documents in a specific container with pagination support.

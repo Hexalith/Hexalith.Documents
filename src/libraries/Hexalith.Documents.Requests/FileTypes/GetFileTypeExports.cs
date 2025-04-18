@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.FileTypes;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a request to get file type exports with pagination support.

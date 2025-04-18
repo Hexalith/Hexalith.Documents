@@ -2,7 +2,7 @@
 
 using System.Runtime.Serialization;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Command to create a new document type in the system.

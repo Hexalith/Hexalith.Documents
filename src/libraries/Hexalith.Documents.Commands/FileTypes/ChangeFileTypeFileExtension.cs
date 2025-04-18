@@ -2,7 +2,7 @@
 
 using System.Runtime.Serialization;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 [PolymorphicSerialization]
 public partial record ChangeFileTypeFileExtension(

@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.Commands.Documents;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a document disabled event.

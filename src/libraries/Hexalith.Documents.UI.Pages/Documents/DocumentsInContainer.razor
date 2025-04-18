@@ -1,0 +1,39 @@
+﻿@page "/Documents/DocumentsInContainer/{DocumentContainerId}"
+<HexPageTitle>@(string.Format(Labels.DocumentsInContainer,DocumentContainerId))</HexPageTitle>
+
+@if (Documents is not null)
+{
+	<DocumentSummaryGrid User="_user" Items="Documents.AsQueryable()" />
+}
+else
+{
+	<HexInProgress />
+}
+
+@code {
+	[Parameter]
+	public string DocumentContainerId { get; set; } = string.Empty;
+
+
+	public IEnumerable<DocumentSummaryViewModel>? Documents { get; set; }
+	[CascadingParameter]
+	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+	private ClaimsPrincipal? _user;
+	private ClaimsPrincipal User => _user ?? throw new InvalidOperationException("User not initialized");
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (AuthenticationStateTask is not null)
+		{
+			var authState = await AuthenticationStateTask;
+			_user = authState.User;
+		}
+		Documents = (await RequestService
+			.SubmitAsync(User, new GetDocumentsInContainer(DocumentContainerId), CancellationToken.None))
+			.Results
+			.OrderBy(p => p.Id);
+
+		await base.OnInitializedAsync();
+	}
+}

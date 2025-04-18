@@ -1,0 +1,90 @@
+﻿@page "/Documents/DocumentType"
+@using Hexalith.Documents.Commands.DataManagements
+@rendermode InteractiveAuto
+<HexEntityIndexPage OnLoadData="LoadSummaries"
+                    OnImport="ImportAsync"
+                    OnExport="ExportAsync"
+                    OnDatabaseSynchronize="SynchronizeDatabaseAsync"
+                    AddPagePath="/Documents/Add/DocumentType"
+                    Title="@Labels.ListTitle">
+    <DocumentTypeSummaryGrid  Items="_summariesQuery"
+                         OnDisabledChanged="OnDisabledChangedAsync"
+                         EntityDetailsPath="/Documents/DocumentType" />
+</HexEntityIndexPage>
+
+@code {
+    private IEnumerable<DocumentTypeSummaryViewModel>? _summaries;
+    private IQueryable<DocumentTypeSummaryViewModel>? _summariesQuery;
+
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+    private ClaimsPrincipal? _user;
+    private ClaimsPrincipal User => _user ?? throw new InvalidOperationException("User not initialized");
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            _user = authState.User;
+        }
+        await base.OnInitializedAsync();
+    }
+
+    private async Task LoadSummaries()
+    {
+        _summaries = [..(await RequestService
+            .SubmitAsync(User, new GetDocumentTypeSummaries(), CancellationToken.None))
+            .Results
+            .OrderBy(p => p.Id)];
+        _summariesQuery = _summaries.AsQueryable();
+        if (!_summaries.Any())
+        {
+            await CommandService.SubmitCommandsAsync(User, DocumentTypeQuickStartData.Data, CancellationToken.None);
+        }
+    }
+    private Task SynchronizeDatabaseAsync()
+    {
+        return Task.CompletedTask;
+    }
+    private async Task OnDisabledChangedAsync(string id)
+    {
+        var item = _summaries?.FirstOrDefault(s => s.Id == id);
+        if (item is null)
+        {
+            return;
+        }
+        // Toggle the disabled value of the item
+        if (item.Disabled)
+        {
+            await CommandService.SubmitCommandAsync(User, new EnableDocumentType(item.Id), CancellationToken.None);
+        }
+        else
+        {
+            await CommandService.SubmitCommandAsync(User, new DisableDocumentType(item.Id), CancellationToken.None);
+        }
+        if (_summaries is not null)
+        {
+            // Update the disabled value of the item in the collection
+            _summaries = [.. _summaries.Select(s => s.Id == item.Id ? s with { Disabled = !item.Disabled } : s)];
+            _summariesQuery = _summaries.AsQueryable();
+        }
+    }
+
+    private async Task ImportAsync()
+    {
+        await Task.CompletedTask;
+        //        await CommandService.SubmitCommandsAsync(User, command, CancellationToken.None);
+    }
+    private async Task ExportAsync()
+    {
+        string documentId = GetImportExportDocumentId();
+        var command = new ExportRequestDataToDocument(documentId, new GetDocumentTypeExports(0, 100));
+        await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
+    }
+    private string GetImportExportDocumentId()
+    {
+        return string.Format(Labels.DataFileName, UniqueIdHelper.GenerateDateTimeId());
+    }
+}

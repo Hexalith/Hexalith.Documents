@@ -1,9 +1,13 @@
+// <copyright file="DocumentContainerCommand.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.Commands.DocumentContainers;
 
 using System.Runtime.Serialization;
 
-using Hexalith.Documents.Domain;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents the base class for all document container commands.

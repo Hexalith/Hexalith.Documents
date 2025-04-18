@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.Commands.DocumentInformationExtractions;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents an event that is raised when a file text extraction mode is disabled.

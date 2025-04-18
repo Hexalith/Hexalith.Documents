@@ -1,0 +1,299 @@
+﻿@page "/Documents/Upload/Document/{DocumentContainerId}"
+@page "/Documents/Upload/Document"
+@using FluentValidation
+@using Hexalith.Documents.Requests.DocumentContainers
+@using Hexalith.Documents.Requests.DocumentTypes
+@using Hexalith.Documents.Requests.FileTypes
+@using Hexalith.Documents.UI.Components.DocumentContainers
+@using Hexalith.Documents.UI.Components.DocumentTypes
+@inject TimeProvider TimeService
+@inject IStringLocalizer<Labels> L
+@inject IValidator<AddDocument> AddDocumentValidator
+@inject IDocumentUploadService DocumentUploadService
+@inject IToastService ToastService
+@rendermode InteractiveServer
+
+<HexPageTitle>@(L[nameof(Labels.UploadTitle)])</HexPageTitle>
+<br />
+<FluentGrid Style="width:100%">
+	<FluentGridItem xs="12" md="4">
+		<DocumentContainerAutocomplete Disabled="@(DocumentContainerId is not null)"
+									   MaximumSelectedOptions="1"
+									   SelectedOptions="_data.DocumentContainer"
+									   SelectedOptionsChanged="OnDocumentContainerChangedAsync"
+									   OnOptionsSearch="OnDocumentContainerSearchAsync" />
+	</FluentGridItem>
+	<FluentGridItem xs="12" md="4">
+		<DocumentTypeAutocomplete MaximumSelectedOptions="1"
+								  SelectedOptions="_data.DocumentType"
+								  SelectedOptionsChanged="OnDocumentTypeChangedAsync"
+								  OnOptionsSearch="OnDocumentTypeSearchAsync" />
+	</FluentGridItem>
+	<FluentGridItem xs="12" md="4">
+		<DocumentAutocomplete MaximumSelectedOptions="1"
+							  @bind-SelectedOptions="_data.ParentDocument"
+							  Label="@(L[nameof(Labels.ParentDocument)])"
+							  OnOptionsSearch="OnDocumentSearchAsync" />
+
+	</FluentGridItem>
+	<FluentGridItem xs="12" md="4">
+		<HexIdField ReadOnly="true" Value="@_data.Id"></HexIdField>
+	</FluentGridItem>
+	<FluentGridItem xs="12" md="4">
+		<HexNameField @bind-Value="@_data.Name"></HexNameField>
+	</FluentGridItem>
+	<FluentGridItem xs="12" md="4">
+	</FluentGridItem>
+	@if (_data.DocumentContainerId is not null && _data.DocumentTypeId is not null)
+	{
+		<FluentGridItem xs="12" md="12">
+			<FluentInputFile id="document-file-uploader"
+							 Mode="InputFileMode.Stream"
+							 Multiple="true"
+							 MaximumFileCount="100"
+							 MaximumFileSize="@(100 * 1024 * 1024)"
+							 OnFileUploaded="@OnFileUploadedAsync"
+							 Accept="@_data.FileContentTypes"
+							 @bind-ProgressPercent="@ProgressPercent"
+							 Style="width:100%;height:200px">
+				<ChildContent>
+					<FluentStack HorizontalAlignment="HorizontalAlignment.Center" VerticalAlignment="VerticalAlignment.Center" Orientation="Orientation.Vertical">
+						<FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+						<label for="document-file-uploader">@(L[nameof(Labels.UploadZoneMessage)])</label>
+					</FluentStack>
+				</ChildContent>
+			</FluentInputFile>
+		</FluentGridItem>
+		@if (_data.Files.Any())
+		{
+			<FluentGridItem xs="12" md="12">
+				<FluentDataGrid Items="@_data.Files.AsQueryable()">
+					<PropertyColumn Property="@(p => p.Id)" Title="@(L[Labels.FileId])" Sortable="true" />
+					<PropertyColumn Property="@(p => p.Name)" Title="@(L[Labels.FileName])" Sortable="true" />
+					<PropertyColumn Property="@(p => p.Size)" Title="@(L[Labels.FileSize])" Sortable="true" />
+					<PropertyColumn Property="@(p => p.FileTypeId)" Title="@(L[Labels.FileType])" Sortable="true" />
+				</FluentDataGrid>
+				<br />
+				<HexSaveButton Appearance="Appearance.Accent" OnClick="OnSaveAsync" />
+			</FluentGridItem>
+		}
+	}
+
+	<FluentGridItem>
+		<HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
+	</FluentGridItem>
+</FluentGrid>
+
+@code {
+	[CascadingParameter]
+	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+	[Parameter]
+	public string? DocumentContainerId { get; set; }
+
+	int ProgressPercent;
+
+	private ClaimsPrincipal? _user;
+	private DocumentEditViewModel _data = new();
+	private DocumentContainerDetailsViewModel? _container;
+	private string _accept = "";
+
+	private ValidationResult? ValidationResult;
+
+	int? progressPercent;
+	string? progressTitle;
+	FluentInputFile? myFileByStream = default!;
+
+	async Task OnFileUploadedAsync(FluentInputFileEventArgs file)
+	{
+		if (_data is null || _user is null || string.IsNullOrWhiteSpace(_user.Identity?.Name))
+		{
+			return;
+		}
+		progressPercent = file.ProgressPercent;
+		progressTitle = file.ProgressTitle;
+		if (string.IsNullOrWhiteSpace(_data.Name))
+		{
+			_data.Name = file.Name;
+		}
+		ValidationResult = new DocumentEditValidation(L).Validate(_data);
+		if (!ValidationResult.IsValid)
+		{
+			return;
+		}
+		if (file.Stream is null || file.IsCancelled)
+		{
+			file.IsCancelled = true;
+			ToastService.ShowError("File read stream not initialized for file " + file.Name);
+			return;
+		}
+		var fileTypeId = _data.SelectedFileTypes.FirstOrDefault(n => n.ContentType == file.ContentType)?.Id;
+		if (fileTypeId is null)
+		{
+			file.IsCancelled = true;
+			ToastService.ShowError(L[nameof(Labels.FileTypeNotSupported), file.Name, file.ContentType, _data.FileContentTypes]);
+			return;
+		}
+		var correlationId = UniqueIdHelper.GenerateUniqueStringId();
+		try
+		{
+			// Save the file to the server
+			await DocumentUploadService.UploadDocumentAsync(
+				correlationId,
+				_user.Identity.Name,
+				_data.DocumentContainerId!,
+				_data.Id,
+				_data.DocumentTypeId!,
+				fileTypeId,
+				file.Name,
+				[],
+				file.Stream,
+				CancellationToken.None);
+
+			FileDescription fileDescription = new FileDescription(
+			UniqueIdHelper.GenerateUniqueStringId(),
+			fileTypeId,
+			file.Name,
+			file.Name,
+			file.Size,
+			file.ContentType);
+			_data.Files = [.. _data.Files, fileDescription];
+			StateHasChanged();
+		}
+		catch (Exception e)
+		{
+			ToastService.ShowError(L[nameof(Labels.FileUploadError), file.Name, e.FullMessage()]);
+		}
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (AuthenticationStateTask is not null)
+		{
+			var authState = await AuthenticationStateTask;
+			if (!authState.User.Identity?.IsAuthenticated == true)
+			{
+				NavigationManager.NavigateTo(Application.LoginPath);
+			}
+			_user = authState.User;
+		}
+		if (_user is null)
+		{
+			return;
+		}
+		var fileTypesTask = RequestService.SubmitAsync(_user, new GetFileTypeSummaries(), CancellationToken.None);
+		if (DocumentContainerId is not null)
+		{
+			_container = await RequestService.GetDocumentContainerDetailsAsync(DocumentContainerId, _user, CancellationToken.None);
+		}
+		_accept = string.Join(", ", (await fileTypesTask).Results.Select(p => "." + p.ContentType).Distinct());
+
+	}
+
+	private async Task OnDocumentContainerSearchAsync(OptionsSearchEventArgs<Option<string>> args)
+	{
+		if (_user is null)
+		{
+			return;
+		}
+		var result = await RequestService.SubmitAsync(_user, new GetDocumentContainerSummaries(0, 100, args.Text), CancellationToken.None);
+		if (result.Results is not null)
+		{
+			args.Items = result.Results.ToOptions(false);
+		}
+	}
+
+	private async Task OnDocumentTypeSearchAsync(OptionsSearchEventArgs<Option<string>> args)
+	{
+		if (_user is null || _data.SelectedDocumentContainer is null)
+		{
+			return;
+		}
+		IEnumerable<DocumentTypeSummaryViewModel> documentTypes = (await RequestService
+				.SubmitAsync(
+					_user,
+					new GetDocumentTypeSummaries(
+						0,
+						100,
+						args.Text,
+						_data.SelectedDocumentContainer?.DocumentTypeIds ?? [],
+						[]),
+					CancellationToken.None))
+				.Results;
+		args.Items = documentTypes.ToOptions(false);
+	}
+
+	private async Task OnDocumentSearchAsync(OptionsSearchEventArgs<Option<string>> args)
+	{
+		if (_user is null)
+		{
+			return;
+		}
+		var result = await RequestService.SubmitAsync(_user, new GetDocumentSummaries(0, 100, args.Text), CancellationToken.None);
+		if (result.Results is not null)
+		{
+			args.Items = result.Results.ToOptions(false);
+		}
+	}
+
+	private async Task OnSaveAsync()
+	{
+		if (
+			_data is null ||
+			_user is null ||
+			string.IsNullOrWhiteSpace(_user.Identity?.Name))
+		{
+			return;
+		}
+		if (!_data.HasChanges)
+		{
+			ToastService.ShowInfo(L[nameof(Labels.NoChanges)]);
+			return;
+		}
+
+		ValidationResult = new DocumentEditValidation(L).Validate(_data);
+		if (!ValidationResult.IsValid)
+			return;
+		// Submit the command to add the document with file references
+		await CommandService.SubmitCommandAsync(_user, new AddDocument(
+			_data.Id,
+			_data.Name,
+			_data.Comments,
+			_data.Files,
+			_user.Identity.Name,
+			TimeService.GetLocalNow(),
+			_data.ParentDocumentId,
+			_data.DocumentContainerId!,
+			_data.DocumentTypeId!,
+			_data.Tags),
+			CancellationToken.None);
+
+		// Reset the form
+		_data = await DocumentEditViewModel.CreateAsync(null, DocumentContainerId, _user, RequestService, CancellationToken.None);
+	}
+
+	private async Task OnDocumentContainerChangedAsync(IEnumerable<Option<string>>? options)
+	{
+		if (_data is null || _user is null)
+		{
+			return;
+		}
+		await _data.SelectDocumentContainerAsync(
+			options?.FirstOrDefault()?.Value,
+			_user,
+			RequestService,
+			CancellationToken.None);
+	}
+
+	private async Task OnDocumentTypeChangedAsync(IEnumerable<Option<string>>? options)
+	{
+		if (_data is null || _user is null)
+		{
+			return;
+		}
+		await _data.SelectDocumentTypeAsync(
+			options?.FirstOrDefault()?.Value,
+			_user,
+			RequestService,
+			CancellationToken.None);
+	}
+}

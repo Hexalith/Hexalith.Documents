@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.Commands.DocumentTypes;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Command to disable an existing document type in the system.

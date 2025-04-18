@@ -1,9 +1,14 @@
+// <copyright file="AddDocumentContainerActor.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.Commands.DocumentContainers;
 
 using System.Runtime.Serialization;
 
-using Hexalith.Documents.Domain.ValueObjects;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.Documents.ValueObjects;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents an command that occurs when an actor is added to a document container.

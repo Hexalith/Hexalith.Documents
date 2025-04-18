@@ -2,7 +2,7 @@
 
 using System.Runtime.Serialization;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a request to get the description of a document information extraction by its ID.

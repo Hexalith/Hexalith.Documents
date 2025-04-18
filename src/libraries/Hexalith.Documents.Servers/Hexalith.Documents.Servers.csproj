@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <NoWarn>$(NoWarn);CA2000;</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage"  />
+    <PackageReference Include="Hexalith.Infrastructure.DaprRuntime"  />
+    <PackageReference Include="Hexalith.UI.Components.Abstractions"  />
+    <PackageReference Include="Hexalith.Application.Sessions.Abstractions"  />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Projections\Hexalith.Documents.Projections.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
+  </ItemGroup>
+</Project>

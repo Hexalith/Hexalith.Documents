@@ -1,9 +1,13 @@
-﻿namespace Hexalith.Documents.Commands.DocumentStorages;
+﻿// <copyright file="DocumentStorageCommand.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Commands.DocumentStorages;
 
 using System.Runtime.Serialization;
 
-using Hexalith.Documents.Domain;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 [PolymorphicSerialization]
 public abstract partial record DocumentStorageCommand([property: DataMember(Order = 1)] string Id)

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Hexalith.Application.Organizations"  />
+        <PackageReference Include="Hexalith.Infrastructure.ClientAppOnServer"  />
+        <PackageReference Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases"  />
+        <PackageReference Include="Hexalith.Infrastructure.DaprRuntime"  />
+        <PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage"  />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
+      <ProjectReference Include="..\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
+      <ProjectReference Include="..\Hexalith.Documents.Servers\Hexalith.Documents.Servers.csproj" />
+      <ProjectReference Include="..\Hexalith.Documents.UI.Pages\Hexalith.Documents.UI.Pages.csproj" />
+    </ItemGroup>
+</Project>

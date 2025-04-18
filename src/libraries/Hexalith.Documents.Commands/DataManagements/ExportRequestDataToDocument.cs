@@ -1,3 +1,8 @@
+// <copyright file="ExportRequestDataToDocument.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.Commands.DataManagements;
 
 using System.Runtime.Serialization;
@@ -5,13 +10,12 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Command to export data to a document.
 /// </summary>
 /// <param name="Id">The identifier of the command.</param>
-/// <param name="UserId">The identifier of the user who requested the export.</param>
 /// <param name="Request">The query to execute to export the data.</param>
 [PolymorphicSerialization]
 [method: JsonConstructor]
@@ -24,11 +28,9 @@ public partial record ExportRequestDataToDocument(
     /// Initializes a new instance of the <see cref="ExportRequestDataToDocument"/> class.
     /// </summary>
     /// <param name="id">The identifier of the command.</param>
-    /// <param name="description">The description of the export request.</param>
-    /// <param name="userId">The identifier of the user who requested the export.</param>
     /// <param name="requestObject">The query object to execute to export the data.</param>
     public ExportRequestDataToDocument(string id, IChunkableRequest requestObject)
-        : this(id, Serialize((PolymorphicRecordBase)requestObject))
+        : this(id, Serialize((Polymorphic)requestObject))
     {
     }
 
@@ -45,8 +47,8 @@ public partial record ExportRequestDataToDocument(
     /// </summary>
     /// <param name="request">The query object to serialize.</param>
     /// <returns>The serialized JSON string.</returns>
-    private static string Serialize(PolymorphicRecordBase request)
-        => JsonSerializer.Serialize<PolymorphicRecordBase>(request, PolymorphicHelper.DefaultJsonSerializerOptions);
+    private static string Serialize(Polymorphic request)
+        => JsonSerializer.Serialize<Polymorphic>(request, PolymorphicHelper.DefaultJsonSerializerOptions);
 
     /// <summary>
     /// Deserializes the query JSON string to a query object.
@@ -54,6 +56,6 @@ public partial record ExportRequestDataToDocument(
     /// <returns>The deserialized query object.</returns>
     /// <exception cref="InvalidOperationException">Thrown when deserialization fails.</exception>
     private IChunkableRequest Deserialize() => JsonSerializer
-            .Deserialize<PolymorphicRecordBase>(Request, PolymorphicHelper.DefaultJsonSerializerOptions) as IChunkableRequest
+            .Deserialize<Polymorphic>(Request, PolymorphicHelper.DefaultJsonSerializerOptions) as IChunkableRequest
             ?? throw new InvalidOperationException("Unable to deserialize the query : " + Request);
 }

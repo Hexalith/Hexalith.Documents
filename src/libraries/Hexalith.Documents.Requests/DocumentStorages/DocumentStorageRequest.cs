@@ -3,7 +3,7 @@
 using System.Runtime.Serialization;
 
 using Hexalith.Documents.Domain;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 [PolymorphicSerialization]
 public abstract partial record DocumentStorageRequest([property: DataMember(Order = 1)] string Id)

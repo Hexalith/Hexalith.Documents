@@ -1,6 +1,6 @@
 namespace Hexalith.Documents.Commands.DocumentContainers;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents an command that occurs when a document container is disabled.

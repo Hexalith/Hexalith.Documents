@@ -5,6 +5,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Hexalith.Documents.Abstractions\Hexalith.Documents.Abstractions.csproj" />
+        <ProjectReference Include="..\Hexalith.Documents\Hexalith.Documents.csproj" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Modules\" />

@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.Commands.FileTypes;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 [PolymorphicSerialization]
 public partial record EnableFileType(string Id) : FileTypeCommand(Id)

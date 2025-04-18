@@ -2,7 +2,7 @@ namespace Hexalith.Documents.Commands.DocumentTypes;
 
 using System.Runtime.Serialization;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Command to remove a metadata tag from a document type.

@@ -1,0 +1,99 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+    <PackageReference Include="Microsoft.Extensions.Http"  />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web"  />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization"  />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"  />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Hexalith.Application.Modules.Abstractions"  />
+    <PackageReference Include="Hexalith.Application.Sessions.Abstractions"  />
+    <PackageReference Include="Hexalith.Application.Partitions.Abstractions"  />
+    <PackageReference Include="Hexalith.UI.Components"  />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
+    <ProjectReference Include="..\..\Application\Hexalith.Documents.Projections\Hexalith.Documents.Projections.csproj" />
+    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\DocumentInformationExtractions.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentInformationExtractions.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Documents.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Documents.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\DocumentContainers.Designer.cs">
+      <DependentUpon>DocumentContainers.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\DocumentStorages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentStorages.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\DocumentTypes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DocumentTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\FileTypes.Designer.cs">
+      <DependentUpon>FileTypes.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\DataManagements.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DataManagements.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="DataManagements\_Imports.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\DocumentContainers.resx">
+      <LastGenOutput>DocumentContainers.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentInformationExtractions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DocumentInformationExtractions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentStorages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DocumentStorages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FileTypes.resx">
+      <LastGenOutput>FileTypes.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DocumentTypes.resx">
+      <LastGenOutput>DocumentTypes.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Documents.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Documents.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\DataManagements.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DataManagements.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.Commands.Documents;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 [PolymorphicSerialization]
 public partial record RemoveDocumentActor(string Id, string ContactId)

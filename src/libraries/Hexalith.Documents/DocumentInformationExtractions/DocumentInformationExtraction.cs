@@ -1,3 +1,8 @@
+// <copyright file="DocumentInformationExtraction.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.DocumentInformationExtractions;
 
 using System.Diagnostics.CodeAnalysis;
@@ -5,15 +10,22 @@ using System.Runtime.Serialization;
 
 using Hexalith.Documents;
 using Hexalith.Documents.Events.DocumentInformationExtractions;
-using Hexalith.Domain.Aggregates;
 using Hexalith.Domain.Events;
+using Hexalith.Domains;
+using Hexalith.Domains.Results;
 
 /// <summary>
 /// Represents a file text extraction mode configuration that defines how text should be extracted from files.
 /// </summary>
 /// <param name="Id">The unique identifier for the extraction mode.</param>
 /// <param name="Name">The display name of the extraction mode.</param>
+/// <param name="Model"></param>
+/// <param name="SystemMessage"></param>
+/// <param name="OutputFormat"></param>
+/// <param name="OutputSample"></param>
 /// <param name="Instructions">The instructions defining how text should be extracted.</param>
+/// <param name="ValidationModel"></param>
+/// <param name="ValidationInstructions"></param>
 /// <param name="Comments">Optional description providing additional details about the extraction mode.</param>
 /// <param name="Disabled">Flag indicating whether this extraction mode is currently disabled.</param>
 [DataContract]
@@ -94,7 +106,7 @@ public record DocumentInformationExtraction(
             DocumentInformationExtractionDescriptionChanged e => ApplyEvent(e),
             DocumentInformationExtractionDisabled e => ApplyEvent(e),
             DocumentInformationExtractionEnabled e => ApplyEvent(e),
-            DocumentInformationInstructionsChanged e => ApplyEvent(e),
+            DocumentInformationExtractionInstructionsChanged e => ApplyEvent(e),
             DocumentInformationExtractionEvent e => new ApplyResult(
                 this,
                 [new DocumentInformationExtractionEventCancelled(e, "Event not implemented")],
@@ -153,7 +165,7 @@ public record DocumentInformationExtraction(
     /// </summary>
     /// <param name="e">The instructions change event to apply.</param>
     /// <returns>The result of applying the event.</returns>
-    private ApplyResult ApplyEvent(DocumentInformationInstructionsChanged e) => e.Instructions != Instructions
+    private ApplyResult ApplyEvent(DocumentInformationExtractionInstructionsChanged e) => e.Instructions != Instructions
         ? new ApplyResult(
             this with { Instructions = e.Instructions },
             [e],

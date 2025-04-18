@@ -2,7 +2,7 @@ namespace Hexalith.Documents.Commands.DocumentTypes;
 
 using System.Runtime.Serialization;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Command to remove a data extraction configuration from a document type.

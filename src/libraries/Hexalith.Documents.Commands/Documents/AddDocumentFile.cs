@@ -1,17 +1,22 @@
-﻿namespace Hexalith.Documents.Commands.Documents;
+﻿// <copyright file="AddDocumentFile.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Commands.Documents;
 
 using System.Runtime.Serialization;
 using System.Text;
 
-using Hexalith.Documents.Domain.ValueObjects;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.Documents.ValueObjects;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Command to create a new document.
 /// </summary>
 /// <param name="Id">The unique identifier of the document.</param>
-/// <param name="FileTypeId">The type of the document.</param>
 /// <param name="Name">The name of the document.</param>
+/// <param name="ContentType"></param>
 /// <param name="Base64Content">The content of the document in base64.</param>
 [PolymorphicSerialization]
 public partial record AddDocumentFile(

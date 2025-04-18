@@ -1,0 +1,115 @@
+﻿@page "/Documents/Add/DocumentType"
+@page "/Documents/DocumentType/{Id}"
+@using Hexalith.Documents.Requests.FileTypes
+@using Hexalith.Documents.Requests.DocumentInformationExtractions
+@using Hexalith.Documents.UI.Components.FileTypes
+@using Hexalith.Documents.UI.Components.DocumentInformationExtractions
+@using Hexalith.UI.Components.Pages
+@rendermode InteractiveAuto
+<HexEntityDetailsPage AddTitle="@Labels.AddTitle"
+                      EditTitle="@Labels.Title"
+                      EntityId="@Id"
+                      ViewModel="_data"
+                      IndexPath="/Documents/DocumentType"
+                      ValidationResult="_validationResult"
+                      OnSave="OnSave"
+                      OnLoadData="OnLoadData">
+
+    @if (_data is not null)
+    {
+        <FluentGrid Style="width:100%;">
+            <FluentGridItem md="12">
+                <FileTypeAutocomplete OnOptionsSearch="OnFileTypeSearch" @bind-SelectedOptions="_data.FileTypeIds"></FileTypeAutocomplete>
+            </FluentGridItem>
+            <FluentGridItem md="12">
+                <DocumentInformationExtractionAutocomplete OnOptionsSearch="OnExtractionSearch" @bind-SelectedOptions="_data.DataExtractionIds"></DocumentInformationExtractionAutocomplete>
+            </FluentGridItem>
+        </FluentGrid>
+    }
+</HexEntityDetailsPage>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+    [Parameter]
+    public string? Id { get; set; }
+
+    private ClaimsPrincipal? _user;
+    private DocumentTypeEditViewModel? _data;
+
+    private ValidationResult? _validationResult;
+
+    private async Task OnLoadData()
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        if (Id is not null)
+        {
+            _data = await DocumentTypeEditViewModel.CreateAsync(Id, _user, RequestService, CancellationToken.None);
+        }
+        else
+        {
+            _data = new DocumentTypeEditViewModel();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationStateTask is not null)
+        {
+            var authState = await AuthenticationStateTask;
+            _user = authState.User;
+        }
+        await base.OnInitializedAsync();
+    }
+
+    private async Task<SaveResult> OnSave()
+    {
+        var result = _data.ValidateSave(_user, (d) =>
+        {
+            _validationResult = new DocumentTypeEditValidation().Validate(d);
+            if (_validationResult.IsValid)
+            {
+                return true;
+            }
+            return false;
+        });
+        if (result.Result == ExecuteSaveResult.Success)
+        {
+            await _data!.SaveAsync(_user!, CommandService, Id is null, CancellationToken.None);
+            if (Id is null)
+            {
+                _data = new ();
+            }
+        }
+        StateHasChanged();
+        return result;
+    }
+
+    private async Task OnFileTypeSearch(OptionsSearchEventArgs<Option<string>> args)
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        var result = await RequestService.SubmitAsync(_user, new GetFileTypeSummaries(0, 100, args.Text), CancellationToken.None);
+        if (result.Results is not null)
+        {
+            args.Items = result.Results.ToOptions(false);
+        }
+    }
+    private async Task OnExtractionSearch(OptionsSearchEventArgs<Option<string>> args)
+    {
+        if (_user is null)
+        {
+            return;
+        }
+        var result = await RequestService.SubmitAsync(_user, new GetDocumentInformationExtractionSummaries(0, 100, args.Text), CancellationToken.None);
+        if (result.Results is not null)
+        {
+            args.Items = result.Results.ToOptions(false);
+        }
+    }
+}

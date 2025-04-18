@@ -1,6 +1,6 @@
 ﻿namespace Hexalith.Documents.Commands.DocumentTypes;
 
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Command to enable a previously disabled document type in the system.

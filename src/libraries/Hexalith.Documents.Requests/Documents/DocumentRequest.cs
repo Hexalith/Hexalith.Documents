@@ -3,7 +3,7 @@
 using System.Runtime.Serialization;
 
 using Hexalith.Documents.Domain;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a base class for document commands.

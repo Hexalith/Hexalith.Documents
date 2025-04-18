@@ -3,7 +3,7 @@ namespace Hexalith.Documents.Requests.DataManagements;
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a request to get data export IDs with pagination.

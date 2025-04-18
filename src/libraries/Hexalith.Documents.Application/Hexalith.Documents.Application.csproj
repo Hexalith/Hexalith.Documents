@@ -6,7 +6,6 @@
         <PackageReference Include="Hexalith.Application"  />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\Domain\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
         <ProjectReference Include="..\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
         <ProjectReference Include="..\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
         <ProjectReference Include="..\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />

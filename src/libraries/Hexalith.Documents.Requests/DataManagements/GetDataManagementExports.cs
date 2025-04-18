@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.DataManagements;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a request for a list of summaries of data export with essential information.

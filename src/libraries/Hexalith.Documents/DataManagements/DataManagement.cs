@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.DataManagements;
+﻿// <copyright file="DataManagement.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.DataManagements;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -6,7 +11,8 @@ using System.Runtime.Serialization;
 
 using Hexalith.Documents;
 using Hexalith.Documents.Events.DataManagements;
-using Hexalith.Domain.Aggregates;
+using Hexalith.Domains;
+using Hexalith.Domains.Results;
 
 /// <summary>
 /// Represents a data export management process that tracks the lifecycle and state of data exports.

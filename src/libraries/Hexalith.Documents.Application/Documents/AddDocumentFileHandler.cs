@@ -22,7 +22,7 @@ using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentStorages;
 using Hexalith.Domain.Aggregates;
 using Hexalith.Extensions.Helpers;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 using Microsoft.Extensions.Logging;
 
@@ -190,7 +190,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
     /// <param name="stream">The stream.</param>
     /// <param name="data">The data.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    private static async Task WritePolymorphicObjectAsync(Stream stream, PolymorphicRecordBase data, CancellationToken cancellationToken)
+    private static async Task WritePolymorphicObjectAsync(Stream stream, Polymorphic data, CancellationToken cancellationToken)
         => await JsonSerializer.SerializeAsync(stream, data, PolymorphicHelper.DefaultJsonSerializerOptions, cancellationToken).ConfigureAwait(false);
 
     /// <summary>
@@ -205,7 +205,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
         if (firstItem is not null)
         {
             Type type;
-            type = firstItem is PolymorphicRecordBase ? typeof(IEnumerable<PolymorphicRecordBase>) : typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
+            type = firstItem is Polymorphic ? typeof(IEnumerable<Polymorphic>) : typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
 
             await JsonSerializer.SerializeAsync(
                     stream,
@@ -233,7 +233,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
     /// <param name="cancellationToken">The cancellation token.</param>
     private static async Task WriteRequestResultAsync(Stream stream, object? result, CancellationToken cancellationToken)
     {
-        if (result is PolymorphicRecordBase polymorphic)
+        if (result is Polymorphic polymorphic)
         {
             await WritePolymorphicObjectAsync(stream, polymorphic, cancellationToken).ConfigureAwait(false);
         }

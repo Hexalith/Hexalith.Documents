@@ -3,7 +3,7 @@
 using System.Runtime.Serialization;
 
 using Hexalith.Domain.ValueObjects;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a request to get the description of a document by its ID.

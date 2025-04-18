@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Domain;
 using Hexalith.Documents.Domain.DocumentStorages;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a request for a list of summaries of document storage with essential information.

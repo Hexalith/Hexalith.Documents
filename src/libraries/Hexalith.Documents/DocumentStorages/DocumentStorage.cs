@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.DocumentStorages;
+﻿// <copyright file="DocumentStorage.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.DocumentStorages;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
@@ -6,8 +11,9 @@ using System.Runtime.Serialization;
 using Hexalith.Documents;
 using Hexalith.Documents.Events.DocumentStorages;
 using Hexalith.Documents.ValueObjects;
-using Hexalith.Domain.Aggregates;
 using Hexalith.Domain.Events;
+using Hexalith.Domains;
+using Hexalith.Domains.Results;
 
 /// <summary>
 /// Represents a partition of a document.
@@ -17,7 +23,6 @@ using Hexalith.Domain.Events;
 /// <param name="StorageType">The storage type of the document partition.</param>
 /// <param name="Description">The description of the document partition.</param>
 /// <param name="ConnectionString">The name of the connection string.</param>
-/// <param name="Tags">The tags associated with the document partition.</param>
 /// <param name="Disabled">Indicates whether the document partition is disabled.</param>
 [DataContract]
 public record DocumentStorage(

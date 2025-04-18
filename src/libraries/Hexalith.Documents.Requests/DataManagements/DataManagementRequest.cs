@@ -3,7 +3,7 @@ namespace Hexalith.Documents.Requests.DataManagements;
 using System.Runtime.Serialization;
 
 using Hexalith.Documents.Domain;
-using Hexalith.PolymorphicSerialization;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a request for data export.
