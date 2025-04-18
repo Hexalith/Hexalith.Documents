@@ -4,7 +4,7 @@
   <ItemGroup>
     <PackageVersion Include="Hexalith.Application.Modules.Abstractions" Version="1.56.0" />
     <PackageVersion Include="Hexalith.NetAspire.Hosting" Version="1.1.0" />
-    <PackageVersion Include="Hexalith.PolymorphicSerializations" Version="1.6.2" />
-    <PackageVersion Include="Hexalith.PolymorphicSerializations.CodeGenerators" Version="1.6.2" />
+    <PackageVersion Include="Hexalith.Domains" Version="1.0.1" />
+    <PackageVersion Include="Hexalith.Domains.Abstractions" Version="1.0.1" />
   </ItemGroup>
 </Project>
