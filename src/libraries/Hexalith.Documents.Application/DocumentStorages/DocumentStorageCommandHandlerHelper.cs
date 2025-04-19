@@ -1,8 +1,13 @@
-﻿namespace Hexalith.Documents.Application.DocumentStorages;
+﻿// <copyright file="DocumentStorageCommandHandlerHelper.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Application.DocumentStorages;
 
 using Hexalith.Application.Commands;
 using Hexalith.Documents.Commands.DocumentStorages;
-using Hexalith.Documents.Domain.DocumentStorages;
+using Hexalith.Documents.DocumentStorages;
 using Hexalith.Documents.Events.DocumentStorages;
 
 using Microsoft.Extensions.DependencyInjection;

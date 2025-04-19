@@ -3,10 +3,10 @@
 using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
 using Hexalith.Documents.Application.Services;
-using Hexalith.Documents.Domain.DocumentContainers;
-using Hexalith.Documents.Domain.Documents;
-using Hexalith.Documents.Domain.DocumentStorages;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.DocumentContainers;
+using Hexalith.Documents.Documents;
+using Hexalith.Documents.DocumentStorages;
+using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.Documents;
 using Hexalith.Documents.Requests.DocumentStorages;

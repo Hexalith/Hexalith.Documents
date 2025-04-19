@@ -11,12 +11,12 @@ using Hexalith.Application.Sessions.Models;
 using Hexalith.Application.Sessions.Services;
 using Hexalith.Documents.Application;
 using Hexalith.Documents.Application.Services;
-using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.DocumentContainers;
-using Hexalith.Documents.Domain.DocumentStorages;
-using Hexalith.Documents.Domain.DocumentTypes;
-using Hexalith.Documents.Domain.FileTypes;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents;
+using Hexalith.Documents.DocumentContainers;
+using Hexalith.Documents.DocumentStorages;
+using Hexalith.Documents.DocumentTypes;
+using Hexalith.Documents.FileTypes;
+using Hexalith.Documents.ValueObjects;
 using Hexalith.Domain.Events;
 
 using Microsoft.Extensions.Logging;

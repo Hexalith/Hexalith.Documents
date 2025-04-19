@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Hexalith.Application.Events;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.Services;
-using Hexalith.Documents.Domain.DocumentContainers;
-using Hexalith.Documents.Domain.Documents;
+using Hexalith.Documents.DocumentContainers;
+using Hexalith.Documents.Documents;
 using Hexalith.Documents.Events.Documents;
 
 /// <summary>

@@ -9,7 +9,7 @@
     <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnServer" Version="1.60.0" />
     <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases" Version="1.60.0" />
     <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime" Version="1.60.0" />
-    <PackageVersion Include="Hexalith.Infrastructure.AzureBlobStorage" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Infrastructure.AzureBlobStorage" Version="1.53.3" />
     <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnWasm" Version="1.60.0" />
     <PackageVersion Include="Hexalith.UI.Components.Abstractions" Version="1.60.0" />
     <PackageVersion Include="Hexalith.Application.Sessions.Abstractions" Version="1.60.0" />

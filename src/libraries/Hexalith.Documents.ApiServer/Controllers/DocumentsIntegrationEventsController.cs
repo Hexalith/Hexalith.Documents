@@ -1,11 +1,15 @@
-﻿namespace Hexalith.Documents.ApiServer.Controllers;
+﻿// <copyright file="DocumentsIntegrationEventsController.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.ApiServer.Controllers;
 
 using Dapr;
 
 using Hexalith.Application.Events;
 using Hexalith.Application.Projections;
 using Hexalith.Application.States;
-using Hexalith.Documents.Domain;
 using Hexalith.Infrastructure.WebApis.Buses;
 using Hexalith.Infrastructure.WebApis.Controllers;
 
@@ -25,17 +29,6 @@ using Swashbuckle.AspNetCore.Annotations;
 /// <param name="projectionProcessor">The projection processor that updates read models based on processed events.</param>
 /// <param name="hostEnvironment">The host environment providing runtime environment information.</param>
 /// <param name="logger">The logger instance for recording diagnostic information.</param>
-/// <remarks>
-/// This controller handles various document-related events including:
-/// - Data management events
-/// - Document container events
-/// - Document processing events
-/// - Information extraction events
-/// - Storage operations
-/// - Document and file type management
-///
-/// Each event type is processed through dedicated endpoints with proper session management and error handling.
-/// </remarks>
 [ApiController]
 [Route("/api/documents/events")]
 [SwaggerTag("Document Integration Events Receiver")]
@@ -50,10 +43,12 @@ public class DocumentsIntegrationEventsController(
     /// Processes data management events asynchronously, handling operations related to document data management and maintenance.
     /// </summary>
     /// <param name="eventState">The event state containing the message payload and metadata for processing.</param>
-    /// <returns>A Task&lt;ActionResult&gt; representing the asynchronous operation result:
+    /// <returns>
+    /// A Task&lt;ActionResult&gt; representing the asynchronous operation result:
     /// - 200 OK if the event was processed successfully
     /// - 400 Bad Request if the event data is invalid
-    /// - 500 Internal Server Error if processing fails.</returns>
+    /// - 500 Internal Server Error if processing fails.
+    /// </returns>
     [EventBusTopic(DocumentDomainHelper.DataManagementAggregateName)]
     [TopicMetadata("requireSessions", "true")]
     [TopicMetadata("sessionIdleTimeoutInSec ", "15")]
@@ -74,10 +69,12 @@ public class DocumentsIntegrationEventsController(
     /// Processes document container events asynchronously, managing operations related to document organization and grouping.
     /// </summary>
     /// <param name="eventState">The event state containing the message payload and metadata for processing.</param>
-    /// <returns>A Task&lt;ActionResult&gt; representing the asynchronous operation result:
+    /// <returns>
+    /// A Task&lt;ActionResult&gt; representing the asynchronous operation result:
     /// - 200 OK if the event was processed successfully
     /// - 400 Bad Request if the event data is invalid
-    /// - 500 Internal Server Error if processing fails.</returns>
+    /// - 500 Internal Server Error if processing fails.
+    /// </returns>
     [EventBusTopic(DocumentDomainHelper.DocumentContainerAggregateName)]
     [TopicMetadata("requireSessions", "true")]
     [TopicMetadata("sessionIdleTimeoutInSec ", "15")]

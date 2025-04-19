@@ -13,7 +13,7 @@
     <ProjectReference Include="..\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
     <ProjectReference Include="..\Hexalith.Documents.Projections\Hexalith.Documents.Projections.csproj" />
     <ProjectReference Include="..\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
-    <ProjectReference Include="..\Hexalith.Documents.Domain.Abstractions\Hexalith.Documents.Domain.Abstractions.csproj" />
-    <ProjectReference Include="..\Hexalith.Documents.Domain\Hexalith.Documents.Domain.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Abstractions\Hexalith.Documents.Abstractions.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Domain\Hexalith.Documents.csproj" />
   </ItemGroup>
 </Project>

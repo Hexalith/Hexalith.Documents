@@ -1,15 +1,19 @@
-﻿namespace Hexalith.Documents.Application;
+﻿// <copyright file="InvalidAggregateTypeException{T}.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Application;
 
 using System;
 using System.Text.Json;
 
-using Hexalith.Domain.Aggregates;
+using Hexalith.Domains;
 
 /// <summary>
 /// Exception thrown when an invalid aggregate type is encountered.
 /// </summary>
 /// <typeparam name="T">The expected aggregate type.</typeparam>
-[Serializable]
 public class InvalidAggregateTypeException<T> : Exception
 {
     /// <summary>
@@ -24,7 +28,7 @@ public class InvalidAggregateTypeException<T> : Exception
     /// </summary>
     /// <param name="aggregate">The aggregate.</param>
     public InvalidAggregateTypeException(IDomainAggregate aggregate)
-        : base($"The exected type is {typeof(T).GetType().Name} but aggregate is {aggregate?.GetType().Name ?? "null"}: {JsonSerializer.Serialize(aggregate)}")
+        : base($"The exected type is {typeof(T).Name} but aggregate is {aggregate?.GetType().Name ?? "null"}: {JsonSerializer.Serialize(aggregate)}")
     {
     }
 

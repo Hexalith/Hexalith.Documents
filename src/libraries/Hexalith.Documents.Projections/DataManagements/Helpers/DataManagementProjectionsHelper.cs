@@ -1,8 +1,13 @@
-﻿namespace Hexalith.Documents.Projections.DataManagements.Helpers;
+﻿// <copyright file="DataManagementProjectionsHelper.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Projections.DataManagements.Helpers;
 
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain.DataManagements;
+using Hexalith.Documents.DataManagements;
 using Hexalith.Documents.Events.DataManagements;
 using Hexalith.Documents.Projections.DataManagements.Projections.Details;
 using Hexalith.Documents.Projections.DataManagements.Projections.Summaries;

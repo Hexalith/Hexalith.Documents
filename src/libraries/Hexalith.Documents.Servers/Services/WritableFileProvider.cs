@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Hexalith.Documents.Application.Services;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
 
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,7 +1,7 @@
 namespace Hexalith.Documents.Projections.Documents.Services;
 
 using Hexalith.Documents.Commands.Documents;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Projections.FileTypes.Services;
 
 /// <summary>

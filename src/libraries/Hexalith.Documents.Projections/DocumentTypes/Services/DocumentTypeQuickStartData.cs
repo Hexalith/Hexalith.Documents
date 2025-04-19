@@ -1,7 +1,7 @@
 ﻿namespace Hexalith.Documents.Projections.DocumentTypes.Services;
 
 using Hexalith.Documents.Commands.DocumentTypes;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
 
 /// <summary>
 /// Provides quick start data for document types.

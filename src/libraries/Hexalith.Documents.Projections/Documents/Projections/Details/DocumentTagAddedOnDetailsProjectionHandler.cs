@@ -3,7 +3,7 @@ namespace Hexalith.Documents.Projections.Documents.Projections.Details;
 using System.Diagnostics.CodeAnalysis;
 
 using Hexalith.Application.Projections;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Events.Documents;
 using Hexalith.Documents.Requests.Documents;
 

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.Projections;
-using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.Documents;
+using Hexalith.Documents;
+using Hexalith.Documents.Documents;
 using Hexalith.Documents.Requests.Documents;
 using Hexalith.Domain.Events;
 

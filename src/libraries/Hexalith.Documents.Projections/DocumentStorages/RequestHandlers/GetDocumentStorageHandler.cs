@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
-using Hexalith.Documents.Domain.DocumentStorages;
+using Hexalith.Documents.DocumentStorages;
 using Hexalith.Documents.Requests.DocumentStorages;
 using Hexalith.Domain.Events;
 

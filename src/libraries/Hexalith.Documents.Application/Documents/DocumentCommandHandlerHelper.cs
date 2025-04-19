@@ -1,9 +1,13 @@
-﻿namespace Hexalith.Documents.Application.Documents;
+﻿// <copyright file="DocumentCommandHandlerHelper.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Application.Documents;
 
 using Hexalith.Application.Commands;
 using Hexalith.Documents.Commands.Documents;
-using Hexalith.Documents.Domain.Documents;
-using Hexalith.Documents.Events;
+using Hexalith.Documents.Documents;
 using Hexalith.Documents.Events.Documents;
 
 using Microsoft.Extensions.DependencyInjection;

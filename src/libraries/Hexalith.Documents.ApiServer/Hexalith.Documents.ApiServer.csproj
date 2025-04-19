@@ -3,15 +3,13 @@
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Hexalith.Application.Organizations"  />
-        <PackageReference Include="Hexalith.Infrastructure.ClientAppOnServer"  />
-        <PackageReference Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases"  />
-        <PackageReference Include="Hexalith.Infrastructure.DaprRuntime"  />
-        <PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage"  />
+        <PackageReference Include="Hexalith.Infrastructure.ClientAppOnServer" />
+        <PackageReference Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\Application\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
-      <ProjectReference Include="..\..\Application\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
-      <ProjectReference Include="..\..\Infrastructure\Hexalith.Documents.Servers\Hexalith.Documents.Servers.csproj" />
+      <ProjectReference Include="..\Hexalith.Documents.Abstractions\Hexalith.Documents.Abstractions.csproj" />
+      <ProjectReference Include="..\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
+      <ProjectReference Include="..\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
+      <ProjectReference Include="..\Hexalith.Documents.Servers\Hexalith.Documents.Servers.csproj" />
     </ItemGroup>
 </Project>

@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Application.Documents;
+﻿// <copyright file="AddDocumentFileHandler.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Application.Documents;
 
 using System.Text;
 using System.Text.Json;
@@ -14,13 +19,13 @@ using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Commands.DataManagements;
 using Hexalith.Documents.Commands.DocumentContainers;
 using Hexalith.Documents.Commands.Documents;
-using Hexalith.Documents.Domain.DataManagements;
-using Hexalith.Documents.Domain.DocumentStorages;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.DataManagements;
+using Hexalith.Documents.DocumentStorages;
 using Hexalith.Documents.Events.DataManagements;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentStorages;
-using Hexalith.Domain.Aggregates;
+using Hexalith.Documents.ValueObjects;
+using Hexalith.Domains;
 using Hexalith.Extensions.Helpers;
 using Hexalith.PolymorphicSerializations;
 
@@ -33,20 +38,17 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
 {
     private readonly IDomainCommandProcessor _commandProcessor;
     private readonly IRequestProcessor _requestProcessor;
-    private readonly IUserDataService _userDataService;
     private readonly IWritableFileProvider _writableFileProvider;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AddDocumentFileHandler"/> class.
     /// </summary>
-    /// <param name="userDataService">The user data service.</param>
     /// <param name="requestProcessor">The request processor.</param>
     /// <param name="commandProcessor">The command processor.</param>
     /// <param name="writableFileProvider">The writable file provider.</param>
     /// <param name="timeProvider">The time provider.</param>
     /// <param name="logger">The logger.</param>
     public AddDocumentFileHandler(
-        IUserDataService userDataService,
         IRequestProcessor requestProcessor,
         IDomainCommandProcessor commandProcessor,
         IWritableFileProvider writableFileProvider,
@@ -55,9 +57,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
         : base(timeProvider, logger)
     {
         ArgumentNullException.ThrowIfNull(requestProcessor);
-        ArgumentNullException.ThrowIfNull(userDataService);
         ArgumentNullException.ThrowIfNull(commandProcessor);
-        _userDataService = userDataService;
         _requestProcessor = requestProcessor;
         _commandProcessor = commandProcessor;
         _writableFileProvider = writableFileProvider;
@@ -172,7 +172,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
     {
         if (data is null)
         {
-            stream.Write(Encoding.UTF8.GetBytes("{}"));
+            await stream.WriteAsync(Encoding.UTF8.GetBytes("{}"), cancellationToken);
             return;
         }
 
@@ -204,8 +204,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
         object? firstItem = data?.FirstOrDefault();
         if (firstItem is not null)
         {
-            Type type;
-            type = firstItem is Polymorphic ? typeof(IEnumerable<Polymorphic>) : typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
+            Type type = firstItem is Polymorphic ? typeof(IEnumerable<Polymorphic>) : typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
 
             await JsonSerializer.SerializeAsync(
                     stream,
@@ -218,7 +217,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
         {
             await JsonSerializer.SerializeAsync<IEnumerable<object>>(
                     stream,
-                    Array.Empty<object>(),
+                    [],
                     JsonSerializerOptions.Default,
                     cancellationToken)
                 .ConfigureAwait(false);
@@ -247,7 +246,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
     {
         string containerId = GetDocumentContainerId(metadata.Context.UserId);
         GetDocumentContainerDetails? getDocumentContainer = new(containerId);
-        Metadata meta = Metadata.CreateNew(getDocumentContainer, metadata, Time.GetLocalNow());
+        var meta = Metadata.CreateNew(getDocumentContainer, metadata, Time.GetLocalNow());
         getDocumentContainer = await _requestProcessor
             .ProcessAsync(getDocumentContainer, meta, cancellationToken)
             .ConfigureAwait(false) as GetDocumentContainerDetails;
@@ -277,7 +276,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
     /// <param name="cancellationToken">The cancellation token.</param>
     private async Task WriteRequestChunksResultAsync(IWritableFile file, IChunkableRequest initialRequest, Metadata metadata, CancellationToken cancellationToken)
     {
-        file.Stream.Write(Encoding.UTF8.GetBytes("[\n"));
+        await file.Stream.WriteAsync(Encoding.UTF8.GetBytes("[\n"), cancellationToken);
         IChunkableRequest? request = initialRequest;
         bool first = true;
         do
@@ -294,7 +293,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
                 }
                 else
                 {
-                    file.Stream.Write(Encoding.UTF8.GetBytes(",\n"));
+                    await file.Stream.WriteAsync(Encoding.UTF8.GetBytes(",\n"), cancellationToken);
                 }
 
                 await WriteRequestResultAsync(file.Stream, result, cancellationToken).ConfigureAwait(false);
@@ -303,6 +302,6 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
             request = request.HasNextChunk ? request.CreateNextChunkRequest() : null;
         }
         while (request is not null);
-        file.Stream.Write(Encoding.UTF8.GetBytes("\n]"));
+        await file.Stream.WriteAsync(Encoding.UTF8.GetBytes("\n]"), cancellationToken);
     }
 }

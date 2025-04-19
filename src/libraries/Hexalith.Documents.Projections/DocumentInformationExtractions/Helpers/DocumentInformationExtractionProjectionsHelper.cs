@@ -2,7 +2,7 @@
 
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain.DocumentInformationExtractions;
+using Hexalith.Documents.DocumentInformationExtractions;
 using Hexalith.Documents.Events.DocumentInformationExtractions;
 using Hexalith.Documents.Projections.DocumentInformationExtractions.Projections.Details;
 using Hexalith.Documents.Projections.DocumentInformationExtractions.Projections.Summaries;

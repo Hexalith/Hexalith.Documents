@@ -1,7 +1,7 @@
 ﻿namespace Hexalith.Documents.Projections.DocumentStorages.Services;
 
 using Hexalith.Documents.Commands.DocumentStorages;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
 
 /// <summary>
 /// Provides demo document storage data for testing and demonstration purposes.

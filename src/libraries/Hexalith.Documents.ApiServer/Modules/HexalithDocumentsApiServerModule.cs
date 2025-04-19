@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.ApiServer.Modules;
+﻿// <copyright file="HexalithDocumentsApiServerModule.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.ApiServer.Modules;
 
 using System.Collections.Generic;
 
@@ -6,19 +11,18 @@ using Dapr.Actors.Runtime;
 
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Application.Services;
+using Hexalith.Documents.Abstractions.Extensions;
 using Hexalith.Documents.ApiServer.Controllers;
 using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Commands.Extensions;
-using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.DataManagements;
-using Hexalith.Documents.Domain.DocumentContainers;
-using Hexalith.Documents.Domain.DocumentInformationExtractions;
-using Hexalith.Documents.Domain.Documents;
-using Hexalith.Documents.Domain.DocumentStorages;
-using Hexalith.Documents.Domain.DocumentTypes;
-using Hexalith.Documents.Domain.FileTypes;
-using Hexalith.Documents.Events.Extensions;
+using Hexalith.Documents.DataManagements;
+using Hexalith.Documents.DocumentContainers;
+using Hexalith.Documents.DocumentInformationExtractions;
+using Hexalith.Documents.Documents;
+using Hexalith.Documents.DocumentStorages;
+using Hexalith.Documents.DocumentTypes;
+using Hexalith.Documents.FileTypes;
 using Hexalith.Documents.Requests.DataManagements;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentInformationExtractions;
@@ -80,9 +84,9 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
         _ = services
             .ConfigureSettings<CosmosDbSettings>(configuration);
 
-        HexalithDocumentsEvents.RegisterPolymorphicMappers();
-        HexalithDocumentsCommands.RegisterPolymorphicMappers();
-        HexalithDocumentsRequests.RegisterPolymorphicMappers();
+        HexalithDocumentsAbstractionsSerialization.RegisterPolymorphicMappers();
+        HexalithDocumentsCommandsSerialization.RegisterPolymorphicMappers();
+        HexalithDocumentsRequestsSerialization.RegisterPolymorphicMappers();
 
         // Add application module
         services.TryAddSingleton<IDocumentModule, HexalithDocumentsApiServerModule>();

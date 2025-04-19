@@ -1,7 +1,7 @@
 namespace Hexalith.Documents.Projections.FileTypes.Services;
 
 using Hexalith.Documents.Commands.FileTypes;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
 
 /// <summary>
 /// Provides demo file type data for testing and demonstration purposes.

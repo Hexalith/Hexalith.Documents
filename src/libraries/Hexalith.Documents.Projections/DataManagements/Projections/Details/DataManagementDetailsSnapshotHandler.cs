@@ -1,12 +1,16 @@
-﻿namespace Hexalith.Documents.UI.Services.DataManagements.Projections.Summaries;
+﻿// <copyright file="DataManagementDetailsSnapshotHandler.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.UI.Services.DataManagements.Projections.Summaries;
 
 using System.Threading;
 using System.Threading.Tasks;
 
 using Hexalith.Application.Metadatas;
 using Hexalith.Application.Projections;
-using Hexalith.Documents.Domain;
-using Hexalith.Documents.Domain.DataManagements;
+using Hexalith.Documents.DataManagements;
 using Hexalith.Documents.Requests.DataManagements;
 using Hexalith.Domain.Events;
 

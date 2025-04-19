@@ -1,10 +1,15 @@
-﻿namespace Hexalith.Documents.Application.Services;
+﻿// <copyright file="UserDataService.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Application.Services;
 
 using System.Threading;
 using System.Threading.Tasks;
 
 using Hexalith.Documents.Application;
-using Hexalith.Documents.Domain.DocumentContainers;
+using Hexalith.Documents.DocumentContainers;
 
 /// <summary>
 /// Service to handle user data related operations.

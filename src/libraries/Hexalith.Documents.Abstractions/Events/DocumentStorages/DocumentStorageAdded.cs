@@ -24,4 +24,4 @@ public partial record DocumentStorageAdded(
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] DocumentStorageType StorageType,
     [property: DataMember(Order = 4)] string? Description,
-    [property: DataMember(Order = 5)] string ConnectionString) : DocumentStorageEvent(Id);
+    [property: DataMember(Order = 5)] string? ConnectionString) : DocumentStorageEvent(Id);

@@ -1,6 +1,10 @@
-﻿namespace Hexalith.Documents.ApiServer.Controllers;
+﻿// <copyright file="FileTypeEventsBusTopicAttribute.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
 
-using Hexalith.Documents.Domain;
+namespace Hexalith.Documents.ApiServer.Controllers;
+
 using Hexalith.Infrastructure.WebApis.Buses;
 
 /// <summary>

@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Application.Helpers;
+﻿// <copyright file="DocumentHelper.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Application.Helpers;
 
 using FluentValidation;
 
@@ -12,13 +17,13 @@ using Hexalith.Documents.Application.DocumentTypes;
 using Hexalith.Documents.Application.FileTypes;
 using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Commands.Documents;
-using Hexalith.Documents.Domain.DataManagements;
-using Hexalith.Documents.Domain.DocumentContainers;
-using Hexalith.Documents.Domain.DocumentInformationExtractions;
-using Hexalith.Documents.Domain.Documents;
-using Hexalith.Documents.Domain.DocumentStorages;
-using Hexalith.Documents.Domain.DocumentTypes;
-using Hexalith.Documents.Domain.FileTypes;
+using Hexalith.Documents.DataManagements;
+using Hexalith.Documents.DocumentContainers;
+using Hexalith.Documents.DocumentInformationExtractions;
+using Hexalith.Documents.Documents;
+using Hexalith.Documents.DocumentStorages;
+using Hexalith.Documents.DocumentTypes;
+using Hexalith.Documents.FileTypes;
 
 using Microsoft.Extensions.DependencyInjection;
 

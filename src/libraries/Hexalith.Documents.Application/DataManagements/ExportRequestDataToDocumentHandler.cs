@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Application.DataManagements;
+﻿// <copyright file="ExportRequestDataToDocumentHandler.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Application.DataManagements;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -15,13 +20,13 @@ using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.Commands.DataManagements;
 using Hexalith.Documents.Commands.DocumentContainers;
 using Hexalith.Documents.Commands.Documents;
-using Hexalith.Documents.Domain.DataManagements;
-using Hexalith.Documents.Domain.DocumentStorages;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.DataManagements;
+using Hexalith.Documents.DocumentStorages;
 using Hexalith.Documents.Events.DataManagements;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentStorages;
-using Hexalith.Domain.Aggregates;
+using Hexalith.Documents.ValueObjects;
+using Hexalith.Domains;
 using Hexalith.Extensions.Helpers;
 using Hexalith.PolymorphicSerializations;
 
@@ -200,8 +205,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
         object? firstItem = data?.FirstOrDefault();
         if (firstItem is not null)
         {
-            Type type;
-            type = firstItem is Polymorphic ? typeof(IEnumerable<Polymorphic>) : typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
+            Type type = firstItem is Polymorphic ? typeof(IEnumerable<Polymorphic>) : typeof(IEnumerable<>).MakeGenericType(firstItem.GetType());
 
             await JsonSerializer.SerializeAsync(
                     stream,
@@ -243,7 +247,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
     {
         string containerId = GetDocumentContainerId(metadata.Context.UserId);
         GetDocumentContainerDetails? getDocumentContainer = new(containerId);
-        Metadata meta = Metadata.CreateNew(getDocumentContainer, metadata, Time.GetLocalNow());
+        var meta = Metadata.CreateNew(getDocumentContainer, metadata, Time.GetLocalNow());
         getDocumentContainer = await _requestProcessor
             .ProcessAsync(getDocumentContainer, meta, cancellationToken)
             .ConfigureAwait(false) as GetDocumentContainerDetails;
