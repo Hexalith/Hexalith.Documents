@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.WebServer.Controllers;
+﻿// <copyright file="DocumentFilesController.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.WebServer.Controllers;
 
 using Hexalith.Application.Requests;
 using Hexalith.Application.Services;
@@ -6,10 +11,10 @@ using Hexalith.Documents.Application.Services;
 using Hexalith.Documents.DocumentContainers;
 using Hexalith.Documents.Documents;
 using Hexalith.Documents.DocumentStorages;
-using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.Documents;
 using Hexalith.Documents.Requests.DocumentStorages;
+using Hexalith.Documents.ValueObjects;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -103,7 +108,7 @@ public class DocumentFilesController : ControllerBase
             return NotFound($"Document storage with ID {container.DocumentStorageId} not found. Check container {document.Description.DocumentContainerId} configuration.");
         }
 
-        Domain.ValueObjects.FileDescription fileDescription = document.Files.First();
+        ValueObjects.FileDescription fileDescription = document.Files.First();
         IReadableFile file = await _readableFileProvider
             .OpenFileAsync(
                 storage.StorageType,

@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Events.DocumentInformationExtractions;
+﻿// <copyright file="DocumentInformationExtractionDescriptionChanged.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Events.DocumentInformationExtractions;
 
 using System.Runtime.Serialization;
 
@@ -9,7 +14,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The unique identifier of the extraction mode.</param>
 /// <param name="Name">The name of the extraction mode.</param>
-/// <param name="Description">The new description of the extraction mode.</param>
+/// <param name="Comments"></param>
 [PolymorphicSerialization]
 public partial record DocumentInformationExtractionDescriptionChanged(
     string Id,

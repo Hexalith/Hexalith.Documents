@@ -1,14 +1,19 @@
-﻿namespace Hexalith.Documents.UI.Pages.DocumentTypes;
+﻿// <copyright file="DocumentTypeEditViewModel.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.UI.Pages.DocumentTypes;
 
 using System.Security.Claims;
 
 using Hexalith.Application.Commands;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Commands.DocumentTypes;
-using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Requests.DocumentInformationExtractions;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Documents.ValueObjects;
 using Hexalith.Domains.ValueObjects;
 using Hexalith.UI.Components;
 using Hexalith.UI.Components.Helpers;
@@ -124,7 +129,7 @@ internal sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewMod
     /// <summary>
     /// Gets the tags associated with the file type.
     /// </summary>
-    public ICollection<DocumentTag> Tags { get; } = [];
+    public ICollection<DocumentTag> Tags { get; }
 
     /// <summary>
     /// Gets a value indicating whether the tags have changed.

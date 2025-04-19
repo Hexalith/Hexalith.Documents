@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Events.DocumentTypes;
+﻿// <copyright file="DocumentTypeAdded.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Events.DocumentTypes;
 
 using System.Runtime.Serialization;
 
@@ -10,6 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Id">The unique identifier for the document type.</param>
 /// <param name="Name">The name of the document type.</param>
 /// <param name="Description">The description of the document type.</param>
+/// <param name="DataExtractionIds"></param>
 /// <param name="FileTypeIds">The collection of file type identifiers associated with this document type.</param>
 [PolymorphicSerialization]
 public partial record DocumentTypeAdded(

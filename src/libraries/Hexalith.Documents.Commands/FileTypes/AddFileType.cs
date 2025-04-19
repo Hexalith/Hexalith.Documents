@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Commands.FileTypes;
+﻿// <copyright file="AddFileType.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Commands.FileTypes;
 
 using System.Runtime.Serialization;
 
@@ -11,6 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Name">The name of the file type.</param>
 /// <param name="ContentType">The primary content type of the file.</param>
 /// <param name="OtherContentTypes">Other possible content types for the file.</param>
+/// <param name="FileExtension"></param>
 /// <param name="Comments">The description of the file type.</param>
 /// <param name="FileToTextConverter">The converter used to convert the file to text.</param>
 [PolymorphicSerialization]

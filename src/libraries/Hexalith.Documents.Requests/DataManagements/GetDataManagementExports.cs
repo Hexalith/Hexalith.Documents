@@ -57,5 +57,6 @@ public partial record GetDataManagementExports(
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetDataManagementExports(Skip + Take, Take);
 
+    /// <inheritdoc/>
     IEnumerable<object>? ICollectionRequest.Results { get; }
 }

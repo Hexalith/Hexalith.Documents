@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Events.Documents;
+﻿// <copyright file="DocumentAdded.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Events.Documents;
 
 using System.Runtime.Serialization;
 
@@ -14,7 +19,10 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Files">The file description containing metadata about the document file.</param>
 /// <param name="OwnerId">The identifier of the document owner.</param>
 /// <param name="CreatedOn">The date and time when the document was created.</param>
+/// <param name="ParentDocumentId"></param>
+/// <param name="DocumentContainerId"></param>
 /// <param name="DocumentTypeId">The identifier of the document type.</param>
+/// <param name="Tags"></param>
 [PolymorphicSerialization]
 public partial record DocumentAdded(
     string Id,

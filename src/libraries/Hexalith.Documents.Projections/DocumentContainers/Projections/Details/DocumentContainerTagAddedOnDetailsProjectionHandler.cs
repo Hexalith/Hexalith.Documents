@@ -1,11 +1,16 @@
+// <copyright file="DocumentContainerTagAddedOnDetailsProjectionHandler.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.Projections.DocumentContainers.Projections.Details;
 
 using System.Diagnostics.CodeAnalysis;
 
 using Hexalith.Application.Projections;
-using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Events.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentContainers;
+using Hexalith.Documents.ValueObjects;
 
 /// <summary>
 /// Handles the projection update when a DocumentContainerTagAdded event is received.

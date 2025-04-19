@@ -1,3 +1,8 @@
+// <copyright file="DocumentTagAdded.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.Events.Documents;
 
 using System.Runtime.Serialization;
@@ -10,6 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Id">The document identifier.</param>
 /// <param name="Key">The tag identifier.</param>
 /// <param name="Value">The tag value.</param>
+/// <param name="Unique"></param>
 [PolymorphicSerialization]
 public partial record DocumentTagAdded(
     string Id,

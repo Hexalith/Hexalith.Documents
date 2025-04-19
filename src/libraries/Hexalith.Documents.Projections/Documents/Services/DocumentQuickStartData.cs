@@ -1,8 +1,13 @@
+// <copyright file="DocumentQuickStartData.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.Projections.Documents.Services;
 
 using Hexalith.Documents.Commands.Documents;
-using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Projections.FileTypes.Services;
+using Hexalith.Documents.ValueObjects;
 
 /// <summary>
 /// Provides demo document data for testing and demonstration purposes.

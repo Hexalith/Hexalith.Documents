@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Projections.DocumentTypes.Projections.Details;
+﻿// <copyright file="DocumentTypeEnabledOnDetailsProjectionHandler.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Projections.DocumentTypes.Projections.Details;
 
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,7 +25,7 @@ public class DocumentTypeEnabledOnDetailsProjectionHandler(IProjectionFactory<Do
     protected override Task<DocumentTypeDetailsViewModel?> ApplyEventAsync([NotNull] DocumentTypeEnabled baseEvent, DocumentTypeDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (model == null || model.Disabled == false)
+        if (model == null || !model.Disabled)
         {
             return Task.FromResult<DocumentTypeDetailsViewModel?>(null);
         }

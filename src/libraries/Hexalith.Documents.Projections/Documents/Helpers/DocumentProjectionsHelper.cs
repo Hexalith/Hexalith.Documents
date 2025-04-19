@@ -1,9 +1,13 @@
-﻿namespace Hexalith.Documents.Projections.Documents.Helpers;
+﻿// <copyright file="DocumentProjectionsHelper.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Projections.Documents.Helpers;
 
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Documents;
-using Hexalith.Documents.Events;
 using Hexalith.Documents.Events.Documents;
 using Hexalith.Documents.Projections.Documents.Projections.Details;
 using Hexalith.Documents.Projections.Documents.Projections.Summaries;

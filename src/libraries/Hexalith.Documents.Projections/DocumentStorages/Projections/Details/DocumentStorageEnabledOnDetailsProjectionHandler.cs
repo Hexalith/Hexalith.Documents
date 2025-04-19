@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Projections.DocumentStorages.Projections.Details;
+﻿// <copyright file="DocumentStorageEnabledOnDetailsProjectionHandler.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Projections.DocumentStorages.Projections.Details;
 
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,7 +25,7 @@ public class DocumentStorageEnabledOnDetailsProjectionHandler(IProjectionFactory
     protected override Task<DocumentStorageDetailsViewModel?> ApplyEventAsync([NotNull] DocumentStorageEnabled baseEvent, DocumentStorageDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (model == null || model.Disabled == false)
+        if (model == null || !model.Disabled)
         {
             return Task.FromResult<DocumentStorageDetailsViewModel?>(null);
         }

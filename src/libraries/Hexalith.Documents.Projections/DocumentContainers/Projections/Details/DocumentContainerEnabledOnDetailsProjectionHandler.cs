@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Projections.DocumentContainers.Projections.Details;
+﻿// <copyright file="DocumentContainerEnabledOnDetailsProjectionHandler.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Projections.DocumentContainers.Projections.Details;
 
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,7 +25,7 @@ public class DocumentContainerEnabledOnDetailsProjectionHandler(IProjectionFacto
     protected override Task<DocumentContainerDetailsViewModel?> ApplyEventAsync([NotNull] DocumentContainerEnabled baseEvent, DocumentContainerDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (model == null || model.Disabled == false)
+        if (model == null || !model.Disabled)
         {
             return Task.FromResult<DocumentContainerDetailsViewModel?>(null);
         }

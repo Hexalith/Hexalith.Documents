@@ -1,9 +1,14 @@
-﻿namespace Hexalith.Documents.Projections.FileTypes.Helpers;
+﻿// <copyright file="FileTypeProjectionsHelper.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Projections.FileTypes.Helpers;
 
 using Hexalith.Application.Projections;
 using Hexalith.Application.Requests;
-using Hexalith.Documents.FileTypes;
 using Hexalith.Documents.Events.FileTypes;
+using Hexalith.Documents.FileTypes;
 using Hexalith.Documents.Projections.FileTypes.Projections.Details;
 using Hexalith.Documents.Projections.FileTypes.Projections.Summaries;
 using Hexalith.Documents.Projections.FileTypes.RequestHandlers;

@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Servers.Services;
+﻿// <copyright file="DocumentUploadService.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Servers.Services;
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -9,9 +14,9 @@ using Hexalith.Application.Metadatas;
 using Hexalith.Application.Services;
 using Hexalith.Application.Sessions.Models;
 using Hexalith.Application.Sessions.Services;
+using Hexalith.Documents;
 using Hexalith.Documents.Application;
 using Hexalith.Documents.Application.Services;
-using Hexalith.Documents;
 using Hexalith.Documents.DocumentContainers;
 using Hexalith.Documents.DocumentStorages;
 using Hexalith.Documents.DocumentTypes;

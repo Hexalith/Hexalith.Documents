@@ -1,15 +1,20 @@
-﻿namespace Hexalith.Documents.UI.Pages.Documents;
+﻿// <copyright file="DocumentEditViewModel.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.UI.Pages.Documents;
 
 using System.Collections.Generic;
 using System.Security.Claims;
 
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Documents;
-using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.Documents;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
+using Hexalith.Documents.ValueObjects;
 using Hexalith.Domains.ValueObjects;
 using Hexalith.Extensions.Helpers;
 using Hexalith.UI.Components.Helpers;

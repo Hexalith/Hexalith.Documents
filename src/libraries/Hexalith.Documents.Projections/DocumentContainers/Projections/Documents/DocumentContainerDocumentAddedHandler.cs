@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Projections.DocumentContainers.Projections.Documents;
+﻿// <copyright file="DocumentContainerDocumentAddedHandler.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Projections.DocumentContainers.Projections.Documents;
 
 using System.Collections.Generic;
 using System.Threading;
@@ -14,7 +19,6 @@ using Hexalith.Documents.Events.Documents;
 /// <summary>
 /// Handles the projection update when a document container is added.
 /// </summary>
-/// <param name="factory">The factory.</param>
 public class DocumentContainerDocumentAddedHandler : IntegrationEventHandlerBase<DocumentAdded>
 {
     private readonly IOneToManyAggregateRelationService<DocumentContainer, Document> _service;

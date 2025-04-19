@@ -1,3 +1,8 @@
+// <copyright file="GetDataManagementIds.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
 namespace Hexalith.Documents.Requests.DataManagements;
 
 using System.Runtime.Serialization;
@@ -10,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of items to skip.</param>
 /// <param name="Take">The number of items to take.</param>
-/// <param name="Result">The collection of data export IDs.</param>
+/// <param name="Results"></param>
 [PolymorphicSerialization]
 public partial record GetDataManagementIds(
     [property: DataMember(Order = 1)]

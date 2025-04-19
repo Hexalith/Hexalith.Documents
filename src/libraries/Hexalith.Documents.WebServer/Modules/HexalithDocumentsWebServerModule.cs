@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.WebServer.Modules;
+﻿// <copyright file="HexalithDocumentsWebServerModule.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.WebServer.Modules;
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -6,10 +11,10 @@ using System.Reflection;
 using Dapr.Actors.Runtime;
 
 using Hexalith.Application.Modules.Modules;
+using Hexalith.Documents.Abstractions.Extensions;
 using Hexalith.Documents.Application.Documents;
 using Hexalith.Documents.Application.Helpers;
 using Hexalith.Documents.Commands.Extensions;
-using Hexalith.Documents.Events.Extensions;
 using Hexalith.Documents.Projections.Helpers;
 using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.Servers.Helpers;
@@ -80,15 +85,14 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
             .AddDocumentsRequestHandlers()
             .AddDocumentProjections();
 
-        HexalithDocumentsEvents.RegisterPolymorphicMappers();
-        HexalithDocumentsCommands.RegisterPolymorphicMappers();
-        HexalithDocumentsRequests.RegisterPolymorphicMappers();
+        HexalithDocumentsAbstractionsSerialization.RegisterPolymorphicMappers();
+        HexalithDocumentsCommandsSerialization.RegisterPolymorphicMappers();
+        HexalithDocumentsRequestsSerialization.RegisterPolymorphicMappers();
 
         // Add application module
         services.TryAddSingleton<IDocumentModule, HexalithDocumentsWebServerModule>();
 
-        _ = services
-            .AddTransient(p => DocumentMenu.Menu);
+        _ = services.AddTransient(_ => DocumentMenu.Menu);
         _ = services.AddControllers().AddApplicationPart(typeof(DocumentFilesController).Assembly);
     }
 
@@ -99,7 +103,7 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     public static void RegisterActors(object actorCollection)
     {
         ArgumentNullException.ThrowIfNull(actorCollection);
-        if (actorCollection is not ActorRegistrationCollection actors)
+        if (actorCollection is not ActorRegistrationCollection)
         {
             throw new ArgumentException($"{nameof(RegisterActors)} parameter must be an {nameof(ActorRegistrationCollection)}. Actual type : {actorCollection.GetType().Name}.", nameof(actorCollection));
         }
