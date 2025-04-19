@@ -40,9 +40,9 @@ public class WritableFileProvider : IWritableFileProvider, IReadableFileProvider
         IEnumerable<(string Key, string? Value)> tags,
         CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(connectionString);
-        ArgumentNullException.ThrowIfNull(path);
-        ArgumentNullException.ThrowIfNull(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(connectionString);
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
         return storageType switch
         {
             DocumentStorageType.AzureStorageContainer
@@ -66,9 +66,9 @@ public class WritableFileProvider : IWritableFileProvider, IReadableFileProvider
     /// <inheritdoc/>
     public async Task<IReadableFile> OpenFileAsync(DocumentStorageType storageType, string? connectionString, string path, string fileName, CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(connectionString);
-        ArgumentNullException.ThrowIfNull(path);
-        ArgumentNullException.ThrowIfNull(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(connectionString);
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
         return storageType switch
         {
             DocumentStorageType.AzureStorageContainer

@@ -136,6 +136,10 @@ OnLoadData="OnLoadData">
 
     private void AddTag()
     {
+        if (_data is null || _user is null)
+        {
+            return;
+		}
         if (!string.IsNullOrWhiteSpace(_newTagKey))
         {
             _data.Tags.Add(new DocumentTag(_newTagKey, _newTagValue, _newTagUnique));
@@ -146,6 +150,10 @@ OnLoadData="OnLoadData">
     }
     private void RemoveTag(DocumentTag target)
     {
+        if (_data is null || _user is null)
+        {
+            return;
+		}
         _data.Tags.Remove(target);
         StateHasChanged();
     }

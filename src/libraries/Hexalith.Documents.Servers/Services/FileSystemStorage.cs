@@ -1,4 +1,9 @@
-﻿namespace Hexalith.Documents.Servers.Services;
+﻿// <copyright file="FileSystemStorage.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.Servers.Services;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -36,7 +41,7 @@ public partial class FileSystemStorage(ILogger<FileSystemStorage> logger)
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        using StreamWriter tagsFile = File.CreateText(filePath + ".tags.json");
+        await using StreamWriter tagsFile = File.CreateText(filePath + ".tags.json");
         await tagsFile.WriteAsync(JsonSerializer.Serialize(tags)).ConfigureAwait(false);
         tagsFile.Close();
 
@@ -124,6 +129,6 @@ public partial class FileSystemStorage(ILogger<FileSystemStorage> logger)
     [LoggerMessage(EventId = 1, Level = LogLevel.Information, Message = "File '{FilePath}' has been created.")]
     private static partial void LogFileCreatedInformation(ILogger logger, string filePath);
 
-    [LoggerMessage(EventId = 1, Level = LogLevel.Information, Message = "File '{FilePath}' has been read.")]
+    [LoggerMessage(EventId = 2, Level = LogLevel.Information, Message = "File '{FilePath}' has been read.")]
     private static partial void LogFileReadInformation(ILogger logger, string filePath);
 }
