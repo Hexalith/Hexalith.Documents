@@ -1,14 +1,19 @@
-﻿namespace Hexalith.Documents.UI.Pages.DocumentContainers;
+﻿// <copyright file="DocumentContainerEditViewModel.cs" company="ITANEO">
+// Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Hexalith.Documents.UI.Pages.DocumentContainers;
 
 using System.Security.Claims;
 
 using Hexalith.Application.Commands;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Commands.DocumentContainers;
-using Hexalith.Documents.Domain.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.DocumentStorages;
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 using Hexalith.UI.Components;
 using Hexalith.UI.Components.Helpers;
 
@@ -123,7 +128,7 @@ public sealed class DocumentContainerEditViewModel : IIdDescription, IEntityView
     /// <summary>
     /// Gets the targets associated with the file type.
     /// </summary>
-    public ICollection<DocumentTag> Tags { get; } = [];
+    public ICollection<DocumentTag> Tags { get; }
 
     /// <summary>
     /// Gets a value indicating whether the tags have changed.

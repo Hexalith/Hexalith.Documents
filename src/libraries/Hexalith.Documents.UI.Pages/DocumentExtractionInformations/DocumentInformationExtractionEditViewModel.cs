@@ -1,7 +1,7 @@
 ﻿namespace Hexalith.Documents.UI.Pages.DocumentExtractionInformations;
 
 using Hexalith.Documents.Requests.DocumentInformationExtractions;
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 using Hexalith.Extensions.Helpers;
 
 /// <summary>

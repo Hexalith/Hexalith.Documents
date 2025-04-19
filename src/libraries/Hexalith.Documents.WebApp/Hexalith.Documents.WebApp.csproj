@@ -3,12 +3,13 @@
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="Hexalith.Application"  />
-      <PackageReference Include="Hexalith.Infrastructure.ClientAppOnWasm"  />
-      <PackageReference Include="Microsoft.AspNetCore.Authorization"  />
+      <PackageReference Include="Hexalith.Application" />
+      <PackageReference Include="Hexalith.Infrastructure.ClientAppOnWasm" />
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
+        <ProjectReference Include="..\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
         <ProjectReference Include="..\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
         <ProjectReference Include="..\Hexalith.Documents.UI.Pages\Hexalith.Documents.UI.Pages.csproj" />
     </ItemGroup>

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Security.Claims;
 
 using Hexalith.Application.Requests;
-using Hexalith.Documents.Domain.Documents;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.Documents;
+using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Requests.DocumentContainers;
 using Hexalith.Documents.Requests.Documents;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 using Hexalith.Extensions.Helpers;
 using Hexalith.UI.Components.Helpers;
 

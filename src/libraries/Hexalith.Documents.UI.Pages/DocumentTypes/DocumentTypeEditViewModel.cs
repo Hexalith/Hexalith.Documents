@@ -5,11 +5,11 @@ using System.Security.Claims;
 using Hexalith.Application.Commands;
 using Hexalith.Application.Requests;
 using Hexalith.Documents.Commands.DocumentTypes;
-using Hexalith.Documents.Domain.ValueObjects;
+using Hexalith.Documents.ValueObjects;
 using Hexalith.Documents.Requests.DocumentInformationExtractions;
 using Hexalith.Documents.Requests.DocumentTypes;
 using Hexalith.Documents.Requests.FileTypes;
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 using Hexalith.UI.Components;
 using Hexalith.UI.Components.Helpers;
 

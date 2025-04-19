@@ -4,7 +4,7 @@
     <NoWarn>$(NoWarn);CA2000;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage"  />
+    <!--<PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage"  />-->
     <PackageReference Include="Hexalith.Infrastructure.DaprRuntime"  />
     <PackageReference Include="Hexalith.UI.Components.Abstractions"  />
     <PackageReference Include="Hexalith.Application.Sessions.Abstractions"  />
@@ -14,6 +14,6 @@
     <ProjectReference Include="..\Hexalith.Documents.Projections\Hexalith.Documents.Projections.csproj" />
     <ProjectReference Include="..\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
     <ProjectReference Include="..\Hexalith.Documents.Abstractions\Hexalith.Documents.Abstractions.csproj" />
-    <ProjectReference Include="..\Hexalith.Documents.Domain\Hexalith.Documents.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents\Hexalith.Documents.csproj" />
   </ItemGroup>
 </Project>

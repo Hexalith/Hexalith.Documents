@@ -1,7 +1,7 @@
 ﻿namespace Hexalith.Documents.UI.Pages.DataManagements;
 
 using Hexalith.Documents.Requests.DataManagements;
-using Hexalith.Domain.ValueObjects;
+using Hexalith.Domains.ValueObjects;
 
 /// <summary>
 /// Represents a view model for editing data management details.
