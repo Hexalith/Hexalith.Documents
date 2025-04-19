@@ -15,19 +15,19 @@ using Hexalith.Domains;
 using Hexalith.Domains.Results;
 
 /// <summary>
-/// Represents a file text extraction mode configuration that defines how text should be extracted from files.
+/// Represents a document information extraction configuration.
 /// </summary>
-/// <param name="Id">The unique identifier for the extraction mode.</param>
-/// <param name="Name">The display name of the extraction mode.</param>
-/// <param name="Model"></param>
-/// <param name="SystemMessage"></param>
-/// <param name="OutputFormat"></param>
-/// <param name="OutputSample"></param>
-/// <param name="Instructions">The instructions defining how text should be extracted.</param>
-/// <param name="ValidationModel"></param>
-/// <param name="ValidationInstructions"></param>
-/// <param name="Comments">Optional description providing additional details about the extraction mode.</param>
-/// <param name="Disabled">Flag indicating whether this extraction mode is currently disabled.</param>
+/// <param name="Id">The unique identifier of the extraction configuration.</param>
+/// <param name="Name">The name of the extraction configuration.</param>
+/// <param name="Model">The model used for extraction.</param>
+/// <param name="SystemMessage">The system message associated with the extraction.</param>
+/// <param name="OutputFormat">The format of the output data.</param>
+/// <param name="OutputSample">A sample of the expected output.</param>
+/// <param name="Instructions">The instructions for the extraction process.</param>
+/// <param name="ValidationModel">The model used for validation.</param>
+/// <param name="ValidationInstructions">The instructions for validation.</param>
+/// <param name="Comments">Optional comments about the extraction configuration.</param>
+/// <param name="Disabled">Indicates whether the extraction configuration is disabled.</param>
 [DataContract]
 public record DocumentInformationExtraction(
     [property: DataMember(Order = 1)] string Id,

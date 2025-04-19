@@ -25,7 +25,7 @@ using Hexalith.Domains.Results;
 /// <param name="Actors">The actors of the document.</param>
 /// <param name="Files">The file of the document.</param>
 /// <param name="Tags">The tags of the document.</param>
-/// <param name="AccessKeys"></param>
+/// <param name="AccessKeys">The access keys of the document.</param>
 /// <param name="Disabled">Indicates whether the document is disabled.</param>
 [DataContract]
 public record Document(

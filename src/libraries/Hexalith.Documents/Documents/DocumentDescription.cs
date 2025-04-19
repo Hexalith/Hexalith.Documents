@@ -15,7 +15,7 @@ using Hexalith.Domains.Results;
 /// </summary>
 /// <param name="Name">The name of the document.</param>
 /// <param name="Comments">The comments associated with the document.</param>
-/// <param name="DocumentContainerId"></param>
+/// <param name="DocumentContainerId">The unique identifier of the document container.</param>
 /// <param name="DocumentTypeId">The unique identifier of the document type.</param>
 /// <param name="Summary">The summary of the document.</param>
 [DataContract]

@@ -9,6 +9,11 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Represents a command to change the comments of a data management entity.
+/// </summary>
+/// <param name="Id">The unique identifier of the data management entity.</param>
+/// <param name="Comments">The new comments to associate with the data management entity.</param>
 [PolymorphicSerialization]
 public partial record ChangeDataManagementComments(
     string Id,
