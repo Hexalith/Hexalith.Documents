@@ -23,7 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 /// <summary>
-/// Helper class for adding document container request handlers to the service collection.
+/// Helper class for adding document container projection and request handlers to the service collection.
 /// </summary>
 public static class DocumentContainerProjectionsHelper
 {
@@ -34,6 +34,8 @@ public static class DocumentContainerProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentContainerProjectionHandlers(this IServiceCollection services)
     {
+        ArgumentNullException.ThrowIfNull(services);
+
         _ = services
 
             // Collection projections
@@ -69,6 +71,8 @@ public static class DocumentContainerProjectionsHelper
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDocumentContainerRequestHandlers(this IServiceCollection services)
     {
+        ArgumentNullException.ThrowIfNull(services);
+
         services.TryAddScoped<IRequestHandler<GetDocumentContainerDetails>, GetDocumentContainerDetailsHandler>();
         services.TryAddScoped<IRequestHandler<GetDocumentContainerSummaries>, GetFilteredCollectionHandler<GetDocumentContainerSummaries, DocumentContainerSummaryViewModel>>();
         services.TryAddScoped<IRequestHandler<GetDocumentContainerExports>, GetExportsRequestHandler<GetDocumentContainerExports, DocumentContainer>>();

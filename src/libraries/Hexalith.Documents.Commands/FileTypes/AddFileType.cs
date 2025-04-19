@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Name">The name of the file type.</param>
 /// <param name="ContentType">The primary content type of the file.</param>
 /// <param name="OtherContentTypes">Other possible content types for the file.</param>
-/// <param name="FileExtension"></param>
+/// <param name="FileExtension">The file extension associated with this file type.</param>
 /// <param name="Comments">The description of the file type.</param>
 /// <param name="FileToTextConverter">The converter used to convert the file to text.</param>
 [PolymorphicSerialization]
@@ -28,6 +28,4 @@ public partial record AddFileType(
     [property: DataMember(Order = 5)] string FileExtension,
     [property: DataMember(Order = 7)] string? Comments,
     [property: DataMember(Order = 8)] string? FileToTextConverter)
-    : FileTypeCommand(Id)
-{
-}
+    : FileTypeCommand(Id);

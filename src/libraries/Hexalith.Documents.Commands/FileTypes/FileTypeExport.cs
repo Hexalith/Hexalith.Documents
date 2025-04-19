@@ -9,5 +9,9 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Command to export file types.
+/// </summary>
+/// <param name="UserId">The identifier of the user requesting the export.</param>
 [PolymorphicSerialization]
 public partial record FileTypeExport([property: DataMember(Order = 2)] string UserId) : FileTypeCommand(AggregateName);

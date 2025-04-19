@@ -9,8 +9,13 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Represents a command for document storage operations.
+/// </summary>
+/// <param name="Id">The unique identifier of the document storage.</param>
 [PolymorphicSerialization]
-public abstract partial record DocumentStorageCommand([property: DataMember(Order = 1)] string Id)
+public abstract partial record DocumentStorageCommand(
+    [property: DataMember(Order = 1)] string Id)
 {
     /// <summary>
     /// Gets the aggregate identifier.

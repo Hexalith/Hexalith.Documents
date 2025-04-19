@@ -9,10 +9,13 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Command to change the content type of an existing file type.
+/// </summary>
+/// <param name="Id">The unique identifier of the file type.</param>
+/// <param name="ContentType">The new content type to set.</param>
 [PolymorphicSerialization]
 public partial record ChangeFileTypeContentType(
     string Id,
     [property: DataMember(Order = 3)] string ContentType)
-    : FileTypeCommand(Id)
-{
-}
+    : FileTypeCommand(Id);

@@ -15,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Id">The unique identifier for the document type.</param>
 /// <param name="Name">The display name of the document type.</param>
 /// <param name="Description">Optional detailed description of the document type's purpose.</param>
-/// <param name="DataExtractionIds"></param>
+/// <param name="DataExtractionIds">Collection of data extraction identifiers supported by this document type.</param>
 /// <param name="FileTypeIds">Collection of file type identifiers supported by this document type.</param>
 /// <remarks>
 /// This command is used to initialize a new document type with its basic properties and supported file types.
@@ -31,6 +31,4 @@ public partial record AddDocumentType(
     [property: DataMember(Order = 4)] IEnumerable<string> DataExtractionIds,
     [property: DataMember(Order = 4)]
     IEnumerable<string> FileTypeIds)
-    : DocumentTypeCommand(Id)
-{
-}
+    : DocumentTypeCommand(Id);

@@ -9,6 +9,10 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Base command class for all file type related commands.
+/// </summary>
+/// <param name="Id">The unique identifier of the file type.</param>
 [PolymorphicSerialization]
 public abstract partial record FileTypeCommand([property: DataMember(Order = 1)] string Id)
 {

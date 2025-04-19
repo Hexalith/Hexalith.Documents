@@ -9,10 +9,13 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Command to change the file extension of an existing file type.
+/// </summary>
+/// <param name="Id">The unique identifier of the file type.</param>
+/// <param name="FileExtension">The new file extension to set.</param>
 [PolymorphicSerialization]
 public partial record ChangeFileTypeFileExtension(
     string Id,
     [property: DataMember(Order = 3)] string FileExtension)
-    : FileTypeCommand(Id)
-{
-}
+    : FileTypeCommand(Id);

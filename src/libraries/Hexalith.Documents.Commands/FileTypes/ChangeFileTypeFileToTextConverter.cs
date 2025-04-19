@@ -9,10 +9,13 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Command to change the file to text converter of an existing file type.
+/// </summary>
+/// <param name="Id">The unique identifier of the file type.</param>
+/// <param name="FileToTextConverter">The new file to text converter to set.</param>
 [PolymorphicSerialization]
 public partial record ChangeFileTypeFileToTextConverter(
     string Id,
     [property: DataMember(Order = 2)] string? FileToTextConverter)
-    : FileTypeCommand(Id)
-{
-}
+    : FileTypeCommand(Id);

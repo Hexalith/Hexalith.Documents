@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The unique identifier of the document.</param>
 /// <param name="Name">The name of the document.</param>
-/// <param name="ContentType"></param>
+/// <param name="ContentType">The content type of the document.</param>
 /// <param name="Base64Content">The content of the document in base64.</param>
 [PolymorphicSerialization]
 public partial record AddDocumentFile(
