@@ -19,6 +19,4 @@ public partial record DocumentContainerAutomaticRoutingInstructionsChanged(
     string Id,
     [property: DataMember(Order = 2)]
     string? AutomaticRoutingInstructions)
-    : DocumentContainerEvent(Id)
-{
-}
+    : DocumentContainerEvent(Id);

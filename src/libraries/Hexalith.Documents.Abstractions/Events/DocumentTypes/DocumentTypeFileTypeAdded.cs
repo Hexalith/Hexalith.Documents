@@ -19,6 +19,4 @@ public partial record DocumentTypeFileTypeAdded(
     string Id,
     [property: DataMember(Order = 2)]
     string FileTypeId)
-    : DocumentTypeEvent(Id)
-{
-}
+    : DocumentTypeEvent(Id);

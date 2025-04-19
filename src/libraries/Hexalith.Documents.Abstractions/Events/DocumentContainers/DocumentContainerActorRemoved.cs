@@ -18,6 +18,4 @@ using Hexalith.PolymorphicSerializations;
 public partial record DocumentContainerActorRemoved(
     string Id,
     [property: DataMember(Order = 2)]
-    string ContactId) : DocumentContainerEvent(Id)
-{
-}
+    string ContactId) : DocumentContainerEvent(Id);

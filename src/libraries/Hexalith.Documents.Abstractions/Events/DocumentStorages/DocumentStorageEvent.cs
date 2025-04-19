@@ -20,12 +20,10 @@ public abstract partial record DocumentStorageEvent([property: DataMember(Order 
     /// <summary>
     /// Gets the aggregate identifier.
     /// </summary>
-    /// <value>The aggregate identifier.</value>
     public string AggregateId => Id;
 
     /// <summary>
     /// Gets the name of the aggregate.
     /// </summary>
-    /// <value>The name of the aggregate.</value>
     public static string AggregateName => DocumentDomainHelper.DocumentStorageAggregateName;
 }

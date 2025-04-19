@@ -14,6 +14,4 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="ByContactId">The identifier of the contact who flagged the document as final.</param>
 /// <param name="Date">The date and time when the document was flagged as final.</param>
 [PolymorphicSerialization]
-public partial record DocumentFlaggedAsFinalVersion(string Id, string ByContactId, DateTimeOffset Date) : DocumentEvent(Id)
-{
-}
+public partial record DocumentFlaggedAsFinalVersion(string Id, string ByContactId, DateTimeOffset Date) : DocumentEvent(Id);

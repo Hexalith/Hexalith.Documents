@@ -13,6 +13,4 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Id">The unique identifier of the extraction mode.</param>
 /// <param name="Instructions">The new instructions for text extraction.</param>
 [PolymorphicSerialization]
-public partial record DocumentInformationExtractionInstructionsChanged(string Id, string Instructions) : DocumentInformationExtractionEvent(Id)
-{
-}
+public partial record DocumentInformationExtractionInstructionsChanged(string Id, string Instructions) : DocumentInformationExtractionEvent(Id);

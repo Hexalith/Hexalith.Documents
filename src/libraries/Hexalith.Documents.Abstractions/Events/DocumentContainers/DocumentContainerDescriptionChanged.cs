@@ -21,6 +21,4 @@ public partial record DocumentContainerDescriptionChanged(
     [property: DataMember(Order = 2)]
     string Name,
     [property: DataMember(Order = 3)]
-    string? Comments) : DocumentContainerEvent(Id)
-{
-}
+    string? Comments) : DocumentContainerEvent(Id);

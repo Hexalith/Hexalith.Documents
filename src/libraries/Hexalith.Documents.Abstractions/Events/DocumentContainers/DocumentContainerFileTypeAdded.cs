@@ -19,6 +19,4 @@ public partial record DocumentContainerDocumentTypeAdded(
     string Id,
     [property: DataMember(Order = 2)]
     string DocumentTypeId)
-    : DocumentContainerEvent(Id)
-{
-}
+    : DocumentContainerEvent(Id);

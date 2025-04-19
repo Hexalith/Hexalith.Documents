@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Name">The name of the file type.</param>
 /// <param name="ContentType">The primary content type of the file type.</param>
 /// <param name="OtherContentTypes">A collection of other content types associated with the file type.</param>
-/// <param name="FileExtension"></param>
+/// <param name="FileExtension">The file extension associated with the file type.</param>
 /// <param name="Description">An optional description of the file type.</param>
 /// <param name="FileToTextConverter">An optional converter for converting files of this type to text.</param>
 [PolymorphicSerialization]

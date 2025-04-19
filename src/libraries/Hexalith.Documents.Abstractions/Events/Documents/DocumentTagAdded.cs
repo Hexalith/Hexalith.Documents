@@ -15,13 +15,11 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Id">The document identifier.</param>
 /// <param name="Key">The tag identifier.</param>
 /// <param name="Value">The tag value.</param>
-/// <param name="Unique"></param>
+/// <param name="Unique">A value indicating whether the tag is unique.</param>
 [PolymorphicSerialization]
 public partial record DocumentTagAdded(
     string Id,
     [property: DataMember(Order = 2)] string Key,
     [property: DataMember(Order = 3)] string Value,
     [property: DataMember(Order = 4)] bool Unique)
-    : DocumentEvent(Id)
-{
-}
+    : DocumentEvent(Id);

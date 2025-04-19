@@ -27,6 +27,4 @@ public record class DocumentDataExtraction
     [property: DataMember(Order = 4)]
     string SystemMessage,
     [property: DataMember(Order = 5)]
-    string Prompt)
-{
-}
+    string Prompt);

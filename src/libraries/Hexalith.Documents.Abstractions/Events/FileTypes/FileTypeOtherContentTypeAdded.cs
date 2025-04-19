@@ -18,6 +18,4 @@ using Hexalith.PolymorphicSerializations;
 public partial record FileTypeOtherContentTypeAdded(
     string Id,
     [property: DataMember(Order = 2)] string OtherContentType)
-    : FileTypeEvent(Id)
-{
-}
+    : FileTypeEvent(Id);

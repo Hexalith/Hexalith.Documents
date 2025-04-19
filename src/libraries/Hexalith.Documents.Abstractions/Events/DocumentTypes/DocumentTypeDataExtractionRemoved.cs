@@ -18,6 +18,4 @@ using Hexalith.PolymorphicSerializations;
 public partial record DocumentTypeDataExtractionRemoved(
     string Id,
     [property: DataMember(Order = 2)]
-    string DataInformationExtractionId) : DocumentTypeEvent(Id)
-{
-}
+    string DataInformationExtractionId) : DocumentTypeEvent(Id);

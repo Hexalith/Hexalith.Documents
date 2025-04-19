@@ -14,14 +14,12 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The unique identifier of the document type.</param>
 /// <param name="Key">The identifier of the tag that was removed.</param>
-/// <param name="Value"></param>
+/// <param name="Value">The value of the tag that was removed.</param>
 [PolymorphicSerialization]
 public partial record DocumentTypeTagRemoved(
     string Id,
     [property: DataMember(Order = 2)]
     string Key,
-    [property: DataMember(Order = 2)]
+    [property: DataMember(Order = 3)]
     string Value)
-    : DocumentTypeEvent(Id)
-{
-}
+    : DocumentTypeEvent(Id);

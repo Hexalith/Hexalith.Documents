@@ -14,14 +14,14 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The unique identifier for the extraction mode.</param>
 /// <param name="Name">The name of the extraction mode.</param>
-/// <param name="Model"></param>
-/// <param name="SystemMessage"></param>
-/// <param name="OutputFormat"></param>
-/// <param name="OutputSample"></param>
+/// <param name="Model">The model used for extraction.</param>
+/// <param name="SystemMessage">The system message used during extraction.</param>
+/// <param name="OutputFormat">The expected output format.</param>
+/// <param name="OutputSample">A sample of the expected output.</param>
 /// <param name="Instructions">The instructions used for text extraction.</param>
-/// <param name="ValidationModel"></param>
-/// <param name="ValidationInstructions"></param>
-/// <param name="Comments"></param>
+/// <param name="ValidationModel">The model used for validation.</param>
+/// <param name="ValidationInstructions">The instructions used for validation.</param>
+/// <param name="Comments">Optional comments about the extraction mode.</param>
 [PolymorphicSerialization]
 public partial record DocumentInformationExtractionAdded(
     string Id,
@@ -34,6 +34,4 @@ public partial record DocumentInformationExtractionAdded(
     [property: DataMember(Order = 8)] string ValidationModel,
     [property: DataMember(Order = 9)] string ValidationInstructions,
     [property: DataMember(Order = 10)] string? Comments)
-    : DocumentInformationExtractionEvent(Id)
-{
-}
+    : DocumentInformationExtractionEvent(Id);

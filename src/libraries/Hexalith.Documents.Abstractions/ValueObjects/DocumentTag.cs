@@ -18,6 +18,4 @@ public record DocumentTag
 (
     [property: DataMember] string Key,
     [property: DataMember] string? Value,
-    [property: DataMember] bool Unique)
-{
-}
+    [property: DataMember] bool Unique);

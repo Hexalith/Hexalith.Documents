@@ -16,6 +16,4 @@ using System.Runtime.Serialization;
 [DataContract]
 public record DocumentAccessKey(
     [property: DataMember(Order = 2)] string Key,
-    [property: DataMember(Order = 3)] DateTimeOffset ValidUntil)
-{
-}
+    [property: DataMember(Order = 3)] DateTimeOffset ValidUntil);

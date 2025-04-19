@@ -19,10 +19,10 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Files">The file description containing metadata about the document file.</param>
 /// <param name="OwnerId">The identifier of the document owner.</param>
 /// <param name="CreatedOn">The date and time when the document was created.</param>
-/// <param name="ParentDocumentId"></param>
-/// <param name="DocumentContainerId"></param>
+/// <param name="ParentDocumentId">The identifier of the parent document, if any.</param>
+/// <param name="DocumentContainerId">The identifier of the document container.</param>
 /// <param name="DocumentTypeId">The identifier of the document type.</param>
-/// <param name="Tags"></param>
+/// <param name="Tags">The tags associated with the document.</param>
 [PolymorphicSerialization]
 public partial record DocumentAdded(
     string Id,
@@ -34,6 +34,4 @@ public partial record DocumentAdded(
     [property: DataMember(Order = 7)] string? ParentDocumentId,
     [property: DataMember(Order = 8)] string DocumentContainerId,
     [property: DataMember(Order = 9)] string DocumentTypeId,
-    [property: DataMember(Order = 10)] IEnumerable<DocumentTag> Tags) : DocumentEvent(Id)
-{
-}
+    [property: DataMember(Order = 10)] IEnumerable<DocumentTag> Tags) : DocumentEvent(Id);

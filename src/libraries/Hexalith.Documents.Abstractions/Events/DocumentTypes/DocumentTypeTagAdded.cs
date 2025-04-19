@@ -15,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Id">The unique identifier of the document type.</param>
 /// <param name="Key">The identifier of the tag being added.</param>
 /// <param name="Value">The value associated with the tag.</param>
-/// <param name="Unique"></param>
+/// <param name="Unique">A value indicating whether the tag is unique.</param>
 [PolymorphicSerialization]
 public partial record DocumentTypeTagAdded(
     string Id,
@@ -23,8 +23,6 @@ public partial record DocumentTypeTagAdded(
     string Key,
     [property: DataMember(Order = 3)]
     string Value,
-    [property: DataMember(Order = 3)]
+    [property: DataMember(Order = 4)]
     bool Unique)
-    : DocumentTypeEvent(Id)
-{
-}
+    : DocumentTypeEvent(Id);

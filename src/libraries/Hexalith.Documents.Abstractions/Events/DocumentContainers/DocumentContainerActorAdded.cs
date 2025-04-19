@@ -19,6 +19,4 @@ using Hexalith.PolymorphicSerializations;
 public partial record DocumentContainerActorAdded(
     string Id,
     [property: DataMember(Order = 2)]
-    DocumentActor Actor) : DocumentContainerEvent(Id)
-{
-}
+    DocumentActor Actor) : DocumentContainerEvent(Id);

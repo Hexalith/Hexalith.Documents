@@ -18,6 +18,4 @@ using Hexalith.PolymorphicSerializations;
 public partial record FileTypeFileToTextConverterChanged(
     string Id,
     [property: DataMember(Order = 2)] string? FileToTextConverter)
-    : FileTypeEvent(Id)
-{
-}
+    : FileTypeEvent(Id);

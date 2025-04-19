@@ -15,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Id">The unique identifier for the document type.</param>
 /// <param name="Name">The name of the document type.</param>
 /// <param name="Description">The description of the document type.</param>
-/// <param name="DataExtractionIds"></param>
+/// <param name="DataExtractionIds">The collection of data extraction identifiers associated with this document type.</param>
 /// <param name="FileTypeIds">The collection of file type identifiers associated with this document type.</param>
 [PolymorphicSerialization]
 public partial record DocumentTypeAdded(
@@ -24,6 +24,4 @@ public partial record DocumentTypeAdded(
     [property: DataMember(Order = 3)] string? Description,
     [property: DataMember(Order = 4)] IEnumerable<string> DataExtractionIds,
     [property: DataMember(Order = 5)] IEnumerable<string> FileTypeIds)
-    : DocumentTypeEvent(Id)
-{
-}
+    : DocumentTypeEvent(Id);

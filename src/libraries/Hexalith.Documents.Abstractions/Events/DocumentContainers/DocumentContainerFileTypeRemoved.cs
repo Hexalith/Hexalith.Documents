@@ -19,6 +19,4 @@ public partial record DocumentContainerDocumentTypeRemoved(
     string Id,
     [property: DataMember(Order = 2)]
     string DocumentTypeId)
-    : DocumentContainerEvent(Id)
-{
-}
+    : DocumentContainerEvent(Id);

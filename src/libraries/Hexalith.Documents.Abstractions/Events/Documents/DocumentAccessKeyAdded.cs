@@ -18,6 +18,4 @@ using Hexalith.PolymorphicSerializations;
 [PolymorphicSerialization]
 public partial record DocumentAccessKeyAdded(
     string Id,
-    [property: DataMember(Order = 2)] DocumentAccessKey AccessKey) : DocumentEvent(Id)
-{
-}
+    [property: DataMember(Order = 2)] DocumentAccessKey AccessKey) : DocumentEvent(Id);

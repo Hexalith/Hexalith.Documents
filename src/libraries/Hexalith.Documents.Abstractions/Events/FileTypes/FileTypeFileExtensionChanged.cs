@@ -18,6 +18,4 @@ using Hexalith.PolymorphicSerializations;
 public partial record FileTypeFileExtensionChanged(
     string Id,
     [property: DataMember(Order = 3)] string FileExtension)
-    : FileTypeEvent(Id)
-{
-}
+    : FileTypeEvent(Id);
