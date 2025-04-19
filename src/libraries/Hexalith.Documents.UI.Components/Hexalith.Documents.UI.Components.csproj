@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -18,10 +18,10 @@
     <PackageReference Include="Hexalith.UI.Components"  />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Application\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
-    <ProjectReference Include="..\..\Application\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
-    <ProjectReference Include="..\..\Application\Hexalith.Documents.Projections\Hexalith.Documents.Projections.csproj" />
-    <ProjectReference Include="..\..\Domain\Hexalith.Documents.Events\Hexalith.Documents.Events.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Commands\Hexalith.Documents.Commands.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Projections\Hexalith.Documents.Projections.csproj" />
+    <ProjectReference Include="..\Hexalith.Documents.Abstractions\Hexalith.Documents.Abstractions.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\DocumentInformationExtractions.Designer.cs">

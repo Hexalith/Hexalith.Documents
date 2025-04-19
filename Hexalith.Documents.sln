@@ -208,6 +208,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.WebApp",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.WebServer", "src\libraries\Hexalith.Documents.WebServer\Hexalith.Documents.WebServer.csproj", "{667C879F-F796-44EA-9BCC-186B73519896}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.UI.Pages", "src\libraries\Hexalith.Documents.UI.Pages\Hexalith.Documents.UI.Pages.csproj", "{62C03276-44D6-0602-91E2-21D37F291482}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexalith.Documents.UI.Components", "src\libraries\Hexalith.Documents.UI.Components\Hexalith.Documents.UI.Components.csproj", "{43CBDBBD-2D24-B170-4581-386A81280DB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -286,6 +290,14 @@ Global
 		{667C879F-F796-44EA-9BCC-186B73519896}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{667C879F-F796-44EA-9BCC-186B73519896}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{667C879F-F796-44EA-9BCC-186B73519896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62C03276-44D6-0602-91E2-21D37F291482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C03276-44D6-0602-91E2-21D37F291482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C03276-44D6-0602-91E2-21D37F291482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C03276-44D6-0602-91E2-21D37F291482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43CBDBBD-2D24-B170-4581-386A81280DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43CBDBBD-2D24-B170-4581-386A81280DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43CBDBBD-2D24-B170-4581-386A81280DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43CBDBBD-2D24-B170-4581-386A81280DB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -328,6 +340,8 @@ Global
 		{2E80A9BA-3E23-1782-D404-97308D986961} = {884D0EEB-6F10-4783-A58F-178A17DF1131}
 		{DE135FDB-54FD-F04E-7510-10225BDC47EB} = {884D0EEB-6F10-4783-A58F-178A17DF1131}
 		{667C879F-F796-44EA-9BCC-186B73519896} = {884D0EEB-6F10-4783-A58F-178A17DF1131}
+		{62C03276-44D6-0602-91E2-21D37F291482} = {884D0EEB-6F10-4783-A58F-178A17DF1131}
+		{43CBDBBD-2D24-B170-4581-386A81280DB2} = {884D0EEB-6F10-4783-A58F-178A17DF1131}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B7376F4-B33A-4BC6-AFCA-C09B437568D7}
