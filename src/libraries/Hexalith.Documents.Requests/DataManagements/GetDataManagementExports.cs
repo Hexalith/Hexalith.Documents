@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of data export summaries to skip.</param>
 /// <param name="Take">The number of data export summaries to take.</param>
-/// <param name="Results"></param>
+/// <param name="Results">The collection of data export summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDataManagementExports(
     [property: DataMember(Order = 1)] int Skip,
@@ -32,7 +32,7 @@ public partial record GetDataManagementExports(
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetDataManagementExports"/> class with specified skip and take values.
+    /// Initializes a new instance of the <see cref="GetDataManagementExports"/> class.
     /// </summary>
     /// <param name="skip">The number of data export summaries to skip.</param>
     /// <param name="take">The number of data export summaries to take.</param>
@@ -52,11 +52,11 @@ public partial record GetDataManagementExports(
     public static string AggregateName => DocumentDomainHelper.DataManagementAggregateName;
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DataManagement>)results };
+    IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => new GetDataManagementExports(Skip + Take, Take);
 
     /// <inheritdoc/>
-    IEnumerable<object>? ICollectionRequest.Results { get; }
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DataManagement>)results };
 }

@@ -152,13 +152,17 @@
 		}
 	}
 
-	private Task OnRefreshAsync()
+	private static Task OnRefreshAsync()
 	{
 		return Task.CompletedTask;
 	}
 
 	private void OnDocumentContainerChanged(IEnumerable<Option<string>>? documentContainer)
 	{
+		if (_data is null)
+		{
+			return;
+		}
 		if (documentContainer is null)
 		{
 			_data.DocumentContainer = [];

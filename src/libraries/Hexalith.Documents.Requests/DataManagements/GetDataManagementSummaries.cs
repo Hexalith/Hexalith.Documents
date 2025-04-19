@@ -15,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of data export summaries to skip.</param>
 /// <param name="Take">The number of data export summaries to take.</param>
-/// <param name="Search"></param>
+/// <param name="Search">The search term to filter data export summaries.</param>
 /// <param name="Ids">The list of data export summary IDs.</param>
 /// <param name="Results">The list of data export summaries.</param>
 [PolymorphicSerialization]
@@ -35,18 +35,18 @@ public partial record GetDataManagementSummaries(
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetDataManagementSummaries"/> class with specified skip and take values.
+    /// Initializes a new instance of the <see cref="GetDataManagementSummaries"/> class.
     /// </summary>
     /// <param name="skip">The number of data export summaries to skip.</param>
     /// <param name="take">The number of data export summaries to take.</param>
-    /// <param name="search">The search to apply to the data export summaries.</param>
+    /// <param name="search">The search term to filter data export summaries.</param>
     public GetDataManagementSummaries(int skip, int take, string? search = null)
         : this(skip, take, search, Array.Empty<string>(), Array.Empty<DataManagementSummaryViewModel>())
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetDataManagementSummaries"/> class with specified skip, take, and IDs values.
+    /// Initializes a new instance of the <see cref="GetDataManagementSummaries"/> class.
     /// </summary>
     /// <param name="skip">The number of data export summaries to skip.</param>
     /// <param name="take">The number of data export summaries to take.</param>

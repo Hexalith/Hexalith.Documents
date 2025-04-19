@@ -15,33 +15,28 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of items to skip.</param>
 /// <param name="Take">The number of items to take.</param>
-/// <param name="Results"></param>
+/// <param name="Results">The collection of document type IDs.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentTypeIds(
-    [property: DataMember(Order = 1)]
-    int Skip,
-    [property: DataMember(Order = 2)]
-    int Take,
-    [property: DataMember(Order = 3)]
-    IEnumerable<string> Results) : IChunkableRequest
+    [property: DataMember(Order = 1)] int Skip,
+    [property: DataMember(Order = 2)] int Take,
+    [property: DataMember(Order = 3)] IEnumerable<string> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentTypeIds"/> class.
-    /// Initializes a new instance of the <see cref="GetDocumentTypeIds"/> record with specified skip and take values.
     /// </summary>
-    /// <param name="skip">The number of items to skip.</param>
-    /// <param name="take">The number of items to take.</param>
-    public GetDocumentTypeIds(int skip, int take)
-        : this(skip, take, [])
+    public GetDocumentTypeIds()
+        : this(0, 0, [])
     {
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentTypeIds"/> class.
-    /// Initializes a new instance of the <see cref="GetDocumentTypeIds"/> record with default values.
     /// </summary>
-    public GetDocumentTypeIds()
-        : this(0, 0, [])
+    /// <param name="skip">The number of items to skip.</param>
+    /// <param name="take">The number of items to take.</param>
+    public GetDocumentTypeIds(int skip, int take)
+        : this(skip, take, [])
     {
     }
 

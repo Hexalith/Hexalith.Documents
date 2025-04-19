@@ -39,19 +39,18 @@ Title="@Labels.ListTitle">
         .OrderBy(p => p.Id)];
         _summariesQuery = _summaries.AsQueryable();
     }
-    private Task SynchronizeDatabaseAsync()
+    private static Task SynchronizeDatabaseAsync()
     {
         return Task.CompletedTask;
     }
-    private Task OnDisabledChangedAsync(string id)
+    private static Task OnDisabledChangedAsync(string id)
     {
         return Task.CompletedTask;
     }
 
-    private async Task ImportAsync()
+    private static async Task ImportAsync()
     {
         await Task.CompletedTask;
-        //        await CommandService.SubmitCommandsAsync(User, command, CancellationToken.None);
     }
     private async Task ExportAsync()
     {

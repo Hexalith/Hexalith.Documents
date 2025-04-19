@@ -11,10 +11,10 @@ using Hexalith.Domains.ValueObjects;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
-/// Represents a request to get the description of a file type by its ID.
+/// Represents a request to get the ID and description of a file type.
 /// </summary>
-/// <param name="Id">The ID of the file type.</param>
-/// <param name="Result">The result containing the ID and description.</param>
+/// <param name="Id">The unique identifier of the file type.</param>
+/// <param name="Result">The result containing the file type ID and description, if found.</param>
 [PolymorphicSerialization]
 public partial record GetFileTypeIdDescription(string Id, [property: DataMember(Order = 2)] IdDescription? Result = null)
     : FileTypeRequest(Id);

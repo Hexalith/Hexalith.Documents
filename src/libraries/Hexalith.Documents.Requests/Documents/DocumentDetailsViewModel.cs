@@ -16,6 +16,15 @@ using Hexalith.Extensions.Helpers;
 /// <summary>
 /// Represents the view model for document details.
 /// </summary>
+/// <param name="Id">The unique identifier of the document.</param>
+/// <param name="Description">The description of the document including name and metadata.</param>
+/// <param name="Routing">The routing information for the document, if any.</param>
+/// <param name="ParentDocumentId">The identifier of the parent document, if this is a child document.</param>
+/// <param name="State">The current state of the document.</param>
+/// <param name="Actors">The collection of actors associated with the document.</param>
+/// <param name="Files">The collection of files associated with the document.</param>
+/// <param name="Tags">The collection of tags associated with the document.</param>
+/// <param name="Disabled">Indicates whether the document is disabled.</param>
 [DataContract]
 public sealed record DocumentDetailsViewModel(
     [property: DataMember(Order = 1)] string Id,
@@ -32,7 +41,7 @@ public sealed record DocumentDetailsViewModel(
     string IIdDescription.Description => Description.Name;
 
     /// <summary>
-    /// Gets an empty instance of the <see cref="DocumentDetailsViewModel"/> class.
+    /// Gets an empty instance of the <see cref="DocumentDetailsViewModel"/> record.
     /// </summary>
     public static DocumentDetailsViewModel Empty => new(
         string.Empty,
@@ -46,11 +55,11 @@ public sealed record DocumentDetailsViewModel(
         false);
 
     /// <summary>
-    /// Creates a new instance of the <see cref="DocumentDetailsViewModel"/> class.
+    /// Creates a new instance of the <see cref="DocumentDetailsViewModel"/> record.
     /// </summary>
     /// <param name="id">The document ID.</param>
     /// <param name="documentContainerId">The document container ID.</param>
-    /// <returns>A new instance of the <see cref="DocumentDetailsViewModel"/> class.</returns>
+    /// <returns>A new instance of the <see cref="DocumentDetailsViewModel"/> record.</returns>
     public static DocumentDetailsViewModel Create(string? id, string? documentContainerId) => new(
         string.IsNullOrWhiteSpace(id) ? UniqueIdHelper.GenerateUniqueStringId() : id,
         new DocumentDescription(string.Empty, null, documentContainerId, null, null),

@@ -11,16 +11,14 @@ using Hexalith.Application.Requests;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
-/// Represents a request to get the description of a document by its ID.
+/// Represents a request to get the details of a document by its ID.
 /// </summary>
-/// <param name="Id">The ID of the document.</param>
-/// <param name="Result">The result containing the ID and description.</param>
+/// <param name="Id">The unique identifier of the document.</param>
+/// <param name="Result">The result containing the document details, if found.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentDetails(string Id, [property: DataMember(Order = 2)] DocumentDetailsViewModel? Result = null)
     : DocumentRequest(Id), IRequest
 {
-    /// <summary>
-    /// Gets the result of the request.
-    /// </summary>
+    /// <inheritdoc/>
     object? IRequest.Result => Result;
 }

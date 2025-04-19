@@ -5,17 +5,18 @@
 
 namespace Hexalith.Documents.Requests.Documents;
 
+using System.Linq;
 using System.Runtime.Serialization;
 
 using Hexalith.Application.Requests;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
-/// Represents a request for a list of summaries of documents with essential information.
+/// Represents a request for a list of document exports with pagination.
 /// </summary>
-/// <param name="Skip">The number of document summaries to skip.</param>
-/// <param name="Take">The number of document summaries to take.</param>
-/// <param name="Results">The list of document summaries.</param>
+/// <param name="Skip">The number of document exports to skip.</param>
+/// <param name="Take">The number of document exports to take.</param>
+/// <param name="Results">The list of document exports.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentExports(
     [property: DataMember(Order = 1)] int Skip,
@@ -31,31 +32,31 @@ public partial record GetDocumentExports(
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetDocumentExports"/> class with specified skip and take values.
+    /// Initializes a new instance of the <see cref="GetDocumentExports"/> class.
     /// </summary>
-    /// <param name="skip">The number of document summaries to skip.</param>
-    /// <param name="take">The number of document summaries to take.</param>
+    /// <param name="skip">The number of document exports to skip.</param>
+    /// <param name="take">The number of document exports to take.</param>
     public GetDocumentExports(int skip, int take)
         : this(skip, take, [])
     {
     }
 
     /// <summary>
-    /// Gets the aggregate ID of the document command.
+    /// Gets the aggregate ID of the document request.
     /// </summary>
     public static string AggregateId => DocumentDomainHelper.DocumentAggregateName;
 
     /// <summary>
-    /// Gets the aggregate name of the document command.
+    /// Gets the aggregate name of the document request.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.DocumentAggregateName;
 
     /// <inheritdoc/>
-    IEnumerable<object>? ICollectionRequest.Results { get; }
+    IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
-    public IChunkableRequest CreateNextChunkRequest() => throw new NotImplementedException();
+    public IChunkableRequest CreateNextChunkRequest() => new GetDocumentExports(Skip + Take, Take);
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results) => throw new NotImplementedException();
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = results?.Cast<DocumentSummaryViewModel>() ?? [] };
 }

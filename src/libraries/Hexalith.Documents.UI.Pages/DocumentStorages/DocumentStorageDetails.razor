@@ -61,7 +61,7 @@
     [Parameter]
     public string? Id { get; set; }
 
-    IEnumerable<Option<string>> _storageTypes = Enum
+    readonly IEnumerable<Option<string>> _storageTypes = Enum
         .GetValues<DocumentStorageType>()
         .Select(p => new Option<string> { Value = p.ToString(), Text = p.GetDisplayName() });
 
@@ -149,7 +149,7 @@
         }
     }
 
-    private Task OnRefreshAsync()
+    private static Task OnRefreshAsync()
     {
         return Task.CompletedTask;
     }

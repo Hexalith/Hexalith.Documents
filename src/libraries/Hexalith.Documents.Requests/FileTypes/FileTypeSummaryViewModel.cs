@@ -10,13 +10,13 @@ using System.Runtime.Serialization;
 using Hexalith.Domains.ValueObjects;
 
 /// <summary>
-/// Represents a summary view of a document type with essential information.
+/// Represents a summary view of a file type with essential information.
 /// </summary>
-/// <param name="Id">The unique identifier of the document type.</param>
-/// <param name="Name">The name of the document type.</param>
-/// <param name="ContentType"></param>
-/// <param name="FileExtension"></param>
-/// <param name="Disabled">Indicates whether the document type is disabled.</param>
+/// <param name="Id">The unique identifier of the file type.</param>
+/// <param name="Name">The name of the file type.</param>
+/// <param name="ContentType">The MIME content type of the file.</param>
+/// <param name="FileExtension">The file extension associated with this file type.</param>
+/// <param name="Disabled">Indicates whether the file type is disabled.</param>
 [DataContract]
 public sealed record FileTypeSummaryViewModel(
     [property: DataMember(Order = 1)] string Id,

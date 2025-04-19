@@ -149,7 +149,7 @@ public sealed class DocumentContainerEditViewModel : IIdDescription, IEntityView
     internal static async Task<DocumentContainerEditViewModel?> CreateAsync(string id, ClaimsPrincipal user, IRequestService requestService, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
-        ArgumentException.ThrowIfNullOrWhiteSpace(user?.Identity?.Name, nameof(user));
+        ArgumentException.ThrowIfNullOrWhiteSpace(user?.Identity?.Name);
         ArgumentNullException.ThrowIfNull(requestService);
 
         DocumentContainerDetailsViewModel details = await requestService

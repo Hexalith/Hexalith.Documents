@@ -9,6 +9,10 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Represents a base class for document storage requests.
+/// </summary>
+/// <param name="Id">The unique identifier of the document storage.</param>
 [PolymorphicSerialization]
 public abstract partial record DocumentStorageRequest([property: DataMember(Order = 1)] string Id)
 {

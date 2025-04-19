@@ -10,19 +10,19 @@ using System.Runtime.Serialization;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
-/// Represents a base class for document commands.
+/// Represents a base class for document requests.
 /// </summary>
-/// <param name="Id">The aggregate ID of the document command.</param>
+/// <param name="Id">The unique identifier of the document.</param>
 [PolymorphicSerialization]
 public abstract partial record DocumentRequest([property: DataMember(Order = 1)] string Id)
 {
     /// <summary>
-    /// Gets the aggregate ID of the document command.
+    /// Gets the aggregate ID of the document request.
     /// </summary>
     public string AggregateId => Id;
 
     /// <summary>
-    /// Gets the aggregate name of the document command.
+    /// Gets the aggregate name of the document request.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.DocumentAggregateName;
 }

@@ -13,35 +13,30 @@ using Hexalith.PolymorphicSerializations;
 /// <summary>
 /// Represents a request to get document IDs with pagination.
 /// </summary>
-/// <param name="Skip">The number of items to skip.</param>
-/// <param name="Take">The number of items to take.</param>
+/// <param name="Skip">The number of document IDs to skip.</param>
+/// <param name="Take">The number of document IDs to take.</param>
 /// <param name="Results">The collection of document IDs.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentIds(
-    [property: DataMember(Order = 1)]
-    int Skip,
-    [property: DataMember(Order = 2)]
-    int Take,
-    [property: DataMember(Order = 3)]
-    IEnumerable<string> Results) : IChunkableRequest
+    [property: DataMember(Order = 1)] int Skip,
+    [property: DataMember(Order = 2)] int Take,
+    [property: DataMember(Order = 3)] IEnumerable<string> Results) : IChunkableRequest
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentIds"/> class.
-    /// Initializes a new instance of the <see cref="GetDocumentIds"/> record with specified skip and take values.
     /// </summary>
-    /// <param name="skip">The number of items to skip.</param>
-    /// <param name="take">The number of items to take.</param>
-    public GetDocumentIds(int skip, int take)
-        : this(skip, take, [])
+    public GetDocumentIds()
+        : this(0, 0, [])
     {
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDocumentIds"/> class.
-    /// Initializes a new instance of the <see cref="GetDocumentIds"/> record with default values.
     /// </summary>
-    public GetDocumentIds()
-        : this(0, 0, [])
+    /// <param name="skip">The number of document IDs to skip.</param>
+    /// <param name="take">The number of document IDs to take.</param>
+    public GetDocumentIds(int skip, int take)
+        : this(skip, take, [])
     {
     }
 

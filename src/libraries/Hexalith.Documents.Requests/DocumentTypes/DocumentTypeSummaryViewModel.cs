@@ -13,7 +13,7 @@ using Hexalith.Domains.ValueObjects;
 /// Represents a summary view of a document type with essential information.
 /// </summary>
 /// <param name="Id">The unique identifier of the document type.</param>
-/// <param name="Name">The name of the document type.</param>
+/// <param name="Name">The display name of the document type.</param>
 /// <param name="Disabled">Indicates whether the document type is disabled.</param>
 [DataContract]
 public sealed record DocumentTypeSummaryViewModel(

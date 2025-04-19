@@ -12,11 +12,11 @@ using Hexalith.Documents.DocumentTypes;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
-/// Represents a request for a list of summaries of document container with essential information.
+/// Represents a request for a list of document type exports with pagination.
 /// </summary>
-/// <param name="Skip">The number of document container summaries to skip.</param>
-/// <param name="Take">The number of document container summaries to take.</param>
-/// <param name="Results"></param>
+/// <param name="Skip">The number of document type exports to skip.</param>
+/// <param name="Take">The number of document type exports to take.</param>
+/// <param name="Results">The list of document type exports.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentTypeExports(
     [property: DataMember(Order = 1)] int Skip,
@@ -27,27 +27,23 @@ public partial record GetDocumentTypeExports(
     /// Initializes a new instance of the <see cref="GetDocumentTypeExports"/> class.
     /// </summary>
     public GetDocumentTypeExports()
-        : this(0, 0, [])
-    {
-    }
+        : this(0, 0, []) { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetDocumentTypeExports"/> class with specified skip and take values.
+    /// Initializes a new instance of the <see cref="GetDocumentTypeExports"/> class.
     /// </summary>
-    /// <param name="skip">The number of document container summaries to skip.</param>
-    /// <param name="take">The number of document container summaries to take.</param>
+    /// <param name="skip">The number of document type exports to skip.</param>
+    /// <param name="take">The number of document type exports to take.</param>
     public GetDocumentTypeExports(int skip, int take)
-        : this(skip, take, [])
-    {
-    }
+        : this(skip, take, []) { }
 
     /// <summary>
-    /// Gets the aggregate ID of the document command.
+    /// Gets the aggregate ID of the document type request.
     /// </summary>
     public static string AggregateId => DocumentDomainHelper.DocumentTypeAggregateName;
 
     /// <summary>
-    /// Gets the aggregate name of the document command.
+    /// Gets the aggregate name of the document type request.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.DocumentTypeAggregateName;
 

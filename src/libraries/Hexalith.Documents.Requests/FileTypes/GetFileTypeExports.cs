@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of items to skip.</param>
 /// <param name="Take">The number of items to take.</param>
-/// <param name="Results">The results of the file type exports.</param>
+/// <param name="Results">The collection of file type exports.</param>
 [PolymorphicSerialization]
 public partial record GetFileTypeExports(
     [property: DataMember(Order = 1)] int Skip,
@@ -24,18 +24,15 @@ public partial record GetFileTypeExports(
     [property: DataMember(Order = 3)] IEnumerable<FileType> Results) : IChunkableRequest
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetFileTypeExports"/> class with default values.
+    /// Initializes a new instance of the <see cref="GetFileTypeExports"/> class.
     /// </summary>
-    /// <remarks>
-    /// This constructor sets the <see cref="Skip"/> and <see cref="Take"/> properties to 0 and initializes an empty list for <see cref="Results"/>.
-    /// </remarks>
     public GetFileTypeExports()
         : this(0, 0, [])
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetFileTypeExports"/> class with specified skip and take values.
+    /// Initializes a new instance of the <see cref="GetFileTypeExports"/> class.
     /// </summary>
     /// <param name="skip">The number of items to skip.</param>
     /// <param name="take">The number of items to take.</param>
@@ -45,12 +42,12 @@ public partial record GetFileTypeExports(
     }
 
     /// <summary>
-    /// Gets the aggregate ID of the document command.
+    /// Gets the aggregate ID of the file type request.
     /// </summary>
     public static string AggregateId => DocumentDomainHelper.FileTypeAggregateName;
 
     /// <summary>
-    /// Gets the aggregate name of the document command.
+    /// Gets the aggregate name of the file type request.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.FileTypeAggregateName;
 

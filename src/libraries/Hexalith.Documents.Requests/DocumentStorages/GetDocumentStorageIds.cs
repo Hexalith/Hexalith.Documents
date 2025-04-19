@@ -15,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of items to skip.</param>
 /// <param name="Take">The number of items to take.</param>
-/// <param name="Results"></param>
+/// <param name="Results">The collection of document partition IDs.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentStorageIds(
     [property: DataMember(Order = 1)]

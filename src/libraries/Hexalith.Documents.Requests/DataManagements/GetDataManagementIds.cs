@@ -15,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of items to skip.</param>
 /// <param name="Take">The number of items to take.</param>
-/// <param name="Results"></param>
+/// <param name="Results">The collection of data export IDs.</param>
 [PolymorphicSerialization]
 public partial record GetDataManagementIds(
     [property: DataMember(Order = 1)]
@@ -27,21 +27,19 @@ public partial record GetDataManagementIds(
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDataManagementIds"/> class.
-    /// Initializes a new instance of the <see cref="GetDataManagementIds"/> record with specified skip and take values.
     /// </summary>
-    /// <param name="skip">The number of items to skip.</param>
-    /// <param name="take">The number of items to take.</param>
-    public GetDataManagementIds(int skip, int take)
-        : this(skip, take, [])
+    public GetDataManagementIds()
+        : this(0, 0, [])
     {
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDataManagementIds"/> class.
-    /// Initializes a new instance of the <see cref="GetDataManagementIds"/> record with default values.
     /// </summary>
-    public GetDataManagementIds()
-        : this(0, 0, [])
+    /// <param name="skip">The number of items to skip.</param>
+    /// <param name="take">The number of items to take.</param>
+    public GetDataManagementIds(int skip, int take)
+        : this(skip, take, [])
     {
     }
 

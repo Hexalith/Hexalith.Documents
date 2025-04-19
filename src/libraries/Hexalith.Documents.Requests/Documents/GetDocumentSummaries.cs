@@ -11,12 +11,12 @@ using Hexalith.Application.Requests;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
-/// Represents a request for a list of summaries of document with essential information.
+/// Represents a request for a list of document summaries with pagination and search capabilities.
 /// </summary>
 /// <param name="Skip">The number of document summaries to skip.</param>
 /// <param name="Take">The number of document summaries to take.</param>
-/// <param name="Search"></param>
-/// <param name="Ids"></param>
+/// <param name="Search">The search term to filter document summaries.</param>
+/// <param name="Ids">The list of document IDs to include in the results.</param>
 /// <param name="Results">The list of document summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentSummaries(
@@ -30,37 +30,31 @@ public partial record GetDocumentSummaries(
     /// Initializes a new instance of the <see cref="GetDocumentSummaries"/> class.
     /// </summary>
     public GetDocumentSummaries()
-        : this(0, 0, null, [], [])
-    {
-    }
+        : this(0, 0, null, [], []) { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetDocumentSummaries"/> class with specified skip and take values.
+    /// Initializes a new instance of the <see cref="GetDocumentSummaries"/> class.
     /// </summary>
     /// <param name="skip">The number of document summaries to skip.</param>
     /// <param name="take">The number of document summaries to take.</param>
-    /// <param name="search">The search criteria for the document summaries.</param>
+    /// <param name="search">The search term to filter document summaries.</param>
     public GetDocumentSummaries(int skip, int take, string? search)
-        : this(skip, take, search, [], [])
-    {
-    }
+        : this(skip, take, search, [], []) { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetDocumentSummaries"/> class with specified document IDs.
+    /// Initializes a new instance of the <see cref="GetDocumentSummaries"/> class.
     /// </summary>
-    /// <param name="ids">The list of document IDs.</param>
+    /// <param name="ids">The list of document IDs to include in the results.</param>
     public GetDocumentSummaries(IEnumerable<string> ids)
-        : this(0, 0, null, ids, [])
-    {
-    }
+        : this(0, 0, null, ids, []) { }
 
     /// <summary>
-    /// Gets the aggregate ID of the document command.
+    /// Gets the aggregate ID of the document request.
     /// </summary>
     public static string AggregateId => DocumentDomainHelper.DocumentAggregateName;
 
     /// <summary>
-    /// Gets the aggregate name of the document command.
+    /// Gets the aggregate name of the document request.
     /// </summary>
     public static string AggregateName => DocumentDomainHelper.DocumentAggregateName;
 
@@ -68,8 +62,7 @@ public partial record GetDocumentSummaries(
     IEnumerable<object>? ICollectionRequest.Results => Results;
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results)
-        => this with { Results = (IEnumerable<DocumentSummaryViewModel>)results };
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<DocumentSummaryViewModel>)results };
 
     /// <inheritdoc/>
     public IChunkableRequest CreateNextChunkRequest() => this with { Skip = Skip + Take, Results = [] };

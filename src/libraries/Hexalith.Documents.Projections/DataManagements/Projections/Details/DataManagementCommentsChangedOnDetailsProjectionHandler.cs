@@ -13,8 +13,15 @@ using Hexalith.Application.Projections;
 using Hexalith.Documents.Events.DataManagements;
 using Hexalith.Documents.Requests.DataManagements;
 
-public class DataManagementCommentsChangedOnDetailsProjectionHandler(IProjectionFactory<DataManagementDetailsViewModel> factory)
-    : DataManagementDetailsProjectionHandler<DataManagementCommentsChanged>(factory)
+/// <summary>
+/// Handles the projection updates for the <see cref="DataManagementCommentsChanged"/> event
+/// on the <see cref="DataManagementDetailsViewModel"/>.
+/// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="DataManagementCommentsChangedOnDetailsProjectionHandler"/> class.
+/// </remarks>
+/// <param name="factory">The projection factory used to manage the state of the projections.</param>
+public class DataManagementCommentsChangedOnDetailsProjectionHandler(IProjectionFactory<DataManagementDetailsViewModel> factory) : DataManagementDetailsProjectionHandler<DataManagementCommentsChanged>(factory)
 {
     /// <inheritdoc/>
     protected override Task<DataManagementDetailsViewModel?> ApplyEventAsync(

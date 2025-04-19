@@ -16,7 +16,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of document storage summaries to skip.</param>
 /// <param name="Take">The number of document storage summaries to take.</param>
-/// <param name="Results"></param>
+/// <param name="Results">The collection of document storage summaries.</param>
 [PolymorphicSerialization]
 public partial record GetDocumentStorageExports(
     [property: DataMember(Order = 1)] int Skip,
@@ -32,7 +32,7 @@ public partial record GetDocumentStorageExports(
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetDocumentStorageExports"/> class with specified skip and take values.
+    /// Initializes a new instance of the <see cref="GetDocumentStorageExports"/> class.
     /// </summary>
     /// <param name="skip">The number of document storage summaries to skip.</param>
     /// <param name="take">The number of document storage summaries to take.</param>

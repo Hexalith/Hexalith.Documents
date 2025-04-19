@@ -15,7 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Skip">The number of document storage summaries to skip.</param>
 /// <param name="Take">The number of document storage summaries to take.</param>
-/// <param name="Search"></param>
+/// <param name="Search">The search term to filter document storage summaries.</param>
 /// <param name="Ids">The list of document storage summary IDs.</param>
 /// <param name="Results">The list of document storage summaries.</param>
 [PolymorphicSerialization]
