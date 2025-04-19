@@ -31,7 +31,7 @@ public class FileTypeEnabledOnSummaryProjectionHandler(IProjectionFactory<FileTy
     protected override Task<FileTypeSummaryViewModel?> ApplyEventAsync([NotNull] FileTypeEnabled baseEvent, FileTypeSummaryViewModel? summary, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (summary == null || !summary.Disabled)
+        if (summary?.Disabled != true)
         {
             return Task.FromResult<FileTypeSummaryViewModel?>(null);
         }

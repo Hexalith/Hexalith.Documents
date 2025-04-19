@@ -17,7 +17,4 @@ using Hexalith.PolymorphicSerializations;
 [PolymorphicSerialization]
 public partial record DocumentStorageEventCancelled(
     [property: DataMember(Order = 2)] DocumentStorageEvent Event,
-    [property: DataMember(Order = 3)] string Reason)
-    : DocumentStorageEvent(Event.Id)
-{
-}
+    [property: DataMember(Order = 3)] string Reason) : DocumentStorageEvent(Event.Id);

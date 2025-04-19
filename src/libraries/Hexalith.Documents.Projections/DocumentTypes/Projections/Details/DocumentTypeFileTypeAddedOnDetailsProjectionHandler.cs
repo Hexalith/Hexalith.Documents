@@ -34,7 +34,7 @@ public class DocumentTypeFileTypeAddedOnDetailsProjectionHandler(IProjectionFact
             FileTypeIds = model.FileTypeIds
                 .Append(baseEvent.FileTypeId)
                 .Distinct()
-                .OrderBy(p => p),
+                .Order(),
         });
     }
 }

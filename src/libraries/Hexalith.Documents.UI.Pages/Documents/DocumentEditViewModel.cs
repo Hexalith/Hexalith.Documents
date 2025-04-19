@@ -244,9 +244,7 @@ public sealed class DocumentEditViewModel : IIdDescription
         ArgumentNullException.ThrowIfNull(requestService);
         cancellationToken.ThrowIfCancellationRequested();
 
-        DocumentDetailsViewModel details;
-
-        details = !string.IsNullOrWhiteSpace(id) ? await requestService.GetDocumentDetailsAsync(id, user, cancellationToken).ConfigureAwait(false) : DocumentDetailsViewModel.Create(id, containerId);
+        DocumentDetailsViewModel details = !string.IsNullOrWhiteSpace(id) ? await requestService.GetDocumentDetailsAsync(id, user, cancellationToken).ConfigureAwait(false) : DocumentDetailsViewModel.Create(id, containerId);
 
         Task<DocumentContainerDetailsViewModel?> containerTask = requestService
             .FindDocumentContainerDetailsAsync(details.Description.DocumentContainerId, user, cancellationToken);

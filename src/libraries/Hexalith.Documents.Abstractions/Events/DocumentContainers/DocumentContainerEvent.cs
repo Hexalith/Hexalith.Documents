@@ -15,8 +15,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The identifier of the document container.</param>
 [PolymorphicSerialization]
-public abstract partial record DocumentContainerEvent(
-    [property: DataMember(Order = 1)] string Id)
+public abstract partial record DocumentContainerEvent([property: DataMember(Order = 1)] string Id)
 {
     /// <summary>
     /// Gets the aggregate identifier for the document container.

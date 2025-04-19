@@ -18,5 +18,4 @@ using Hexalith.PolymorphicSerializations;
 public partial record DataExportStarted(
     string Id,
     [property: DataMember(Order = 2)]
-    DateTimeOffset DateTime)
-    : DataManagementEvent(Id);
+    DateTimeOffset DateTime) : DataManagementEvent(Id);

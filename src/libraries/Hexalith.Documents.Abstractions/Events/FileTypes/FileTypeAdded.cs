@@ -28,6 +28,4 @@ public partial record FileTypeAdded(
     [property: DataMember(Order = 5)] string FileExtension,
     [property: DataMember(Order = 7)] string? Description,
     [property: DataMember(Order = 8)] string? FileToTextConverter)
-    : FileTypeEvent(Id)
-{
-}
+    : FileTypeEvent(Id);

@@ -25,7 +25,7 @@ public class FileTypeEnabledOnDetailsProjectionHandler(IProjectionFactory<FileTy
     protected override Task<FileTypeDetailsViewModel?> ApplyEventAsync([NotNull] FileTypeEnabled baseEvent, FileTypeDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (model == null || !model.Disabled)
+        if (model?.Disabled != true)
         {
             return Task.FromResult<FileTypeDetailsViewModel?>(null);
         }

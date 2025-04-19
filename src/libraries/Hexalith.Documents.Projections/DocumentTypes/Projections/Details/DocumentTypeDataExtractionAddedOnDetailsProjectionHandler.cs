@@ -34,7 +34,7 @@ public class DocumentTypeDataExtractionAddedOnDetailsProjectionHandler(IProjecti
             DataExtractionIds = model.DataExtractionIds
                 .Append(baseEvent.DataInformationExtractionId)
                 .Distinct()
-                .OrderBy(p => p),
+                .Order(),
         });
     }
 }

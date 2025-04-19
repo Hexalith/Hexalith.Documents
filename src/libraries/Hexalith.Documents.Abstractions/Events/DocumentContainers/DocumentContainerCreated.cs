@@ -25,7 +25,4 @@ public partial record DocumentContainerCreated(
     [property: DataMember(Order = 3)] string Name,
     [property: DataMember(Order = 3)] string Path,
     [property: DataMember(Order = 4)] string? Comments,
-    [property: DataMember(Order = 5)] string? AutomaticRoutingInstructions)
-    : DocumentContainerEvent(Id)
-{
-}
+    [property: DataMember(Order = 5)] string? AutomaticRoutingInstructions) : DocumentContainerEvent(Id);

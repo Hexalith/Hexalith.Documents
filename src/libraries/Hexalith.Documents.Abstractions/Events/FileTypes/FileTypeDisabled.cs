@@ -12,6 +12,4 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The unique identifier of the file type.</param>
 [PolymorphicSerialization]
-public partial record FileTypeDisabled(string Id) : FileTypeEvent(Id)
-{
-}
+public partial record FileTypeDisabled(string Id) : FileTypeEvent(Id);

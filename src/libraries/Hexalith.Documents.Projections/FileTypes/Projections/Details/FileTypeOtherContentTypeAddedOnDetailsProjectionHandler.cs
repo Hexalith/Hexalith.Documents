@@ -34,7 +34,7 @@ public class FileTypeOtherContentTypeAddedOnDetailsProjectionHandler(IProjection
             OtherContentTypes = model.OtherContentTypes
                 .Append(baseEvent.OtherContentType)
                 .Distinct()
-                .OrderBy(p => p),
+                .Order(),
         });
     }
 }
