@@ -19,6 +19,4 @@ public partial record AddDocumentContainerFileType(
     string Id,
     [property: DataMember(Order = 2)]
     string FileTypeId)
-    : DocumentContainerCommand(Id)
-{
-}
+    : DocumentContainerCommand(Id);

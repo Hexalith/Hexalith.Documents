@@ -12,6 +12,4 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The unique identifier of the document container.</param>
 [PolymorphicSerialization]
-public partial record EnableDocumentContainer(string Id) : DocumentContainerCommand(Id)
-{
-}
+public partial record EnableDocumentContainer(string Id) : DocumentContainerCommand(Id);

@@ -34,6 +34,4 @@ public partial record AddDocumentInformationExtraction(
     [property: DataMember(Order = 8)] string ValidationModel,
     [property: DataMember(Order = 9)] string ValidationInstructions,
     [property: DataMember(Order = 10)] string? Comments)
-    : DocumentInformationExtractionCommand(Id)
-{
-}
+    : DocumentInformationExtractionCommand(Id);

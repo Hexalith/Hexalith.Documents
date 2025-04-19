@@ -9,11 +9,15 @@ using System.Runtime.Serialization;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Represents a command to change the description of a document storage.
+/// </summary>
+/// <param name="Id">The unique identifier of the document storage.</param>
+/// <param name="Name">The new name of the document storage.</param>
+/// <param name="Comments">Optional comments about the document storage.</param>
 [PolymorphicSerialization]
 public partial record ChangeDocumentStorageDescription(
     string Id,
     [property: DataMember(Order = 2)] string Name,
     [property: DataMember(Order = 3)] string? Comments)
-    : DocumentStorageCommand(Id)
-{
-}
+    : DocumentStorageCommand(Id);

@@ -7,7 +7,9 @@ namespace Hexalith.Documents.Commands.DocumentStorages;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Command to enable a document storage.
+/// </summary>
+/// <param name="Id">The unique identifier of the document storage.</param>
 [PolymorphicSerialization]
-public partial record EnableDocumentStorage(string Id) : DocumentStorageCommand(Id)
-{
-}
+public partial record EnableDocumentStorage(string Id) : DocumentStorageCommand(Id);

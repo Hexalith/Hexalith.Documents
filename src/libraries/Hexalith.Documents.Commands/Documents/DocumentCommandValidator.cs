@@ -24,7 +24,7 @@ public class DocumentCommandValidator<TCommand> : AbstractValidator<TCommand>
     /// <param name="l">The string localizer for labels.</param>
     public DocumentCommandValidator(IStringLocalizer<Labels> l)
     {
-        ArgumentNullException.ThrowIfNull(l, nameof(l));
+        ArgumentNullException.ThrowIfNull(l);
         _ = RuleFor(command => command.Id)
             .NotEmpty()
             .WithMessage(l[Labels.IdRequired]);

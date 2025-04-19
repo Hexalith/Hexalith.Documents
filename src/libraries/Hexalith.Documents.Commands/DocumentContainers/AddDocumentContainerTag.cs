@@ -25,6 +25,4 @@ public partial record AddDocumentContainerTag(
     string? Value,
     [property: DataMember(Order = 4)]
     bool Unique)
-    : DocumentContainerCommand(Id)
-{
-}
+    : DocumentContainerCommand(Id);

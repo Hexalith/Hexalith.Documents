@@ -21,6 +21,4 @@ public partial record ChangeDocumentInformationExtractionDescription(
     [property: DataMember(Order = 2)]
     string Name,
     [property: DataMember(Order = 3)]
-    string? Comments) : DocumentInformationExtractionCommand(Id)
-{
-}
+    string? Comments) : DocumentInformationExtractionCommand(Id);

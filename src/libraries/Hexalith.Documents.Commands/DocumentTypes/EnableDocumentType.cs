@@ -16,6 +16,4 @@ using Hexalith.PolymorphicSerializations;
 /// This command restores full functionality to a previously disabled document type.
 /// </remarks>
 [PolymorphicSerialization]
-public partial record EnableDocumentType(string Id) : DocumentTypeCommand(Id)
-{
-}
+public partial record EnableDocumentType(string Id) : DocumentTypeCommand(Id);

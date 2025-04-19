@@ -14,7 +14,7 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The identifier of the document container.</param>
 /// <param name="Key">The identifier of the tag that was removed.</param>
-/// <param name="Value"></param>
+/// <param name="Value">The value of the tag that was removed.</param>
 [PolymorphicSerialization]
 public partial record RemoveDocumentContainerTag(
     string Id,
@@ -22,6 +22,4 @@ public partial record RemoveDocumentContainerTag(
     string Key,
     [property: DataMember(Order = 3)]
     string? Value)
-    : DocumentContainerCommand(Id)
-{
-}
+    : DocumentContainerCommand(Id);

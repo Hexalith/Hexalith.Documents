@@ -16,6 +16,4 @@ using Hexalith.PolymorphicSerializations;
 /// Existing documents of this type are not affected but no new documents can be created with this type.
 /// </remarks>
 [PolymorphicSerialization]
-public partial record DisableDocumentType(string Id) : DocumentTypeCommand(Id)
-{
-}
+public partial record DisableDocumentType(string Id) : DocumentTypeCommand(Id);

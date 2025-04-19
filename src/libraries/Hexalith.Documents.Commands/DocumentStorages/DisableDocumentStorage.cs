@@ -7,7 +7,10 @@ namespace Hexalith.Documents.Commands.DocumentStorages;
 
 using Hexalith.PolymorphicSerializations;
 
+/// <summary>
+/// Command to disable a document storage.
+/// </summary>
+/// <param name="Id">The unique identifier of the document storage to disable.</param>
 [PolymorphicSerialization]
-public partial record DisableDocumentStorage(string Id) : DocumentStorageCommand(Id)
-{
-}
+public partial record DisableDocumentStorage(string Id)
+    : DocumentStorageCommand(Id);
