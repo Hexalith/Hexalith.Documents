@@ -27,7 +27,7 @@ public class DocumentInformationExtractionDisabledOnDetailsProjectionHandler(IPr
     protected override Task<DocumentInformationExtractionDetailsViewModel?> ApplyEventAsync([NotNull] DocumentInformationExtractionDisabled baseEvent, DocumentInformationExtractionDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (model == null || model.Disabled)
+        if (model?.Disabled != false)
         {
             return Task.FromResult<DocumentInformationExtractionDetailsViewModel?>(null);
         }

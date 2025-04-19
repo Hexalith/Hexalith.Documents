@@ -14,6 +14,4 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="ByContactId">The identifier of the contact who flagged the document as draft.</param>
 /// <param name="Date">The date and time when the document was flagged as draft.</param>
 [PolymorphicSerialization]
-public partial record DocumentFlaggedAsDraft(string Id, string ByContactId, DateTimeOffset Date) : DocumentEvent(Id)
-{
-}
+public partial record DocumentFlaggedAsDraft(string Id, string ByContactId, DateTimeOffset Date) : DocumentEvent(Id);

@@ -14,6 +14,4 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="ContactId">The identifier of the actor being removed.</param>
 [PolymorphicSerialization]
 public partial record DocumentActorRemoved(string Id, string ContactId)
-    : DocumentEvent(Id)
-{
-}
+    : DocumentEvent(Id);

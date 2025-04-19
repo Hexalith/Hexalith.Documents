@@ -25,7 +25,7 @@ public class DocumentContainerEnabledOnDetailsProjectionHandler(IProjectionFacto
     protected override Task<DocumentContainerDetailsViewModel?> ApplyEventAsync([NotNull] DocumentContainerEnabled baseEvent, DocumentContainerDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (model == null || !model.Disabled)
+        if (model?.Disabled != true)
         {
             return Task.FromResult<DocumentContainerDetailsViewModel?>(null);
         }

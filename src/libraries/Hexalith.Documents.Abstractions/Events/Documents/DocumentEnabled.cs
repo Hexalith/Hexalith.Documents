@@ -11,6 +11,4 @@ using Hexalith.PolymorphicSerializations;
 /// Represents a document enabled event.
 /// </summary>
 [PolymorphicSerialization]
-public partial record DocumentEnabled(string Id) : DocumentEvent(Id)
-{
-}
+public partial record DocumentEnabled(string Id) : DocumentEvent(Id);

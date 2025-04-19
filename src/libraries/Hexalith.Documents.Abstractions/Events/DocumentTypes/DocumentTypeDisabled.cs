@@ -12,6 +12,4 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The unique identifier of the document type that was disabled.</param>
 [PolymorphicSerialization]
-public partial record DocumentTypeDisabled(string Id) : DocumentTypeEvent(Id)
-{
-}
+public partial record DocumentTypeDisabled(string Id) : DocumentTypeEvent(Id);

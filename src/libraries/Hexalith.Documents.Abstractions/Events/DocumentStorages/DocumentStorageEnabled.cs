@@ -12,6 +12,4 @@ using Hexalith.PolymorphicSerializations;
 /// </summary>
 /// <param name="Id">The unique identifier of the document storage.</param>
 [PolymorphicSerialization]
-public partial record DocumentStorageEnabled(string Id) : DocumentStorageEvent(Id)
-{
-}
+public partial record DocumentStorageEnabled(string Id) : DocumentStorageEvent(Id);

@@ -15,9 +15,6 @@ using Hexalith.Documents.ValueObjects;
 /// <summary>
 /// Handles the projection update when a DocumentTargetAdded event is received.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="DocumentTargetAddedOnDetailsProjectionHandler"/> class.
-/// </remarks>
 /// <param name="factory">The projection factory.</param>
 public class DocumentTagAddedOnDetailsProjectionHandler(IProjectionFactory<DocumentDetailsViewModel> factory) : DocumentDetailsProjectionHandler<DocumentTagAdded>(factory)
 {

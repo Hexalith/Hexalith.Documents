@@ -14,6 +14,4 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="ByContactId">The identifier of the contact who validated the document.</param>
 /// <param name="Date">The date and time when the document was validated.</param>
 [PolymorphicSerialization]
-public partial record DocumentValidated(string Id, string ByContactId, DateTimeOffset Date) : DocumentEvent(Id)
-{
-}
+public partial record DocumentValidated(string Id, string ByContactId, DateTimeOffset Date) : DocumentEvent(Id);

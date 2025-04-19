@@ -15,6 +15,4 @@ using Hexalith.PolymorphicSerializations;
 /// <param name="Actor">The actor information being added to the document.</param>
 [PolymorphicSerialization]
 public partial record DocumentActorAdded(string Id, DocumentActor Actor)
-    : DocumentEvent(Id)
-{
-}
+    : DocumentEvent(Id);

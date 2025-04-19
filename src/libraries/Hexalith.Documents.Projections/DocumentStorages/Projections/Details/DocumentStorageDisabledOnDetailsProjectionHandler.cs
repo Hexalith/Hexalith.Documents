@@ -27,7 +27,7 @@ public class DocumentStorageDisabledOnDetailsProjectionHandler(IProjectionFactor
     protected override Task<DocumentStorageDetailsViewModel?> ApplyEventAsync([NotNull] DocumentStorageDisabled baseEvent, DocumentStorageDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
-        if (model == null || model.Disabled)
+        if (model?.Disabled != false)
         {
             return Task.FromResult<DocumentStorageDetailsViewModel?>(null);
         }
