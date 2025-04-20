@@ -25,8 +25,5 @@ public partial record RemoveDocumentTypeTag(
     string Id,
     [property: DataMember(Order = 2)]
     string Key,
-    [property: DataMember(Order = 2)]
-    string Value)
-    : DocumentTypeCommand(Id)
-{
-}
+    [property: DataMember(Order = 3)]
+    string Value) : DocumentTypeCommand(Id);

@@ -22,9 +22,5 @@ using Hexalith.PolymorphicSerializations;
 [PolymorphicSerialization]
 public partial record ChangeDocumentTypeDescription(
     string Id,
-    [property: DataMember(Order = 2)]
-    string Name,
-    [property: DataMember(Order = 3)]
-    string? Description) : DocumentTypeCommand(Id)
-{
-}
+    [property: DataMember(Order = 2)] string Name,
+    [property: DataMember(Order = 3)] string? Description) : DocumentTypeCommand(Id);

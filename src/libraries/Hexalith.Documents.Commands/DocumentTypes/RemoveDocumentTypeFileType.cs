@@ -23,7 +23,4 @@ using Hexalith.PolymorphicSerializations;
 public partial record RemoveDocumentTypeFileType(
     string Id,
     [property: DataMember(Order = 2)]
-    string FileTypeId)
-    : DocumentTypeCommand(Id)
-{
-}
+    string FileTypeId) : DocumentTypeCommand(Id);

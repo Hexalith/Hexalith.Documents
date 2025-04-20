@@ -32,10 +32,7 @@ public sealed record DataManagementSummaryViewModel(
             {
                 return $"{Id} {StartedAt} ...";
             }
-            else
-            {
-                return $"{Id} {StartedAt}/{CompletedAt} {Size / 1024m} Ko";
-            }
+            return $"{Id} {StartedAt}/{CompletedAt} {Size / 1024m} Ko";
         }
     }
 

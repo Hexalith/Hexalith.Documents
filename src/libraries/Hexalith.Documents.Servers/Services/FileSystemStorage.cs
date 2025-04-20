@@ -115,12 +115,9 @@ public partial class FileSystemStorage(ILogger<FileSystemStorage> logger)
                 throw new InvalidOperationException($"The file '{filePath}' already exists on the file system.");
             }
         }
-        else
+        else if (!File.Exists(filePath))
         {
-            if (!File.Exists(filePath))
-            {
-                throw new InvalidOperationException($"The file '{filePath}' does not exist on the file system.");
-            }
+            throw new InvalidOperationException($"The file '{filePath}' does not exist on the file system.");
         }
 
         return filePath;

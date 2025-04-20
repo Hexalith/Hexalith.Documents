@@ -10,5 +10,6 @@ using Hexalith.PolymorphicSerializations;
 /// <summary>
 /// Represents a document enabled event.
 /// </summary>
+/// <param name="Id">The unique identifier of the document to enable.</param>
 [PolymorphicSerialization]
 public partial record EnableDocument(string Id) : DocumentCommand(Id);

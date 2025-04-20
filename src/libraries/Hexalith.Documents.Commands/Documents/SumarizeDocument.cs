@@ -8,7 +8,8 @@ namespace Hexalith.Documents.Commands.Documents;
 using Hexalith.PolymorphicSerializations;
 
 /// <summary>
-/// Represents a document enabled event.
+/// Represents a command to generate a summary for a document.
 /// </summary>
+/// <param name="Id">The unique identifier of the document to summarize.</param>
 [PolymorphicSerialization]
-public partial record SumarizeDocument(string Id, string Summary) : DocumentCommand(Id);
+public partial record SummarizeDocument(string Id) : DocumentCommand(Id);

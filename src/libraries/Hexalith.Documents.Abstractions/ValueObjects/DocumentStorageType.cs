@@ -16,35 +16,35 @@ public enum DocumentStorageType
     /// <summary>
     /// The document is stored as a local file.
     /// </summary>
-    FileSystem,
+    FileSystem = 0,
 
     /// <summary>
     /// The document is stored in an Azure Storage Container.
     /// </summary>
-    AzureStorageContainer,
+    AzureStorageContainer = 1,
 
     /// <summary>
     /// The document is stored in OneDrive.
     /// </summary>
-    OneDrive,
+    OneDrive = 2,
 
     /// <summary>
     /// The document is stored in Google Drive.
     /// </summary>
-    GoogleDrive,
+    GoogleDrive = 3,
 
     /// <summary>
     /// The document is stored in Dropbox.
     /// </summary>
-    Dropbox,
+    Dropbox = 4,
 
     /// <summary>
     /// The document is stored in an AWS S3 Bucket.
     /// </summary>
-    AwsS3Bucket,
+    AwsS3Bucket = 5,
 
     /// <summary>
     /// The document is stored in SharePoint.
     /// </summary>
-    Sharepoint,
+    Sharepoint = 6,
 }

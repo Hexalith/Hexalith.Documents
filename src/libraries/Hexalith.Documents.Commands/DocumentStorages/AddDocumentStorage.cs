@@ -8,6 +8,7 @@ namespace Hexalith.Documents.Commands.DocumentStorages;
 using System.Runtime.Serialization;
 
 using Hexalith.Documents.ValueObjects;
+using Hexalith.PolymorphicSerializations;
 
 /// <summary>
 /// Represents a command to add a document storage.
@@ -17,6 +18,7 @@ using Hexalith.Documents.ValueObjects;
 /// <param name="StorageType">The type of the document storage.</param>
 /// <param name="Comments">Optional comments about the document storage.</param>
 /// <param name="ConnectionString">Optional connection string for the document storage.</param>
+[PolymorphicSerialization]
 public partial record AddDocumentStorage(
     string Id,
     [property: DataMember(Order = 2)]

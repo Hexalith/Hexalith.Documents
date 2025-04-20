@@ -14,6 +14,16 @@ using Hexalith.Domains.ValueObjects;
 /// <summary>
 /// Represents the details of a document container.
 /// </summary>
+/// <param name="Id">The unique identifier of the document container.</param>
+/// <param name="DocumentStorageId">The identifier of the document storage this container belongs to.</param>
+/// <param name="Name">The name of the document container.</param>
+/// <param name="Path">The path to the document container.</param>
+/// <param name="Comments">Additional comments about the document container.</param>
+/// <param name="AutomaticRoutingInstructions">Instructions for automatic routing of documents in this container.</param>
+/// <param name="Actors">The collection of actors associated with this document container.</param>
+/// <param name="DocumentTypeIds">The collection of document type IDs associated with this container.</param>
+/// <param name="Tags">The collection of tags associated with this document container.</param>
+/// <param name="Disabled">Indicates whether the document container is disabled.</param>
 [DataContract]
 public sealed record DocumentContainerDetailsViewModel(
     [property: DataMember(Order = 1)] string Id,

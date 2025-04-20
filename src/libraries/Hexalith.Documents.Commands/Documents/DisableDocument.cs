@@ -10,5 +10,6 @@ using Hexalith.PolymorphicSerializations;
 /// <summary>
 /// Represents a document disabled event.
 /// </summary>
+/// <param name="Id">The unique identifier of the document to disable.</param>
 [PolymorphicSerialization]
 public partial record DisableDocument(string Id) : DocumentCommand(Id);

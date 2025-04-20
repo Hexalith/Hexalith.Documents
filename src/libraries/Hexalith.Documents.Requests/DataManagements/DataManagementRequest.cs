@@ -12,6 +12,7 @@ using Hexalith.PolymorphicSerializations;
 /// <summary>
 /// Represents a request for data export.
 /// </summary>
+/// <param name="Id">The unique identifier of the data management request.</param>
 [PolymorphicSerialization]
 public abstract partial record DataManagementRequest([property: DataMember(Order = 1)] string Id)
 {

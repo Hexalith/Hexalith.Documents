@@ -16,6 +16,7 @@ using Hexalith.Documents.Requests.FileTypes;
 /// <summary>
 /// Handles the projection updates when the content type of a file type is changed.
 /// </summary>
+/// <param name="factory">The projection factory used to manage the state of the projections.</param>
 public class FileTypeContentTypeChangedOnDetailsProjectionHandler(IProjectionFactory<FileTypeDetailsViewModel> factory)
     : FileTypeDetailsProjectionHandler<FileTypeContentTypeChanged>(factory)
 {

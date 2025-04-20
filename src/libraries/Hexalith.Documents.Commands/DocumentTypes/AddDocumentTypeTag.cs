@@ -23,12 +23,6 @@ using Hexalith.PolymorphicSerializations;
 [PolymorphicSerialization]
 public partial record AddDocumentTypeTag(
     string Id,
-    [property: DataMember(Order = 2)]
-    string Key,
-    [property: DataMember(Order = 3)]
-    string Value,
-    [property: DataMember(Order = 3)]
-    bool Unique)
-    : DocumentTypeCommand(Id)
-{
-}
+    [property: DataMember(Order = 2)] string Key,
+    [property: DataMember(Order = 3)] string Value,
+    [property: DataMember(Order = 4)] bool Unique = false) : DocumentTypeCommand(Id);

@@ -24,17 +24,6 @@ namespace Hexalith.Documents.ValueObjects;
 public enum DocumentActorRole
 {
     /// <summary>
-    /// Indicates the actor has full control over the document, including management of access rights.
-    /// An owner can:
-    /// - Read and modify document content
-    /// - Delete the document
-    /// - Grant or revoke access rights
-    /// - Manage document metadata
-    /// - Transfer ownership.
-    /// </summary>
-    Owner,
-
-    /// <summary>
     /// Indicates the actor has read-only access to view the document content.
     /// A reader can:
     /// - View document content
@@ -42,7 +31,7 @@ public enum DocumentActorRole
     /// - Download permitted content
     /// Cannot modify content or manage permissions.
     /// </summary>
-    Reader,
+    Reader = 0,
 
     /// <summary>
     /// Indicates the actor can make modifications to the document content.
@@ -52,5 +41,16 @@ public enum DocumentActorRole
     /// - Update document metadata
     /// Cannot manage access permissions or delete the document.
     /// </summary>
-    Contributor,
+    Contributor = 1,
+
+    /// <summary>
+    /// Indicates the actor has full control over the document, including management of access rights.
+    /// An owner can:
+    /// - Read and modify document content
+    /// - Delete the document
+    /// - Grant or revoke access rights
+    /// - Manage document metadata
+    /// - Transfer ownership.
+    /// </summary>
+    Owner = 2,
 }

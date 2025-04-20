@@ -22,6 +22,4 @@ using Hexalith.PolymorphicSerializations;
 public partial record AddDocumentTypeDataExtraction(
     string Id,
     [property: DataMember(Order = 2)]
-    string DataInformationExtractionId) : DocumentTypeCommand(Id)
-{
-}
+    string DataInformationExtractionId) : DocumentTypeCommand(Id);

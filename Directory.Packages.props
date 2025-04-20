@@ -12,8 +12,12 @@
     <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases" Version="1.60.0" />
     <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime" Version="1.60.0" />
     <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnWasm" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.Infrastructure.WebApis" Version="1.60.0" />
     <PackageVersion Include="Hexalith.UI.Components.Abstractions" Version="1.60.0" />
     <PackageVersion Include="Hexalith.UI.Components" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.UI.ApiServer" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.UI.WebServer" Version="1.60.0" />
+    <PackageVersion Include="Hexalith.UI.WebApp" Version="1.60.0" />
     <PackageVersion Include="Hexalith.Application.Sessions.Abstractions" Version="1.60.0" />
     <PackageVersion Include="Hexalith.NetAspire.Hosting" Version="1.1.0" />
   </ItemGroup>

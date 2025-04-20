@@ -17,7 +17,7 @@ using Hexalith.Domains.ValueObjects;
 /// <param name="Name">The name of the document container.</param>
 /// <param name="Disabled">Indicates whether the document container is disabled.</param>
 [DataContract]
-public sealed partial record DocumentContainerSummaryViewModel(
+public sealed record DocumentContainerSummaryViewModel(
     [property: DataMember(Order = 1)] string Id,
     [property: DataMember(Order = 2)] string DocumentStorageId,
     [property: DataMember(Order = 3)] string Name,

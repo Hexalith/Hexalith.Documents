@@ -12,6 +12,7 @@ using Hexalith.PolymorphicSerializations;
 /// <summary>
 /// Represents a base class for document commands.
 /// </summary>
+/// <param name="Id">The unique identifier of the document.</param>
 [PolymorphicSerialization]
 public abstract partial record DocumentCommand([property: DataMember(Order = 1)] string Id)
 {
