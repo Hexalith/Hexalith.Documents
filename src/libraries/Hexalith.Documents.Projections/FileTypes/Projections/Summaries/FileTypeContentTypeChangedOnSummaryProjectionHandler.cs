@@ -16,17 +16,10 @@ using Hexalith.Documents.Requests.FileTypes;
 /// <summary>
 /// Handles the projection update when the content type of a file type is changed.
 /// </summary>
-public class FileTypeContentTypeChangedOnSummaryProjectionHandler : FileTypeSummaryProjectionHandler<FileTypeContentTypeChanged>
+/// <param name="factory">The projection factory for file type summary view models.</param>
+public class FileTypeContentTypeChangedOnSummaryProjectionHandler(IProjectionFactory<FileTypeSummaryViewModel> factory)
+    : FileTypeSummaryProjectionHandler<FileTypeContentTypeChanged>(factory)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="FileTypeContentTypeChangedOnSummaryProjectionHandler"/> class.
-    /// </summary>
-    /// <param name="factory">The projection factory.</param>
-    public FileTypeContentTypeChangedOnSummaryProjectionHandler(IProjectionFactory<FileTypeSummaryViewModel> factory)
-        : base(factory)
-    {
-    }
-
     /// <inheritdoc/>
     protected override Task<FileTypeSummaryViewModel?> ApplyEventAsync([NotNull] FileTypeContentTypeChanged baseEvent, FileTypeSummaryViewModel? summary, CancellationToken cancellationToken)
     {

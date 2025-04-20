@@ -133,8 +133,7 @@ public partial class DocumentUploadService : IDocumentUploadService
         SnapshotEvent? snapshot = await _aggregateService
             .GetSnapshotAsync(DocumentDomainHelper.DocumentContainerAggregateName, globalId, cancellationToken)
             .ConfigureAwait(false) ?? throw new InvalidOperationException($"Document container '{documentContainerId}' not found.");
-        DocumentContainer aggregate = snapshot.GetAggregate<DocumentContainer>();
-        return aggregate;
+        return snapshot.GetAggregate<DocumentContainer>();
     }
 
     private async Task<DocumentType> GetDocumentTypeAsync(string documentTypeId, string partitionId, CancellationToken cancellationToken)
@@ -146,8 +145,7 @@ public partial class DocumentUploadService : IDocumentUploadService
         SnapshotEvent? snapshot = await _aggregateService
             .GetSnapshotAsync(DocumentDomainHelper.DocumentTypeAggregateName, globalId, cancellationToken)
             .ConfigureAwait(false) ?? throw new InvalidOperationException($"Document type '{documentTypeId}' not found.");
-        DocumentType aggregate = snapshot.GetAggregate<DocumentType>();
-        return aggregate;
+        return snapshot.GetAggregate<DocumentType>();
     }
 
     private async Task<FileType> GetFileTypeAsync(string documentTypeId, string partitionId, CancellationToken cancellationToken)
@@ -159,8 +157,7 @@ public partial class DocumentUploadService : IDocumentUploadService
         SnapshotEvent? snapshot = await _aggregateService
             .GetSnapshotAsync(DocumentDomainHelper.FileTypeAggregateName, globalId, cancellationToken)
             .ConfigureAwait(false) ?? throw new InvalidOperationException($"File type '{documentTypeId}' not found.");
-        FileType aggregate = snapshot.GetAggregate<FileType>();
-        return aggregate;
+        return snapshot.GetAggregate<FileType>();
     }
 
     private async Task<DocumentStorage> GetStorageAsync(string documentStorageId, string partitionId, CancellationToken cancellationToken)
@@ -172,7 +169,6 @@ public partial class DocumentUploadService : IDocumentUploadService
         SnapshotEvent? snapshot = await _aggregateService
             .GetSnapshotAsync(DocumentDomainHelper.DocumentStorageAggregateName, globalId, cancellationToken)
             .ConfigureAwait(false) ?? throw new InvalidOperationException($"Document storage '{documentStorageId}' not found.");
-        DocumentStorage aggregate = snapshot.GetAggregate<DocumentStorage>();
-        return aggregate;
+        return snapshot.GetAggregate<DocumentStorage>();
     }
 }

@@ -18,7 +18,6 @@ using Hexalith.Documents.Requests.Extensions;
 using Hexalith.Documents.UI.Pages.Modules;
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -51,8 +50,8 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
     /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [
         GetType().Assembly,
-        typeof(Hexalith.Documents.UI.Components._Imports).Assembly,
-        typeof(Hexalith.Documents.UI.Pages._Imports).Assembly,
+        typeof(UI.Components._Imports).Assembly,
+        typeof(UI.Pages._Imports).Assembly,
     ];
 
     /// <inheritdoc/>
@@ -62,11 +61,7 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
     /// Adds services to the service collection.
     /// </summary>
     /// <param name="services">The service collection.</param>
-    /// <param name="configuration">The configuration.</param>
-#pragma warning disable IDE0060 // Remove unused parameter
-
-    public static void AddServices(IServiceCollection services, IConfiguration configuration)
-#pragma warning restore IDE0060 // Remove unused parameter
+    public static void AddServices(IServiceCollection services)
     {
         HexalithDocumentsAbstractionsSerialization.RegisterPolymorphicMappers();
         HexalithDocumentsCommandsSerialization.RegisterPolymorphicMappers();
@@ -77,7 +72,7 @@ public class HexalithDocumentsWebAppModule : IWebAppApplicationModule, IDocument
 
         _ = services
             .AddDocumentsQueryServices()
-            .AddTransient(p => DocumentMenu.Menu);
+            .AddTransient(_ => DocumentMenu.Menu);
     }
 
     /// <inheritdoc/>

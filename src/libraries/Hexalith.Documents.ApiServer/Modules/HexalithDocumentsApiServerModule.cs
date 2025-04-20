@@ -106,6 +106,8 @@ public sealed class HexalithDocumentsApiServerModule : IApiServerApplicationModu
     /// Registers the actors associated with the module.
     /// </summary>
     /// <param name="actorCollection">The actor collection.</param>
+    /// <exception cref="ArgumentNullException">Thrown when actorCollection is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when actorCollection is not an ActorRegistrationCollection.</exception>
     public static void RegisterActors(object actorCollection)
     {
         ArgumentNullException.ThrowIfNull(actorCollection);

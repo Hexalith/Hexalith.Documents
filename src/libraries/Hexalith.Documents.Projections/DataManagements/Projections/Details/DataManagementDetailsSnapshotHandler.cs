@@ -19,6 +19,8 @@ using Microsoft.Extensions.Logging;
 /// <summary>
 /// Handles the snapshot events for data export details.
 /// </summary>
+/// <param name="factory">The projection factory for data management details view models.</param>
+/// <param name="logger">The logger for the handler.</param>
 public partial class DataManagementDetailsSnapshotHandler(
     IProjectionFactory<DataManagementDetailsViewModel> factory,
     ILogger<DataManagementDetailsSnapshotHandler> logger) : IProjectionUpdateHandler<SnapshotEvent>

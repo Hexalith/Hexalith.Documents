@@ -10,6 +10,4 @@ using Hexalith.UI.Components.Validations;
 /// <summary>
 /// Validator for adding a new document type.
 /// </summary>
-public class DocumentContainerEditValidation : EntityValidation<DocumentContainerEditViewModel>
-{
-}
+public class DocumentContainerEditValidation : EntityValidation<DocumentContainerEditViewModel>;

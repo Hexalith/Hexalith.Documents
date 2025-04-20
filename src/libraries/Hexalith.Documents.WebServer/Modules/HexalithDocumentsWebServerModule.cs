@@ -54,8 +54,8 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [
         GetType().Assembly,
-        typeof(Hexalith.Documents.UI.Components._Imports).Assembly,
-        typeof(Hexalith.Documents.UI.Pages._Imports).Assembly,
+        typeof(UI.Components._Imports).Assembly,
+        typeof(UI.Pages._Imports).Assembly,
     ];
 
     /// <inheritdoc/>
@@ -100,6 +100,8 @@ public sealed class HexalithDocumentsWebServerModule : IWebServerApplicationModu
     /// Registers the actors associated with the module.
     /// </summary>
     /// <param name="actorCollection">The actor collection.</param>
+    /// <exception cref="ArgumentNullException">Thrown when actorCollection is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when actorCollection is not an ActorRegistrationCollection.</exception>
     public static void RegisterActors(object actorCollection)
     {
         ArgumentNullException.ThrowIfNull(actorCollection);

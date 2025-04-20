@@ -20,6 +20,8 @@ using Microsoft.Extensions.Logging;
 /// <summary>
 /// Handles the snapshot events for document details.
 /// </summary>
+/// <param name="factory">The projection factory for document details view models.</param>
+/// <param name="logger">The logger for the handler.</param>
 public partial class DocumentDetailsSnapshotHandler(
     IProjectionFactory<DocumentDetailsViewModel> factory,
     ILogger<DocumentDetailsSnapshotHandler> logger) : IProjectionUpdateHandler<SnapshotEvent>

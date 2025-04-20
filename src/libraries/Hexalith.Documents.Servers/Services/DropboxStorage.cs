@@ -23,6 +23,7 @@ public class DropboxStorage
     /// <param name="fileName">The name of the file to be created.</param>
     /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the writable file.</returns>
+    /// <exception cref="NotImplementedException">This method is not implemented yet.</exception>
     public Task<IWritableFile> CreateFileAsync(string connectionString, string path, string fileName, CancellationToken cancellationToken) => throw new NotImplementedException();
 
     /// <summary>
@@ -33,5 +34,6 @@ public class DropboxStorage
     /// <param name="fileName">The name of the file to be read.</param>
     /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the readable file.</returns>
+    /// <exception cref="NotImplementedException">This method is not implemented yet.</exception>
     public Task<IReadableFile> ReadFileAsync(string connectionString, string path, string fileName, CancellationToken cancellationToken) => throw new NotImplementedException();
 }

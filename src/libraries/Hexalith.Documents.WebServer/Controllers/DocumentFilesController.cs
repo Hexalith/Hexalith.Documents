@@ -108,7 +108,7 @@ public class DocumentFilesController : ControllerBase
             return NotFound($"Document storage with ID {container.DocumentStorageId} not found. Check container {document.Description.DocumentContainerId} configuration.");
         }
 
-        ValueObjects.FileDescription fileDescription = document.Files.First();
+        FileDescription fileDescription = document.Files.First();
         IReadableFile file = await _readableFileProvider
             .OpenFileAsync(
                 storage.StorageType,
@@ -156,7 +156,8 @@ public class DocumentFilesController : ControllerBase
         }
 
         Document? document = await aggregateService
-            .FindAsync(new Document() with { Id = documentId }, partitionId, CancellationToken.None);
+            .FindAsync(new Document() with { Id = documentId }, partitionId, CancellationToken.None)
+            .ConfigureAwait(false);
 
         if (document is null)
         {
@@ -179,7 +180,8 @@ public class DocumentFilesController : ControllerBase
         }
 
         DocumentContainer? container = await aggregateService
-            .FindAsync(new DocumentContainer() with { Id = document.Description.DocumentContainerId }, partitionId, CancellationToken.None);
+            .FindAsync(new DocumentContainer() with { Id = document.Description.DocumentContainerId }, partitionId, CancellationToken.None)
+            .ConfigureAwait(false);
 
         if (container is null)
         {
@@ -192,7 +194,8 @@ public class DocumentFilesController : ControllerBase
         }
 
         DocumentStorage? storage = await aggregateService
-            .FindAsync(new DocumentStorage() with { Id = container.DocumentStorageId }, partitionId, CancellationToken.None);
+            .FindAsync(new DocumentStorage() with { Id = container.DocumentStorageId }, partitionId, CancellationToken.None)
+            .ConfigureAwait(false);
 
         if (storage is null)
         {

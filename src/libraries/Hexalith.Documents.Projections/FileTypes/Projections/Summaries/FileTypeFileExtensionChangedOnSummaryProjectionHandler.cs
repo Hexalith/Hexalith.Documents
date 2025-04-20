@@ -16,17 +16,10 @@ using Hexalith.Documents.Requests.FileTypes;
 /// <summary>
 /// Handles the projection update when a file type's file extension is changed.
 /// </summary>
-public class FileTypeFileExtensionChangedOnSummaryProjectionHandler : FileTypeSummaryProjectionHandler<FileTypeFileExtensionChanged>
+/// <param name="factory">The projection factory for file type summary view models.</param>
+public class FileTypeFileExtensionChangedOnSummaryProjectionHandler(IProjectionFactory<FileTypeSummaryViewModel> factory)
+    : FileTypeSummaryProjectionHandler<FileTypeFileExtensionChanged>(factory)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="FileTypeFileExtensionChangedOnSummaryProjectionHandler"/> class.
-    /// </summary>
-    /// <param name="factory">The projection factory.</param>
-    public FileTypeFileExtensionChangedOnSummaryProjectionHandler(IProjectionFactory<FileTypeSummaryViewModel> factory)
-        : base(factory)
-    {
-    }
-
     /// <inheritdoc/>
     protected override Task<FileTypeSummaryViewModel?> ApplyEventAsync([NotNull] FileTypeFileExtensionChanged baseEvent, FileTypeSummaryViewModel? summary, CancellationToken cancellationToken)
     {
