@@ -208,7 +208,7 @@ public record DocumentType(
             {
                 DataExtractionIds = [..DataExtractionIds
                 .Append(e.DataInformationExtractionId)
-                .OrderBy(p => p)],
+                .Order()],
             },
             [e]);
     }
