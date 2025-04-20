@@ -19,7 +19,7 @@ using Hexalith.Domain.Events;
 /// Handles the projection updates for file type snapshots on summary.
 /// </summary>
 /// <param name="factory">The projection factory.</param>
-public partial class FileTypeSnapshotOnSummaryProjectionHandler(IProjectionFactory<FileTypeSummaryViewModel> factory)
+public class FileTypeSnapshotOnSummaryProjectionHandler(IProjectionFactory<FileTypeSummaryViewModel> factory)
     : IProjectionUpdateHandler<SnapshotEvent>
 {
     /// <inheritdoc/>

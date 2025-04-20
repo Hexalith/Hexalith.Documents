@@ -99,7 +99,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
                 container.Path,
                 fileName,
                 [],
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
             object? request = command.RequestObject;
             if (request is IChunkableRequest chunkedRequest && chunkedRequest.Take > 0)
@@ -172,7 +172,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
     {
         if (data is null)
         {
-            await stream.WriteAsync(Encoding.UTF8.GetBytes("{}"), cancellationToken);
+            await stream.WriteAsync(Encoding.UTF8.GetBytes("{}"), cancellationToken).ConfigureAwait(false);
             return;
         }
 
@@ -276,7 +276,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
     /// <param name="cancellationToken">The cancellation token.</param>
     private async Task WriteRequestChunksResultAsync(IWritableFile file, IChunkableRequest initialRequest, Metadata metadata, CancellationToken cancellationToken)
     {
-        await file.Stream.WriteAsync(Encoding.UTF8.GetBytes("[\n"), cancellationToken);
+        await file.Stream.WriteAsync(Encoding.UTF8.GetBytes("[\n"), cancellationToken).ConfigureAwait(false);
         IChunkableRequest? request = initialRequest;
         bool first = true;
         do
@@ -293,7 +293,7 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
                 }
                 else
                 {
-                    await file.Stream.WriteAsync(Encoding.UTF8.GetBytes(",\n"), cancellationToken);
+                    await file.Stream.WriteAsync(Encoding.UTF8.GetBytes(",\n"), cancellationToken).ConfigureAwait(false);
                 }
 
                 await WriteRequestResultAsync(file.Stream, result, cancellationToken).ConfigureAwait(false);
@@ -302,6 +302,6 @@ public class AddDocumentFileHandler : DomainCommandHandler<ExportRequestDataToDo
             request = request.HasNextChunk ? request.CreateNextChunkRequest() : null;
         }
         while (request is not null);
-        await file.Stream.WriteAsync(Encoding.UTF8.GetBytes("\n]"), cancellationToken);
+        await file.Stream.WriteAsync(Encoding.UTF8.GetBytes("\n]"), cancellationToken).ConfigureAwait(false);
     }
 }

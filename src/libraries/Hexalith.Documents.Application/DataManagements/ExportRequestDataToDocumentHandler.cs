@@ -102,7 +102,7 @@ public class ExportRequestDataToDocumentHandler : DomainCommandHandler<ExportReq
                 container.Path,
                 fileName,
                 [],
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             object? request = command.RequestObject;
             if (request is IChunkableRequest chunkedRequest && chunkedRequest.Take > 0)
             {

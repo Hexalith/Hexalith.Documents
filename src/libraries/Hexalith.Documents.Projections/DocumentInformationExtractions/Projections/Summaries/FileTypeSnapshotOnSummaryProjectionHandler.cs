@@ -19,7 +19,7 @@ using Hexalith.Domain.Events;
 /// Handles the projection updates for document information extraction snapshots on summary.
 /// </summary>
 /// <param name="factory">The projection factory.</param>
-public partial class DocumentInformationExtractionSnapshotOnSummaryProjectionHandler(IProjectionFactory<DocumentInformationExtractionSummaryViewModel> factory)
+public class DocumentInformationExtractionSnapshotOnSummaryProjectionHandler(IProjectionFactory<DocumentInformationExtractionSummaryViewModel> factory)
     : IProjectionUpdateHandler<SnapshotEvent>
 {
     /// <inheritdoc/>

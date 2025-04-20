@@ -1,9 +1,9 @@
-﻿// <copyright file="FileTypeSummarySnapshotHandler.cs" company="ITANEO">
+﻿// <copyright file="FileTypeDetailsSnapshotHandler.cs" company="ITANEO">
 // Copyright (c) ITANEO (https://www.itaneo.com). All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Hexalith.Documents.UI.Services.FileTypes.Projections.Summaries;
+namespace Hexalith.Documents.Projections.FileTypes.Projections.Details;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +20,8 @@ using Microsoft.Extensions.Logging;
 /// <summary>
 /// Handles the snapshot events for file type details.
 /// </summary>
+/// <param name="factory">The projection factory for file type details.</param>
+/// <param name="logger">The logger instance.</param>
 public partial class FileTypeDetailsSnapshotHandler(
     IProjectionFactory<FileTypeDetailsViewModel> factory,
     ILogger<FileTypeDetailsSnapshotHandler> logger) : IProjectionUpdateHandler<SnapshotEvent>

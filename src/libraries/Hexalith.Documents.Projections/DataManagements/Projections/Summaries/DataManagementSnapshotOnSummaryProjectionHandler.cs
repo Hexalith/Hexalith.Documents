@@ -18,7 +18,7 @@ using Hexalith.Domain.Events;
 /// Handles the projection updates for data export snapshots on summary.
 /// </summary>
 /// <param name="factory">The projection factory.</param>
-public partial class DataManagementSnapshotOnSummaryProjectionHandler(IProjectionFactory<DataManagementSummaryViewModel> factory)
+public class DataManagementSnapshotOnSummaryProjectionHandler(IProjectionFactory<DataManagementSummaryViewModel> factory)
     : IProjectionUpdateHandler<SnapshotEvent>
 {
     /// <inheritdoc/>
