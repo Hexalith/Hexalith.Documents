@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\libraries\Hexalith.Documents\Hexalith.Documents.csproj" />
+    <ProjectReference Include="..\..\src\libraries\Hexalith.Documents.Requests\Hexalith.Documents.Requests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

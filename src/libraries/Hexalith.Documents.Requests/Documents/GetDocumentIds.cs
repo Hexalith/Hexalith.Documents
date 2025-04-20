@@ -47,5 +47,5 @@ public partial record GetDocumentIds(
     public IChunkableRequest CreateNextChunkRequest() => new GetDocumentIds(Skip + Take, Take);
 
     /// <inheritdoc/>
-    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = (IEnumerable<string>)results };
+    public ICollectionRequest CreateResults(IEnumerable<object> results) => this with { Results = results.Cast<string>() };
 }

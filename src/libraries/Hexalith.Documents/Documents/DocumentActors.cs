@@ -42,7 +42,7 @@ public class DocumentActors(IEnumerable<DocumentActor> actors)
         DocumentActor? documentActor = FindActor(e.Actor.ContactId);
         if (documentActor != null)
         {
-            return new(document, [new DocumentEventCancelled(e, $"Could not add the owner. The contact {e.Actor.ContactId} already exists in the document with role {documentActor.Role}.")], true);
+            return new(document, [new DocumentEventCancelled(e, $"Could not add the owner. The contact {e.Actor.ContactId} already exists in the document with role {documentActor.Role}")], true);
         }
 
         return new(
@@ -73,12 +73,12 @@ public class DocumentActors(IEnumerable<DocumentActor> actors)
         DocumentActor? documentActor = FindActor(e.ContactId);
         if (documentActor == null)
         {
-            return new(document, [new DocumentEventCancelled(e, $"Could not remove the actor {e.ContactId}. The contact does not exist in the document.")], true);
+            return new(document, [new DocumentEventCancelled(e, $"Could not remove the actor {e.ContactId}. The contact does not exist in the document")], true);
         }
 
         if (documentActor.Role == DocumentActorRole.Owner && actors.Count(p => p.Role == DocumentActorRole.Owner) < 2)
         {
-            return new(document, [new DocumentEventCancelled(e, $"Could not remove the owner {e.ContactId}. The document must have at least one owner.")], true);
+            return new(document, [new DocumentEventCancelled(e, $"Could not remove the owner {e.ContactId}. The document must have at least one owner")], true);
         }
 
         return new(
