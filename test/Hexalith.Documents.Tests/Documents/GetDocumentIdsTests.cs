@@ -6,6 +6,7 @@
 namespace Hexalith.Documents.Tests.Documents;
 
 using Hexalith.Documents.Requests.Documents;
+
 using Shouldly;
 
 /// <summary>
@@ -13,56 +14,6 @@ using Shouldly;
 /// </summary>
 public class GetDocumentIdsTests
 {
-    /// <summary>
-    /// Tests that the default constructor initializes properties correctly.
-    /// </summary>
-    [Fact]
-    public void DefaultConstructorShouldInitializePropertiesCorrectly()
-    {
-        // Arrange & Act
-        var request = new GetDocumentIds();
-
-        // Assert
-        request.Skip.ShouldBe(0);
-        request.Take.ShouldBe(0);
-        request.Results.ShouldNotBeNull();
-        request.Results.ShouldBeEmpty();
-    }
-
-    /// <summary>
-    /// Tests that the constructor with skip and take parameters initializes properties correctly.
-    /// </summary>
-    [Fact]
-    public void SkipTakeConstructorShouldInitializePropertiesCorrectly()
-    {
-        // Arrange & Act
-        var request = new GetDocumentIds(10, 20);
-
-        // Assert
-        request.Skip.ShouldBe(10);
-        request.Take.ShouldBe(20);
-        request.Results.ShouldNotBeNull();
-        request.Results.ShouldBeEmpty();
-    }
-
-    /// <summary>
-    /// Tests that the constructor with all parameters initializes properties correctly.
-    /// </summary>
-    [Fact]
-    public void FullConstructorShouldInitializePropertiesCorrectly()
-    {
-        // Arrange
-        var results = new[] { "id1", "id2", "id3" };
-
-        // Act
-        var request = new GetDocumentIds(10, 20, results);
-
-        // Assert
-        request.Skip.ShouldBe(10);
-        request.Take.ShouldBe(20);
-        request.Results.ShouldBe(results);
-    }
-
     /// <summary>
     /// Tests that CreateNextChunkRequest creates a request with the correct skip and take values.
     /// </summary>
@@ -73,10 +24,10 @@ public class GetDocumentIdsTests
         var request = new GetDocumentIds(10, 20);
 
         // Act
-        var nextRequest = request.CreateNextChunkRequest();
+        Application.Requests.IChunkableRequest nextRequest = request.CreateNextChunkRequest();
 
         // Assert
-        nextRequest.ShouldBeOfType<GetDocumentIds>();
+        _ = nextRequest.ShouldBeOfType<GetDocumentIds>();
         var typedNextRequest = (GetDocumentIds)nextRequest;
         typedNextRequest.Skip.ShouldBe(30); // 10 + 20
         typedNextRequest.Take.ShouldBe(20);
@@ -91,16 +42,66 @@ public class GetDocumentIdsTests
     {
         // Arrange
         var request = new GetDocumentIds(10, 20);
-        var results = new object[] { "id1", "id2", "id3" };
+        object[] results = ["id1", "id2", "id3"];
 
         // Act
-        var resultsRequest = request.CreateResults(results);
+        Application.Requests.ICollectionRequest resultsRequest = request.CreateResults(results);
 
         // Assert
-        resultsRequest.ShouldBeOfType<GetDocumentIds>();
+        _ = resultsRequest.ShouldBeOfType<GetDocumentIds>();
         var typedResultsRequest = (GetDocumentIds)resultsRequest;
         typedResultsRequest.Skip.ShouldBe(10);
         typedResultsRequest.Take.ShouldBe(20);
         typedResultsRequest.Results.ShouldBe(results.Cast<string>());
+    }
+
+    /// <summary>
+    /// Tests that the default constructor initializes properties correctly.
+    /// </summary>
+    [Fact]
+    public void DefaultConstructorShouldInitializePropertiesCorrectly()
+    {
+        // Arrange & Act
+        var request = new GetDocumentIds();
+
+        // Assert
+        request.Skip.ShouldBe(0);
+        request.Take.ShouldBe(0);
+        _ = request.Results.ShouldNotBeNull();
+        request.Results.ShouldBeEmpty();
+    }
+
+    /// <summary>
+    /// Tests that the constructor with all parameters initializes properties correctly.
+    /// </summary>
+    [Fact]
+    public void FullConstructorShouldInitializePropertiesCorrectly()
+    {
+        // Arrange
+        string[] results = ["id1", "id2", "id3"];
+
+        // Act
+        var request = new GetDocumentIds(10, 20, results);
+
+        // Assert
+        request.Skip.ShouldBe(10);
+        request.Take.ShouldBe(20);
+        request.Results.ShouldBe(results);
+    }
+
+    /// <summary>
+    /// Tests that the constructor with skip and take parameters initializes properties correctly.
+    /// </summary>
+    [Fact]
+    public void SkipTakeConstructorShouldInitializePropertiesCorrectly()
+    {
+        // Arrange & Act
+        var request = new GetDocumentIds(10, 20);
+
+        // Assert
+        request.Skip.ShouldBe(10);
+        request.Take.ShouldBe(20);
+        _ = request.Results.ShouldNotBeNull();
+        request.Results.ShouldBeEmpty();
     }
 }
