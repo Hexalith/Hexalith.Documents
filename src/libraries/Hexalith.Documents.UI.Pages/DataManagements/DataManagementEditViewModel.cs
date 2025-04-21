@@ -11,7 +11,11 @@ using Hexalith.Domains.ValueObjects;
 /// <summary>
 /// Represents a view model for editing data management details.
 /// </summary>
-public sealed class DataManagementEditViewModel : IIdDescription
+/// <remarks>
+/// Initializes a new instance of the <see cref="DataManagementEditViewModel"/> class with the specified original details.
+/// </remarks>
+/// <param name="original">The original details of the data management item.</param>
+public sealed class DataManagementEditViewModel(DataManagementDetailsViewModel original) : IIdDescription
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DataManagementEditViewModel"/> class.
@@ -25,12 +29,6 @@ public sealed class DataManagementEditViewModel : IIdDescription
             null))
     {
     }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DataManagementEditViewModel"/> class with the specified original details.
-    /// </summary>
-    /// <param name="original">The original details of the data management item.</param>
-    public DataManagementEditViewModel(DataManagementDetailsViewModel original) => Original = original;
 
     /// <summary>
     /// Gets or sets the comments of the data management item.
@@ -60,7 +58,7 @@ public sealed class DataManagementEditViewModel : IIdDescription
     /// <summary>
     /// Gets the original details of the data management item.
     /// </summary>
-    public DataManagementDetailsViewModel Original { get; }
+    public DataManagementDetailsViewModel Original { get; } = original;
 
     /// <summary>
     /// Gets the size of the data management item.

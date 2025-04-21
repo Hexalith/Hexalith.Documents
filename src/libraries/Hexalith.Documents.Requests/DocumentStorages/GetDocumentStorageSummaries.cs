@@ -41,7 +41,7 @@ public partial record GetDocumentStorageSummaries(
     /// <param name="take">The number of document storage summaries to take.</param>
     /// <param name="search">The search to apply to the document storage summaries.</param>
     public GetDocumentStorageSummaries(int skip, int take, string? search = null)
-        : this(skip, take, search, Array.Empty<string>(), Array.Empty<DocumentStorageSummaryViewModel>())
+        : this(skip, take, search, [], [])
     {
     }
 
@@ -50,7 +50,7 @@ public partial record GetDocumentStorageSummaries(
     /// </summary>
     /// <param name="ids">The list of document storage summary IDs.</param>
     public GetDocumentStorageSummaries(IEnumerable<string> ids)
-        : this(0, 0, null, ids, Array.Empty<DocumentStorageSummaryViewModel>())
+        : this(0, 0, null, ids, [])
     {
     }
 

@@ -41,7 +41,7 @@ public partial record GetDocumentInformationExtractionSummaries(
     /// <param name="take">The number of document information extraction summaries to take.</param>
     /// <param name="search">The search to apply to the document information extraction summaries.</param>
     public GetDocumentInformationExtractionSummaries(int skip, int take, string? search = null)
-        : this(skip, take, search, Array.Empty<string>(), Array.Empty<DocumentInformationExtractionSummaryViewModel>())
+        : this(skip, take, search, [], [])
     {
     }
 
@@ -50,7 +50,7 @@ public partial record GetDocumentInformationExtractionSummaries(
     /// </summary>
     /// <param name="ids">The list of document information extraction summary IDs.</param>
     public GetDocumentInformationExtractionSummaries(IEnumerable<string> ids)
-        : this(0, 0, null, ids, Array.Empty<DocumentInformationExtractionSummaryViewModel>())
+        : this(0, 0, null, ids, [])
     {
     }
 

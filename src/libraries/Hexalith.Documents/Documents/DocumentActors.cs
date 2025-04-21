@@ -6,7 +6,6 @@
 namespace Hexalith.Documents.Documents;
 
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 using Hexalith.Documents.Events.Documents;
@@ -48,10 +47,9 @@ public class DocumentActors(IEnumerable<DocumentActor> actors)
         return new(
             document with
             {
-                Actors = actors
+                Actors = [.. actors
                     .Append(new(e.Actor.ContactId, DocumentActorRole.Owner))
-                    .DistinctBy(x => x.ContactId)
-                    .ToImmutableList(),
+                    .DistinctBy(x => x.ContactId)],
             },
             [e],
             false);
@@ -82,7 +80,7 @@ public class DocumentActors(IEnumerable<DocumentActor> actors)
         }
 
         return new(
-            document with { Actors = actors.Where(p => p.ContactId != e.ContactId).ToImmutableList() },
+            document with { Actors = [.. actors.Where(p => p.ContactId != e.ContactId)] },
             [e],
             false);
     }

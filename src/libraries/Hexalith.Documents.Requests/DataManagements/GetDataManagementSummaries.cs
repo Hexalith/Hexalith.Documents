@@ -41,7 +41,7 @@ public partial record GetDataManagementSummaries(
     /// <param name="take">The number of data export summaries to take.</param>
     /// <param name="search">The search term to filter data export summaries.</param>
     public GetDataManagementSummaries(int skip, int take, string? search = null)
-        : this(skip, take, search, Array.Empty<string>(), Array.Empty<DataManagementSummaryViewModel>())
+        : this(skip, take, search, [], [])
     {
     }
 
@@ -52,7 +52,7 @@ public partial record GetDataManagementSummaries(
     /// <param name="take">The number of data export summaries to take.</param>
     /// <param name="ids">The list of data export summary IDs.</param>
     public GetDataManagementSummaries(int skip, int take, IEnumerable<string> ids)
-        : this(skip, take, null, ids, Array.Empty<DataManagementSummaryViewModel>())
+        : this(skip, take, null, ids, [])
     {
     }
 

@@ -41,7 +41,7 @@ public partial record GetDocumentContainerSummaries(
     /// <param name="take">The number of document container summaries to take.</param>
     /// <param name="search">The search to apply to the document container summaries.</param>
     public GetDocumentContainerSummaries(int skip, int take, string? search = null)
-        : this(skip, take, search, Array.Empty<string>(), Array.Empty<DocumentContainerSummaryViewModel>())
+        : this(skip, take, search, [], [])
     {
     }
 
@@ -50,7 +50,7 @@ public partial record GetDocumentContainerSummaries(
     /// </summary>
     /// <param name="ids">The list of document container summary IDs.</param>
     public GetDocumentContainerSummaries(IEnumerable<string> ids)
-        : this(0, 0, null, ids, Array.Empty<DocumentContainerSummaryViewModel>())
+        : this(0, 0, null, ids, [])
     {
     }
 
