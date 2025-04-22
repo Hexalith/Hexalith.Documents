@@ -18,8 +18,7 @@
 	<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="string" Property="@(p => p.DocumentContainerId)" Title="@(L[nameof(Labels.Container)])"></PropertyColumn>
 	<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="long" Property="@(p => p.Size)" Title="@(L[nameof(Labels.Size)])"></PropertyColumn>
 	<TemplateColumn Style="display: flex; align-items: center;" TGridItem="DocumentSummaryViewModel">
-		<FluentAnchor IconStart="@(new Icons.Regular.Size16.ArrowDownload())" Href="@("documents/download/" + context.Id)" />
-		<FluentIcon Value="@(new Icons.Regular.Size16.Link())" OnClick="@(async () => await OnCreateDocumentLinkAsync(context.Id))" />
+		<DocumentDownloadAnchors DocumentId="@context.Id" OnDocumentLink="OnCreateDocumentLinkAsync" />
 	</TemplateColumn>
 
 </HexEntitySummaryGrid>

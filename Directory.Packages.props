@@ -13,9 +13,9 @@
     <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime" Version="1.60.0" />
     <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnWasm" Version="1.60.0" />
     <PackageVersion Include="Hexalith.Infrastructure.WebApis" Version="1.60.0" />
-    <PackageVersion Include="Hexalith.Security.ApiServer" Version="2.1.5" />
-    <PackageVersion Include="Hexalith.Security.WebServer" Version="2.1.5" />
-    <PackageVersion Include="Hexalith.Security.WebApp" Version="2.1.5" />
+    <PackageVersion Include="Hexalith.Security.ApiServer" Version="2.1.6" />
+    <PackageVersion Include="Hexalith.Security.WebServer" Version="2.1.6" />
+    <PackageVersion Include="Hexalith.Security.WebApp" Version="2.1.6" />
     <PackageVersion Include="Hexalith.UI.Components.Abstractions" Version="1.60.0" />
     <PackageVersion Include="Hexalith.UI.Components" Version="1.60.0" />
     <PackageVersion Include="Hexalith.UI.ApiServer" Version="1.60.0" />
