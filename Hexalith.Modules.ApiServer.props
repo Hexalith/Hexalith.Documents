@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <HexalithAppName>document</HexalithAppName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Hexalith.Security.ApiServer" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\src\libraries\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\src\libraries\Hexalith.Documents.ApiServer\Hexalith.Documents.ApiServer.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsApiServerApplication.cs" />
+  </ItemGroup>
+</Project>

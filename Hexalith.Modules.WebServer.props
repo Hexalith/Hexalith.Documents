@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <HexalithAppName>document</HexalithAppName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Hexalith.Security.WebServer" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)src\libraries\Hexalith.Documents.Application\Hexalith.Documents.Application.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)src\libraries\Hexalith.Documents.WebApp\Hexalith.Documents.WebApp.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)src\libraries\Hexalith.Documents.WebServer\Hexalith.Documents.WebServer.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)src/HexalithDocumentsWebServerApplication.cs" />
+  </ItemGroup>
+</Project>
