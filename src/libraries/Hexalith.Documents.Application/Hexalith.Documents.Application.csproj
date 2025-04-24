@@ -3,7 +3,8 @@
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Hexalith.Application"  />
+      <PackageReference Include="Hexalith.Application"  />
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Hexalith.Documents.Application.Abstractions\Hexalith.Documents.Application.Abstractions.csproj" />

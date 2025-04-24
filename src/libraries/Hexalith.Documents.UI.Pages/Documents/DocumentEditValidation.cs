@@ -11,7 +11,7 @@ using Hexalith.UI.Components.Validations;
 
 using Microsoft.Extensions.Localization;
 
-using Labels = Hexalith.Documents.UI.Pages.Resources.Documents;
+using Labels = Resources.Documents;
 
 /// <summary>
 /// Validator for adding a new document type.

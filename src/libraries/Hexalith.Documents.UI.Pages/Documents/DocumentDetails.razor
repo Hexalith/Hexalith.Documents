@@ -1,5 +1,7 @@
 ﻿@page "/Documents/Add/Document"
 @page "/Documents/Document/{Id}"
+@using Hexalith.Documents.Requests.DocumentContainers
+@using Hexalith.Documents.Requests.DocumentTypes
 @using Hexalith.Documents.UI.Components.DocumentContainers
 @using Hexalith.Documents.UI.Components.DocumentTypes
 @inject TimeProvider TimeService
@@ -38,13 +40,18 @@
 				<FluentTextArea Style="width:100%;" @bind-Value="_data.Summary" Label="@Labels.Summary" Rows="5"></FluentTextArea>
 			</FluentGridItem>
 			<FluentGridItem xs="12" md="3">
-				<DocumentContainerAutocomplete SelectedOptions="_data.DocumentContainer" SelectedOptionsChanged="OnDocumentContainerChanged" />
+				<DocumentContainerAutocomplete @bind-SelectedOptions="_data.DocumentContainer"
+											   OnOptionsSearch="OnDocumentContainerSearch" />
 			</FluentGridItem>
 			<FluentGridItem xs="12" md="3">
-				<DocumentTypeAutocomplete @bind-SelectedOptions="_data.DocumentType" />
+				<DocumentTypeAutocomplete @bind-SelectedOptions="_data.DocumentType"
+										  OnOptionsSearch="OnDocumentTypeSearch" />
+
 			</FluentGridItem>
 			<FluentGridItem xs="12" md="3">
-				<DocumentAutocomplete @bind-SelectedOptions="_data.ParentDocument" Label="@(L[nameof(Labels.ParentDocument)])" />
+				<DocumentAutocomplete @bind-SelectedOptions="_data.ParentDocument" Label="@(L[nameof(Labels.ParentDocument)])"
+									  OnOptionsSearch="OnDocumentSearch" />
+
 			</FluentGridItem>
 			@if (_data.Files.Any())
 			{
@@ -157,18 +164,42 @@
 		return Task.CompletedTask;
 	}
 
-	private void OnDocumentContainerChanged(IEnumerable<Option<string>>? documentContainer)
+	private async Task OnDocumentContainerSearch(OptionsSearchEventArgs<Option<string>> args)
 	{
-		if (_data is null)
+		if (_user is null)
 		{
 			return;
 		}
-		if (documentContainer is null)
+		var result = await RequestService.SubmitAsync(_user, new GetDocumentContainerSummaries(0, 100, args.Text), CancellationToken.None);
+		if (result.Results is not null)
 		{
-			_data.DocumentContainer = [];
-			return;
+			args.Items = result.Results.ToOptions(false);
 		}
-
 	}
 
+	private async Task OnDocumentTypeSearch(OptionsSearchEventArgs<Option<string>> args)
+	{
+		if (_user is null)
+		{
+			return;
+		}
+		var result = await RequestService.SubmitAsync(_user, new GetDocumentTypeSummaries(0, 100, args.Text), CancellationToken.None);
+		if (result.Results is not null)
+		{
+			args.Items = result.Results.ToOptions(false);
+		}
+	}
+
+	private async Task OnDocumentSearch(OptionsSearchEventArgs<Option<string>> args)
+	{
+		if (_user is null)
+		{
+			return;
+		}
+		var result = await RequestService.SubmitAsync(_user, new GetDocumentSummaries(0, 100, args.Text), CancellationToken.None);
+		if (result.Results is not null)
+		{
+			args.Items = result.Results.ToOptions(false);
+		}
+	}
 }

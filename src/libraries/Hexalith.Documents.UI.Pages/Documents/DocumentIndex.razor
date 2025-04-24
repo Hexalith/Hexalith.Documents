@@ -1,12 +1,12 @@
 ﻿@page "/Documents/Document"
 @rendermode InteractiveAuto
-<HexEntityIndexPage OnLoadData="LoadSummaries"
+<HexEntityIndexPage OnLoadData="OnLoadData"
                     OnImport="ImportAsync"
                     OnExport="ExportAsync"
                     OnDatabaseSynchronize="SynchronizeDatabaseAsync"
                     AddPagePath="/Documents/Add/Document"
                     Title="@Labels.ListTitle">
-    <DocumentSummaryGrid User="_user" Items="_summariesQuery" EntityDetailsPath="/Documents/Document" OnDisabledChanged="OnDisabledChangedAsync" />
+    <DocumentSummaryGrid User="_user" EntityDetailsPath="/Documents/Document" OnDisabledChanged="OnDisabledChangedAsync" />
 </HexEntityIndexPage>
 
 @code {
@@ -28,22 +28,16 @@
         }
     }
 
-    private async Task LoadSummaries()
-    {
-        _summaries = [..(await RequestService
-            .SubmitAsync(User, new GetDocumentSummaries(), CancellationToken.None))
-            .Results
-            .OrderBy(p => p.Id)];
-        _summariesQuery = _summaries.AsQueryable();
-        if (!_summaries.Any())
-        {
-            await CommandService.SubmitCommandsAsync(User, DocumentQuickStartData.Data, CancellationToken.None);
-        }
-    }
-    private Task SynchronizeDatabaseAsync()
+    private static Task SynchronizeDatabaseAsync()
     {
         return Task.CompletedTask;
     }
+
+    private static Task OnLoadData()
+    {
+        return Task.CompletedTask;
+    }
+
     private async Task OnDisabledChangedAsync(string id)
     {
         var item = _summaries?.FirstOrDefault(s => s.Id == id);
@@ -75,12 +69,14 @@
     {
         await Task.CompletedTask;
     }
+
     private async Task ExportAsync()
     {
         string documentId = GetImportExportDocumentId();
         var command = new ExportRequestDataToDocument(documentId, new GetDocumentExports(0, 100));
         await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
     }
+    
     private string GetImportExportDocumentId()
     {
         return string.Format(Labels.DataFileName, UniqueIdHelper.GenerateDateTimeId());

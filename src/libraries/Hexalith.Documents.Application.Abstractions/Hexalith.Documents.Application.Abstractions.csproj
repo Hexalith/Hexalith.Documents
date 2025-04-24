@@ -11,6 +11,6 @@
       <Folder Include="Modules\" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Hexalith.Application.Modules.Abstractions" />
+      <PackageReference Include="Hexalith.Application.Modules.Abstractions"  />
     </ItemGroup>
 </Project>

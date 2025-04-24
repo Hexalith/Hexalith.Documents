@@ -27,4 +27,7 @@ public sealed record DocumentSummaryViewModel(
 {
     /// <inheritdoc/>
     string IIdDescription.Description => Name;
+
+    /// <inheritdoc/>
+    string IIdDescription.Search => $"{Id} {Name} {DocumentContainerId}";
 }

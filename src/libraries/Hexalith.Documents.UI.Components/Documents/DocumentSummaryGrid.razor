@@ -1,5 +1,6 @@
 ﻿@using Hexalith.Application.Commands
 @using System.Security.Claims
+@using Hexalith.Application.Requests
 @using Hexalith.Application.Sessions.Services
 @using Hexalith.Documents.Commands.Documents
 @using Hexalith.Extensions.Helpers
@@ -7,6 +8,7 @@
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
 @inject ICommandService CommandService
+@inject IRequestService RequestService
 @inject ISessionService SessionService
 @inject IToastService ToastService
 @inject TimeProvider TimeProvider
@@ -14,6 +16,7 @@
 					  TIdDescription="DocumentSummaryViewModel"
 					  ShowDisabledColumn="ShowDisabledColumn"
 					  OnDisabledChanged="OnDisabledChanged"
+					  SearchChanged="OnSearchChanged"
 					  EntityDetailsPath="@EntityDetailsPath">
 	<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="string" Property="@(p => p.DocumentContainerId)" Title="@(L[nameof(Labels.Container)])"></PropertyColumn>
 	<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="long" Property="@(p => p.Size)" Title="@(L[nameof(Labels.Size)])"></PropertyColumn>
@@ -47,9 +50,22 @@
 	[Parameter]
 	public string? EntityDetailsPath { get; set; } = "/Documents/Document";
 
-	[Parameter]
-	[EditorRequired]
-	public required IQueryable<DocumentSummaryViewModel> Items { get; set; }
+	private IQueryable<DocumentSummaryViewModel> Items { get; set; } = Enumerable.Empty<DocumentSummaryViewModel>().AsQueryable();
+
+	private string? Search { get; set; }
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadSummaries();
+		await base.OnInitializedAsync();
+	}
+
+	private async Task OnSearchChanged(string search)
+	{
+		Search = search;
+		await LoadSummaries();
+	}
 
 	private async Task OnCreateDocumentLinkAsync(string id)
 	{
@@ -81,5 +97,18 @@
 			ToastService.ShowError(L[nameof(Labels.DownloadLinkFailed), ex.FullMessage()]);
 		}
 	}
-
+	private async Task LoadSummaries()
+	{
+		if (User is null || string.IsNullOrWhiteSpace(User.Identity?.Name))
+		{
+			return;
+		}
+		var result = await RequestService
+			.SubmitAsync(User, new GetDocumentSummaries(0, 50, Search), CancellationToken.None);
+		if (result?.Results.Any() != true && string.IsNullOrWhiteSpace(Search))
+		{
+			await CommandService.SubmitCommandsAsync(User, DocumentQuickStartData.Data, CancellationToken.None);
+		}
+		Items = (result?.Results ?? []).AsQueryable();
+	}
 }
