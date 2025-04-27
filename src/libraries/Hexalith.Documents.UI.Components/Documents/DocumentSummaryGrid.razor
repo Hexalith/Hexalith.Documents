@@ -18,7 +18,10 @@
 					  OnDisabledChanged="OnDisabledChanged"
 					  SearchChanged="OnSearchChanged"
 					  EntityDetailsPath="@EntityDetailsPath">
-	<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="string" Property="@(p => p.DocumentContainerId)" Title="@(L[nameof(Labels.Container)])"></PropertyColumn>
+	@if (!HideContainerColumn)
+	{
+		<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="string" Property="@(p => p.DocumentContainerId)" Title="@(L[nameof(Labels.Container)])"></PropertyColumn>
+	}
 	<PropertyColumn TGridItem="DocumentSummaryViewModel" TProp="long" Property="@(p => p.Size)" Title="@(L[nameof(Labels.Size)])"></PropertyColumn>
 	<TemplateColumn Style="display: flex; align-items: center;" TGridItem="DocumentSummaryViewModel">
 		<DocumentDownloadAnchors DocumentId="@context.Id" OnDocumentLink="OnCreateDocumentLinkAsync" />
@@ -35,6 +38,9 @@
 	public bool ShowDisabledColumn { get; set; }
 
 	[Parameter]
+	public bool HideContainerColumn { get; set; }
+
+	[Parameter]
 	[EditorRequired]
 	public ClaimsPrincipal? User { get; set; }
 
@@ -49,6 +55,9 @@
 	/// </summary>
 	[Parameter]
 	public string? EntityDetailsPath { get; set; } = "/Documents/Document";
+
+	[Parameter]
+	public string? DocumentContainerId { get; set; }
 
 	private IQueryable<DocumentSummaryViewModel> Items { get; set; } = Enumerable.Empty<DocumentSummaryViewModel>().AsQueryable();
 
@@ -103,12 +112,25 @@
 		{
 			return;
 		}
-		var result = await RequestService
-			.SubmitAsync(User, new GetDocumentSummaries(0, 50, Search), CancellationToken.None);
-		if (result?.Results.Any() != true && string.IsNullOrWhiteSpace(Search))
+		IEnumerable<DocumentSummaryViewModel> results;
+		if (string.IsNullOrWhiteSpace(DocumentContainerId))
+		{
+			results = (await RequestService.SubmitAsync(
+				User,
+				new GetDocumentSummaries(0, 50, Search),
+				CancellationToken.None)).Results;
+		}
+		else
+		{
+			results = (await RequestService
+						.SubmitAsync(User, new GetDocumentsInContainer(DocumentContainerId), CancellationToken.None))
+						.Results
+						.OrderBy(p => p.Id);
+		}
+		if (!results.Any() && string.IsNullOrWhiteSpace(Search) && string.IsNullOrWhiteSpace(DocumentContainerId))
 		{
 			await CommandService.SubmitCommandsAsync(User, DocumentQuickStartData.Data, CancellationToken.None);
 		}
-		Items = (result?.Results ?? []).AsQueryable();
+		Items = (results ?? []).AsQueryable();
 	}
 }

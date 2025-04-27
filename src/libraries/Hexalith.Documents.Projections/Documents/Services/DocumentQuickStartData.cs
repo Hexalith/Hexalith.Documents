@@ -6,6 +6,8 @@
 namespace Hexalith.Documents.Projections.Documents.Services;
 
 using Hexalith.Documents.Commands.Documents;
+using Hexalith.Documents.Projections.DocumentContainers.Services;
+using Hexalith.Documents.Projections.DocumentTypes.Services;
 using Hexalith.Documents.Projections.FileTypes.Services;
 using Hexalith.Documents.ValueObjects;
 
@@ -34,7 +36,7 @@ public static class DocumentQuickStartData
         "john.doe@test.com",
         TimeProvider.System.GetUtcNow(),
         null,
-        "Triage",
-        "Unknown",
+        DocumentContainerQuickStartData.Triage.Id,
+        DocumentTypeQuickStartData.Undefined.Id,
         []);
 }

@@ -1,21 +1,13 @@
 ﻿@page "/Documents/DocumentsInContainer/{DocumentContainerId}"
-<HexPageTitle>@(string.Format(Labels.DocumentsInContainer,DocumentContainerId))</HexPageTitle>
+<HexPageTitle>@(string.Format(Labels.DocumentsInContainer, DocumentContainerId))</HexPageTitle>
 
-@if (Documents is not null)
-{
-	<DocumentSummaryGrid User="_user" Items="Documents.AsQueryable()" />
-}
-else
-{
-	<HexInProgress />
-}
+<DocumentSummaryGrid User="_user" DocumentContainerId="@DocumentContainerId" HideContainerColumn="true" />
 
 @code {
 	[Parameter]
 	public string DocumentContainerId { get; set; } = string.Empty;
 
 
-	public IEnumerable<DocumentSummaryViewModel>? Documents { get; set; }
 	[CascadingParameter]
 	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
@@ -29,11 +21,6 @@ else
 			var authState = await AuthenticationStateTask;
 			_user = authState.User;
 		}
-		Documents = (await RequestService
-			.SubmitAsync(User, new GetDocumentsInContainer(DocumentContainerId), CancellationToken.None))
-			.Results
-			.OrderBy(p => p.Id);
-
 		await base.OnInitializedAsync();
 	}
 }
