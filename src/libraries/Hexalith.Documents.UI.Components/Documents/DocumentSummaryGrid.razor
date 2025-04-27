@@ -1,4 +1,5 @@
-﻿@using Hexalith.Application.Commands
+﻿@inherits HexEntitySummaryGrid<DocumentSummaryViewModel>
+@using Hexalith.Application.Commands
 @using System.Security.Claims
 @using Hexalith.Application.Requests
 @using Hexalith.Application.Sessions.Services
@@ -16,7 +17,6 @@
 					  TIdDescription="DocumentSummaryViewModel"
 					  ShowDisabledColumn="ShowDisabledColumn"
 					  OnDisabledChanged="OnDisabledChanged"
-					  SearchChanged="OnSearchChanged"
 					  EntityDetailsPath="@EntityDetailsPath">
 	@if (!HideContainerColumn)
 	{
@@ -31,11 +31,6 @@
 
 
 @code {
-	/// <summary>
-	/// Gets or sets a value indicating whether the column displaying disabled status of items should be shown.
-	/// </summary>
-	[Parameter]
-	public bool ShowDisabledColumn { get; set; }
 
 	[Parameter]
 	public bool HideContainerColumn { get; set; }
@@ -44,37 +39,8 @@
 	[EditorRequired]
 	public ClaimsPrincipal? User { get; set; }
 
-	/// <summary>
-	/// Gets or sets the callback when the disabled state changes.
-	/// </summary>
-	[Parameter]
-	public EventCallback<string> OnDisabledChanged { get; set; }
-
-	/// <summary>
-	/// Gets or sets the callback when a row is double clicked.
-	/// </summary>
-	[Parameter]
-	public string? EntityDetailsPath { get; set; } = "/Documents/Document";
-
 	[Parameter]
 	public string? DocumentContainerId { get; set; }
-
-	private IQueryable<DocumentSummaryViewModel> Items { get; set; } = Enumerable.Empty<DocumentSummaryViewModel>().AsQueryable();
-
-	private string? Search { get; set; }
-
-
-	protected override async Task OnInitializedAsync()
-	{
-		await LoadSummaries();
-		await base.OnInitializedAsync();
-	}
-
-	private async Task OnSearchChanged(string search)
-	{
-		Search = search;
-		await LoadSummaries();
-	}
 
 	private async Task OnCreateDocumentLinkAsync(string id)
 	{
@@ -105,32 +71,5 @@
 		{
 			ToastService.ShowError(L[nameof(Labels.DownloadLinkFailed), ex.FullMessage()]);
 		}
-	}
-	private async Task LoadSummaries()
-	{
-		if (User is null || string.IsNullOrWhiteSpace(User.Identity?.Name))
-		{
-			return;
-		}
-		IEnumerable<DocumentSummaryViewModel> results;
-		if (string.IsNullOrWhiteSpace(DocumentContainerId))
-		{
-			results = (await RequestService.SubmitAsync(
-				User,
-				new GetDocumentSummaries(0, 50, Search),
-				CancellationToken.None)).Results;
-		}
-		else
-		{
-			results = (await RequestService
-						.SubmitAsync(User, new GetDocumentsInContainer(DocumentContainerId), CancellationToken.None))
-						.Results
-						.OrderBy(p => p.Id);
-		}
-		if (!results.Any() && string.IsNullOrWhiteSpace(Search) && string.IsNullOrWhiteSpace(DocumentContainerId))
-		{
-			await CommandService.SubmitCommandsAsync(User, DocumentQuickStartData.Data, CancellationToken.None);
-		}
-		Items = (results ?? []).AsQueryable();
 	}
 }

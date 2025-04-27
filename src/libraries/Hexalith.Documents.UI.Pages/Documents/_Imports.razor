@@ -1,4 +1,5 @@
 ﻿@attribute [Authorize(Policy = DocumentPolicies.Owners)]
+@inject IStringLocalizer<Labels> L
 @using Labels = Hexalith.Documents.UI.Pages.Resources.Documents
 @using Hexalith.Documents.Commands.Documents
 @using Hexalith.Documents.Requests.Documents

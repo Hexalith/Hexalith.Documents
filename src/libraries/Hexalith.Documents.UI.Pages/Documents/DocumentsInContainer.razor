@@ -1,12 +1,27 @@
 ﻿@page "/Documents/DocumentsInContainer/{DocumentContainerId}"
-<HexPageTitle>@(string.Format(Labels.DocumentsInContainer, DocumentContainerId))</HexPageTitle>
 
-<DocumentSummaryGrid User="_user" DocumentContainerId="@DocumentContainerId" HideContainerColumn="true" />
+<HexEntityIndexPage AddPagePath="/Documents/AddDocument"
+					Title="@(L[nameof(Labels.DocumentsInContainer), DocumentContainerId])"
+					OnImport="OnImport"
+					OnExport="OnExport"
+					OnDatabaseSynchronize="OnDatabaseSynchronize"
+					Search="@_search"
+					SearchChanged="OnSearchChanged">
+
+	<DocumentSummaryGrid 
+		User="_user" 
+		Items="_items" 
+		DocumentContainerId="@DocumentContainerId" 
+		HideContainerColumn="true"/>
+</HexEntityIndexPage>
 
 @code {
 	[Parameter]
 	public string DocumentContainerId { get; set; } = string.Empty;
 
+	private string? _search;
+
+	private IQueryable<DocumentSummaryViewModel> _items { get; set; } = Enumerable.Empty<DocumentSummaryViewModel>().AsQueryable();
 
 	[CascadingParameter]
 	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
@@ -20,7 +35,58 @@
 		{
 			var authState = await AuthenticationStateTask;
 			_user = authState.User;
+			await LoadSummaries();
 		}
 		await base.OnInitializedAsync();
 	}
+
+	private async Task OnSearchChanged(string search)
+	{
+		_search = search;
+		await LoadSummaries();
+	}
+
+	private async Task LoadSummaries()
+	{
+		if (User is null || string.IsNullOrWhiteSpace(User.Identity?.Name))
+		{
+			return;
+		}
+		IEnumerable<DocumentSummaryViewModel> results;
+		if (string.IsNullOrWhiteSpace(DocumentContainerId))
+		{
+			results = (await RequestService.SubmitAsync(
+				User,
+				new GetDocumentSummaries(0, 50, _search),
+				CancellationToken.None)).Results;
+		}
+		else
+		{
+			results = (await RequestService
+						.SubmitAsync(User, new GetDocumentsInContainer(DocumentContainerId), CancellationToken.None))
+						.Results
+						.OrderBy(p => p.Id);
+		}
+		if (!results.Any() && string.IsNullOrWhiteSpace(_search) && string.IsNullOrWhiteSpace(DocumentContainerId))
+		{
+			await CommandService.SubmitCommandsAsync(User, DocumentQuickStartData.Data, CancellationToken.None);
+		}
+		_items = (results ?? []).AsQueryable();
+	}
+
+	private async Task OnImport()
+	{
+		await LoadSummaries();
+	}
+
+	private async Task OnExport()
+	{
+		await LoadSummaries();
+	}
+
+	private async Task OnDatabaseSynchronize()
+	{
+		await LoadSummaries();
+	}
+
 }
