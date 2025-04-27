@@ -10,7 +10,8 @@
 
 	<DocumentSummaryGrid 
 		User="_user" 
-		Items="_items" 
+		Search="@_search"
+		@key="_search"
 		DocumentContainerId="@DocumentContainerId" 
 		HideContainerColumn="true"/>
 </HexEntityIndexPage>
@@ -35,58 +36,29 @@
 		{
 			var authState = await AuthenticationStateTask;
 			_user = authState.User;
-			await LoadSummaries();
 		}
 		await base.OnInitializedAsync();
 	}
 
-	private async Task OnSearchChanged(string search)
+	private void OnSearchChanged(string search)
 	{
 		_search = search;
-		await LoadSummaries();
+		StateHasChanged();
 	}
 
-	private async Task LoadSummaries()
+	private void OnImport()
 	{
-		if (User is null || string.IsNullOrWhiteSpace(User.Identity?.Name))
-		{
-			return;
-		}
-		IEnumerable<DocumentSummaryViewModel> results;
-		if (string.IsNullOrWhiteSpace(DocumentContainerId))
-		{
-			results = (await RequestService.SubmitAsync(
-				User,
-				new GetDocumentSummaries(0, 50, _search),
-				CancellationToken.None)).Results;
-		}
-		else
-		{
-			results = (await RequestService
-						.SubmitAsync(User, new GetDocumentsInContainer(DocumentContainerId), CancellationToken.None))
-						.Results
-						.OrderBy(p => p.Id);
-		}
-		if (!results.Any() && string.IsNullOrWhiteSpace(_search) && string.IsNullOrWhiteSpace(DocumentContainerId))
-		{
-			await CommandService.SubmitCommandsAsync(User, DocumentQuickStartData.Data, CancellationToken.None);
-		}
-		_items = (results ?? []).AsQueryable();
+		ToastService.ShowInfo("Not Implemented");
 	}
 
-	private async Task OnImport()
+	private void OnExport()
 	{
-		await LoadSummaries();
+		ToastService.ShowInfo("Not Implemented");
 	}
 
-	private async Task OnExport()
+	private void OnDatabaseSynchronize()
 	{
-		await LoadSummaries();
-	}
-
-	private async Task OnDatabaseSynchronize()
-	{
-		await LoadSummaries();
+		ToastService.ShowInfo("Not Implemented");
 	}
 
 }

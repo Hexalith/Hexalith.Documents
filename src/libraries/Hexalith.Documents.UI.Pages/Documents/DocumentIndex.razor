@@ -1,84 +1,103 @@
 ﻿@page "/Documents/Document"
 @rendermode InteractiveAuto
 <HexEntityIndexPage OnLoadData="OnLoadData"
-                    OnImport="ImportAsync"
-                    OnExport="ExportAsync"
-                    OnDatabaseSynchronize="SynchronizeDatabaseAsync"
-                    AddPagePath="/Documents/Add/Document"
-                    Title="@Labels.ListTitle">
-    <DocumentSummaryGrid User="_user" EntityDetailsPath="/Documents/Document" OnDisabledChanged="OnDisabledChangedAsync" />
+					OnImport="ImportAsync"
+					OnExport="ExportAsync"
+					OnDatabaseSynchronize="SynchronizeDatabaseAsync"
+					Search="@_search"
+					SearchChanged="OnSearchChanged"
+					AddPagePath="/Documents/Add/Document"
+					Title="@Labels.ListTitle">
+	<DocumentSummaryGrid User="_user"
+						 Search="@_search"
+						 @key="_search"
+						 EntityDetailsPath="/Documents/Document"
+						 OnDisabledChanged="OnDisabledChangedAsync" />
 </HexEntityIndexPage>
 
 @code {
-    private IEnumerable<DocumentSummaryViewModel>? _summaries;
-    private IQueryable<DocumentSummaryViewModel>? _summariesQuery;
+	private IEnumerable<DocumentSummaryViewModel>? _summaries;
+	private IQueryable<DocumentSummaryViewModel>? _summariesQuery;
 
-    [CascadingParameter]
-    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+	[CascadingParameter]
+	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
-    private ClaimsPrincipal? _user;
-    private ClaimsPrincipal User => _user ?? throw new InvalidOperationException("User not initialized");
+	private ClaimsPrincipal? _user;
+	private ClaimsPrincipal User => _user ?? throw new InvalidOperationException("User not initialized");
 
-    protected override async Task OnInitializedAsync()
-    {
-        if (AuthenticationStateTask is not null)
-        {
-            var authState = await AuthenticationStateTask;
-            _user = authState.User;
-        }
-    }
+	private string? _search;
 
-    private static Task SynchronizeDatabaseAsync()
-    {
-        return Task.CompletedTask;
-    }
+	protected override async Task OnInitializedAsync()
+	{
+		if (AuthenticationStateTask is not null)
+		{
+			var authState = await AuthenticationStateTask;
+			_user = authState.User;
+		}
+	}
 
-    private static Task OnLoadData()
-    {
-        return Task.CompletedTask;
-    }
+	protected override Task OnParametersSetAsync()
+	{
+		return Task.CompletedTask;
+	}
 
-    private async Task OnDisabledChangedAsync(string id)
-    {
-        var item = _summaries?.FirstOrDefault(s => s.Id == id);
-        if (item is null)
-        {
-            return;
-        }
-        if (item.Disabled)
-        {
-            await CommandService.SubmitCommandAsync(User, new DisableDocument(item.Id), CancellationToken.None);
-        }
-        else
-        {
-            await CommandService.SubmitCommandAsync(User, new EnableDocument(item.Id), CancellationToken.None);
-        }
-        if (_summaries is not null)
-        {
-            // Update the disabled value of the item in the collection
-            _summaries = [.. _summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled } : s)];
-            _summariesQuery = _summaries.AsQueryable();
-        }
-    }
-    private void OnSummaryDoubleClick(DocumentSummaryViewModel item)
-    {
-        NavigationManager.NavigateTo($"/Documents/Document/{item.Id}");
-    }
+	private void OnSearchChanged(string search)
+	{
+		_search = search;
+		StateHasChanged();
+	}
 
-    private static async Task ImportAsync()
-    {
-        await Task.CompletedTask;
-    }
+	private static Task SynchronizeDatabaseAsync()
+	{
+		return Task.CompletedTask;
+	}
 
-    private async Task ExportAsync()
-    {
-        string documentId = GetImportExportDocumentId();
-        var command = new ExportRequestDataToDocument(documentId, new GetDocumentExports(0, 100));
-        await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
-    }
-    
-    private string GetImportExportDocumentId()
-    {
-        return string.Format(Labels.DataFileName, UniqueIdHelper.GenerateDateTimeId());
-    }
+	private static Task OnLoadData()
+	{
+		return Task.CompletedTask;
+	}
+
+	private async Task OnDisabledChangedAsync(string id)
+	{
+		var item = _summaries?.FirstOrDefault(s => s.Id == id);
+		if (item is null)
+		{
+			return;
+		}
+		if (item.Disabled)
+		{
+			await CommandService.SubmitCommandAsync(User, new DisableDocument(item.Id), CancellationToken.None);
+		}
+		else
+		{
+			await CommandService.SubmitCommandAsync(User, new EnableDocument(item.Id), CancellationToken.None);
+		}
+		if (_summaries is not null)
+		{
+			// Update the disabled value of the item in the collection
+			_summaries = [.. _summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled } : s)];
+			_summariesQuery = _summaries.AsQueryable();
+		}
+	}
+	private void OnSummaryDoubleClick(DocumentSummaryViewModel item)
+	{
+		NavigationManager.NavigateTo($"/Documents/Document/{item.Id}");
+	}
+
+	private static async Task ImportAsync()
+	{
+		await Task.CompletedTask;
+	}
+
+	private async Task ExportAsync()
+	{
+		string documentId = GetImportExportDocumentId();
+		var command = new ExportRequestDataToDocument(documentId, new GetDocumentExports(0, 100));
+		await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
+	}
+
+	private string GetImportExportDocumentId()
+	{
+		return string.Format(Labels.DataFileName, UniqueIdHelper.GenerateDateTimeId());
+	}
 }

@@ -42,6 +42,19 @@
 	[Parameter]
 	public string? DocumentContainerId { get; set; }
 
+	[Parameter]
+	public string? Search { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (User is null || string.IsNullOrWhiteSpace(User.Identity?.Name))
+		{
+			return;
+		}
+		await LoadSummaries();
+		await base.OnInitializedAsync();
+	}
+
 	private async Task OnCreateDocumentLinkAsync(string id)
 	{
 		try
@@ -66,6 +79,41 @@
 			await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", downloadUrl);
 
 			ToastService.ShowSuccess(L[nameof(Labels.DownloadLinkCopiedToCliboard)]);
+		}
+		catch (Exception ex)
+		{
+			ToastService.ShowError(L[nameof(Labels.DownloadLinkFailed), ex.FullMessage()]);
+		}
+	}
+
+	private async Task LoadSummaries()
+	{
+		try
+		{
+			if (User is null || string.IsNullOrWhiteSpace(User.Identity?.Name))
+			{
+				return;
+			}
+			IEnumerable<DocumentSummaryViewModel> results;
+			if (string.IsNullOrWhiteSpace(DocumentContainerId))
+			{
+				results = (await RequestService.SubmitAsync(
+					User,
+					new GetDocumentSummaries(0, 50, Search),
+					CancellationToken.None)).Results;
+			}
+			else
+			{
+				results = (await RequestService
+							.SubmitAsync(User, new GetDocumentsInContainer(DocumentContainerId), CancellationToken.None))
+							.Results
+							.OrderBy(p => p.Id);
+			}
+			if (!results.Any() && string.IsNullOrWhiteSpace(Search) && string.IsNullOrWhiteSpace(DocumentContainerId))
+			{
+				await CommandService.SubmitCommandsAsync(User, DocumentQuickStartData.Data, CancellationToken.None);
+			}
+			Items = (results ?? []).AsQueryable();
 		}
 		catch (Exception ex)
 		{
