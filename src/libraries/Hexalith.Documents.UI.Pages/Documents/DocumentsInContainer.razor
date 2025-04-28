@@ -1,6 +1,6 @@
 ﻿@page "/Documents/DocumentsInContainer/{DocumentContainerId}"
 
-<HexEntityIndexPage AddPagePath="/Documents/AddDocument"
+<HexEntityIndexPage AddPagePath="@($"/Documents/Upload/Document/{DocumentContainerId}")"
 					Title="@(L[nameof(Labels.DocumentsInContainer), DocumentContainerId])"
 					OnImport="OnImport"
 					OnExport="OnExport"
