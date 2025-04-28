@@ -16,13 +16,15 @@
 <HexPageTitle>@(L[nameof(Labels.UploadTitle)])</HexPageTitle>
 <br />
 <FluentGrid Style="width:100%">
-	<FluentGridItem xs="12" md="4">
-		<DocumentContainerAutocomplete Disabled="@(DocumentContainerId is not null)"
-									   MaximumSelectedOptions="1"
-									   SelectedOptions="_data.DocumentContainer"
-									   SelectedOptionsChanged="OnDocumentContainerChangedAsync"
-									   OnOptionsSearch="OnDocumentContainerSearchAsync" />
-	</FluentGridItem>
+	@if (string.IsNullOrWhiteSpace(DocumentContainerId))
+	{
+		<FluentGridItem xs="12" md="4">
+			<DocumentContainerAutocomplete MaximumSelectedOptions="1"
+										   SelectedOptions="_data.DocumentContainer"
+										   SelectedOptionsChanged="OnDocumentContainerChangedAsync"
+										   OnOptionsSearch="OnDocumentContainerSearchAsync" />
+		</FluentGridItem>
+	}
 	<FluentGridItem xs="12" md="4">
 		<DocumentTypeAutocomplete MaximumSelectedOptions="1"
 								  SelectedOptions="_data.DocumentType"
@@ -41,8 +43,6 @@
 	</FluentGridItem>
 	<FluentGridItem xs="12" md="4">
 		<HexNameField @bind-Value="@_data.Name"></HexNameField>
-	</FluentGridItem>
-	<FluentGridItem xs="12" md="4">
 	</FluentGridItem>
 	@if (_data.DocumentContainerId is not null && _data.DocumentTypeId is not null)
 	{
