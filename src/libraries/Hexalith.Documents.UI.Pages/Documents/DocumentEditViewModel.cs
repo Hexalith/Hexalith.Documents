@@ -84,6 +84,31 @@ public sealed class DocumentEditViewModel : IIdDescription
     }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="DocumentEditViewModel"/> class.
+    /// </summary>
+    /// <param name="container">The document container.</param>
+    public DocumentEditViewModel(DocumentContainerDetailsViewModel container)
+        : this(
+            new DocumentDetailsViewModel(
+                UniqueIdHelper.GenerateUniqueStringId(),
+                new DocumentDescription(string.Empty, null, null, null, null),
+                null,
+                string.Empty,
+                DocumentState.Create(DateTimeOffset.MinValue, string.Empty),
+                [],
+                [],
+                [],
+                false),
+            container,
+            null,
+            null,
+            [])
+    {
+        ArgumentNullException.ThrowIfNull(container);
+        SelectedDocumentContainer = container;
+    }
+
+    /// <summary>
     /// Gets or sets the document actors.
     /// </summary>
     public IEnumerable<DocumentActor> Actors { get; set; }
@@ -190,14 +215,14 @@ public sealed class DocumentEditViewModel : IIdDescription
         CopyToContactIds != Original.Routing?.CopyToContactIds;
 
     /// <summary>
-    /// Gets the selected document container.
+    /// Gets or sets the selected document container.
     /// </summary>
-    public DocumentContainerDetailsViewModel? SelectedDocumentContainer { get; private set; }
+    public DocumentContainerDetailsViewModel? SelectedDocumentContainer { get; set; }
 
     /// <summary>
-    /// Gets the selected document type.
+    /// Gets or sets the selected document type.
     /// </summary>
-    public DocumentTypeDetailsViewModel? SelectedDocumentType { get; private set; }
+    public DocumentTypeDetailsViewModel? SelectedDocumentType { get; set; }
 
     /// <summary>
     /// Gets the selected file types.

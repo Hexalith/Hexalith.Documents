@@ -180,9 +180,10 @@
 			return;
 		}
 		var fileTypesTask = RequestService.SubmitAsync(_user, new GetFileTypeSummaries(), CancellationToken.None);
-		if (DocumentContainerId is not null)
+		if (!string.IsNullOrWhiteSpace(DocumentContainerId))
 		{
 			_container = await RequestService.GetDocumentContainerDetailsAsync(DocumentContainerId, _user, CancellationToken.None);
+			_data = new(_container);
 		}
 		_accept = string.Join(", ", (await fileTypesTask).Results.Select(p => "." + p.ContentType).Distinct());
 
