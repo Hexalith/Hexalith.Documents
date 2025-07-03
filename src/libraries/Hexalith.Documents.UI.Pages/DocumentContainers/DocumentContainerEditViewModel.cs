@@ -5,6 +5,8 @@
 
 namespace Hexalith.Documents.UI.Pages.DocumentContainers;
 
+using System.Linq;
+
 using System.Security.Claims;
 
 using Hexalith.Application.Commands;
@@ -211,24 +213,16 @@ public sealed class DocumentContainerEditViewModel : IIdDescription, IEntityView
             await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
         }
 
-        // for each tag in tags, add it if it does not exist
-        foreach (DocumentTag tag in Tags)
+        foreach (DocumentTag? tag in Tags.Where(tag => !Original.Tags.Contains(tag)))
         {
-            if (!Original.Tags.Contains(tag))
-            {
-                command = new AddDocumentContainerTag(Id, tag.Key, tag.Value, tag.Unique);
-                await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
-            }
+            command = new AddDocumentContainerTag(Id, tag.Key, tag.Value, tag.Unique);
+            await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
         }
 
-        // for each tag in tags, remove it if it does not exist
-        foreach (DocumentTag target in Original.Tags)
+        foreach (DocumentTag? target in Original.Tags.Where(target => !Tags.Contains(target)))
         {
-            if (!Tags.Contains(target))
-            {
-                command = new RemoveDocumentContainerTag(Id, target.Key, target.Value);
-                await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
-            }
+            command = new RemoveDocumentContainerTag(Id, target.Key, target.Value);
+            await commandService.SubmitCommandAsync(user, command, cancellationToken).ConfigureAwait(false);
         }
     }
 }

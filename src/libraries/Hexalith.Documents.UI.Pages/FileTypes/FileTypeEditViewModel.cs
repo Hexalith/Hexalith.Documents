@@ -5,6 +5,8 @@
 
 namespace Hexalith.Documents.UI.Pages.FileTypes;
 
+using System.Linq;
+
 using System.Security.Claims;
 
 using Hexalith.Application.Commands;
@@ -191,24 +193,18 @@ internal sealed class FileTypeEditViewModel : IIdDescription, IEntityViewModel
             await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
         }
 
-        // for each content type in other content types, add it if it does not exist
-        foreach (string target in OtherContentTypes)
+        foreach (string? target in OtherContentTypes.Where(target => !Original.OtherContentTypes.Contains(target)))
         {
-            if (!Original.OtherContentTypes.Contains(target))
-            {
-                fileTypeCommand = new AddFileTypeOtherContentType(Id, target);
-                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
-            }
+            // for each content type in other content types, add it if it does not exist
+            fileTypeCommand = new AddFileTypeOtherContentType(Id, target);
+            await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
         }
 
-        // for each content type in Original.OtherContentTypes, remove it if it does not exist
-        foreach (string target in Original.OtherContentTypes)
+        foreach (string? target in Original.OtherContentTypes.Where(target => !OtherContentTypes.Contains(target)))
         {
-            if (!OtherContentTypes.Contains(target))
-            {
-                fileTypeCommand = new RemoveFileTypeOtherContentType(Id, target);
-                await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
-            }
+            // for each content type in Original.OtherContentTypes, remove it if it does not exist
+            fileTypeCommand = new RemoveFileTypeOtherContentType(Id, target);
+            await commandService.SubmitCommandAsync(user, fileTypeCommand, cancellationToken).ConfigureAwait(false);
         }
     }
 }

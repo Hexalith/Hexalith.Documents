@@ -5,6 +5,8 @@
 
 namespace Hexalith.Documents.UI.Pages.DocumentTypes;
 
+using System.Linq;
+
 using System.Security.Claims;
 
 using Hexalith.Application.Commands;
@@ -243,51 +245,41 @@ internal sealed class DocumentTypeEditViewModel : IIdDescription, IEntityViewMod
 
     private async Task UpdateExtractionIdsAsync(ClaimsPrincipal user, ICommandService commandService, CancellationToken cancellationToken)
     {
-        // for each file type in ExtractionIds, ADD it if it does not exist
-        foreach (string item in DataExtractionIds
-            .Where(p => !string.IsNullOrWhiteSpace(p.Value))
-            .Select(p => p.Value!))
+        foreach (string? item in DataExtractionIds
+                    .Where(p => !string.IsNullOrWhiteSpace(p.Value))
+                    .Select(p => p.Value!).Where(item => !Original.DataExtractionIds.Contains(item))
+        )
         {
-            if (!Original.DataExtractionIds.Contains(item))
-            {
-                AddDocumentTypeDataExtraction c = new(Id, item);
-                await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
-            }
+            // for each file type in ExtractionIds, ADD it if it does not exist
+            AddDocumentTypeDataExtraction c = new(Id, item);
+            await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
         }
 
-        // for each file type in original, REMOVE it if it does not exist in ExtractionIds
-        foreach (string item in Original.DataExtractionIds)
+        foreach (string? item in Original.DataExtractionIds.Where(item => !DataExtractionIds.Any(p => p.Value == item)))
         {
-            if (!DataExtractionIds.Any(p => p.Value == item))
-            {
-                RemoveDocumentTypeDataExtraction c = new(Id, item);
-                await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
-            }
+            // for each file type in original, REMOVE it if it does not exist in ExtractionIds
+            RemoveDocumentTypeDataExtraction c = new(Id, item);
+            await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
         }
     }
 
     private async Task UpdateFileTypeIdsAsync(ClaimsPrincipal user, ICommandService commandService, CancellationToken cancellationToken)
     {
-        // for each file type in FileTypeIds, ADD it if it does not exist
-        foreach (string item in FileTypeIds
-            .Where(p => !string.IsNullOrWhiteSpace(p.Value))
-            .Select(p => p.Value!))
+        foreach (string? item in FileTypeIds
+                    .Where(p => !string.IsNullOrWhiteSpace(p.Value))
+                    .Select(p => p.Value!).Where(item => !Original.FileTypeIds.Contains(item))
+        )
         {
-            if (!Original.FileTypeIds.Contains(item))
-            {
-                AddDocumentTypeFileType c = new(Id, item);
-                await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
-            }
+            // for each file type in FileTypeIds, ADD it if it does not exist
+            AddDocumentTypeFileType c = new(Id, item);
+            await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
         }
 
-        // for each file type in original, REMOVE it if it does not exist in FileTypeIds
-        foreach (string item in Original.FileTypeIds)
+        foreach (string? item in Original.FileTypeIds.Where(item => !FileTypeIds.Any(p => p.Value == item)))
         {
-            if (!FileTypeIds.Any(p => p.Value == item))
-            {
-                RemoveDocumentTypeFileType c = new(Id, item);
-                await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
-            }
+            // for each file type in original, REMOVE it if it does not exist in FileTypeIds
+            RemoveDocumentTypeFileType c = new(Id, item);
+            await commandService.SubmitCommandAsync(user, c, cancellationToken).ConfigureAwait(false);
         }
     }
 }
