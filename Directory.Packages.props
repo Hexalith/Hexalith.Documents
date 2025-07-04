@@ -11,7 +11,7 @@
   <Import Project="$(Hexalith1BuildPackageProps)" Condition="Exists('$(Hexalith1BuildPackageProps)') And '$(HexalithVersionsLoaded)' == ''" />
   <Import Project="$(Hexalith2BuildPackageProps)" Condition="Exists('$(Hexalith2BuildPackageProps)') And '$(HexalithVersionsLoaded)' == ''" />
   <Import Project="$(Hexalith3BuildPackageProps)" Condition="'$(HexalithVersionsLoaded)' == ''" />
-  <ItemGroup>
+  <ItemGroup Condition="!Exists('$(ParentDirectoryPackageProps)')">
     <PackageVersion Include="Hexalith.Application" Version="1.68.5" />
     <PackageVersion Include="Hexalith.Application.Abstractions" Version="1.68.5" />
     <PackageVersion Include="Hexalith.Application.Modules.Abstractions" Version="1.68.5" />
