@@ -68,10 +68,6 @@
             _summariesQuery = _summaries.AsQueryable();
         }
     }
-    private void OnSummaryDoubleClick(FileTypeSummaryViewModel item)
-    {
-        NavigationManager.NavigateTo($"/Documents/FileType/{item.Id}");
-    }
 
     private static async Task ImportAsync()
     {
