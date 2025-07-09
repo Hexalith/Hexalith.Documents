@@ -13,25 +13,22 @@
   <Import Project="$(Hexalith3BuildPackageProps)" Condition="'$(HexalithVersionsLoaded)' != 'true'" />
   <ItemGroup>
     <!-- Define packages versions for this module. -->
-    <PackageVersion Include="Hexalith.Application" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Application.Abstractions" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Application.Modules.Abstractions" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Application.Organizations" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Application.Partitions" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Application.Partitions.Abstractions" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnServer" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnWasm" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Infrastructure.WebApis" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Security.ApiServer" Version="2.8.20" />
-    <PackageVersion Include="Hexalith.Security.WebServer" Version="2.8.20" />
-    <PackageVersion Include="Hexalith.Security.WebApp" Version="2.8.20" />
-    <PackageVersion Include="Hexalith.UI.Components.Abstractions" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.UI.Components" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.UI.ApiServer" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.UI.WebServer" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.UI.WebApp" Version="1.68.9" />
-    <PackageVersion Include="Hexalith.Application.Sessions.Abstractions" Version="1.68.9" />
+    <PackageVersion Include="Hexalith.Application" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Application.Abstractions" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Application.Modules.Abstractions" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Application.Organizations" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Application.Partitions" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Application.Partitions.Abstractions" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnServer" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Infrastructure.DaprRuntime" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Infrastructure.ClientAppOnWasm" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Infrastructure.WebApis" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.UI.Components.Abstractions" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.UI.Components" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.UI.ApiServer" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.UI.WebServer" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.UI.WebApp" Version="1.70.1" />
+    <PackageVersion Include="Hexalith.Application.Sessions.Abstractions" Version="1.70.1" />
   </ItemGroup>
 </Project>

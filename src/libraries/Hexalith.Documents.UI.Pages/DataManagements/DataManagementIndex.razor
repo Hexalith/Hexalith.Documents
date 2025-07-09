@@ -58,7 +58,7 @@ Title="@Labels.ListTitle">
         var command = new ExportRequestDataToDocument(documentId, new GetDataManagementExports(0, 100));
         await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
     }
-    private string GetImportExportDocumentId()
+    private static string GetImportExportDocumentId()
     {
         return string.Format(Labels.DataFileName, UniqueIdHelper.GenerateDateTimeId());
     }
