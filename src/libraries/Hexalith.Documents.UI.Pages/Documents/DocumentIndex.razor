@@ -79,11 +79,6 @@
 			_summariesQuery = _summaries.AsQueryable();
 		}
 	}
-	private void OnSummaryDoubleClick(DocumentSummaryViewModel item)
-	{
-		NavigationManager.NavigateTo($"/Documents/Document/{item.Id}");
-	}
-
 	private static async Task ImportAsync()
 	{
 		await Task.CompletedTask;

@@ -28,7 +28,6 @@
 	public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
 	private ClaimsPrincipal? _user;
-	private ClaimsPrincipal User => _user ?? throw new InvalidOperationException("User not initialized");
 
 	protected override async Task OnInitializedAsync()
 	{

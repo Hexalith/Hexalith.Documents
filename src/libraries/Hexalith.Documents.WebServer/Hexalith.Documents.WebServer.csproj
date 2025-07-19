@@ -7,7 +7,6 @@
         <PackageReference Include="Hexalith.Infrastructure.ClientAppOnServer" />
         <PackageReference Include="Hexalith.Infrastructure.DaprRuntime.CosmosDatabases" />
         <PackageReference Include="Hexalith.Infrastructure.DaprRuntime" />
-        <!--<PackageReference Include="Hexalith.Infrastructure.AzureBlobStorage"  />-->
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Hexalith.Documents.Abstractions\Hexalith.Documents.Abstractions.csproj" />

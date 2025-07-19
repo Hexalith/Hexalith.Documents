@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IdRequired" xml:space="preserve">
-    <value>Document identifier is required</value>
+    <value>Document identifier is required.</value>
   </data>
   <data name="NameRequired" xml:space="preserve">
-    <value>Document iname is required</value>
+    <value>Document name is required.</value>
   </data>
   <data name="ContainerRequired" xml:space="preserve">
-    <value>Document container is required</value>
+    <value>Document container is required.</value>
   </data>
   <data name="TypeRequired" xml:space="preserve">
-    <value>Document type is required</value>
+    <value>Document type is required.</value>
   </data>
 </root>

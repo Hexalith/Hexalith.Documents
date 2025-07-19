@@ -61,7 +61,7 @@ namespace Hexalith.Documents.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document container is required.
+        ///   Looks up a localized string similar to Document container is required..
         /// </summary>
         public static string ContainerRequired {
             get {
@@ -70,7 +70,7 @@ namespace Hexalith.Documents.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document identifier is required.
+        ///   Looks up a localized string similar to Document identifier is required..
         /// </summary>
         public static string IdRequired {
             get {
@@ -79,7 +79,7 @@ namespace Hexalith.Documents.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document iname is required.
+        ///   Looks up a localized string similar to Document name is required..
         /// </summary>
         public static string NameRequired {
             get {
@@ -88,7 +88,7 @@ namespace Hexalith.Documents.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document type is required.
+        ///   Looks up a localized string similar to Document type is required..
         /// </summary>
         public static string TypeRequired {
             get {

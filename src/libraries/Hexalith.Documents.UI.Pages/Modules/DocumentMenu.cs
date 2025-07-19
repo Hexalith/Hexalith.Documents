@@ -5,10 +5,11 @@
 
 namespace Hexalith.Documents.UI.Pages.Modules;
 
+using Hexalith.Documents.Application;
 using Hexalith.UI.Components;
 using Hexalith.UI.Components.Icons;
 
-using Labels = Hexalith.Documents.UI.Pages.Resources.DocumentMenu;
+using Labels = Resources.DocumentMenu;
 
 /// <summary>
 /// Represents the Document menu.
@@ -24,6 +25,7 @@ public static class DocumentMenu
                     new IconInformation("DocumentDatabase", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                     true,
                     10,
+                    DocumentRoles.Reader,
                     [
                         new MenuItemInformation(
                             Labels.DocumentMenuItem,
@@ -31,6 +33,7 @@ public static class DocumentMenu
                             new IconInformation("DocumentBulletListMultiple", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                             false,
                             30,
+                            DocumentRoles.Reader,
                             []),
                         new MenuItemInformation(
                             Labels.UploadMenuItem,
@@ -38,6 +41,7 @@ public static class DocumentMenu
                             new IconInformation("ArrowUpload", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                             false,
                             20,
+                            DocumentRoles.Contributor,
                             []),
                         new MenuItemInformation(
                             Labels.SetupMenuItem,
@@ -45,6 +49,7 @@ public static class DocumentMenu
                             new IconInformation("AppsSettings", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                             false,
                             10,
+                            DocumentRoles.Contributor,
                             [
                                 new MenuItemInformation(
                                     Labels.DocumentMenuItem,
@@ -52,6 +57,7 @@ public static class DocumentMenu
                                     new IconInformation("Document", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     110,
+                                    DocumentRoles.Owner,
                                     []),
                                 new MenuItemInformation(
                                     Labels.DataManagementMenuItem,
@@ -59,6 +65,7 @@ public static class DocumentMenu
                                     new IconInformation("DatabaseMultiple", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     100,
+                                    DocumentRoles.Owner,
                                     []),
                                 new MenuItemInformation(
                                     Labels.DocumentStorageMenuItem,
@@ -66,6 +73,7 @@ public static class DocumentMenu
                                     new IconInformation("DocumentBulletListCube", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     90,
+                                    DocumentRoles.Owner,
                                     []),
                                 new MenuItemInformation(
                                     Labels.DocumentTypeMenuItem,
@@ -73,6 +81,7 @@ public static class DocumentMenu
                                     new IconInformation("BookQuestionMarkRtl", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     80,
+                                    DocumentRoles.Owner,
                                     []),
                                 new MenuItemInformation(
                                     Labels.FileTypeMenuItem,
@@ -80,6 +89,7 @@ public static class DocumentMenu
                                     new IconInformation("DocumentData", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     70,
+                                    DocumentRoles.Owner,
                                     []),
                                 new MenuItemInformation(
                                     Labels.FileTextExtractionTypeMenuItem,
@@ -87,6 +97,7 @@ public static class DocumentMenu
                                     new IconInformation("ScanType", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     60,
+                                    DocumentRoles.Owner,
                                     []),
                                 new MenuItemInformation(
                                     Labels.DocumentContainerTypeMenuItem,
@@ -94,6 +105,7 @@ public static class DocumentMenu
                                     new IconInformation("DocumentFolder", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     50,
+                                    DocumentRoles.Contributor,
                                     []),
                                 ]),
                     ]);

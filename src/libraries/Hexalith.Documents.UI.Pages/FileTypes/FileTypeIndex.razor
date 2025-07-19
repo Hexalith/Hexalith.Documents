@@ -42,7 +42,7 @@
             await CommandService.SubmitCommandsAsync(User, FileTypeQuickStartData.Data, CancellationToken.None);
         }
     }
-    private Task SynchronizeDatabaseAsync()
+    private static Task SynchronizeDatabaseAsync()
     {
         return Task.CompletedTask;
     }

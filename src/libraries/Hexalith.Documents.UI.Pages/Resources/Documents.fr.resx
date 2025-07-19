@@ -175,7 +175,7 @@
     <value>Erreur lors du téléversement du fichier {0} : {1}</value>
   </data>
   <data name="IdRequired" xml:space="preserve">
-    <value>L'identifiant du document est requis</value>
+    <value>L'identifiant du document est requis.</value>
   </data>
   <data name="FileTypeNotSupported" xml:space="preserve">
     <value>Le type '{1}' du fichier '{0}' n'est pas supporté. Types attendus : {2}</value>
