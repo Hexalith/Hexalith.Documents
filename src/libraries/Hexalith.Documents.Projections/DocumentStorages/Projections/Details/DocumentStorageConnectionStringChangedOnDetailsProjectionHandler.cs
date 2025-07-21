@@ -20,10 +20,10 @@ using Hexalith.Documents.Requests.DocumentStorages;
 /// Initializes a new instance of the <see cref="DocumentStorageConnectionStringChangedOnDetailsProjectionHandler"/> class.
 /// </remarks>
 /// <param name="factory">The projection factory.</param>
-public class DocumentStorageConnectionStringChangedOnDetailsProjectionHandler(IProjectionFactory<DocumentStorageDetailsViewModel> factory) : DocumentStorageDetailsProjectionHandler<DocumentStorageConnectionStringChanged>(factory)
+public class DocumentStorageConnectionStringChangedOnDetailsProjectionHandler(IProjectionFactory<DocumentStorageDetailsViewModel> factory) : DocumentStorageDetailsProjectionHandler<DocumentStorageTypeChanged>(factory)
 {
     /// <inheritdoc/>
-    protected override Task<DocumentStorageDetailsViewModel?> ApplyEventAsync([NotNull] DocumentStorageConnectionStringChanged baseEvent, DocumentStorageDetailsViewModel? model, CancellationToken cancellationToken)
+    protected override Task<DocumentStorageDetailsViewModel?> ApplyEventAsync([NotNull] DocumentStorageTypeChanged baseEvent, DocumentStorageDetailsViewModel? model, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(baseEvent);
         if (model == null)

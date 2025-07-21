@@ -1,20 +1,18 @@
 ﻿@page "/Documents/Add/DocumentStorage"
 @page "/Documents/DocumentStorage/{Id}"
 @rendermode InteractiveAuto
-<HexEntityDetailsToolbar IndexPath="/Documents/DocumentStorage" OnRefresh="OnRefreshAsync" />
+<HexEntityDetailsPage AddTitle="@Labels.AddTitle"
+                      EditTitle="@Labels.Title"
+                      EntityId="@Id"
+                      ViewModel="_data"
+                      IndexPath="/Documents/DocumentStorage"
+                      ValidationResult="_validationResult"
+                      OnSave="OnSave"
+                      OnLoadData="OnLoadData">
 
-<FluentStack Orientation="Orientation.Vertical" Style="padding:20px;">
-    @if (Id is null) // Add
-    {
-        <FluentLabel Typo="Typography.PageTitle">@Labels.AddTitle</FluentLabel>
-    }
-    else // Edit
-    {
-        <FluentLabel Typo="Typography.PageTitle">@string.Format(Labels.Title, Id)</FluentLabel>
-    }
     @if (_data is not null)
     {
-        <FluentGrid Orientation="Orientation.Vertical">
+        <FluentGrid Style="width:100%;">
             <FluentGridItem xs="12" md="3">
                 <HexIdField Disabled="@(Id is not null)" @bind-Value="_data.Id"></HexIdField>
             </FluentGridItem>
@@ -44,16 +42,9 @@
                               Label="@Labels.StorageType">
                 </FluentSelect>
             </FluentGridItem>
-
-            <FluentGridItem md="12">
-                <HexSaveButton Appearance="Appearance.Accent" Onclick="OnSave" />
-            </FluentGridItem>
-            <FluentGridItem>
-                <HexValidationSummary ValidationResult="ValidationResult"></HexValidationSummary>
-            </FluentGridItem>
         </FluentGrid>
     }
-</FluentStack>
+</HexEntityDetailsPage>
 
 @code {
     [CascadingParameter]
@@ -67,9 +58,9 @@
 
 
     private ClaimsPrincipal? _user;
-    private DocumentStorageEditViewModel _data = new();
+    private DocumentStorageEditViewModel? _data;
 
-    private ValidationResult? ValidationResult;
+    private ValidationResult? _validationResult;
 
     protected override async Task OnInitializedAsync()
     {
@@ -82,75 +73,43 @@
             }
             _user = authState.User;
         }
-        if (_user is null)
-        {
-            return;
-        }
-        if (Id is not null)
-        {
-            var details = await RequestService.SubmitAsync(_user, new GetDocumentStorageDetails(Id), CancellationToken.None);
-            if (details.Result is not null)
-            {
-                _data = new DocumentStorageEditViewModel(details.Result);
-            }
-        }
         await base.OnInitializedAsync();
     }
-
-    private async Task OnSave()
+    private async Task OnLoadData()
+    {
+        if (Id is not null && _user is not null)
+        {
+            _data = await DocumentStorageEditViewModel.CreateAsync(Id, _user, RequestService, CancellationToken.None);
+        }
+        else
+        {
+            _data = new DocumentStorageEditViewModel();
+        }
+    }
+    private async Task<Hexalith.UI.Components.Pages.SaveResult> OnSave()
     {
         if (_data is null || _user is null)
         {
-            return;
-        }
-        if (!_data.HasChanges)
+            return new Hexalith.UI.Components.Pages.SaveResult(ExecuteSaveResult.ValidationFailed, "Data or user not initialized.");
+		}
+        var result = _data.ValidateSave(_user, (d) =>
         {
-            return;
-        }
-        ValidationResult = new DocumentStorageEditValidation().Validate(_data);
-        if (!ValidationResult.IsValid)
-            return;
-        DocumentStorageCommand fileTypeCommand;
-        if (Id is null)
+            _validationResult = new DocumentStorageEditValidation().Validate(d);
+            if (_validationResult.IsValid)
+            {
+                return true;
+            }
+            return false;
+        });
+        if (result.Result == ExecuteSaveResult.Success)
         {
-            fileTypeCommand = new AddDocumentStorage(
-                        _data.Id!,
-                        _data.Name,
-                        Enum.Parse<DocumentStorageType>(_data.StorageType),
-                        _data.Comments,
-                        _data.ConnectionString);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-            _data = new();
-            StateHasChanged();
-            return;
+            await _data!.SaveAsync(_user!, CommandService, Id is null, CancellationToken.None);
+            if (Id is null)
+            {
+                _data = new();
+            }
         }
-        if (_data.DescriptionChanged)
-        {
-            fileTypeCommand = new ChangeDocumentStorageDescription(
-                        _data.Id!,
-                        _data.Name!,
-                        _data.Comments);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (_data.Disabled != _data.Original.Disabled && _data.Disabled)
-        {
-            fileTypeCommand = new DisableDocumentStorage(_data.Id);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (_data.Disabled != _data.Original.Disabled && !_data.Disabled)
-        {
-            fileTypeCommand = new EnableDocumentStorage(_data.Id);
-            await CommandService.SubmitCommandAsync(_user, fileTypeCommand, CancellationToken.None);
-        }
-        if (Id is null)
-        {
-            _data = new();
-            StateHasChanged();
-        }
-    }
-
-    private static Task OnRefreshAsync()
-    {
-        return Task.CompletedTask;
+        StateHasChanged();
+        return result;
     }
 }

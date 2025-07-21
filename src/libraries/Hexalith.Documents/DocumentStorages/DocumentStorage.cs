@@ -84,7 +84,7 @@ public record DocumentStorage(
         return domainEvent switch
         {
             DocumentStorageAdded e => ApplyEvent(e),
-            DocumentStorageConnectionStringChanged e => ApplyEvent(e),
+            DocumentStorageTypeChanged e => ApplyEvent(e),
             DocumentStorageDescriptionChanged e => ApplyEvent(e),
             DocumentStorageDisabled e => ApplyEvent(e),
             DocumentStorageEnabled e => ApplyEvent(e),
@@ -135,16 +135,7 @@ public record DocumentStorage(
             false)
         : new ApplyResult(this, [], false);
 
-    private ApplyResult ApplyEvent(DocumentStorageConnectionStringChanged e)
-    {
-        if (ConnectionString == e.ConnectionString)
-        {
-            return new ApplyResult(this, [], false);
-        }
-
-        return new ApplyResult(
-            this with { ConnectionString = e.ConnectionString },
-            [e],
-            false);
-    }
+    private ApplyResult ApplyEvent(DocumentStorageTypeChanged e) => e.StorageType == StorageType && e.ConnectionString == ConnectionString
+            ? ApplyResult.Error(this, "The storage type and connection string are already set to the specified value.")
+            : ApplyResult.Success(this with { StorageType = e.StorageType, ConnectionString = e.ConnectionString }, [e]);
 }

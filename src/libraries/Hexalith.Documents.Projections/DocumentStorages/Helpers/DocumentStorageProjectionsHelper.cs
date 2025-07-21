@@ -45,7 +45,7 @@ public static class DocumentStorageProjectionsHelper
 
             // Details
             .AddScoped<IProjectionUpdateHandler<DocumentStorageAdded>, DocumentStorageAddedOnDetailsProjectionHandler>()
-            .AddScoped<IProjectionUpdateHandler<DocumentStorageConnectionStringChanged>, DocumentStorageConnectionStringChangedOnDetailsProjectionHandler>()
+            .AddScoped<IProjectionUpdateHandler<DocumentStorageTypeChanged>, DocumentStorageConnectionStringChangedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<DocumentStorageDescriptionChanged>, DocumentStorageDescriptionChangedOnDetailsProjectionHandler>()
             .AddScoped<IProjectionUpdateHandler<SnapshotEvent>, DocumentStorageDetailsSnapshotHandler>()
             .AddScoped<IProjectionUpdateHandler<DocumentStorageDisabled>, DocumentStorageDisabledOnDetailsProjectionHandler>()

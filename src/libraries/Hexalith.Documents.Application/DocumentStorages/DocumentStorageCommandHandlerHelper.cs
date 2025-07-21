@@ -36,5 +36,9 @@ public static class DocumentStorageCommandHandlerHelper
             .TryAddSimpleCommandHandler<ChangeDocumentStorageDescription>(c => new DocumentStorageDescriptionChanged(
                 c.Id,
                 c.Name,
-                c.Comments));
+                c.Comments))
+            .TryAddSimpleCommandHandler<ChangeDocumentStorageType>(c => new DocumentStorageTypeChanged(
+                c.Id,
+                c.StorageType,
+                c.ConnectionString));
 }

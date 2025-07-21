@@ -40,7 +40,7 @@
             await CommandService.SubmitCommandsAsync(User, DocumentInformationExtractionQuickStartData.Data, CancellationToken.None);
         }
     }
-    private Task SynchronizeDatabaseAsync()
+    private static Task SynchronizeDatabaseAsync()
     {
         return Task.CompletedTask;
     }
@@ -65,10 +65,6 @@
             _summaries = [.. _summaries.Select(s => s.Id == item.Id ? s with { Disabled = item.Disabled } : s)];
             _summariesQuery = _summaries.AsQueryable();
         }
-    }
-    private void OnSummaryDoubleClick(DocumentInformationExtractionSummaryViewModel item)
-    {
-        NavigationManager.NavigateTo($"/Documents/DocumentInformationExtraction/{item.Id}");
     }
 
     private static async Task ImportAsync()

@@ -91,7 +91,7 @@
 		await CommandService.SubmitCommandAsync(User, command, CancellationToken.None);
 	}
 
-	private string GetImportExportDocumentId()
+	private static string GetImportExportDocumentId()
 	{
 		return string.Format(Labels.DataFileName, UniqueIdHelper.GenerateDateTimeId());
 	}

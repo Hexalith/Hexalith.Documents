@@ -23,19 +23,19 @@ public static class DocumentModulePolicies
     new Dictionary<string, AuthorizationPolicy>
     {
         {
-            DocumentPolicies.Owners, new AuthorizationPolicyBuilder()
+            DocumentPolicies.Owner, new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .RequireRole(ApplicationRoles.GlobalAdministrator, DocumentRoles.Owner)
                 .Build()
         },
         {
-            DocumentPolicies.Contributors, new AuthorizationPolicyBuilder()
+            DocumentPolicies.Contributor, new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .RequireRole(ApplicationRoles.GlobalAdministrator, DocumentRoles.Owner, DocumentRoles.Contributor)
                 .Build()
         },
         {
-            DocumentPolicies.Readers, new AuthorizationPolicyBuilder()
+            DocumentPolicies.Reader, new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .RequireRole(ApplicationRoles.GlobalAdministrator, DocumentRoles.Owner, DocumentRoles.Contributor, DocumentRoles.Reader)
                 .Build()
