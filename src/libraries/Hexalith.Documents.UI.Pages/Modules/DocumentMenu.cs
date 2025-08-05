@@ -49,7 +49,7 @@ public static class DocumentMenu
                             new IconInformation("AppsSettings", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                             false,
                             10,
-                            DocumentRoles.Contributor,
+                            DocumentRoles.Owner,
                             [
                                 new MenuItemInformation(
                                     Labels.DocumentMenuItem,
@@ -105,7 +105,7 @@ public static class DocumentMenu
                                     new IconInformation("DocumentFolder", 20, IconStyle.Regular, IconSource.Fluent, IconLibraryName),
                                     false,
                                     50,
-                                    DocumentRoles.Contributor,
+                                    DocumentRoles.Owner,
                                     []),
                                 ]),
                     ]);
