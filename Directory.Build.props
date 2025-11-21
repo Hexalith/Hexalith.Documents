@@ -23,5 +23,6 @@
     <PackageProjectUrl>https://github.com/Hexalith/Hexalith.MyModule</PackageProjectUrl>
     <PackageTags>hexalith;documents;</PackageTags>
     <Description>Hexalith Documents Module</Description>
+    <NoWarn>$(NoWarn);IDE0055;</NoWarn>
   </PropertyGroup>
 </Project>
