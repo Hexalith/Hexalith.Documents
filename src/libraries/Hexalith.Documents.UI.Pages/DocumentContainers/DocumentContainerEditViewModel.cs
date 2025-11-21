@@ -26,8 +26,6 @@ using Microsoft.FluentUI.AspNetCore.Components;
 /// </summary>
 public sealed class DocumentContainerEditViewModel : IIdDescription, IEntityViewModel
 {
-    private string _id = string.Empty;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentContainerEditViewModel"/> class.
     /// </summary>
@@ -108,8 +106,8 @@ public sealed class DocumentContainerEditViewModel : IIdDescription, IEntityView
     /// </summary>
     public string Id
     {
-        get => string.IsNullOrWhiteSpace(Original.Id) ? _id : Original.Id;
-        set => _id = string.IsNullOrWhiteSpace(Original.Id) ? value : Original.Id;
+        get => string.IsNullOrWhiteSpace(Original.Id) ? field : Original.Id;
+        set => field = string.IsNullOrWhiteSpace(Original.Id) ? value : Original.Id;
     }
 
     /// <summary>
